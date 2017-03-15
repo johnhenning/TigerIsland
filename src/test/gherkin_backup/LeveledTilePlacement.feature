@@ -26,10 +26,10 @@ Feature: Leveled Tile Placement
     When the Player tries to place a new Tile on top of the other tiles,
     Then The tile is not added to the board and the Player is prompted to make a valid placement
 
-  Scenario: Place Tile on a Higher Level Without Volcanoes lined up
-    Given there are two or three tiles on the same level
-    And There are three adjacent hexes
-    Wh
+#  Scenario: Place Tile on a Higher Level Without Volcanoes lined up
+#    Given there are two or three tiles on the same level
+#    And There are three adjacent hexes
+#    When the Player tries to place a new Tile on top of
 
   Scenario: Place Tile on a Higher Level on top of a Totoro
     Given there are two or three tiles of the same level
