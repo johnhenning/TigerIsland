@@ -15,30 +15,36 @@ public class TilePlacement {
 
     Grid gameBoard = new Grid(200); //this is a hack
 
+
+
     @Given("^there are no tiles on the grid$")
     public void there_are_no_tiles_on_the_grid() throws Throwable {
         //TODO: make function that checks if all of grid is NULL
 
-        if(gameBoard == null) { //needs to go
+        if(!gameBoard.gridEmpty())
             throw new PendingException();
-        }
+
+
+
     }
 
     @When("^the Player tries to place a tile,$")
     public void the_Player_tries_to_place_a_tile() throws Throwable {
-        //TODO: this should be the first file
+
         int[][] coord = new int[3][2];
-        for(int i = 0; i < 3; i++){
-            coord[i][0] = 0;
-            coord[i][1] = 0;
-        }
+
+        coord[0][0] = 100;
+        coord[0][1] = 100;
+        coord[1][0] = 100 + 1;
+        coord[1][1] = 100 + 1;
+        coord[2][0] = 100;
+        coord[2][1] = 100 + 1;
         TerrainType[] terrains = new TerrainType[3];
         terrains[0] = TerrainType.VOLCANO;
         terrains[1] = TerrainType.GRASSLAND;
         terrains[2] = TerrainType.LAKE;
 
         Tile tile = new Tile(coord, terrains);
-        //place tile into game board
         if(!gameBoard.PlaceTile(tile)) //placeTile fails -- bad code
             throw new PendingException();
 
@@ -49,10 +55,13 @@ public class TilePlacement {
 
         //TODO: can just see if we can place piece exactly like above, if we can't it was added?
         int[][] coord = new int[3][2];
-        for(int i = 0; i < 3; i++){
-            coord[i][0] = 0;
-            coord[i][1] = 0;
-        }
+        coord[0][0] = 100;
+        coord[0][1] = 100;
+        coord[1][0] = 100 + 1;
+        coord[1][1] = 100 + 1;
+        coord[2][0] = 100;
+        coord[2][1] = 100 + 1;
+
         TerrainType[] terrains = new TerrainType[3];
         terrains[0] = TerrainType.VOLCANO;
         terrains[1] = TerrainType.GRASSLAND;
@@ -78,12 +87,13 @@ public class TilePlacement {
         throw new PendingException();
     }
 
-    @Then("^the Player is prompted to pick a valid location$")
-    public void the_Player_is_prompted_to_pick_a_valid_location() throws Throwable {
-        // Express the Regexp above with the code you wish you had
-        throw new PendingException();
-    }
+
+
     public void setCoordiantes(int[][] coordiantes) {
         return;
     }
+
+//    public boolean checkGameBoardEmpty(Grid grid){
+//        return grid.placedTile.isEmpty();
+//    }
 }

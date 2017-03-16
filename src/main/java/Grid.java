@@ -61,4 +61,7 @@ public class Grid {
         return true;
     }
 
+    public boolean gridEmpty(){
+        return placedTiles.isEmpty();
+    }
 }
