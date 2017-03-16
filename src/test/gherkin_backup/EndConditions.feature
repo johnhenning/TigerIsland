@@ -1,4 +1,4 @@
-Feature End Conditions:
+Feature: End Conditions
   In order to complete the game
   The Players are able to
   Meet conditions to try to win the game
