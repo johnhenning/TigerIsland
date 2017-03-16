@@ -3,10 +3,18 @@
  */
 public class meeple extends entity {
 
-    private int meeplesInPool;
-    private int meepleScore;
-    public void meeple(String name,int x,int y,int z){
+    private int meepleScore = 1;
+
+    meeple(){
 
     }
+
+    meeple(String entityType,int x,int y,int height){
+
+        System.out.println("Meeple created" + " " + x + " " + y + " " +height);
+    }
+
+
+
 
 }

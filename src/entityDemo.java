@@ -4,7 +4,8 @@
 public class entityDemo {
     public static void main(String[] args){
 
-        meeple m = new meeple();
+        entity meeple = new entity("meeple",1,1,1);
+        entity totoro = new entity("totoro",1,1,1);
 
     }
 }
