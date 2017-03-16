@@ -24,8 +24,6 @@ public class TilePlacement {
         if(!gameBoard.gridEmpty())
             throw new PendingException();
 
-
-
     }
 
     @When("^the Player tries to place a tile,$")
