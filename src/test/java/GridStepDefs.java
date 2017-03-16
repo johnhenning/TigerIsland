@@ -6,7 +6,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 
-public class TileGridStepDefs {
+public class GridStepDefs {
     Grid grid;
     @Given("^the game just began,$")
     public void the_game_just_began() throws Throwable {
