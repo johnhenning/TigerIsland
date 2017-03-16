@@ -57,8 +57,44 @@ public class Grid {
     }
 
     private boolean CheckForAdjacentHex(Tile tile){
+    //if y is odd, then x in top left and bottom left is equal of that y value
+        //then x in top right and bottom right is greater by one. y is minus one for top and greater by one on bottom
 
-        return true;
+        for (Hex hex : tile.getHexes()) {
+            if(hex.gety() % 2 != 0){
+                if (gameboard[hex.getx()][hex.gety() - 1] != null &&
+                        gameboard[hex.getx() + 1][hex.gety() - 1] != null) {
+                    //finish
+                    return true;
+                }
+                else if (gameboard[hex.getx()][hex.gety() + 1] != null &&
+                        gameboard[hex.getx() + 1][hex.gety() + 1] != null) {
+                    //finish
+                    return true;
+                }
+                else if (gameboard[hex.getx() + 1][hex.gety()] != null &&
+                        gameboard[hex.getx() + 1][hex.gety() - 1] != null ) {
+                    //finish
+                    return true;
+                }
+                else if (gameboard[hex.getx() + 1][hex.gety()] != null &&
+                        gameboard[hex.getx() + 1][hex.gety() + 1] != null ) {
+                    //finish
+                    return true;
+                }
+                else if (gameboard[hex.getx() - 1][hex.gety()] != null &&
+                        gameboard[hex.getx()][hex.gety() - 1] != null ) {
+                    //finish
+                    return true;
+                }
+                else if (gameboard[hex.getx() - 1][hex.gety()] != null &&
+                        gameboard[hex.getx()][hex.gety() + 1] != null ) {
+                    //finish
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean gridEmpty(){

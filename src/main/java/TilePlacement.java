@@ -52,6 +52,9 @@ public class TilePlacement {
     public void the_tile_is_added_to_the_board() throws Throwable {
 
         //TODO: can just see if we can place piece exactly like above, if we can't it was added?
+        //the values within coord[][] are the actual coordinates of the three hexes
+        //Made in a way to be close to the center of the grid and to represent a tile as shown
+        //in the hexagon webpage
         int[][] coord = new int[3][2];
         coord[0][0] = 100;
         coord[0][1] = 100;
