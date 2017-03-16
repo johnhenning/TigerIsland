@@ -2,27 +2,40 @@
  * Created by KWong on 3/15/2017.
  */
 
-public abstract class entity{
+import java.util.ArrayList;
 
-   private String entityType;
-   private int hexCoOrdinateX;
-   private int hexCoOrdinateY;
-   private int hexCoOrdinateZ;
+public class entity{
 
-   public entity(){
-        System.out.print("Meeple created");
-   }
+    private ArrayList<entity> settlements;
 
-   public entity(String entityType,int hexCoOrdinateX,int hexCoOrdinateY,int hexCoOrdinateZ){
+    private String entityType;
+    private int hexCoOrdinateX;
+    private int hexCoOrdinateY;
+    private int height;
 
-       System.out.println("Creating entity");
 
-       this.entityType = entityType;
-       this.hexCoOrdinateX = hexCoOrdinateX;
-       this.hexCoOrdinateY = hexCoOrdinateY;
-       this.hexCoOrdinateZ = hexCoOrdinateZ;
+    entity(){
 
-   }
+    }
+
+    public entity(String entityType, int x,int y, int height){
+
+        this.entityType = entityType;
+        this.hexCoOrdinateX = x;
+        this.hexCoOrdinateY = y;
+        this.height = height;
+
+        if(entityType.equalsIgnoreCase("meeple")){
+            meeple meepObject;
+            meepObject = new meeple(entityType,x,y,height);
+        }
+
+        if(entityType.equalsIgnoreCase("totoro")){
+            totoro totoroObject;
+            totoroObject = new totoro(entityType,x,y,height);
+        }
+
+    }
+
 
 }
-
