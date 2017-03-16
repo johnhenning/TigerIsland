@@ -9,6 +9,7 @@ public class Tile {
 
     public Tile(int[][] coordinates, TerrainType[] terrains) {
         assert coordinates.length == terrains.length;
+        hexes = new ArrayList<Hex>(); //interesting to note I think this was the problem
 
         for (int i = 0; i < coordinates.length; i++) {
             hexes.add(new Hex(coordinates[i][0], coordinates[i][1], terrains[i]));

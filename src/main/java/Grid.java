@@ -7,6 +7,9 @@ public class Grid {
     private Hex[][] gameboard;
     private ArrayList<Tile> placedTiles;
 
+    //TODO: should we use a beginning of game flag to check if a tile has been placed?
+
+
     public Grid(int size) {
         gameboard = new Hex[size][size];
         placedTiles = new ArrayList<Tile>();
@@ -44,7 +47,7 @@ public class Grid {
         hex.setTileIndex(placedTiles.size() - 1);
     }
 
-    private boolean CheckForUnoccupiedHexes(Tile tile){
+    public boolean CheckForUnoccupiedHexes(Tile tile){ //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
             if (gameboard[hex.getx()][hex.gety()] != null) {
                 return false;
