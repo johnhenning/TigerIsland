@@ -70,10 +70,6 @@ public class TilePlacement {
         Tile tile = new Tile(coord, terrains);
 
 
-
-        if(gameBoard.CheckForUnoccupiedHexes(tile)) //could use better naming or seperate function
-            throw new PendingException();
-
     }
 
     @When("^the Player tries to place the tile not adjacent to the existing tiles$")

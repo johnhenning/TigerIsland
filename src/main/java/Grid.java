@@ -36,7 +36,7 @@ public class Grid {
         return placedTiles.isEmpty();
     }
 
-    public boolean CheckForUnoccupiedHexes(Tile tile){ //changed to public so I can use in tests
+    private boolean CheckForUnoccupiedHexes(Tile tile){ //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
             if (gameboard[hex.getx()][hex.gety()] != null) {
                 return false;
