@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Grid {
     private Hex[][] gameboard;
-    private ArrayList<Tile> placedTiles;
+    public ArrayList<Tile> placedTiles;
 
     //TODO: should we use a beginning of game flag to check if a tile has been placed?
     //I think we can check that by the size of the placed tiles ArrayList
@@ -30,6 +30,13 @@ public class Grid {
         }
 
         return true;
+    }
+
+    public boolean hexEmpty(int x, int y){
+        if (gameboard[x][y] == null)
+            return true;
+        else
+            return false;
     }
 
     public boolean gridEmpty(){
@@ -121,9 +128,37 @@ public class Grid {
 
     private boolean CheckForAdjacentHex(Tile tile){
 
-        //if the tile being placed
 
-        return true;
+
+        for (Hex hex : tile.getHexes()) {
+            int x = hex.getx();
+            int y = hex.gety();
+            // TODO : need to figure out edge cases
+            if(hex.getx() < 0 || hex.gety() > 200){
+                //do nothing
+            }
+            else{
+
+                if(gameboard[x][y+1] != null)
+                    return true;
+                else if(gameboard[x][y-1] != null)
+                    return true;
+                else if(gameboard[x+1][y-1] != null)
+                    return true;
+                else if(gameboard[x+1][y+1] != null)
+                    return true;
+                else if(gameboard[x+1][y] != null)
+                    return true;
+                else if(gameboard[x-1][y] != null)
+                    return true;
+                else if(gameboard[x-1][y+1] != null)
+                    return true;
+                else if(gameboard[x-1][y-1] != null)
+                    return true;
+            }
+        }
+
+        return false;
     }
 
 }
