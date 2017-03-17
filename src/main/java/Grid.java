@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Grid {
     private Hex[][] gameboard;
-    private ArrayList<Tile> placedTiles;
+    public ArrayList<Tile> placedTiles;
 
     //TODO: should we use a beginning of game flag to check if a tile has been placed?
 
@@ -66,9 +66,46 @@ public class Grid {
 
     private boolean CheckForAdjacentHex(Tile tile){
 
-        //if the tile being placed
+        //the tile being placed has coordinates
 
-        return true;
+        //need to check if there is a hex adjacent to the tiles coordiantes
+        //if there is not, we cannot add an the tile
+
+        //if there is a hex on the game board occupied adjacent to where we want to place it
+        //we may add the tile
+
+        //this is just iterating through the graycode of the 2 coordiantes
+
+        for (Hex hex : tile.getHexes()) {
+            int x = hex.getx();
+            int y = hex.gety();
+            // TODO : need to figure out edge cases
+            if(hex.getx() < 0 || hex.gety() > 200){
+                //do nothing
+            }
+
+            else{
+
+                if(gameboard[x][y+1] != null)
+                    return true;
+                else if(gameboard[x][y-1] != null)
+                    return true;
+                else if(gameboard[x+1][y-1] != null)
+                    return true;
+                else if(gameboard[x+1][y+1] != null)
+                    return true;
+                else if(gameboard[x+1][y] != null)
+                    return true;
+                else if(gameboard[x-1][y] != null)
+                    return true;
+                else if(gameboard[x-1][y+1] != null)
+                    return true;
+                else if(gameboard[x-1][y-1] != null)
+                    return true;
+            }
+        }
+
+        return false;
     }
 
 }
