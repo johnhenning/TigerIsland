@@ -32,6 +32,13 @@ public class Grid {
         return true;
     }
 
+    public boolean hexEmpty(int x, int y){
+        if (gameboard[x][y] == null)
+            return true;
+        else
+            return false;
+    }
+
     public boolean gridEmpty(){
         return placedTiles.isEmpty();
     }
@@ -66,15 +73,7 @@ public class Grid {
 
     private boolean CheckForAdjacentHex(Tile tile){
 
-        //the tile being placed has coordinates
 
-        //need to check if there is a hex adjacent to the tiles coordiantes
-        //if there is not, we cannot add an the tile
-
-        //if there is a hex on the game board occupied adjacent to where we want to place it
-        //we may add the tile
-
-        //this is just iterating through the graycode of the 2 coordiantes
 
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
@@ -83,7 +82,6 @@ public class Grid {
             if(hex.getx() < 0 || hex.gety() > 200){
                 //do nothing
             }
-
             else{
 
                 if(gameboard[x][y+1] != null)

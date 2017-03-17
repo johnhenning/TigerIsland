@@ -13,6 +13,11 @@ Feature: Tile Grid
     When the player places a tile adjacent to other tiles
     Then The new tile is saved at the coordinates at which it is placed
 
+  Scenario:  Placing a Tile
+    Given there are tiles placed on the board
+    When the player places a tile overlapping other tiles
+    Then the new tile is not placed
+
   Scenario: Level a Tile
     Given there is a valid location to level a tile
     When the player levels a tile at certain coordinates
