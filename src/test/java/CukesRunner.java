@@ -6,6 +6,6 @@ import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @Cucumber.Options(
-        features={"src/resources"}
+        features={"src/test/Gherkin"}
 )
 public class CukesRunner {}

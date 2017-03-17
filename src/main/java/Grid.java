@@ -18,7 +18,9 @@ public class Grid {
 
     public boolean PlaceTile(Tile tile) {
         assert CheckForUnoccupiedHexes(tile);
-        assert CheckForAdjacentHex(tile);
+        if(!gridEmpty())
+            assert CheckForAdjacentHex(tile);
+
 
         placedTiles.add(tile);
 
@@ -94,7 +96,7 @@ public class Grid {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     public boolean gridEmpty(){
