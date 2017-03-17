@@ -2,20 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7631b41-0c88-4514-a924-3d4277bbc789" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_html_0_2_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_jvm_deps_1_0_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_gherkin_2_12_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/TigerIsland.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_core_1_1_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_core_1_1_8.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_java_1_1_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_java_1_1_8.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_junit_1_1_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_cukes_cucumber_junit_1_1_8.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/TigerIsland.iml" afterPath="$PROJECT_DIR$/.idea/TigerIsland.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Coordinates.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Entity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/Settlement.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/TigerIsland.java" afterPath="$PROJECT_DIR$/src/main/java/TigerIsland.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Tile.java" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -32,74 +24,39 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Grid.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Grid.java">
+      <file leaf-file-name="Settlement.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Settlement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+            <state relative-caret-position="272">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
-                <marker date="1489703406000" expanded="true" signature="1019:1203" ph="{...}" />
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#198#199#0" expanded="true" />
+                <element signature="e#248#249#0" expanded="true" />
+                <element signature="e#282#283#0" expanded="true" />
+                <element signature="e#329#330#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="Coordinates.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Coordinates.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="48" column="26" lean-forward="false" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Tile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CukesRunner.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/CukesRunner.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GridStepDefs.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/GridStepDefs.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-16303">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Grid.feature" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/Gherkin/Grid.feature">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="153">
+              <caret line="9" column="28" lean-forward="true" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+              <folding>
+                <element signature="e#344#345#0" expanded="true" />
+                <element signature="e#368#369#0" expanded="true" />
+                <element signature="e#392#393#0" expanded="true" />
+                <element signature="e#416#417#0" expanded="true" />
+                <element signature="e#450#451#0" expanded="true" />
+                <element signature="e#484#485#0" expanded="true" />
+                <element signature="e#518#519#0" expanded="true" />
+                <element signature="e#552#553#0" expanded="true" />
+                <element signature="e#584#585#0" expanded="true" />
+                <element signature="e#613#614#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,19 +64,33 @@
       <file leaf-file-name="Hex.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Hex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-              <folding />
+            <state relative-caret-position="68">
+              <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+              <folding>
+                <element signature="e#374#375#0" expanded="true" />
+                <element signature="e#398#399#0" expanded="true" />
+                <element signature="e#423#424#0" expanded="true" />
+                <element signature="e#447#448#0" expanded="true" />
+                <element signature="e#486#487#0" expanded="true" />
+                <element signature="e#516#517#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TerrainType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TerrainType.java">
+      <file leaf-file-name="Tile.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Tile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-              <folding />
+            <state relative-caret-position="238">
+              <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <folding>
+                <element signature="e#539#540#0" expanded="true" />
+                <element signature="e#573#574#0" expanded="true" />
+                <element signature="e#613#614#0" expanded="true" />
+                <element signature="e#641#642#0" expanded="true" />
+                <element signature="e#691#692#0" expanded="true" />
+                <element signature="e#718#719#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,7 +110,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="grid_testing" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
   </component>
@@ -166,10 +137,23 @@
         <option value="$PROJECT_DIR$/src/test/Gherkin/LeveledTilePlacement.feature" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/java/CukesRunner.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Tile.java" />
         <option value="$PROJECT_DIR$/src/test/java/TileGridStepDefs.java" />
         <option value="$PROJECT_DIR$/src/test/java/GridStepDefs.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/entityDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/totoro.java" />
+        <option value="$PROJECT_DIR$/src/main/java/entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/meeple.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Meeple.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Totoro.java" />
+        <option value="$PROJECT_DIR$/src/main/java/EntityDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/EntityType.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TigerIsland.java" />
+        <option value="$PROJECT_DIR$/src/main/java/CoOrdinates.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Tile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Coordinates.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Settlement.java" />
       </list>
     </option>
   </component>
@@ -187,9 +171,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1680" />
-    <option name="height" value="1023" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -206,11 +191,39 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TigerIsland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Maven: org.hamcrest:hamcrest-core:1.3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hamcrest-core-1.3.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TigerIsland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="TigerIsland" />
@@ -258,46 +271,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TigerIsland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TigerIsland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gherkin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TigerIsland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TigerIsland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -458,68 +431,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Cold Fusion runner description" factoryName="Cold Fusion" custom_browser="" web_path="">
-      <method />
-    </configuration>
     <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="myFilePath" />
@@ -539,55 +450,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
-      <option name="BCName" value="" />
-      <option name="IOSSimulatorSdkPath" value="" />
-      <option name="adlOptions" value="" />
-      <option name="airProgramParameters" value="" />
-      <option name="appDescriptorForEmulator" value="Android" />
-      <option name="debugTransport" value="USB" />
-      <option name="debuggerSdkRaw" value="BC SDK" />
-      <option name="emulator" value="NexusOne" />
-      <option name="emulatorAdlOptions" value="" />
-      <option name="fastPackaging" value="true" />
-      <option name="fullScreenHeight" value="0" />
-      <option name="fullScreenWidth" value="0" />
-      <option name="launchUrl" value="false" />
-      <option name="launcherParameters">
-        <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="OSDefault" />
-          <option name="newPlayerInstance" value="false" />
-          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
-        </LauncherParameters>
-      </option>
-      <option name="mobileRunTarget" value="Emulator" />
-      <option name="moduleName" value="" />
-      <option name="overriddenMainClass" value="" />
-      <option name="overriddenOutputFileName" value="" />
-      <option name="overrideMainClass" value="false" />
-      <option name="runTrusted" value="true" />
-      <option name="screenDpi" value="0" />
-      <option name="screenHeight" value="0" />
-      <option name="screenWidth" value="0" />
-      <option name="url" value="http://" />
-      <option name="usbDebugPort" value="7936" />
-      <method />
-    </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
-      <option name="BCName" value="" />
-      <option name="launcherParameters">
-        <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="OSDefault" />
-          <option name="newPlayerInstance" value="false" />
-          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
-        </LauncherParameters>
-      </option>
-      <option name="moduleName" value="" />
-      <option name="trusted" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -602,15 +464,6 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
-      <setting name="vmparams" value="" />
-      <setting name="cmdLine" value="run-app" />
-      <setting name="passParentEnv" value="true" />
-      <setting name="launchBrowser" value="true" />
-      <setting name="launchBrowserUrl" value="" />
-      <setting name="depsClasspath" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -655,15 +508,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
-      <config-file value="" />
-      <node-interpreter value="project" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -697,12 +541,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -729,28 +567,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run" />
-      <scripts />
-      <node-interpreter value="project" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
-      <method />
-    </configuration>
-    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
       <method />
     </configuration>
     <list size="1">
@@ -807,38 +623,38 @@
     <option name="totallyTimeSpent" value="9969000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1023" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32975295" sideWeight="0.497558" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.497558" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32975295" sideWeight="0.502442" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.50292826" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26495728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26427525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.49707174" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -862,72 +678,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/CukesRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/GridStepDefs.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/Gherkin/Grid.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Hex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TerrainType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Grid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="33" column="20" lean-forward="false" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
-          <folding>
-            <marker date="1489703406000" expanded="true" signature="1019:1203" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="26" lean-forward="false" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Tile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="33" lean-forward="false" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TilePlacement.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/Hex.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -950,7 +700,8 @@
         <state relative-caret-position="405">
           <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
           <folding>
-            <marker date="1489703406000" expanded="true" signature="1019:1203" ph="{...}" />
+            <element signature="e#638#639#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -972,7 +723,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#539#540#0" expanded="true" />
+            <element signature="e#573#574#0" expanded="true" />
+            <element signature="e#613#614#0" expanded="true" />
+            <element signature="e#641#642#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#718#719#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -997,7 +755,8 @@
         <state relative-caret-position="450">
           <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
           <folding>
-            <marker date="1489703406000" expanded="true" signature="1019:1203" ph="{...}" />
+            <element signature="e#638#639#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1019,7 +778,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#539#540#0" expanded="true" />
+            <element signature="e#573#574#0" expanded="true" />
+            <element signature="e#613#614#0" expanded="true" />
+            <element signature="e#641#642#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#718#719#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1040,32 +806,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Coordinates.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/TerrainType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Hex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Grid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
-          <folding>
-            <marker date="1489703406000" expanded="true" signature="1019:1203" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_src/GridTest.java" />
     <entry file="file://$PROJECT_DIR$/test_src/TileGridStepDefs.java" />
     <entry file="file://$PROJECT_DIR$/src/MyStepdefs.java" />
@@ -1075,36 +815,30 @@
     <entry file="file://$PROJECT_DIR$/src/test/gherkin_backup/GamePiece.feature" />
     <entry file="file://$PROJECT_DIR$/src/test/gherkin_backup/EndConditions.feature" />
     <entry file="file://$PROJECT_DIR$/src/test/gherkin_backup/LeveledTilePlacement.feature" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/TilePlacement.java" />
+    <entry file="file://$PROJECT_DIR$/src/test/Gherkin/Grid.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
+        <state relative-caret-position="337">
           <caret line="48" column="26" lean-forward="false" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TilePlacement.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/Tile.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Grid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/CukesRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/Gherkin/Grid.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="340">
+          <caret line="55" column="16" lean-forward="true" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
+          <folding>
+            <element signature="e#638#639#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1118,9 +852,117 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16303">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Meeple.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/Totoro.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-71">
+          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/EntityDemo.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/TigerIsland.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TerrainType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/CukesRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="20" lean-forward="false" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <folding>
+            <element signature="e#539#540#0" expanded="true" />
+            <element signature="e#573#574#0" expanded="true" />
+            <element signature="e#613#614#0" expanded="true" />
+            <element signature="e#641#642#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#718#719#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Hex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding>
+            <element signature="e#374#375#0" expanded="true" />
+            <element signature="e#398#399#0" expanded="true" />
+            <element signature="e#423#424#0" expanded="true" />
+            <element signature="e#447#448#0" expanded="true" />
+            <element signature="e#486#487#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Coordinates.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="28" lean-forward="true" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding>
+            <element signature="e#344#345#0" expanded="true" />
+            <element signature="e#368#369#0" expanded="true" />
+            <element signature="e#392#393#0" expanded="true" />
+            <element signature="e#416#417#0" expanded="true" />
+            <element signature="e#450#451#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+            <element signature="e#518#519#0" expanded="true" />
+            <element signature="e#552#553#0" expanded="true" />
+            <element signature="e#584#585#0" expanded="true" />
+            <element signature="e#613#614#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Settlement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#198#199#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="true" />
+            <element signature="e#282#283#0" expanded="true" />
+            <element signature="e#329#330#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
