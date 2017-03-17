@@ -7,7 +7,7 @@ public class Settlement {
     private ArrayList<Coordinates> entityCoordinates;
 
     public Settlement(Coordinates coordinates){
-        entityCoordinates = new ArrayList<Coordinates>();
+
         entityCoordinates.add(coordinates);
     }
 
