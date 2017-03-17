@@ -18,7 +18,7 @@ public class Grid {
 
     public boolean PlaceTile(Tile tile) {
         assert CheckForUnoccupiedHexes(tile);
-        if(!gridEmpty())
+        if(!GridEmpty())
             assert CheckForAdjacentHex(tile);
 
 
@@ -32,24 +32,8 @@ public class Grid {
         return true;
     }
 
-    public boolean hexEmpty(int x, int y){
-        if (gameboard[x][y] == null)
-            return true;
-        else
-            return false;
-    }
-
-    public boolean gridEmpty(){
+    public boolean GridEmpty(){
         return placedTiles.isEmpty();
-    }
-
-    private boolean CheckForUnoccupiedHexes(Tile tile){ //changed to public so I can use in tests
-        for (Hex hex : tile.getHexes()) {
-            if (gameboard[hex.getx()][hex.gety()] != null) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public boolean LevelTile(Tile tile) {
@@ -64,7 +48,27 @@ public class Grid {
         return true;
     }
 
-    private int CheckLowerHexesAreSameLevel(Tile tile) {
+    public int GetTurnNumber() {
+        return placedTiles.size();
+    }
+
+    public boolean HexEmpty(int x, int y){
+        if (gameboard[x][y] == null)
+            return true;
+        else
+            return false;
+    }
+
+    private boolean CheckForUnoccupiedHexes(Tile tile){ //changed to public so I can use in tests
+        for (Hex hex : tile.getHexes()) {
+            if (gameboard[hex.getx()][hex.gety()] != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int CheckLowerHexesAreSameLevel(Tile tile) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
         Hex hex2 = tile.getHexes().get(2);
@@ -73,7 +77,7 @@ public class Grid {
         Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
         Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
 
-        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) return false;
+        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) return -1;
         int lowerLevel0 = placedTiles.get(lower_hex0.getTileIndex()).getLevel();
         int lowerLevel1 = placedTiles.get(lower_hex1.getTileIndex()).getLevel();
         int lowerLevel2 = placedTiles.get(lower_hex2.getTileIndex()).getLevel();
@@ -85,7 +89,7 @@ public class Grid {
         }
     }
 
-    private boolean CheckHexesSpanMultipleTiles(Tile tile) {
+    public boolean CheckHexesSpanMultipleTiles(Tile tile) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
         Hex hex2 = tile.getHexes().get(2);
@@ -105,14 +109,16 @@ public class Grid {
         return true;
     }
 
-    private boolean CheckVolcanoesLineUp(Tile tile) {
 
-        return true;
-    }
-
-
-    public int getTurnNumber() {
-        return placedTiles.size();
+    public boolean CheckVolcanoesLineUp(Tile tile) {
+        for (Hex hex : tile.getHexes()) {
+            if (hex.getTerrain() == TerrainType.VOLCANO) {
+                if (gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private boolean PlaceHex(Hex hex) {
@@ -128,8 +134,6 @@ public class Grid {
 
     private boolean CheckForAdjacentHex(Tile tile){
 
-
-
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
             int y = hex.gety();
@@ -139,7 +143,7 @@ public class Grid {
             }
             else{
 
-                if(gameboard[x][y+1] != null)
+                if(gameboard[x][y+1] == null)
                     return true;
                 else if(gameboard[x][y-1] != null)
                     return true;
