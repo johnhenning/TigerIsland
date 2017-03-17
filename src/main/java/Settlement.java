@@ -4,13 +4,14 @@
 import java.util.ArrayList;
 
 public class Settlement {
-    private ArrayList<Coordinates> entityCoOrdinates;
+    private ArrayList<Coordinates> entityCoordinates;
 
     public Settlement(Coordinates coordinates){
-        entityCoOrdinates.add(coordinates);
+        entityCoordinates = new ArrayList<Coordinates>();
+        entityCoordinates.add(coordinates);
     }
 
     public int SettlementSize(){
-        return entityCoOrdinates.size();
+        return entityCoordinates.size();
     }
 }
