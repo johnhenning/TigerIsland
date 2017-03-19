@@ -1,14 +1,15 @@
+
+/**
+ * Created by johnhenning on 3/15/17.
+ */
+
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 
+
 import static junit.framework.TestCase.fail;
-
-/**
- * Created by kyle on 3/17/17.
- */
-
 public class GridStepDefs {
 
     static Grid gameBoard = new Grid(200); //this is a hack
@@ -18,6 +19,12 @@ public class GridStepDefs {
         if(!gameBoard.GridEmpty())
             fail("gameboard isn't empty");
 
+public class GridStepDefs {
+    Grid grid;
+    @Given("^the game just began,$")
+    public void the_game_just_began() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @When("^Player (\\d+) places the first tile,$")
@@ -39,16 +46,21 @@ public class GridStepDefs {
         Tile tile = new Tile(coord, terrains);
         gameBoard.PlaceTile(tile);
 
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @Then("^the upper Terrain Hex tile becomes the origin of the Tile Grid$")
     public void the_upper_Terrain_Hex_tile_becomes_the_origin_of_the_Tile_Grid() throws Throwable {
+
         //we are defining the origin of the tile grid to be the center of the array [max_size/2][max_size/2]
         if(gameBoard.HexEmpty(100,100) || gameBoard.HexEmpty(101,101)
                                                 || gameBoard.HexEmpty(100,101))
             fail("hexes are empty");
 
 
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @Given("^there are tiles placed on the board$")
@@ -57,9 +69,8 @@ public class GridStepDefs {
         if(gameBoard.GridEmpty())
             fail("no tiles on board");
 
-//            throw new PendingException();
-
-
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @When("^the player places a tile adjacent to other tiles$")
@@ -80,11 +91,13 @@ public class GridStepDefs {
         Tile tile = new Tile(coord, terrains);
         gameBoard.PlaceTile(tile);
 
-
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 
     @Then("^The new tile is saved at the coordinates at which it is placed$")
     public void the_new_tile_is_saved_at_the_coordinates_at_which_it_is_placed() throws Throwable {
+
         //TODO: write check tile function
         if(gameBoard.HexEmpty(101,100) || gameBoard.HexEmpty(101,99) || gameBoard.HexEmpty(102,99))
             fail("hexes weren't saved");
@@ -98,6 +111,7 @@ public class GridStepDefs {
 
     @Then("^the new tile is not placed$")
     public void the_new_tile_is_not_placed() throws Throwable {
+
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
@@ -144,6 +158,7 @@ public class GridStepDefs {
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
     }
+
 
     @Given("^there are two or three tiles of the same level$")
     public void there_are_two_or_three_tiles_of_the_same_level() throws Throwable {
