@@ -27,6 +27,10 @@ public class Hex {
         return terrain;
     }
 
+    public int getTileIndex() {
+        return tileIndex;
+    }
+
     public void setTileIndex(int tileIndex) {
         this.tileIndex = tileIndex;
     }
