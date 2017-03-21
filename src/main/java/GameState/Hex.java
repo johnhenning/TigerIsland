@@ -1,26 +1,28 @@
+package GameState;
+
 /**
  * Created by johnhenning on 3/15/17.
  */
 public class Hex {
-    private int x;
-    private int y;
-    private TerrainType terrain;
+    private final Coordinate coordinate;
+    private final TerrainType terrain;
     private int tileIndex;
     private int MeepleCount;
     private boolean Totoro;
 
     public Hex(int x, int y, TerrainType terrain) {
-        this.x = x;
-        this.y = y;
+        this.coordinate = new Coordinate(x,y);
         this.terrain = terrain;
+        this.MeepleCount = 0;
+        this.Totoro = false;
     }
 
     public int getx() {
-        return x;
+        return coordinate.getX();
     }
 
     public int gety() {
-        return y;
+        return coordinate.getY();
     }
 
     public TerrainType getTerrain() {
@@ -33,6 +35,14 @@ public class Hex {
 
     public void setTileIndex(int tileIndex) {
         this.tileIndex = tileIndex;
+    }
+
+    public void addMeeple(int level) {
+        MeepleCount += level;
+    }
+
+    public void addTotoro() {
+        Totoro = true;
     }
 
 }

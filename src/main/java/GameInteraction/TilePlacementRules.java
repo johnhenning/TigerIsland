@@ -1,65 +1,16 @@
-/**
- * Created by johnhenning on 3/15/17.
- */
+package GameInteraction;
+
+import GameState.Hex;
+import GameState.TerrainType;
+import GameState.Tile;
+
 import java.util.ArrayList;
 
-public class Grid {
-    private Hex[][] gameboard;
-    public ArrayList<Tile> placedTiles;
-
-    //TODO: should we use a beginning of game flag to check if a tile has been placed?
-    //I think we can check that by the size of the placed tiles ArrayList
-
-    public Grid(int size) {
-        gameboard = new Hex[size][size];
-        placedTiles = new ArrayList<Tile>();
-
-    }
-
-    public boolean PlaceTile(Tile tile) {
-        assert CheckForUnoccupiedHexes(tile);
-        if(!GridEmpty())
-            assert CheckForAdjacentHex(tile);
-
-
-        placedTiles.add(tile);
-
-        for (Hex hex : tile.getHexes()) {
-            updateHexTileIndex(hex);
-            PlaceHex(hex);
-        }
-
-        return true;
-    }
-
-    public boolean GridEmpty(){
-        return placedTiles.isEmpty();
-    }
-
-    public boolean LevelTile(Tile tile) {
-        int lowerLevel = CheckLowerHexesAreSameLevel(tile);
-        if (lowerLevel == -1) throw new AssertionError();
-        assert CheckHexesSpanMultipleTiles(tile);
-        assert CheckVolcanoesLineUp(tile);
-        tile.setLevel(lowerLevel + 1);
-        for (Hex hex : tile.getHexes()) {
-            gameboard[hex.getx()][hex.gety()] = hex;
-        }
-        return true;
-    }
-
-    public int GetTurnNumber() {
-        return placedTiles.size();
-    }
-
-    public boolean HexEmpty(int x, int y){
-        if (gameboard[x][y] == null)
-            return true;
-        else
-            return false;
-    }
-
-    private boolean CheckForUnoccupiedHexes(Tile tile){ //changed to public so I can use in tests
+/**
+ * Created by johnhenning on 3/19/17.
+ */
+public class TilePlacementRules extends Rules {
+    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard){ //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
             if (gameboard[hex.getx()][hex.gety()] != null) {
                 return false;
@@ -68,7 +19,7 @@ public class Grid {
         return true;
     }
 
-    public int CheckLowerHexesAreSameLevel(Tile tile) {
+    public static int CheckLowerHexesAreSameLevel(Tile tile, Hex[][] gameboard, ArrayList<Tile> placedTiles) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
         Hex hex2 = tile.getHexes().get(2);
@@ -89,7 +40,7 @@ public class Grid {
         }
     }
 
-    public boolean CheckHexesSpanMultipleTiles(Tile tile) {
+    public boolean CheckHexesSpanMultipleTiles(Tile tile, Hex[][] gameboard) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
         Hex hex2 = tile.getHexes().get(2);
@@ -110,7 +61,7 @@ public class Grid {
     }
 
 
-    public boolean CheckVolcanoesLineUp(Tile tile) {
+    public boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
         for (Hex hex : tile.getHexes()) {
             if (hex.getTerrain() == TerrainType.VOLCANO) {
                 if (gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) {
@@ -121,22 +72,12 @@ public class Grid {
         return false;
     }
 
-    private boolean PlaceHex(Hex hex) {
-        gameboard[hex.getx()][hex.gety()] = hex;
-        return true;
-    }
-
-    private void updateHexTileIndex(Hex hex) {
-        hex.setTileIndex(placedTiles.size() - 1);
-    }
-
-
-
-    private boolean CheckForAdjacentHex(Tile tile){
+    public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
 
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
             int y = hex.gety();
+
             // TODO : need to figure out edge cases
             if(hex.getx() < 0 || hex.gety() > 200){
                 //do nothing
@@ -164,5 +105,6 @@ public class Grid {
 
         return false;
     }
+
 
 }

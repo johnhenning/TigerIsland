@@ -1,3 +1,4 @@
+package GameState;
 /**
  * Created by johnhenning on 3/15/17.
  */
@@ -27,10 +28,6 @@ public class Tile {
 
     public ArrayList<Hex> getHexes() {
         return hexes;
-    }
-
-    private boolean CheckForValidCoordinates() {
-        return true;
     }
 }
 
