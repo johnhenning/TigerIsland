@@ -7,23 +7,20 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
-
+import GameState.*;
+import GameInteraction.*;
 
 import static junit.framework.TestCase.fail;
-public class GridStepDefs {
-
-    static Grid gameBoard = new Grid(200); //this is a hack
-
-    @Given("^the game just began,$")
-    public void the_game_just_began() throws Throwable {
-        if(!gameBoard.GridEmpty())
-            fail("gameboard isn't empty");
 
 public class GridStepDefs {
-    Grid grid;
+    Grid gameBoard;
+
     @Given("^the game just began,$")
     public void the_game_just_began() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
+        gameBoard = new Grid(200);
+        if(!gameBoard.GridEmpty())
+            fail("gameboard isn't empty");
         throw new PendingException();
     }
 
