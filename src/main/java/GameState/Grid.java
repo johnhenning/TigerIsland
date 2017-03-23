@@ -1,16 +1,15 @@
 package GameState; /**
  * Created by johnhenning on 3/15/17.
  */
+import GameInteraction.Rules;
 import GameInteraction.TilePlacementRules;
 
 import java.util.ArrayList;
 
 public class Grid {
     private Hex[][] gameboard;
-    public ArrayList<Tile> placedTiles;
+    private ArrayList<Tile> placedTiles;
 
-    //TODO: should we use a beginning of game flag to check if a tile has been placed?
-    //I think we can check that by the size of the placed tiles ArrayList
 
     public Grid(int size) {
         gameboard = new Hex[size][size];
@@ -35,8 +34,8 @@ public class Grid {
         return hex;
     }
 
-    public boolean GridEmpty(){
-        return placedTiles.isEmpty();
+    public int TurnNumber(){
+        return this.placedTiles.size();
     }
 
     public void LevelTile(Tile tile) {
@@ -54,7 +53,7 @@ public class Grid {
         return placedTiles.size();
     }
 
-    public boolean HexEmpty(int x, int y){
+    public boolean HexEmpty(int x, int y){ //TODO: OLD NEEDS TO BE REMOVED
         if (gameboard[x][y] == null)
             return true;
         else
@@ -64,6 +63,7 @@ public class Grid {
 
 
     private boolean PlaceHex(Hex hex) {
+
         gameboard[hex.getx()][hex.gety()] = hex;
         return true;
     }

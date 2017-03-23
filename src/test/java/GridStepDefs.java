@@ -3,6 +3,7 @@
  * Created by johnhenning on 3/15/17.
  */
 
+import GameInteraction.Rules;
 import GameState.Grid;
 import GameState.TerrainType;
 import GameState.Tile;
@@ -16,11 +17,15 @@ import static junit.framework.TestCase.fail;
 public class GridStepDefs {
 
     Grid gameBoard = new Grid(200); //this is a hack
+    //rules needs to be initialized unless we make methods statics
+
 
     @Given("^the game just began,$")
     public void the_game_just_began() throws Throwable {
-        if (!gameBoard.GridEmpty())
-            fail("gameboard isn't empty");
+//        if (gameBoard.TurnNumber() != 0)
+//            fail("gameboard isn't empty");
+        if(Rules.GameStarted(gameBoard))
+            fail("game has already started");
     }
 
 
@@ -77,11 +82,10 @@ public class GridStepDefs {
         terrains[2] = TerrainType.LAKE;
 
         Tile tile = new Tile(coord, terrains);
+        //TODO:placed tile needs to have its rules associated with it
         gameBoard.PlaceTile(tile);
-        if(gameBoard.GridEmpty())
-            fail("no tiles on board");
 
-        // Write code here that turns the phrase above into concrete actions
+
 
     }
 
@@ -101,9 +105,10 @@ public class GridStepDefs {
         terrains[2] = TerrainType.LAKE;
 
         Tile tile = new Tile(coord, terrains);
+        //TODO:placed tile needs to have its rules associated with it
         gameBoard.PlaceTile(tile);
 
-        // Write code here that turns the phrase above into concrete actions
+
 
     }
 
@@ -130,27 +135,7 @@ public class GridStepDefs {
 
     @Given("^there is a valid location to level a tile$")
     public void there_is_a_valid_location_to_level_a_tile() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        int[][] coord = new int[3][2];
-        coord[0][0] = 100 + 1;
-        coord[0][1] = 100;
-        coord[1][0] = 100 + 1;
-        coord[1][1] = 100 - 1;
-        coord[2][0] = 100 + 2 ;
-        coord[2][1] = 100 - 1;
 
-        TerrainType[] terrains = new TerrainType[3];
-        terrains[0] = TerrainType.VOLCANO;
-        terrains[1] = TerrainType.GRASSLAND;
-        terrains[2] = TerrainType.LAKE;
-
-        Tile tile = new Tile(coord, terrains);
-
-        gameBoard.PlaceTile(tile);
-
-
-
-        throw new PendingException();
     }
 
     @When("^the player levels a tile at certain coordinates$")

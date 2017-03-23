@@ -1,5 +1,5 @@
 package GameInteraction;
-
+import GameInteraction.Rules;
 import GameState.Hex;
 import GameState.TerrainType;
 import GameState.Tile;
@@ -73,6 +73,8 @@ public class TilePlacementRules extends Rules {
     }
 
     public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
+
+
 
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
