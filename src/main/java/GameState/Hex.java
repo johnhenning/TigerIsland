@@ -33,6 +33,8 @@ public class Hex {
         return tileIndex;
     }
 
+    public int getMeepleCount() {return MeepleCount; }
+
     public void setTileIndex(int tileIndex) {
         this.tileIndex = tileIndex;
     }
