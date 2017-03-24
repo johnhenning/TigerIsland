@@ -12,7 +12,7 @@ import GameStateModule.Hex;
  */
 public class Rules {
 
-    static public boolean GameStarted(Grid grid){
+     public static boolean GameStarted(Grid grid){
         if(grid.TurnNumber() == 0)
             return false;
         else

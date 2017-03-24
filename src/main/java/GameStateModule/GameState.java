@@ -24,6 +24,8 @@ public class GameState {
         //TODO: Work on Player Rules
         //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
+        if(!SettlementFoundationRules.isValidFoundation(h)) throw new AssertionError();
+
         if(SettlementFoundationRules.isValidFoundation(h)){
             player.removeMeeple();
             placeMeeple(coordinate);
@@ -37,6 +39,8 @@ public class GameState {
     public void placeTile(Tile tile) {
         gameboard.placeTile(tile);
     }
+
+    public void levelTile(Tile tile) { gameboard.LevelTile(tile); }
     
     public void placeMeeple(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);

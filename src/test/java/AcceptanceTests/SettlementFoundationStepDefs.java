@@ -19,11 +19,11 @@ import java.util.ArrayList;
 public class SettlementFoundationStepDefs {
     GameState game = new GameState();
     Tile tile;
-    boolean settlementFounded = false;
+    boolean exceptionThrown = false;
     @Given("^There is a tile with an unoccupied Terrain hex$")
     public void there_is_a_tile_with_an_unoccupied_Terrain_hex() throws Throwable {
         //TODO: find better way of dealing with coordiantes
-        int[][] coord = new int[3][2];
+
 
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
@@ -36,7 +36,11 @@ public class SettlementFoundationStepDefs {
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
-        game.placeTile(tile);
+
+
+
+        try{game.placeTile(tile);}
+        catch (AssertionError e){ exceptionThrown = true; }
 
     }
 
@@ -48,13 +52,14 @@ public class SettlementFoundationStepDefs {
 
     @When("^the Player tries to found a settlement on that hex$")
     public void the_Player_tries_to_found_a_settlement_on_that_hex() throws Throwable {
-        settlementFounded = game.foundSettlement(new Coordinate(101,101),new Player());
+        try{game.foundSettlement(new Coordinate(101,101),new Player());}
+        catch (AssertionError e){ exceptionThrown = true; }
     }
 
     @Then("^the Settlement is founded$")
     public void the_Settlement_is_founded() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        assert game.getSettlementList().size()>0;
+        assert  !exceptionThrown;
     }
 
     @Then("^(\\d+) Meeple is placed on that Hex$")
@@ -66,40 +71,40 @@ public class SettlementFoundationStepDefs {
 
     @Given("^There is a hex occupied by another game piece$")
     public void there_is_a_hex_occupied_by_another_game_piece() throws Throwable {
-        int[][] coord = new int[3][2];
 
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
-
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        Tile tile = new Tile(coordinates, terrains);
+        tile = new Tile(coordinates,terrains);
 
         game.placeTile(tile);
         Coordinate c = new Coordinate(101,101);
         Hex h = game.getHex(c);
-        game.foundSettlement(new Coordinate(101,101),new Player());
+        try{game.foundSettlement(new Coordinate(101,101),new Player());}
+        catch (AssertionError e){}
         assert !SettlementFoundationRules.isUnnocupied(h);
     }
     @When("^the player attempts to found a settlement at that location$")
     public void the_player_attempts_to_found_a_settlement_at_that_location() throws Throwable {
-        settlementFounded = game.foundSettlement(new Coordinate(101,101),new Player());
+        try{ game.foundSettlement(new Coordinate(101,101),new Player());}
+        catch (AssertionError e){ exceptionThrown = true; }
     }
 
     @Then("^the settlment is not founded$")
     public void the_settlment_is_not_founded() throws Throwable {
-        assert !settlementFounded;
+        assert  exceptionThrown;
     }
 
 
     @Then("^The Player cannot found the settlement$")
     public void the_Player_cannot_found_the_settlement() throws Throwable {
-        assert !settlementFounded;
+        assert  exceptionThrown;
     }
 
     @Then("^The Player is prompted to choose a valid location$")
@@ -115,30 +120,31 @@ public class SettlementFoundationStepDefs {
 
     @Given("^There is a Volcano Hex$")
     public void there_is_a_Volcano_Hex() throws Throwable {
-        int[][] coord = new int[3][2];
-
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
-
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        Tile tile = new Tile(coordinates, terrains);
+        tile = new Tile(coordinates,terrains);
+
+
         game.placeTile(tile);
     }
 
     @When("^the Player tries to found a settlement on the hex$")
     public void the_Player_tries_to_found_a_settlement_on_the_hex() throws Throwable {
-        settlementFounded = game.foundSettlement(new Coordinate(100,100),new Player());
+        try{ game.foundSettlement(new Coordinate(100,100),new Player());}
+        catch (AssertionError e){ exceptionThrown = true; }
     }
 
     @Then("^The Player cannot found the settlement on that hex$")
     public void the_Player_cannot_found_the_settlement_on_that_hex() throws Throwable {
-        assert !settlementFounded;
+        //TODO: might need to look at e?
+        assert  exceptionThrown;
     }
 
 }

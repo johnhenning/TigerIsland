@@ -3,6 +3,9 @@
  */
 package GameStateModule;
 import GameInteractionModule.Rules.TileNukeRules;
+import GameInteractionModule.*;
+import GameInteractionModule.Rules.TilePlacementRules;
+
 import java.util.ArrayList;
 
 public class Grid {
@@ -21,7 +24,13 @@ public class Grid {
 
     public boolean placeTile(Tile tile) {
         placedTiles.add(tile);
+        if(TilePlacementRules.CheckGameStarted(placedTiles)) {
+           if(!TilePlacementRules.CheckForAdjacentHex(tile, gameboard)) throw new AssertionError();
+        }
 
+        if(!TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard)) throw new AssertionError();
+
+        tile.setLevel(1);
         for (Hex hex : tile.getHexes()) {
             updateHexTileIndex(hex);
             placeHex(hex);

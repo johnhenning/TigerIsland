@@ -3,11 +3,17 @@ import GameStateModule.Hex;
 import GameStateModule.TerrainType;
 import GameStateModule.Tile;
 
+import java.util.ArrayList;
+
 /**
  * Created by johnhenning on 3/19/17.
  */
 public class TilePlacementRules extends Rules {
-    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard) { //changed to public so I can use in tests
+
+    public static boolean CheckGameStarted(ArrayList<Tile> placedTiles){
+        return placedTiles.size() > 0;
+    }
+    public static boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard) { //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
             if (gameboard[hex.getx()][hex.gety()] != null) {
                 return false;
@@ -16,7 +22,7 @@ public class TilePlacementRules extends Rules {
         return true;
     }
 
-    public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
+    public static boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
 
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
