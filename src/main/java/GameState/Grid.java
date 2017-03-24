@@ -2,6 +2,7 @@ package GameState; /**
  * Created by johnhenning on 3/15/17.
  */
 import GameInteraction.Rules;
+import GameInteraction.TileNukeRules;
 import GameInteraction.TilePlacementRules;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class Grid {
     }
 
     public void LevelTile(Tile tile) {
-        int lowerLevel = TilePlacementRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
+        int lowerLevel = TileNukeRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
         if (lowerLevel == -1) throw new AssertionError();
         tile.setLevel(lowerLevel + 1);
         for (Hex hex : tile.getHexes()) {
