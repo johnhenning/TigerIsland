@@ -153,10 +153,10 @@ public class GridStepDefs {
 
         coord[0][0] = 100+1;
         coord[0][1] = 100;
-        coord[1][0] = 100 + 2;
-        coord[1][1] = 100 + 1;
-        coord[2][0] = 100+2;
-        coord[2][1] = 100;
+        coord[1][0] = 100 + 1;
+        coord[1][1] = 100 - 1;
+        coord[2][0] = 100 + 2;
+        coord[2][1] = 100 - 1;
 
         terrains[0] = TerrainType.VOLCANO;
         terrains[1] = TerrainType.JUNGLE;
@@ -203,9 +203,6 @@ public class GridStepDefs {
     @Then("^the new tile is saved at those coordinates$")
     public void the_new_tile_is_saved_at_those_coordinates() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        ArrayList<Tile> leveledTile = gameBoard.getListOfTiles();
-       // leveledTile.get(leveledTile.size()-1).getHexes();
-
 
     }
 
