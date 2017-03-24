@@ -4,7 +4,6 @@ import GameStateModule.Hex;
 import GameStateModule.TerrainType;
 import GameStateModule.Player;
 
-
 /**
  * Created by johnhenning on 3/19/17.
  */

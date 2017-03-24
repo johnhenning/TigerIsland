@@ -3,14 +3,12 @@ package GameInteractionModule.Rules;
 import GameStateModule.Hex;
 import GameStateModule.TerrainType;
 import GameStateModule.Tile;
-
 import java.util.ArrayList;
 
 /**
  * Created by johnhenning on 3/22/17.
  */
 public class TileNukeRules extends TilePlacementRules {
-
     public static int CheckLowerHexesAreSameLevel(Tile tile, Hex[][] gameboard, ArrayList<Tile> placedTiles) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
@@ -52,7 +50,8 @@ public class TileNukeRules extends TilePlacementRules {
         return true;
     }
 
-    public static boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
+    public boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
+
         for (Hex hex : tile.getHexes()) {
             if (hex.getTerrain() == TerrainType.VOLCANO) {
                 if (gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) {

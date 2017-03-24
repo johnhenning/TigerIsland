@@ -1,14 +1,17 @@
-package GameStateModule; /**
+/**
  * Created by johnhenning on 3/15/17.
  */
+package GameStateModule;
 import GameInteractionModule.Rules.TileNukeRules;
-
 import java.util.ArrayList;
 
 public class Grid {
     private Hex[][] gameboard;
     private ArrayList<Tile> placedTiles;
 
+
+    //TODO: should we use a beginning of game flag to check if a tile has been placed?
+    //I think we can check that by the size of the placed tiles ArrayList
 
     public Grid(int size) {
         gameboard = new Hex[size][size];
@@ -18,7 +21,7 @@ public class Grid {
 
     public boolean PlaceTile(Tile tile) {
         placedTiles.add(tile);
-        tile.setLevel(1);
+
         for (Hex hex : tile.getHexes()) {
             updateHexTileIndex(hex);
             PlaceHex(hex);
@@ -34,8 +37,9 @@ public class Grid {
         return hex;
     }
 
+
     public int TurnNumber(){
-        return this.placedTiles.size();
+        return placedTiles.size();
     }
 
     public void LevelTile(Tile tile) {
@@ -67,17 +71,20 @@ public class Grid {
 
     public ArrayList<Tile> getPlacedTiles(){ return placedTiles; }
 
-    public boolean HexEmpty(int x, int y){ //TODO: OLD NEEDS TO BE REMOVED
-        if (gameboard[x][y] == null)
-            return true;
-        else
-            return false;
+    public boolean HexEmpty(int x, int y) { //TODO: OLD NEEDS TO BE REMOVED
+        return gameboard[x][y] == null;
+    }
+  
+    public boolean GridEmpty(){
+        return placedTiles.isEmpty();
+    }
+
+    public int getPlacedTiles() {
+        return placedTiles;
     }
 
 
-
     private boolean PlaceHex(Hex hex) {
-
         gameboard[hex.getx()][hex.gety()] = hex;
         return true;
     }

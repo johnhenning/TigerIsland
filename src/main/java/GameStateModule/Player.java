@@ -26,6 +26,10 @@ public class Player {
         return Totoro;
     }
 
+    public void removeMeeple(int amount) {
+        Meeples -= amount;
+    }
+
     public void removeMeeple() {
         Meeples -= 1;
     }

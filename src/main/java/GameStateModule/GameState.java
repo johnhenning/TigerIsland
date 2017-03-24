@@ -1,7 +1,5 @@
 package GameStateModule;
-
 import GameInteractionModule.Rules.SettlementFoundationRules;
-
 import java.util.ArrayList;
 
 /**
@@ -11,11 +9,14 @@ public class GameState {
     private Grid gameboard;
     private Player player1;
     private Player player2;
+
     private ArrayList<Settlement> settlementList;
+  
     public GameState(){
         gameboard = new Grid(200);
         player1 = new Player();
         player2 = new Player();
+
         settlementList = new ArrayList<Settlement>();
     }
 
@@ -49,8 +50,16 @@ public class GameState {
         hex.addTotoro();
     }
 
-    public ArrayList<Settlement> getSettlementList() { return settlementList; }
+    public ArrayList<Settlement> getSettlementList() { 
+        return settlementList; 
+    }
 
-    public Hex getHex(Coordinate coordinate) { return gameboard.getHexFromCoordinate(coordinate); }
+    public Hex getHex(Coordinate coordinate) { 
+        return gameboard.getHexFromCoordinate(coordinate); 
+    }
+
+    public Grid getGameboard() {
+        return gameboard;
+    }
 
 }

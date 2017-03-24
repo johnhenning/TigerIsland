@@ -1,9 +1,7 @@
 package GameInteractionModule.Rules;
-
 import GameStateModule.Hex;
 import GameStateModule.Player;
 import GameStateModule.Settlement;
-
 import java.util.ArrayList;
 
 /**
@@ -42,4 +40,5 @@ public class TotoroBuildRules extends BuildRules {
         return bigSettlements;
 
     }
+
 }

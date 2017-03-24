@@ -28,23 +28,35 @@ public class Hex {
         return coordinate.getY();
     }
 
-    public void setLevel(int level) { this.level = level; }
+
+    public void setLevel(int level) { 
+      this.level = level; 
+    }
 
     public TerrainType getTerrain() {
         return terrain;
     }
 
-    public int getLevel() {return level; }
+    public int getLevel() {
+        return level; 
+    }
+
 
     public int getTileIndex() {
         return tileIndex;
     }
 
-    public int getMeepleCount() { return MeepleCount; }
+    public int getMeepleCount() { 
+        return MeepleCount; 
+    }
 
-    public boolean hasTotoro() { return Totoro; }
+    public boolean hasTotoro() { 
+        return Totoro; 
+    }
 
-    public boolean hasTiger() { return Tiger; }
+    public boolean hasTiger() { 
+        return Tiger; 
+    }
 
     public void setTileIndex(int tileIndex) {
         this.tileIndex = tileIndex;

@@ -1,5 +1,6 @@
 package GameInteractionModule.Rules;
 import GameStateModule.Hex;
+import GameStateModule.TerrainType;
 import GameStateModule.Tile;
 
 /**
@@ -12,8 +13,6 @@ public class TilePlacementRules extends Rules {
                 return false;
             }
         }
-        return true;
-    }
 
 
     public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
@@ -47,6 +46,30 @@ public class TilePlacementRules extends Rules {
             }
         }
 
+        return false;
+    }
+
+
+    public boolean IsValidTile(Tile tile) {
+        if (HasVolcano(tile) && HexesAreValid(tile)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean HexesAreValid(Tile tile) {
+        return Rules.HexesAreAdjacent(tile.getHexes().get(0), tile.getHexes().get(1))
+                && Rules.HexesAreAdjacent(tile.getHexes().get(0), tile.getHexes().get(2))
+                && Rules.HexesAreAdjacent(tile.getHexes().get(1),tile.getHexes().get(2));
+    }
+
+
+    private static boolean HasVolcano(Tile tile) {
+        for (Hex hex : tile.getHexes()) {
+            if ( hex.getTerrain() == TerrainType.VOLCANO ) {
+                return true;
+            }
+        }
         return false;
     }
 
