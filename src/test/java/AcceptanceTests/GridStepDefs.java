@@ -4,7 +4,6 @@ package AcceptanceTests;
  */
 
 
-import GameInteractionModule.Rules.Rules;
 import GameStateModule.*;
 
 import cucumber.api.PendingException;
@@ -24,7 +23,7 @@ public class GridStepDefs {
     public void the_game_just_began() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         gameBoard = new Grid(200);
-        if(!gameBoard.GridEmpty())
+        if(!gameBoard.gridEmpty())
             fail("gameboard isn't empty");
         throw new PendingException();
     }
@@ -44,7 +43,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
-        gameBoard.PlaceTile(tile);
+        gameBoard.placeTile(tile);
 
         // Write code here that turns the phrase above into concrete actions
         throw new PendingException();
@@ -54,7 +53,7 @@ public class GridStepDefs {
     public void the_upper_Terrain_Hex_tile_becomes_the_origin_of_the_Tile_Grid() throws Throwable {
 
         //we are defining the origin of the tile grid to be the center of the array [max_size/2][max_size/2]
-        if(gameBoard.HexEmpty(100,100) || gameBoard.HexEmpty(101,101) || gameBoard.HexEmpty(100,101)) {
+        if(gameBoard.hexEmpty(100,100) || gameBoard.hexEmpty(101,101) || gameBoard.hexEmpty(100,101)) {
             fail("hexes are empty");
         }
     }
@@ -73,7 +72,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
-        gameBoard.PlaceTile(tile);
+        gameBoard.placeTile(tile);
 
     }
 
@@ -90,14 +89,14 @@ public class GridStepDefs {
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
-        gameBoard.PlaceTile(tile);
+        gameBoard.placeTile(tile);
     }
 
     @Then("^The new tile is saved at the coordinates at which it is placed$")
     public void the_new_tile_is_saved_at_the_coordinates_at_which_it_is_placed() throws Throwable {
 
         //TODO: write check tile function
-        if(gameBoard.HexEmpty(101,100) || gameBoard.HexEmpty(101,99) || gameBoard.HexEmpty(102,99))
+        if(gameBoard.hexEmpty(101,100) || gameBoard.hexEmpty(101,99) || gameBoard.hexEmpty(102,99))
             fail("hexes weren't saved");
     }
 
@@ -116,7 +115,7 @@ public class GridStepDefs {
 
     @Given("^there is a valid location to level a tile$")
     public void there_is_a_valid_location_to_level_a_tile() throws Throwable {
-        gameboard = new Grid(200);
+        gameBoard = new Grid(200);
         
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
@@ -129,7 +128,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
-        gameBoard.PlaceTile(tile);
+        gameBoard.placeTile(tile);
   
         
         coordinates = new ArrayList<Coordinate>();
@@ -143,7 +142,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.GRASSLAND);
 
         tile = new Tile(coordinates, terrains);
-        gameBoard.PlaceTile(tile);
+        gameBoard.placeTile(tile);
 
 
     }
@@ -162,7 +161,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.JUNGLE);
 
         Tile tile = new Tile(coordinates, terrains);
-        gameBoard.PlaceTile(tile);   
+        gameBoard.placeTile(tile);
 
     }
 
