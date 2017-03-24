@@ -1,5 +1,4 @@
 package GameInteractionModule.Rules;
-
 import GameStateModule.Hex;
 import GameStateModule.TerrainType;
 import GameStateModule.Tile;
@@ -8,29 +7,12 @@ import GameStateModule.Tile;
  * Created by johnhenning on 3/19/17.
  */
 public class TilePlacementRules extends Rules {
-
-
-
-
-    public boolean CheckHexesSpanMultipleTiles(Tile tile, Hex[][] gameboard) {
-        Hex hex0 = tile.getHexes().get(0);
-        Hex hex1 = tile.getHexes().get(1);
-        Hex hex2 = tile.getHexes().get(2);
-
-        Hex lower_hex0 = gameboard[hex0.getx()][hex0.gety()];
-        Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
-        Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
-
-        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) return false;
-
-        int tileIndex0 = lower_hex0.getTileIndex();
-        int tileIndex1 = lower_hex1.getTileIndex();
-        int tileIndex2 = lower_hex2.getTileIndex();
-
-        if (tileIndex0 == tileIndex1 && tileIndex1 == tileIndex2) return false;
-
-        return true;
-    }
+    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard){ //changed to public so I can use in tests
+        for (Hex hex : tile.getHexes()) {
+            if (gameboard[hex.getx()][hex.gety()] != null) {
+                return false;
+            }
+        }
 
 
     public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
@@ -67,6 +49,7 @@ public class TilePlacementRules extends Rules {
         return false;
     }
 
+
     public boolean IsValidTile(Tile tile) {
         if (HasVolcano(tile) && HexesAreValid(tile)) {
             return true;
@@ -89,7 +72,6 @@ public class TilePlacementRules extends Rules {
         }
         return false;
     }
-
 
 
 }

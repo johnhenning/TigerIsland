@@ -8,6 +8,7 @@ public class Tile {
     private ArrayList<Hex> hexes;
     private int level;
 
+
     public Tile(ArrayList<Coordinate> coordinates, ArrayList<TerrainType> terrains) {
         assert coordinates.size() == terrains.size();
         hexes = new ArrayList<Hex>(); //interesting to note I think this was the problem
@@ -22,7 +23,12 @@ public class Tile {
     public int getLevel() {
         return level;
     }
+
+
     public void setLevel(int level) {
+        for(Hex h: hexes){
+            h.setLevel(level);
+        }
         this.level = level;
     }
 

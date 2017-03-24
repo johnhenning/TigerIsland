@@ -24,4 +24,13 @@ public class Settlement {
         settlementCoordinates.addAll(coordinates);    
     }
 
+
+    public Player getOwner(){ 
+        return owner;
+    }
+
+    public int getSize(){
+        return settlementCoordinates.size();
+    }
+
 }

@@ -3,14 +3,15 @@ package AcceptanceTests;
  * Created by johnhenning on 3/15/17.
  */
 
-import GameStateModule.Coordinate;
-import GameStateModule.Grid;
-import GameStateModule.TerrainType;
-import GameStateModule.Tile;
+
+import GameInteractionModule.Rules.Rules;
+import GameStateModule.*;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
+
 
 import java.util.ArrayList;
 
@@ -53,30 +54,43 @@ public class GridStepDefs {
     public void the_upper_Terrain_Hex_tile_becomes_the_origin_of_the_Tile_Grid() throws Throwable {
 
         //we are defining the origin of the tile grid to be the center of the array [max_size/2][max_size/2]
-        if(gameBoard.HexEmpty(100,100) || gameBoard.HexEmpty(101,101)
-                                                || gameBoard.HexEmpty(100,101))
+        if(gameBoard.HexEmpty(100,100) || gameBoard.HexEmpty(101,101) || gameBoard.HexEmpty(100,101)) {
             fail("hexes are empty");
-
-
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        }
     }
 
     @Given("^there are tiles placed on the board$")
     public void there_are_tiles_placed_on_the_board() throws Throwable {
+        gameBoard = new Grid(200);
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(100,100));
+        coordinates.add(new Coordinate(101,101));
+        coordinates.add(new Coordinate(100,101));
 
-        if(gameBoard.GridEmpty())
-            fail("no tiles on board");
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
 
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Tile tile = new Tile(coordinates, terrains);
+        gameBoard.PlaceTile(tile);
+
     }
 
     @When("^the player places a tile adjacent to other tiles$")
     public void the_player_places_a_tile_adjacent_to_other_tiles() throws Throwable {
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(101,100));
+        coordinates.add(new Coordinate(101,99));
+        coordinates.add(new Coordinate(102,99));
 
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
+
+        Tile tile = new Tile(coordinates, terrains);
+        gameBoard.PlaceTile(tile);
     }
 
     @Then("^The new tile is saved at the coordinates at which it is placed$")
@@ -102,27 +116,71 @@ public class GridStepDefs {
 
     @Given("^there is a valid location to level a tile$")
     public void there_is_a_valid_location_to_level_a_tile() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+        gameboard = new Grid(200);
+        
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(100,100));
+        coordinates.add(new Coordinate(101,101));
+        coordinates.add(new Coordinate(100,101));
 
-        throw new PendingException();
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
+
+        Tile tile = new Tile(coordinates, terrains);
+        gameBoard.PlaceTile(tile);
+  
+        
+        coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(101,100));
+        coordinates.add(new Coordinate(101,99));
+        coordinates.add(new Coordinate(102,99));
+
+        terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.JUNGLE);
+        terrains.add(TerrainType.GRASSLAND);
+
+        tile = new Tile(coordinates, terrains);
+        gameBoard.PlaceTile(tile);
+
+
     }
 
     @When("^the player levels a tile at certain coordinates$")
     public void the_player_levels_a_tile_at_certain_coordinates() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(100,100));
+        coordinates.add(new Coordinate(101,100));
+        coordinates.add(new Coordinate(101,101));
+
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.JUNGLE);
+
+        Tile tile = new Tile(coordinates, terrains);
+        gameBoard.PlaceTile(tile);   
+
     }
 
     @Then("^the original hexes at the coordinates are removed$")
     public void the_original_hexes_at_the_coordinates_are_removed() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        //check lvl >1
+        Hex hex = gameBoard.getHexFromCoordinate(new Coordinate(100,100));
+        int level = hex.getLevel();
+        if(level == 1){
+            fail("Level not incremented");
+        }
+
     }
 
     @Then("^the new tile is saved at those coordinates$")
     public void the_new_tile_is_saved_at_those_coordinates() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+
     }
 
 
