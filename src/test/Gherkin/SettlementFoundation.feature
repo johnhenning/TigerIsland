@@ -24,8 +24,6 @@ Feature: Settlement Foundation
 
   Scenario: Found Settlement on a Volcano Hex
     Given There is a Volcano Hex
-    When the Player tries to found a settlement on that hex
-    Then The Player cannot found the settlement
-    And The Player is prompted to choose a valid location
-
+    When the Player tries to found a settlement on the hex
+    Then The Player cannot found the settlement on that hex
 

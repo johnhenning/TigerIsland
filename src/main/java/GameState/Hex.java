@@ -7,6 +7,7 @@ public class Hex {
     private final Coordinate coordinate;
     private final TerrainType terrain;
     private int tileIndex;
+    private int level;
     private int MeepleCount;
     private boolean Totoro;
     private boolean Tiger;
@@ -27,9 +28,13 @@ public class Hex {
         return coordinate.getY();
     }
 
+    public void setLevel(int level) { this.level = level; }
+
     public TerrainType getTerrain() {
         return terrain;
     }
+
+    public int getLevel() {return level; }
 
     public int getTileIndex() {
         return tileIndex;

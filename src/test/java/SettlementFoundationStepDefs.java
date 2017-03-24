@@ -39,7 +39,8 @@ public class SettlementFoundationStepDefs {
 
     @Given("^the tile is on level (\\d+)$")
     public void the_tile_is_on_level(int arg1) throws Throwable {
-        assert 1 == tile.getLevel();
+        Hex hex = game.getHex(new Coordinate(100,100));
+        assert 1 == hex.getLevel();
     }
 
     @When("^the Player tries to found a settlement on that hex$")
@@ -112,8 +113,32 @@ public class SettlementFoundationStepDefs {
 
     @Given("^There is a Volcano Hex$")
     public void there_is_a_Volcano_Hex() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        int[][] coord = new int[3][2];
+
+        coord[0][0] = 100;
+        coord[0][1] = 100;
+        coord[1][0] = 100 + 1;
+        coord[1][1] = 100 + 1;
+        coord[2][0] = 100;
+        coord[2][1] = 100 + 1;
+        TerrainType[] terrains = new TerrainType[3];
+        terrains[0] = TerrainType.VOLCANO;
+        terrains[1] = TerrainType.GRASSLAND;
+        terrains[2] = TerrainType.LAKE;
+
+        tile = new Tile(coord,terrains);
+
+        game.placeTile(tile);
+    }
+
+    @When("^the Player tries to found a settlement on the hex$")
+    public void the_Player_tries_to_found_a_settlement_on_the_hex() throws Throwable {
+        settlementFounded = game.foundSettlement(new Coordinate(100,100),new Player());
+    }
+
+    @Then("^The Player cannot found the settlement on that hex$")
+    public void the_Player_cannot_found_the_settlement_on_that_hex() throws Throwable {
+        assert !settlementFounded;
     }
 
 }

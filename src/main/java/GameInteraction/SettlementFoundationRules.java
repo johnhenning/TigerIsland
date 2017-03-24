@@ -11,13 +11,11 @@ import java.util.ArrayList;
  */
 
 public class SettlementFoundationRules extends BuildRules{
-    public boolean hexIsLevelOne(Hex hex, Hex[][] gameboard, ArrayList<Tile> placedTiles ) {
-        Hex newHex = gameboard[hex.getx()][hex.gety()];
-        int level = placedTiles.get(newHex.getTileIndex()).getLevel();
-        return level == 1;
+    public static boolean hexIsLevelOne(Hex hex) {
+        return hex.getLevel() == 1;
     }
 
-    public boolean validFoundation(Hex hex, Hex[][] gameboard, ArrayList<Tile> placedTiles){
-        return hexIsLevelOne(hex, gameboard, placedTiles) && isUnnocupied(hex) && isNotVolcano(hex);
+    public static boolean isValidFoundation(Hex hex){
+        return hexIsLevelOne(hex) && isUnnocupied(hex) && isNotVolcano(hex);
     }
 }

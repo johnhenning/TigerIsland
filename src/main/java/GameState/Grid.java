@@ -19,6 +19,7 @@ public class Grid {
 
     public boolean PlaceTile(Tile tile) {
         placedTiles.add(tile);
+        tile.setLevel(1);
         for (Hex hex : tile.getHexes()) {
             updateHexTileIndex(hex);
             PlaceHex(hex);
@@ -49,9 +50,11 @@ public class Grid {
 
 
 
-    public int getPlacedTiles() {
+    public int getNumberOfPlacedTiles() {
         return placedTiles.size();
     }
+
+    public ArrayList<Tile> getPlacedTiles(){ return placedTiles; }
 
     public boolean HexEmpty(int x, int y){ //TODO: OLD NEEDS TO BE REMOVED
         if (gameboard[x][y] == null)

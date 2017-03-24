@@ -23,7 +23,7 @@ public class GameState {
         //TODO: Work on Player Rules
         //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
-        if(SettlementFoundationRules.isUnnocupied(h)){
+        if(SettlementFoundationRules.isValidFoundation(h)){
             player.removeMeeple();
             placeMeeple(coordinate);
             Settlement settlement = new Settlement(coordinate,player);
