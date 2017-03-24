@@ -4,10 +4,7 @@
  */
 
 import GameInteraction.Rules;
-import GameState.Grid;
-import GameState.Hex;
-import GameState.TerrainType;
-import GameState.Tile;
+import GameState.*;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
@@ -175,10 +172,10 @@ public class GridStepDefs {
     public void the_player_levels_a_tile_at_certain_coordinates() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         int[][] coordLevel = new int[3][2];
-        coordLevel[0][0] = 100+1;
+        coordLevel[0][0] = 100;
         coordLevel[0][1] = 100;
-        coordLevel[1][0] = 100 + 2;
-        coordLevel[1][1] = 100 + 1;
+        coordLevel[1][0] = 100 +1;
+        coordLevel[1][1] = 100;
         coordLevel[2][0] = 100+1;
         coordLevel[2][1] = 100+1;
 
@@ -195,11 +192,11 @@ public class GridStepDefs {
     public void the_original_hexes_at_the_coordinates_are_removed() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
         //check lvl >1
-        ArrayList<Tile> tiles = gameBoard.getListOfTiles();
-       int level = tiles.get(tiles.size()-1).getLevel();
-       if(level == 1){
-           fail("Level not incremented");
-       }
+        Hex hex = gameBoard.getHexFromCoordinate(new Coordinate(100,100));
+        int level = hex.getLevel();
+        if(level == 1){
+            fail("Level not incremented");
+        }
 
     }
 
@@ -209,10 +206,6 @@ public class GridStepDefs {
         ArrayList<Tile> leveledTile = gameBoard.getListOfTiles();
        // leveledTile.get(leveledTile.size()-1).getHexes();
 
-
-
-
-        throw new PendingException();
 
     }
 
