@@ -19,16 +19,18 @@ public class GameState {
         settlementList = new ArrayList<Settlement>();
     }
 
-    public void foundSettlement(Coordinate coordinate, Player player){
+    public boolean foundSettlement(Coordinate coordinate, Player player) throws Exception{
         //TODO: Work on Player Rules
         //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
         if(SettlementFoundationRules.isUnnocupied(h)){
             player.removeMeeple();
-            h.addMeeple(1);
+            placeMeeple(coordinate);
             Settlement settlement = new Settlement(coordinate,player);
             settlementList.add(settlement);
+            return true;
         }
+        return false;
     }
 
     public void placeTile(Tile tile) {
@@ -50,5 +52,9 @@ public class GameState {
     public Grid getGameboard(){
         return gameboard;
     }
+
+    public ArrayList<Settlement> getSettlementList() { return settlementList; }
+
+    public Hex getHex(Coordinate coordinate) { return gameboard.getHexFromCoordinate(coordinate); }
 
 }

@@ -8,7 +8,6 @@ public class Hex {
     private final TerrainType terrain;
     private int tileIndex;
     private int MeepleCount;
-    private int level;
     private boolean Totoro;
     private boolean Tiger;
 
@@ -17,6 +16,7 @@ public class Hex {
         this.terrain = terrain;
         this.MeepleCount = 0;
         this.Totoro = false;
+        this.Tiger = false;
     }
 
     public int getx() {
@@ -36,8 +36,6 @@ public class Hex {
     }
 
     public int getMeepleCount() { return MeepleCount; }
-
-    public int getLevel() { return level; }
 
     public boolean hasTotoro() { return Totoro; }
 
