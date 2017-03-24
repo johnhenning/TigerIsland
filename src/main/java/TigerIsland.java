@@ -3,6 +3,8 @@
  */
 public class TigerIsland {
     public static void main(String[] args) {
+
+    /*
         Game game = new Game();
         AI ai = new AI();
         Server server = new Server();
@@ -20,6 +22,9 @@ public class TigerIsland {
             game.makeMove(firstPlayer.getMessage());
             game.makeMove(secondPlayer.getMessage());
 
+
         }
+    */
+
     }
 }
