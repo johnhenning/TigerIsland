@@ -1,4 +1,4 @@
-package GameInteraction;
+package GameInteractionModule;
 
 /**
  * Created by johnhenning on 3/21/17.

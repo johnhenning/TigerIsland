@@ -1,7 +1,7 @@
-package GameState; /**
+/**
  * Created by johnhenning on 3/15/17.
  */
-import GameInteraction.TilePlacementRules;
+package GameStateModule;
 
 import java.util.ArrayList;
 
@@ -38,16 +38,6 @@ public class Grid {
     public boolean GridEmpty(){
         return placedTiles.isEmpty();
     }
-
-    public void LevelTile(Tile tile) {
-        int lowerLevel = TilePlacementRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
-        if (lowerLevel == -1) throw new AssertionError();
-        tile.setLevel(lowerLevel + 1);
-        for (Hex hex : tile.getHexes()) {
-            gameboard[hex.getx()][hex.gety()] = hex;
-        }
-    }
-
 
 
     public int getPlacedTiles() {

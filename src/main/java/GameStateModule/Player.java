@@ -1,4 +1,4 @@
-package GameState;
+package GameStateModule;
 
 /**
  * Created by johnhenning on 3/19/17.
@@ -24,6 +24,10 @@ public class Player {
 
     public int getTotoroCount() {
         return Totoro;
+    }
+
+    public void removeMeeple(int amount) {
+        Meeples -= amount;
     }
 
     public void removeMeeple() {

@@ -1,4 +1,4 @@
-package GameState;
+package GameStateModule;
 
 /**
  * Created by johnhenning on 3/15/17.
@@ -44,6 +44,7 @@ public class Hex {
     public void addTotoro() {
         Totoro = true;
     }
+
 
 }
 
