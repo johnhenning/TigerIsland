@@ -24,4 +24,8 @@ public class TotoroBuildRules extends BuildRules {
     {
         return true;
     }
+
+    public boolean CheckSettlementNotContainTotoro(ArrayList<Settlement> settlementList){
+        return true; // not done
+    }
 }

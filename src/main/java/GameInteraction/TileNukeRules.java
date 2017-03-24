@@ -32,7 +32,7 @@ public class TileNukeRules extends TilePlacementRules {
         }
     }
 
-    public boolean CheckHexesSpanMultipleTiles(Tile tile, Hex[][] gameboard) {
+    public static boolean CheckHexesSpanMultipleTiles(Tile tile, Hex[][] gameboard) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
         Hex hex2 = tile.getHexes().get(2);
@@ -52,7 +52,7 @@ public class TileNukeRules extends TilePlacementRules {
         return true;
     }
 
-    public boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
+    public static boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
         for (Hex hex : tile.getHexes()) {
             if (hex.getTerrain() == TerrainType.VOLCANO) {
                 if (gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) {
@@ -63,8 +63,16 @@ public class TileNukeRules extends TilePlacementRules {
         return false;
     }
 
-    public boolean CheckHexNotContainTotoro(Hex hex){
-        if(hex.hasTotoro()==true){
+    public static boolean CheckTileNotContainTotoro(Tile tile, Hex[][]gameboard){
+        Hex hex0 = tile.getHexes().get(0);
+        Hex hex1 = tile.getHexes().get(1);
+        Hex hex2 = tile.getHexes().get(2);
+
+        Hex lower_hex0 = gameboard[hex0.getx()][hex0.gety()];
+        Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
+        Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
+
+        if(lower_hex0.hasTotoro() || lower_hex1.hasTotoro() || lower_hex2.hasTotoro()){
             return false;
         }
         else{
