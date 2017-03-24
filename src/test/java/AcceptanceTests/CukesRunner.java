@@ -1,4 +1,4 @@
-/**
+package AcceptanceTests; /**
  * Created by johnhenning on 3/15/17.
  */
 import cucumber.api.junit.*;

@@ -1,6 +1,6 @@
-package GameState;
+package GameStateModule;
 
-import GameInteraction.SettlementFoundationRules;
+import GameInteractionModule.Rules.SettlementFoundationRules;
 
 import java.util.ArrayList;
 

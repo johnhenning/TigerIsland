@@ -1,4 +1,4 @@
-package GameState;
+package GameStateModule;
 
 /**
  * Created by johnhenning on 3/13/17.

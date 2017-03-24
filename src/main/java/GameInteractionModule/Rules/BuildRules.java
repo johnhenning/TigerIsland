@@ -1,8 +1,8 @@
-package GameInteraction;
+package GameInteractionModule.Rules;
 
-import GameState.Hex;
-import GameState.TerrainType;
-import GameState.Player;
+import GameStateModule.Hex;
+import GameStateModule.TerrainType;
+import GameStateModule.Player;
 
 
 /**

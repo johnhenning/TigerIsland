@@ -1,4 +1,4 @@
-package GameInteraction;
+package GameInteractionModule.Rules;
 
 /**
  * Created by johnhenning on 3/22/17.

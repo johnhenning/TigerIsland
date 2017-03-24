@@ -1,10 +1,6 @@
-package GameInteraction;
-import GameInteraction.Rules;
-import GameState.Hex;
-import GameState.TerrainType;
-import GameState.Tile;
-
-import java.util.ArrayList;
+package GameInteractionModule.Rules;
+import GameStateModule.Hex;
+import GameStateModule.Tile;
 
 /**
  * Created by johnhenning on 3/19/17.

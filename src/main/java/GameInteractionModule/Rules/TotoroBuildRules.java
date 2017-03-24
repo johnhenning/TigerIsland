@@ -1,12 +1,10 @@
-package GameInteraction;
+package GameInteractionModule.Rules;
 
-import GameState.Hex;
-import GameState.Player;
-import GameState.Settlement;
+import GameStateModule.Hex;
+import GameStateModule.Player;
+import GameStateModule.Settlement;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Created by johnhenning on 3/22/17.

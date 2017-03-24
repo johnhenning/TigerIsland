@@ -1,10 +1,10 @@
-
+package AcceptanceTests;
 /**
  * Created by johnhenning on 3/15/17.
  */
 
-import GameInteraction.Rules;
-import GameState.*;
+import GameInteractionModule.Rules.Rules;
+import GameStateModule.*;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;

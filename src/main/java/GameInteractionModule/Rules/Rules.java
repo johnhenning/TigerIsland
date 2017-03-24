@@ -1,7 +1,7 @@
-package GameInteraction;
+package GameInteractionModule.Rules;
 
-import GameState.Grid;
-import GameState.Hex;
+import GameStateModule.Grid;
+import GameStateModule.Hex;
 
 /**
  * Created by johnhenning on 3/19/17.

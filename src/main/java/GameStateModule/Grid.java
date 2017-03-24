@@ -1,9 +1,7 @@
-package GameState; /**
+package GameStateModule; /**
  * Created by johnhenning on 3/15/17.
  */
-import GameInteraction.Rules;
-import GameInteraction.TileNukeRules;
-import GameInteraction.TilePlacementRules;
+import GameInteractionModule.Rules.TileNukeRules;
 
 import java.util.ArrayList;
 

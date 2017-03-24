@@ -1,5 +1,7 @@
-import GameInteraction.*;
-import GameState.*;
+package AcceptanceTests;
+
+import GameInteractionModule.Rules.SettlementFoundationRules;
+import GameStateModule.*;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;

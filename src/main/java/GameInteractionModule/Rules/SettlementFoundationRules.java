@@ -1,10 +1,6 @@
-package GameInteraction;
+package GameInteractionModule.Rules;
 
-import GameState.Coordinate;
-import GameState.Hex;
-import GameState.Tile;
-
-import java.util.ArrayList;
+import GameStateModule.Hex;
 
 /**
  * Created by johnhenning on 3/22/17.
