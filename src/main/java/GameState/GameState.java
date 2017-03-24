@@ -49,10 +49,6 @@ public class GameState {
         hex.addTotoro();
     }
 
-    public Grid getGameboard(){
-        return gameboard;
-    }
-
     public ArrayList<Settlement> getSettlementList() { return settlementList; }
 
     public Hex getHex(Coordinate coordinate) { return gameboard.getHexFromCoordinate(coordinate); }
