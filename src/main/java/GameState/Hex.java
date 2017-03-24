@@ -8,7 +8,9 @@ public class Hex {
     private final TerrainType terrain;
     private int tileIndex;
     private int MeepleCount;
+    private int level;
     private boolean Totoro;
+    private boolean Tiger;
 
     public Hex(int x, int y, TerrainType terrain) {
         this.coordinate = new Coordinate(x,y);
@@ -33,7 +35,13 @@ public class Hex {
         return tileIndex;
     }
 
-    public int getMeepleCount() {return MeepleCount; }
+    public int getMeepleCount() { return MeepleCount; }
+
+    public int getLevel() { return level; }
+
+    public boolean hasTotoro() { return Totoro; }
+
+    public boolean hasTiger() { return Tiger; }
 
     public void setTileIndex(int tileIndex) {
         this.tileIndex = tileIndex;

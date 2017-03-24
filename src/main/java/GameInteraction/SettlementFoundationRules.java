@@ -7,8 +7,7 @@ import GameState.Hex;
  */
 
 public class SettlementFoundationRules extends BuildRules{
-
-    public static boolean isUnnocupied(Hex hex){
-        return hex.getMeepleCount()==0;
+    public boolean hexIsLevelOne(Hex hex) {
+        return hex.getLevel() == 1;
     }
 }

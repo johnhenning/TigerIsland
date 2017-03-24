@@ -74,8 +74,6 @@ public class TilePlacementRules extends Rules {
 
     public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
 
-
-
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
             int y = hex.gety();
