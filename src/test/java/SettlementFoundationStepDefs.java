@@ -7,6 +7,10 @@ import cucumber.api.java.en.Then;
 /**
  * Created by jslocke on 3/23/17.
  */
+
+/* TODO: Why can't we use the same language in test?
+ * Is this duplication of tests? How do we avoid it
+ */
 public class SettlementFoundationStepDefs {
     GameState game = new GameState();
     Tile tile;
@@ -79,21 +83,25 @@ public class SettlementFoundationStepDefs {
         game.foundSettlement(new Coordinate(101,101),new Player());
         assert !SettlementFoundationRules.isUnnocupied(h);
     }
+    @When("^the player attempts to found a settlement at that location$")
+    public void the_player_attempts_to_found_a_settlement_at_that_location() throws Throwable {
+        settlementFounded = game.foundSettlement(new Coordinate(101,101),new Player());
+    }
 
-
-
+    @Then("^the settlment is not founded$")
+    public void the_settlment_is_not_founded() throws Throwable {
+        assert !settlementFounded;
+    }
 
 
     @Then("^The Player cannot found the settlement$")
     public void the_Player_cannot_found_the_settlement() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-
+        assert !settlementFounded;
     }
 
     @Then("^The Player is prompted to choose a valid location$")
     public void the_Player_is_prompted_to_choose_a_valid_location() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        System.out.println("Please choose a valid location");
     }
 
     @Given("^There is an empty hex on a level greater than (\\d+)$")

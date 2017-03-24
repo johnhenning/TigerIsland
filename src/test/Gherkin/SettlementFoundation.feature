@@ -12,8 +12,8 @@ Feature: Settlement Foundation
 
   Scenario: Found Settlement on an occupied hex
     Given There is a hex occupied by another game piece
-    When The Player tries to found a settlement on that hex
-    Then The Player cannot found the settlement
+    When the player attempts to found a settlement at that location
+    Then the settlment is not founded
     And The Player is prompted to choose a valid location
 
   Scenario: Found Settlement above level 1
