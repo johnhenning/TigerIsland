@@ -6,6 +6,9 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
+
+import java.util.ArrayList;
+
 /**
  * Created by jslocke on 3/23/17.
  */
@@ -22,19 +25,17 @@ public class SettlementFoundationStepDefs {
         //TODO: find better way of dealing with coordiantes
         int[][] coord = new int[3][2];
 
-        coord[0][0] = 100;
-        coord[0][1] = 100;
-        coord[1][0] = 100 + 1;
-        coord[1][1] = 100 + 1;
-        coord[2][0] = 100;
-        coord[2][1] = 100 + 1;
-        TerrainType[] terrains = new TerrainType[3];
-        terrains[0] = TerrainType.VOLCANO;
-        terrains[1] = TerrainType.GRASSLAND;
-        terrains[2] = TerrainType.LAKE;
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(100,100));
+        coordinates.add(new Coordinate(101,101));
+        coordinates.add(new Coordinate(100,101));
 
-        tile = new Tile(coord,terrains);
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
 
+        Tile tile = new Tile(coordinates, terrains);
         game.placeTile(tile);
 
     }
@@ -67,18 +68,17 @@ public class SettlementFoundationStepDefs {
     public void there_is_a_hex_occupied_by_another_game_piece() throws Throwable {
         int[][] coord = new int[3][2];
 
-        coord[0][0] = 100;
-        coord[0][1] = 100;
-        coord[1][0] = 100 + 1;
-        coord[1][1] = 100 + 1;
-        coord[2][0] = 100;
-        coord[2][1] = 100 + 1;
-        TerrainType[] terrains = new TerrainType[3];
-        terrains[0] = TerrainType.VOLCANO;
-        terrains[1] = TerrainType.GRASSLAND;
-        terrains[2] = TerrainType.LAKE;
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(100,100));
+        coordinates.add(new Coordinate(101,101));
+        coordinates.add(new Coordinate(100,101));
 
-        tile = new Tile(coord,terrains);
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
+
+        Tile tile = new Tile(coordinates, terrains);
 
         game.placeTile(tile);
         Coordinate c = new Coordinate(101,101);
@@ -117,19 +117,17 @@ public class SettlementFoundationStepDefs {
     public void there_is_a_Volcano_Hex() throws Throwable {
         int[][] coord = new int[3][2];
 
-        coord[0][0] = 100;
-        coord[0][1] = 100;
-        coord[1][0] = 100 + 1;
-        coord[1][1] = 100 + 1;
-        coord[2][0] = 100;
-        coord[2][1] = 100 + 1;
-        TerrainType[] terrains = new TerrainType[3];
-        terrains[0] = TerrainType.VOLCANO;
-        terrains[1] = TerrainType.GRASSLAND;
-        terrains[2] = TerrainType.LAKE;
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates.add(new Coordinate(100,100));
+        coordinates.add(new Coordinate(101,101));
+        coordinates.add(new Coordinate(100,101));
 
-        tile = new Tile(coord,terrains);
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
 
+        Tile tile = new Tile(coordinates, terrains);
         game.placeTile(tile);
     }
 

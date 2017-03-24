@@ -7,13 +7,14 @@ import GameStateModule.Tile;
  * Created by johnhenning on 3/19/17.
  */
 public class TilePlacementRules extends Rules {
-    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard){ //changed to public so I can use in tests
+    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard) { //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
             if (gameboard[hex.getx()][hex.gety()] != null) {
                 return false;
             }
         }
-
+        return true;
+    }
 
     public boolean CheckForAdjacentHex(Tile tile, Hex[][] gameboard){
 

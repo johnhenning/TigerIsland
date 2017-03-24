@@ -35,7 +35,7 @@ public class GameState {
     }
 
     public void placeTile(Tile tile) {
-        gameboard.PlaceTile(tile);
+        gameboard.placeTile(tile);
     }
     
     public void placeMeeple(Coordinate coordinate) {

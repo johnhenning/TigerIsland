@@ -39,6 +39,6 @@ public class GridTests {
     @Test
     public void TilePlacement() throws Exception {
         grid = new Grid(200);
-        grid.PlaceTile(tile);
+        grid.placeTile(tile);
     }
 }

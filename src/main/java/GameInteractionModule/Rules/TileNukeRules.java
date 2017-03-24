@@ -50,7 +50,7 @@ public class TileNukeRules extends TilePlacementRules {
         return true;
     }
 
-    public boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
+    public static boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
 
         for (Hex hex : tile.getHexes()) {
             if (hex.getTerrain() == TerrainType.VOLCANO) {
