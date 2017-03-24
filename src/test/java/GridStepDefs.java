@@ -5,6 +5,7 @@
 
 import GameInteraction.Rules;
 import GameState.Grid;
+import GameState.Hex;
 import GameState.TerrainType;
 import GameState.Tile;
 import cucumber.api.PendingException;
@@ -12,6 +13,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 
+
+import java.util.ArrayList;
 
 import static junit.framework.TestCase.fail;
 public class GridStepDefs {
@@ -135,25 +138,82 @@ public class GridStepDefs {
 
     @Given("^there is a valid location to level a tile$")
     public void there_is_a_valid_location_to_level_a_tile() throws Throwable {
+        int[][] coord = new int[3][2];
+
+        coord[0][0] = 100;
+        coord[0][1] = 100;
+        coord[1][0] = 100 + 1;
+        coord[1][1] = 100 + 1;
+        coord[2][0] = 100;
+        coord[2][1] = 100 + 1;
+        TerrainType[] terrains = new TerrainType[3];
+        terrains[0] = TerrainType.VOLCANO;
+        terrains[1] = TerrainType.GRASSLAND;
+        terrains[2] = TerrainType.LAKE;
+
+        Tile tile = new Tile(coord, terrains);
+        gameBoard.PlaceTile(tile);
+
+        coord[0][0] = 100+1;
+        coord[0][1] = 100;
+        coord[1][0] = 100 + 2;
+        coord[1][1] = 100 + 1;
+        coord[2][0] = 100+2;
+        coord[2][1] = 100;
+
+        terrains[0] = TerrainType.VOLCANO;
+        terrains[1] = TerrainType.JUNGLE;
+        terrains[2] = TerrainType.GRASSLAND;
+
+        Tile tile2 = new Tile(coord, terrains);
+        //TODO:placed tile needs to have its rules associated with it
+        gameBoard.PlaceTile(tile2);
 
     }
 
     @When("^the player levels a tile at certain coordinates$")
     public void the_player_levels_a_tile_at_certain_coordinates() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        int[][] coordLevel = new int[3][2];
+        coordLevel[0][0] = 100+1;
+        coordLevel[0][1] = 100;
+        coordLevel[1][0] = 100 + 2;
+        coordLevel[1][1] = 100 + 1;
+        coordLevel[2][0] = 100+1;
+        coordLevel[2][1] = 100+1;
+
+        TerrainType[] terrainsLevel = new TerrainType[3];
+        terrainsLevel[0] = TerrainType.VOLCANO;
+        terrainsLevel[1] = TerrainType.LAKE;
+        terrainsLevel[2] = TerrainType.JUNGLE;
+
+        Tile tile3 = new Tile(coordLevel, terrainsLevel);
+        gameBoard.LevelTile(tile3);
     }
 
     @Then("^the original hexes at the coordinates are removed$")
     public void the_original_hexes_at_the_coordinates_are_removed() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        //check lvl >1
+        ArrayList<Tile> tiles = gameBoard.getListOfTiles();
+       int level = tiles.get(tiles.size()-1).getLevel();
+       if(level == 1){
+           fail("Level not incremented");
+       }
+
     }
 
     @Then("^the new tile is saved at those coordinates$")
     public void the_new_tile_is_saved_at_those_coordinates() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
+        ArrayList<Tile> leveledTile = gameBoard.getListOfTiles();
+       // leveledTile.get(leveledTile.size()-1).getHexes();
+
+
+
+
         throw new PendingException();
+
     }
 
 

@@ -2,6 +2,7 @@ package GameState; /**
  * Created by johnhenning on 3/15/17.
  */
 import GameInteraction.Rules;
+import GameInteraction.TileNukeRules;
 import GameInteraction.TilePlacementRules;
 
 import java.util.ArrayList;
@@ -40,15 +41,27 @@ public class Grid {
     }
 
     public void LevelTile(Tile tile) {
-        int lowerLevel = TilePlacementRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
+        int lowerLevel = TileNukeRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
         if (lowerLevel == -1) throw new AssertionError();
+        boolean MultipleTiles = TileNukeRules.CheckHexesSpanMultipleTiles(tile, gameboard);
+        if(MultipleTiles==false) throw new AssertionError();
+        boolean VolcanoLineUp = TileNukeRules.CheckVolcanoesLineUp(tile,gameboard);
+        if(VolcanoLineUp == false) throw new AssertionError();
+        boolean DoesNotHaveTotoro = TileNukeRules.CheckTileNotContainTotoro(tile, gameboard);
+        if(DoesNotHaveTotoro == false) throw new AssertionError();
+
         tile.setLevel(lowerLevel + 1);
+        placedTiles.add(tile);
+
         for (Hex hex : tile.getHexes()) {
-            gameboard[hex.getx()][hex.gety()] = hex;
+            updateHexTileIndex(hex);
+            PlaceHex(hex);
         }
     }
 
-
+    public ArrayList<Tile> getListOfTiles(){
+        return placedTiles;
+    }
 
     public int getNumberOfPlacedTiles() {
         return placedTiles.size();

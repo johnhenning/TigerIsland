@@ -16,14 +16,16 @@ Feature: Settlement Foundation
     Then the settlment is not founded
     And The Player is prompted to choose a valid location
 
+  Scenario: Found Settlement on a Volcano Hex
+    Given There is a Volcano Hex
+    When the Player tries to found a settlement on the hex
+    Then The Player cannot found the settlement on that hex
+
   Scenario: Found Settlement above level 1
     Given There is an empty hex on a level greater than 1
     When The Player tries to found a settlement on that hex
     Then The Player cannot found the settlement
     And The Player is prompted to choose a valid location
 
-  Scenario: Found Settlement on a Volcano Hex
-    Given There is a Volcano Hex
-    When the Player tries to found a settlement on the hex
-    Then The Player cannot found the settlement on that hex
+
 
