@@ -40,11 +40,11 @@ public class GameState {
         gameboard.placeTile(tile);
     }
 
-    public void levelTile(Tile tile) { gameboard.LevelTile(tile); }
+    public void levelTile(Tile tile) { gameboard.levelTile(tile); }
     
     public void placeMeeple(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
-        int tileIndex = hex.getTileIndex();
+        int tileIndex = hex.getTurnPlaced();
         int level = gameboard.getPlacedTile(tileIndex).getLevel();
         hex.addMeeple(level);
     }

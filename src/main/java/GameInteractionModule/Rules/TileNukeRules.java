@@ -19,9 +19,9 @@ public class TileNukeRules extends TilePlacementRules {
         Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
 
         if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) return -1;
-        int lowerLevel0 = placedTiles.get(lower_hex0.getTileIndex()).getLevel();
-        int lowerLevel1 = placedTiles.get(lower_hex1.getTileIndex()).getLevel();
-        int lowerLevel2 = placedTiles.get(lower_hex2.getTileIndex()).getLevel();
+        int lowerLevel0 = placedTiles.get(lower_hex0.getTurnPlaced()).getLevel();
+        int lowerLevel1 = placedTiles.get(lower_hex1.getTurnPlaced()).getLevel();
+        int lowerLevel2 = placedTiles.get(lower_hex2.getTurnPlaced()).getLevel();
 
         if (lowerLevel0 == lowerLevel1 && lowerLevel1 == lowerLevel2) {
             return lowerLevel0;
@@ -41,9 +41,9 @@ public class TileNukeRules extends TilePlacementRules {
 
         if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) return false;
 
-        int tileIndex0 = lower_hex0.getTileIndex();
-        int tileIndex1 = lower_hex1.getTileIndex();
-        int tileIndex2 = lower_hex2.getTileIndex();
+        int tileIndex0 = lower_hex0.getTurnPlaced();
+        int tileIndex1 = lower_hex1.getTurnPlaced();
+        int tileIndex2 = lower_hex2.getTurnPlaced();
 
         if (tileIndex0 == tileIndex1 && tileIndex1 == tileIndex2) return false;
 

@@ -36,6 +36,6 @@ public class SettlementTests {
         settlement = new Settlement(settlementCoordinates,player1);
         settlementCoordinates = new ArrayList<Coordinate>();
         settlementCoordinates.add(new Coordinate(3,2));
-        settlement.ExpandSettlement(settlementCoordinates);
+        settlement.expandSettlement(settlementCoordinates);
     }
 }

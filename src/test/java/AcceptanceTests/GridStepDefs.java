@@ -170,7 +170,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.JUNGLE);
 
         Tile tile = new Tile(coordinates, terrains);
-        try{gameBoard.LevelTile(tile);}
+        try{gameBoard.levelTile(tile);}
         catch (AssertionError e){ exceptionThrown = true; }
 
     }

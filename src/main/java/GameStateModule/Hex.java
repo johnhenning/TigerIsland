@@ -6,18 +6,18 @@ package GameStateModule;
 public class Hex {
     private final Coordinate coordinate;
     private final TerrainType terrain;
-    private int tileIndex;
+    private int turnPlaced;
     private int level;
-    private int MeepleCount;
-    private boolean Totoro;
-    private boolean Tiger;
+    private int meepleCount;
+    private boolean totoro;
+    private boolean tiger;
 
     public Hex(int x, int y, TerrainType terrain) {
         this.coordinate = new Coordinate(x,y);
         this.terrain = terrain;
-        this.MeepleCount = 0;
-        this.Totoro = false;
-        this.Tiger = false;
+        this.meepleCount = 0;
+        this.totoro = false;
+        this.tiger = false;
     }
 
     public int getx() {
@@ -27,7 +27,6 @@ public class Hex {
     public int gety() {
         return coordinate.getY();
     }
-
 
     public void setLevel(int level) { 
       this.level = level; 
@@ -40,34 +39,33 @@ public class Hex {
     public int getLevel() {
         return level; 
     }
-
-
-    public int getTileIndex() {
-        return tileIndex;
+    
+    public int getTurnPlaced() {
+        return turnPlaced;
     }
 
     public int getMeepleCount() { 
-        return MeepleCount; 
+        return meepleCount; 
     }
 
     public boolean hasTotoro() { 
-        return Totoro; 
+        return totoro; 
     }
 
     public boolean hasTiger() { 
-        return Tiger; 
+        return tiger; 
     }
 
-    public void setTileIndex(int tileIndex) {
-        this.tileIndex = tileIndex;
+    public void setTurnPlaced(int turnPlaced) {
+        this.turnPlaced = turnPlaced;
     }
 
     public void addMeeple(int level) {
-        MeepleCount += level;
+        meepleCount += level;
     }
 
     public void addTotoro() {
-        Totoro = true;
+        totoro = true;
     }
 
 }

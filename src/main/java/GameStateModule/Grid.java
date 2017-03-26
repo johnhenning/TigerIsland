@@ -3,7 +3,6 @@
  */
 package GameStateModule;
 import GameInteractionModule.Rules.TileNukeRules;
-import GameInteractionModule.*;
 import GameInteractionModule.Rules.TilePlacementRules;
 
 import java.util.ArrayList;
@@ -22,21 +21,26 @@ public class Grid {
 
     }
 
-    public boolean placeTile(Tile tile) {
+    public boolean placeTile(Tile tile) {//Can we change this back to void?
         placedTiles.add(tile);
+        //condense these ifs. Too long
         if(TilePlacementRules.CheckGameStarted(placedTiles)) {
            if(!TilePlacementRules.CheckForAdjacentHex(tile, gameboard)) throw new AssertionError();
         }
 
         if(!TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard)) throw new AssertionError();
 
+        setHexLevel(tile);
+
+        return true;
+    }
+
+    private void setHexLevel(Tile tile) {//Extracted out setting levels into new method
         tile.setLevel(1);
         for (Hex hex : tile.getHexes()) {
             updateHexTileIndex(hex);
             placeHex(hex);
         }
-
-        return true;
     }
 
     public Hex getHexFromCoordinate(Coordinate coordinate) {
@@ -51,15 +55,15 @@ public class Grid {
         return placedTiles.size();
     }
 
-    public void LevelTile(Tile tile) {
+    public void levelTile(Tile tile) {
         int lowerLevel = TileNukeRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
         if (lowerLevel == -1) throw new AssertionError();
         boolean MultipleTiles = TileNukeRules.CheckHexesSpanMultipleTiles(tile, gameboard);
         if(!MultipleTiles) throw new AssertionError();
         boolean VolcanoLineUp = TileNukeRules.CheckVolcanoesLineUp(tile,gameboard);
         if(!VolcanoLineUp) throw new AssertionError();
-        boolean DoesNotHaveTotoro = TileNukeRules.CheckTileNotContainTotoro(tile, gameboard);
-        if(DoesNotHaveTotoro == false) throw new AssertionError();
+        boolean tileDoesNotContainTotoro = TileNukeRules.CheckTileNotContainTotoro(tile, gameboard);
+        if(tileDoesNotContainTotoro == false) throw new AssertionError();
 
         tile.setLevel(lowerLevel + 1);
         placedTiles.add(tile);
@@ -86,13 +90,12 @@ public class Grid {
         return placedTiles.isEmpty();
     }
 
-
     private void placeHex(Hex hex) {
         gameboard[hex.getx()][hex.gety()] = hex;
     }
 
     private void updateHexTileIndex(Hex hex) {
-        hex.setTileIndex(placedTiles.size() - 1);
+        hex.setTurnPlaced(placedTiles.size() - 1);
     }
 
     public Tile getPlacedTile(int tileIndex) {

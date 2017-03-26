@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 public class Settlement {
     private ArrayList<Coordinate> settlementCoordinates;
-    private Player owner;
+    private Player owner;//Are we going to change the owner/player relationship as discussed?
 
-    public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner) {
+    public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner) {//Is this necessary?
         this.settlementCoordinates = settlementCoordinates;
         this.owner = owner;
     }
@@ -20,10 +20,9 @@ public class Settlement {
         this.owner = owner;
     }
 
-    public void ExpandSettlement(ArrayList<Coordinate> coordinates){
+    public void expandSettlement(ArrayList<Coordinate> coordinates){
         settlementCoordinates.addAll(coordinates);    
     }
-
 
     public Player getOwner(){ 
         return owner;

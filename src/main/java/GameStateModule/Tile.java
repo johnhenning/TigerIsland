@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class Tile {
     private ArrayList<Hex> hexes;
-    private int level;
+    private int level;//Do we still need the level of a tile
 
 
-    public Tile(ArrayList<Coordinate> coordinates, ArrayList<TerrainType> terrains) {
-        assert coordinates.size() == terrains.size();
+    public Tile(ArrayList<Coordinate> coordinates, ArrayList<TerrainType> terrains) {//Should only need an array of three hexes, could reduce parameters to one
+        assert coordinates.size() == terrains.size();//Why do we have an assert in a constructor
         hexes = new ArrayList<Hex>(); //interesting to note I think this was the problem
 
         for (int i = 0; i < coordinates.size(); i++) {
