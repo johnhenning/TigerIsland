@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 public class Settlement {
     private ArrayList<Coordinate> settlementCoordinates;
-    private Player owner;//Are we going to change the owner/player relationship as discussed?
+    private Player owner; //Are we going to change the owner/player relationship as discussed?
 
-    public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner) {//Is this necessary?
+    public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner) {//Is this necessary? : yes for splitting settlements up
         this.settlementCoordinates = settlementCoordinates;
         this.owner = owner;
     }

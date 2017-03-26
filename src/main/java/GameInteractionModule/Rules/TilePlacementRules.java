@@ -10,9 +10,17 @@ import java.util.ArrayList;
  */
 public class TilePlacementRules extends Rules {
 
+    public static void isValidTilePlacement(Tile tile, Hex[][] gameboard, ArrayList<Tile> placedTiles){
+        if(TilePlacementRules.CheckGameStarted(placedTiles)) {
+            if(!TilePlacementRules.CheckForAdjacentHex(tile, gameboard)) throw new AssertionError();
+        }
+        if(!TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard)) throw new AssertionError();
+    }
+
     public static boolean CheckGameStarted(ArrayList<Tile> placedTiles){
         return placedTiles.size() > 0;
     }
+
     public static boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard) { //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
             if (gameboard[hex.getx()][hex.gety()] != null) {

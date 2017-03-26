@@ -35,8 +35,8 @@ public class Player {
     }
 
     public void removeTotoro() {
-        numTotoros -= 2;
-    }//should be -1?
+        numTotoros -= 1;
+    }
 
     public void addScore(int score) {
         this.score += score;

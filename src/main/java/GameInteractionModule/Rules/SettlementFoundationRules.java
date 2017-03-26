@@ -7,6 +7,7 @@ import GameStateModule.Hex;
  */
 
 public class SettlementFoundationRules extends BuildRules{
+
     public static boolean hexIsLevelOne(Hex hex) {
         return hex.getLevel() == 1;
     }

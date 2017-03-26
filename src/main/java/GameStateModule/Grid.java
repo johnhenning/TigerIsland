@@ -21,22 +21,18 @@ public class Grid {
 
     }
 
-    public boolean placeTile(Tile tile) {//Can we change this back to void?
+    public void placeTile(Tile tile) {
         placedTiles.add(tile);
-        //condense these ifs. Too long
-        if(TilePlacementRules.CheckGameStarted(placedTiles)) {
-           if(!TilePlacementRules.CheckForAdjacentHex(tile, gameboard)) throw new AssertionError();
-        }
 
-        if(!TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard)) throw new AssertionError();
+        TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
 
-        setHexLevel(tile);
+        placeHexOnGameboard(tile, 1);
 
-        return true;
+
     }
 
-    private void setHexLevel(Tile tile) {//Extracted out setting levels into new method
-        tile.setLevel(1);
+    private void placeHexOnGameboard(Tile tile, int level) {//Extracted out setting levels into new method
+        tile.setLevel(level);
         for (Hex hex : tile.getHexes()) {
             updateHexTileIndex(hex);
             placeHex(hex);
@@ -56,22 +52,12 @@ public class Grid {
     }
 
     public void levelTile(Tile tile) {
-        int lowerLevel = TileNukeRules.CheckLowerHexesAreSameLevel(tile,gameboard,placedTiles);
-        if (lowerLevel == -1) throw new AssertionError();
-        boolean MultipleTiles = TileNukeRules.CheckHexesSpanMultipleTiles(tile, gameboard);
-        if(!MultipleTiles) throw new AssertionError();
-        boolean VolcanoLineUp = TileNukeRules.CheckVolcanoesLineUp(tile,gameboard);
-        if(!VolcanoLineUp) throw new AssertionError();
-        boolean tileDoesNotContainTotoro = TileNukeRules.CheckTileNotContainTotoro(tile, gameboard);
-        if(tileDoesNotContainTotoro == false) throw new AssertionError();
-
-        tile.setLevel(lowerLevel + 1);
+        int lowerLevel = TileNukeRules.isValidNuke(tile, gameboard);
+        int newLevel = lowerLevel + 1;
         placedTiles.add(tile);
 
-        for (Hex hex : tile.getHexes()) {
-            updateHexTileIndex(hex);
-            placeHex(hex);
-        }
+        placeHexOnGameboard(tile, newLevel);
+        
     }
 
     public int getNumberOfPlacedTiles() {

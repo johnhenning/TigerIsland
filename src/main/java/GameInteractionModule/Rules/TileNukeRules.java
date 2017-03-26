@@ -9,7 +9,25 @@ import java.util.ArrayList;
  * Created by johnhenning on 3/22/17.
  */
 public class TileNukeRules extends TilePlacementRules {
-    public static int CheckLowerHexesAreSameLevel(Tile tile, Hex[][] gameboard, ArrayList<Tile> placedTiles) {
+
+    public static int isValidNuke(Tile tile, Hex[][] gameboard){
+        int lowerLevel = CheckLowerHexesAreSameLevel(tile,gameboard);
+        if (lowerLevel == -1) throw new AssertionError();
+        boolean MultipleTiles = CheckHexesSpanMultipleTiles(tile, gameboard);
+        if(!MultipleTiles) throw new AssertionError();
+        boolean VolcanoLineUp = CheckVolcanoesLineUp(tile,gameboard);
+        if(!VolcanoLineUp) throw new AssertionError();
+        boolean tileDoesNotContainTotoro = TileNukeRules.CheckTileNotContainTotoro(tile, gameboard);
+        if(tileDoesNotContainTotoro == false) throw new AssertionError();
+        //TODO: need to check tiger
+        return lowerLevel;
+    }
+
+    public static int getNewTileLevel(Tile tile, Hex[][] gameboard){
+        int lowerLevel = CheckLowerHexesAreSameLevel(tile, gameboard);
+        return lowerLevel+1;
+    }
+    public static int CheckLowerHexesAreSameLevel(Tile tile, Hex[][] gameboard) {
         Hex hex0 = tile.getHexes().get(0);
         Hex hex1 = tile.getHexes().get(1);
         Hex hex2 = tile.getHexes().get(2);
@@ -19,9 +37,10 @@ public class TileNukeRules extends TilePlacementRules {
         Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
 
         if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) return -1;
-        int lowerLevel0 = placedTiles.get(lower_hex0.getTurnPlaced()).getLevel();
-        int lowerLevel1 = placedTiles.get(lower_hex1.getTurnPlaced()).getLevel();
-        int lowerLevel2 = placedTiles.get(lower_hex2.getTurnPlaced()).getLevel();
+
+        int lowerLevel0 = lower_hex0.getLevel();
+        int lowerLevel1 = lower_hex1.getLevel();
+        int lowerLevel2 = lower_hex2.getLevel();
 
         if (lowerLevel0 == lowerLevel1 && lowerLevel1 == lowerLevel2) {
             return lowerLevel0;
@@ -78,4 +97,5 @@ public class TileNukeRules extends TilePlacementRules {
             return true;
         }
     }
+
 }
