@@ -26,12 +26,12 @@ public class Grid {
 
         TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
 
-        placeHexOnGameboard(tile, 1);
+        placeTileOnGameboard(tile, 1);
 
 
     }
 
-    private void placeHexOnGameboard(Tile tile, int level) {//Extracted out setting levels into new method
+    private void placeTileOnGameboard(Tile tile, int level) {//Extracted out setting levels into new method
         tile.setLevel(level);
         for (Hex hex : tile.getHexes()) {
             updateHexTileIndex(hex);
@@ -56,7 +56,7 @@ public class Grid {
         int newLevel = lowerLevel + 1;
         placedTiles.add(tile);
 
-        placeHexOnGameboard(tile, newLevel);
+        placeTileOnGameboard(tile, newLevel);
         
     }
 

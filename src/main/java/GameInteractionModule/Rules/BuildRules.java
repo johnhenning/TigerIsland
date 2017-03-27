@@ -18,7 +18,7 @@ public class BuildRules extends Rules {
     }
 
     public static boolean CheckEnoughEntities(Player player){
-        return true; //not done yet
+        return true; //TODO: Check if there enough entities to build/expand
 
     }
 }
