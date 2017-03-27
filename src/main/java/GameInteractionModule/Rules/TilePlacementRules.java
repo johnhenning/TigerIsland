@@ -23,9 +23,7 @@ public class TilePlacementRules extends Rules {
 
     public static boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard) { //changed to public so I can use in tests
         for (Hex hex : tile.getHexes()) {
-            if (gameboard[hex.getx()][hex.gety()] != null) {
-                return false;
-            }
+            if (gameboard[hex.getx()][hex.gety()] != null) return false;
         }
         return true;
     }
@@ -39,6 +37,7 @@ public class TilePlacementRules extends Rules {
             // TODO : need to figure out edge cases
             if(hex.getx() < 0 || hex.gety() > 200){
                 //do nothing
+                continue;
             }
             else{
 
@@ -60,15 +59,13 @@ public class TilePlacementRules extends Rules {
                     return true;
             }
         }
-
         return false;
     }
 
 
     public boolean IsValidTile(Tile tile) {
-        if (HasVolcano(tile) && HexesAreValid(tile)) {
-            return true;
-        }
+        if (HasVolcano(tile) && HexesAreValid(tile)) { return true; }
+
         return false;
     }
 
@@ -81,9 +78,7 @@ public class TilePlacementRules extends Rules {
 
     private static boolean HasVolcano(Tile tile) {
         for (Hex hex : tile.getHexes()) {
-            if ( hex.getTerrain() == TerrainType.VOLCANO ) {
-                return true;
-            }
+            if ( hex.getTerrain() == TerrainType.VOLCANO ) return true;
         }
         return false;
     }

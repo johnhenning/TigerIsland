@@ -20,10 +20,8 @@ public class Rules {
 
     }
     static public boolean CheckIfHexEmpty(Hex hex, Hex[][] gameboard){
-        if(gameboard[hex.getx()][hex.gety()] == null)
-            return true;
-        else
-            return false;
+        if(gameboard[hex.getx()][hex.gety()] == null) { return true; }
+        else { return false; }
     }
 
 

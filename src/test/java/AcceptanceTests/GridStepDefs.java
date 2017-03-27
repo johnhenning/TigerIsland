@@ -30,7 +30,7 @@ public class GridStepDefs {
 
     @When("^Player (\\d+) places the first tile,$")
     public void player_places_the_first_tile(int arg1) throws Throwable {
-        //TODO: find better way of dealing with coordiantes
+        //TODO: find better way of dealing with coordinates
 
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
@@ -87,7 +87,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
-        try {gameBoard.placeTile(tile);}
+        try { gameBoard.placeTile(tile); }
         catch (AssertionError e) { exceptionThrown = true; }
     }
 
@@ -109,7 +109,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.LAKE);
         Tile tile = new Tile(coordinates, terrains);
         //TODO:placed tile needs to have its rules associated with it
-        try {gameBoard.placeTile(tile);}
+        try { gameBoard.placeTile(tile); }
         catch (AssertionError e) { exceptionThrown = true; }
     }
 
@@ -131,7 +131,7 @@ public class GridStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.ROCKY);
 
         Tile tile = new Tile(coordinates, terrains);
         try{gameBoard.placeTile(tile);}
@@ -150,7 +150,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.GRASSLAND);
 
         tile = new Tile(coordinates, terrains);
-        try{gameBoard.placeTile(tile);}
+        try{ gameBoard.placeTile(tile); }
         catch (AssertionError e){ exceptionThrown = true; }
 
 
@@ -170,7 +170,7 @@ public class GridStepDefs {
         terrains.add(TerrainType.JUNGLE);
 
         Tile tile = new Tile(coordinates, terrains);
-        try{gameBoard.levelTile(tile);}
+        try{ gameBoard.levelTile(tile); }
         catch (AssertionError e){ exceptionThrown = true; }
 
     }

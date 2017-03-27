@@ -22,15 +22,15 @@ public class SettlementFoundationStepDefs {
     boolean exceptionThrown = false;
     @Given("^There is a tile with an unoccupied Terrain hex$")
     public void there_is_a_tile_with_an_unoccupied_Terrain_hex() throws Throwable {
-        //TODO: find better way of dealing with coordiantes
+        //TODO: find better way of dealing with coordinates
 
 
-        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
 
-        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
@@ -39,7 +39,7 @@ public class SettlementFoundationStepDefs {
 
 
 
-        try{game.placeTile(tile);}
+        try{ game.placeTile(tile); }
         catch (AssertionError e){ exceptionThrown = true; }
 
     }

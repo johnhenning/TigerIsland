@@ -9,13 +9,12 @@ import java.util.ArrayList;
  */
 public class TotoroBuildRules extends BuildRules {
 
-    public boolean userHasSizeFiveSettlement(ArrayList<Settlement> settlementList, Player player)
+    public boolean playerHasSizeFiveSettlement(ArrayList<Settlement> settlementList, Player player)
     {
-        ArrayList<Settlement> CopySettlementList = SettlementsOfPlayer(settlementList, player);
-        CopySettlementList = SettlementsGreaterThanFive(CopySettlementList);
+        ArrayList<Settlement> CopyOfSettlementList = SettlementsOfPlayer(settlementList, player);
+        CopyOfSettlementList = SettlementsGreaterThanFive(CopyOfSettlementList);
 
-        return CopySettlementList.size() > 0;
-
+        return CopyOfSettlementList.size() > 0;
     }
 
     public boolean isHexAdjacentToSettlement(Hex hex, ArrayList<Settlement> settlementList, Player player)
