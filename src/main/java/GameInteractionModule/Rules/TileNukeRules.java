@@ -10,18 +10,12 @@ import java.util.ArrayList;
  */
 public class TileNukeRules extends TilePlacementRules {
 
-    public static int isValidNuke(Tile tile, Hex[][] gameboard){
-        int lowerLevel = CheckLowerHexesAreSameLevel(tile,gameboard);
-        if (lowerLevel == -1) throw new AssertionError();
-        boolean MultipleTiles = CheckHexesSpanMultipleTiles(tile, gameboard);
-        if(!MultipleTiles) throw new AssertionError();
-        boolean VolcanoLineUp = CheckVolcanoesLineUp(tile,gameboard);
-        if(!VolcanoLineUp) throw new AssertionError();
-        boolean tileDoesNotContainTotoro = TileNukeRules.CheckTileNotContainTotoro(tile, gameboard);
-        if(!tileDoesNotContainTotoro) throw new AssertionError();
-        boolean tileDoesNotContainTiger = TileNukeRules.CheckTileNotContainTiger(tile, gameboard);
-        if(!tileDoesNotContainTiger) throw new AssertionError();
-        return lowerLevel;
+    public static void isValidNuke(Tile tile, Hex[][] gameboard){
+        CheckLowerHexesAreSameLevel(tile,gameboard);
+        if(CheckHexesSpanMultipleTiles(tile, gameboard) == false) throw new AssertionError();
+        if(CheckVolcanoesLineUp(tile,gameboard) == false) throw new AssertionError();
+        if(CheckTileNotContainTotoro(tile, gameboard) == false) throw new AssertionError();
+        if(CheckTileNotContainTiger(tile, gameboard) == false) throw new AssertionError();
     }
 
     public static int getNewTileLevel(Tile tile, Hex[][] gameboard){
@@ -46,7 +40,7 @@ public class TileNukeRules extends TilePlacementRules {
         if (lowerLevel0 == lowerLevel1 && lowerLevel1 == lowerLevel2) {
             return lowerLevel0;
         } else {
-            return -1;
+            throw new AssertionError();
         }
     }
 
