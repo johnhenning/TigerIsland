@@ -1,4 +1,5 @@
 package GameStateModule;
+import GameInteractionModule.Rules.BuildRules;
 import GameInteractionModule.Rules.SettlementFoundationRules;
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class GameState {
         settlementList = new ArrayList<Settlement>();
     }
 
-    public boolean foundSettlement(Coordinate coordinate, Player player) throws Exception{
+    public void foundSettlement(Coordinate coordinate, Player player) throws Exception{
         //TODO: Work on Player Rules
         //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
@@ -30,10 +31,10 @@ public class GameState {
             player.removeMeeple();
             placeMeeple(coordinate);
             Settlement settlement = new Settlement(coordinate,player);
-            settlementList.add(settlement);
-            return true;
+            //call merge settlements here instead of settlementList.add
+            mergeSettlements(settlement);
         }
-        return false;
+
     }
 
     public void placeTile(Tile tile) {
@@ -63,6 +64,22 @@ public class GameState {
 
     public Grid getGameboard() {
         return gameboard;
+    }
+
+    public void mergeSettlements(Settlement newSettlement){
+        ArrayList<Coordinate> adjacentCoordiantes = newSettlement.getSettlementCoordinates();
+        ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
+
+        for(Settlement s: playersSettlements){
+            if(s.areCoordiantesAdjacent(adjacentCoordiantes)){
+                adjacentCoordiantes.addAll(s.getSettlementCoordinates());
+                settlementList.remove(s);
+            }
+        }
+        Settlement combinedSettlements = new Settlement(adjacentCoordiantes, newSettlement.getOwner());
+        settlementList.add(combinedSettlements);
+
+
     }
 
 }

@@ -38,4 +38,24 @@ public class SettlementTests {
         settlementCoordinates.add(new Coordinate(3,2));
         settlement.expandSettlement(settlementCoordinates);
     }
+
+    @Test
+    public void coordinateAdjacency() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        ArrayList<Coordinate> newCoordinates = new ArrayList<>();
+        newCoordinates.add(new Coordinate(3,3));
+        newCoordinates.add(new Coordinate(1,4));
+        newCoordinates.add(new Coordinate(6,5));
+        assert settlement.areCoordiantesAdjacent(newCoordinates);
+    }
+
+    @Test
+    public void coordinateNonAdjacency() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        ArrayList<Coordinate> newCoordinates = new ArrayList<>();
+        newCoordinates.add(new Coordinate(3,4));
+        newCoordinates.add(new Coordinate(1,4));
+        newCoordinates.add(new Coordinate(6,5));
+        assert !settlement.areCoordiantesAdjacent(newCoordinates);
+    }
 }

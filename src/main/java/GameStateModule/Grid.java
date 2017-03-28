@@ -22,11 +22,13 @@ public class Grid {
     }
 
     public void placeTile(Tile tile) {
-        placedTiles.add(tile);
+
 
         TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
 
         placeTileOnGameboard(tile, 1);
+
+        placedTiles.add(tile); //this has to occur before above function, need to fix
 
 
     }
@@ -52,8 +54,8 @@ public class Grid {
     }
 
     public void levelTile(Tile tile) {
-        int lowerLevel = TileNukeRules.isValidNuke(tile, gameboard);
-        int newLevel = lowerLevel + 1;
+        TileNukeRules.isValidNuke(tile, gameboard);
+        int newLevel = TileNukeRules.getNewTileLevel(tile, gameboard);
         placedTiles.add(tile);
 
         placeTileOnGameboard(tile, newLevel);

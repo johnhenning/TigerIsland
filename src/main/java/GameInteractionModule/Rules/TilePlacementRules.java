@@ -41,7 +41,7 @@ public class TilePlacementRules extends Rules {
             }
             else{
 
-                if(gameboard[x][y+1] == null)
+                if(gameboard[x][y+1] != null)
                     return true;
                 else if(gameboard[x][y-1] != null)
                     return true;

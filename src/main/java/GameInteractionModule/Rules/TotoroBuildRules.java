@@ -11,7 +11,7 @@ public class TotoroBuildRules extends BuildRules {
 
     public boolean playerHasSizeFiveSettlement(ArrayList<Settlement> settlementList, Player player)
     {
-        ArrayList<Settlement> CopyOfSettlementList = SettlementsOfPlayer(settlementList, player);
+        ArrayList<Settlement> CopyOfSettlementList = settlementsOfPlayer(settlementList, player);
         CopyOfSettlementList = SettlementsGreaterThanFive(CopyOfSettlementList);
 
         return CopyOfSettlementList.size() > 0;
@@ -22,14 +22,7 @@ public class TotoroBuildRules extends BuildRules {
         return true;
     }
 
-    public ArrayList<Settlement> SettlementsOfPlayer(ArrayList<Settlement> settlements, Player player){
-        ArrayList<Settlement> playersSettlements = new ArrayList<Settlement>();
-        for(Settlement s: settlements){
-            if(s.getOwner().equals(player))
-                playersSettlements.add(s);
-        }
-        return playersSettlements;
-    }
+
     public ArrayList<Settlement> SettlementsGreaterThanFive(ArrayList<Settlement> settlements){
         ArrayList<Settlement> bigSettlements = new ArrayList<Settlement>();
         for(Settlement s: settlements){
