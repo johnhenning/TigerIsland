@@ -68,5 +68,7 @@ public class Hex {
         totoro = true;
     }
 
+    public Coordinate getCoords(){ return coordinate; }
+
 }
 

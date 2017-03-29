@@ -10,20 +10,17 @@ public class GameState {
     private Grid gameboard;
     private Player player1;
     private Player player2;
-
     private ArrayList<Settlement> settlementList;
   
     public GameState(){
         gameboard = new Grid(200);
         player1 = new Player();
         player2 = new Player();
-
         settlementList = new ArrayList<Settlement>();
     }
 
     public void foundSettlement(Coordinate coordinate, Player player) throws Exception{
-        //TODO: Work on Player Rules
-        //TODO: Add Victory Points
+      //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
         if(!SettlementFoundationRules.isValidFoundation(h)) throw new AssertionError();
 
@@ -31,11 +28,9 @@ public class GameState {
             player.removeMeeple();
             placeMeeple(coordinate);
             Settlement settlement = new Settlement(coordinate,player);
-            //call merge settlements here instead of settlementList.add
             mergeSettlements(settlement);
         }
-
-    }
+}
 
     public void placeTile(Tile tile) {
         gameboard.placeTile(tile);
@@ -66,7 +61,7 @@ public class GameState {
         return gameboard;
     }
 
-    public void mergeSettlements(Settlement newSettlement){
+    private void mergeSettlements(Settlement newSettlement){
         ArrayList<Coordinate> adjacentCoordiantes = newSettlement.getSettlementCoordinates();
         ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
 
@@ -76,10 +71,9 @@ public class GameState {
                 settlementList.remove(s);
             }
         }
+
         Settlement combinedSettlements = new Settlement(adjacentCoordiantes, newSettlement.getOwner());
         settlementList.add(combinedSettlements);
-
-
     }
 
 }

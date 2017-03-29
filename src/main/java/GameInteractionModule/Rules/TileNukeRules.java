@@ -1,9 +1,9 @@
 package GameInteractionModule.Rules;
 
-import GameStateModule.Hex;
-import GameStateModule.TerrainType;
-import GameStateModule.Tile;
+import GameStateModule.*;
+
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by johnhenning on 3/22/17.
@@ -12,6 +12,8 @@ public class TileNukeRules extends TilePlacementRules {
 
     public static void isValidNuke(Tile tile, Hex[][] gameboard){
         CheckLowerHexesAreSameLevel(tile,gameboard);
+
+        //TODO: instead of this mess, throw inside functions
         if(CheckHexesSpanMultipleTiles(tile, gameboard) == false) throw new AssertionError();
         if(CheckVolcanoesLineUp(tile,gameboard) == false) throw new AssertionError();
         if(CheckTileNotContainTotoro(tile, gameboard) == false) throw new AssertionError();
@@ -94,6 +96,37 @@ public class TileNukeRules extends TilePlacementRules {
         Hex hex_two = gameboard[hex2.getx()][hex2.gety()];
 
         return !(hex_zero.hasTiger() || hex_one.hasTiger() || hex_two.hasTiger());
+    }
+    //TODO: look into making SettlementNukeRules class
+    public static boolean CheckNukeDoesNotWipeoutSettlement(Tile tile, ArrayList<Settlement> settlementList){
+        ArrayList<Coordinate> tileCoords = tile.getCoords();
+        ArrayList<Settlement> settlementsInDanger = getSettlementsThatCouldBeWipedOut(settlementList);
+        for(Settlement s: settlementsInDanger){
+            s.getSettlementCoordinates();
+            //see if all of s->coords is contained in tile->coords
+        }
+        return true;
+
+    }
+
+    private static boolean doCoordiantesOverlap(ArrayList<Coordinate> tile, ArrayList<Coordinate> settlementCoords){
+
+        for(Coordinate c: settlementCoords){
+            for(Coordinate d: tile){
+                if(!c.equals(d))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    private static ArrayList<Settlement> getSettlementsThatCouldBeWipedOut(ArrayList<Settlement> settlementList){
+        ArrayList<Settlement> smallSettlements = new ArrayList<>();
+        for(Settlement s: settlementList){
+            if(s.getSettlementCoordinates().size() < 3)
+                smallSettlements.add(s);
+        }
+        return smallSettlements;
     }
 
 }

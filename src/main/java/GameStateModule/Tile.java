@@ -26,5 +26,13 @@ public class Tile {
     public ArrayList<Hex> getHexes() {
         return hexes;
     }
+
+    public ArrayList<Coordinate> getCoords(){
+        ArrayList<Coordinate> tileCoords = new ArrayList<>();
+        for(Hex h: hexes)
+            tileCoords.add(h.getCoords());
+
+        return tileCoords;
+    }
 }
 
