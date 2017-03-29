@@ -34,7 +34,7 @@ public class Settlement {
 
     public ArrayList<Coordinate> getSettlementCoordinates() { return settlementCoordinates; }
 
-    public boolean areCoordiantesAdjacent(ArrayList<Coordinate> coordinates){
+    public boolean areCoordinatesAdjacent(ArrayList<Coordinate> coordinates){
         //lists should never contain the same x,y value going to ignore for now
         for(Coordinate c: settlementCoordinates){
             int x = c.getX();

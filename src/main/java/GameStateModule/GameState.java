@@ -66,7 +66,7 @@ public class GameState {
         ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
 
         for(Settlement s: playersSettlements){
-            if(s.areCoordiantesAdjacent(adjacentCoordiantes)){
+            if(s.areCoordinatesAdjacent(adjacentCoordiantes)){
                 adjacentCoordiantes.addAll(s.getSettlementCoordinates());
                 settlementList.remove(s);
             }

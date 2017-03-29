@@ -19,8 +19,8 @@ public class SettlementExpansionRules extends BuildRules{
         coords.addAll(returnValue);
 
         while(!coords.empty()){
-            Coordinate currentAdjacentCoordiante = coords.pop();
-            ArrayList<Coordinate> neighboringCoordiantes = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordiante);
+            Coordinate currentAdjacentCoordinate = coords.pop();
+            ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
         }
 
         return returnValue;

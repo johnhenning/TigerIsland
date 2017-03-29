@@ -109,15 +109,26 @@ public class TileNukeRules extends TilePlacementRules {
 
     }
 
-    private static boolean doCoordiantesOverlap(ArrayList<Coordinate> tile, ArrayList<Coordinate> settlementCoords){
+    public static boolean doCoordinatesOverlap(ArrayList<Coordinate> tile, ArrayList<Coordinate> settlementCoords){
 
-        for(Coordinate c: settlementCoords){
-            for(Coordinate d: tile){
-                if(!c.equals(d))
-                    return false;
-            }
+        Coordinate t1 = tile.get(0);
+        Coordinate t2 = tile.get(1);
+        Coordinate t3 = tile.get(2);
+
+        Coordinate s1 = settlementCoords.get(0);
+        Coordinate s2 = settlementCoords.get(1);
+        Coordinate s3 = settlementCoords.get(2);
+
+
+
+        if((t1.getX()==s1.getX())&&(t2.getX()==s2.getX())&&(t3.getX()==s3.getX()) && (t1.getY() == s1.getY())
+                && (t2.getY()== s2.getY()) && (t3.getY()==s3.getY())){
+            return true;
         }
-        return true;
+        else{
+            return false;
+        }
+
     }
 
     private static ArrayList<Settlement> getSettlementsThatCouldBeWipedOut(ArrayList<Settlement> settlementList){

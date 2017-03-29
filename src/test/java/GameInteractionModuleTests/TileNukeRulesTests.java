@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * Created by Kyle on 3/28/2017.
  */
 public class TileNukeRulesTests{
-    private ArrayList<Settlement> overlappedSettlment;
-    private ArrayList<Settlement> validSettlment;
+    private ArrayList<Settlement> overlappedSettlement;
+    private ArrayList<Settlement> validSettlement;
     private Player player1;
 
     private ArrayList<Coordinate> coordinates;
@@ -25,8 +25,8 @@ public class TileNukeRulesTests{
 
     @Before
     public void setup() throws Exception{
-        overlappedSettlment = new ArrayList<>();
-        validSettlment = new ArrayList<>();
+        overlappedSettlement = new ArrayList<>();
+        validSettlement = new ArrayList<>();
         coordinates = new ArrayList<>();
         terrains = new ArrayList<>();
         player1 = new Player();
@@ -40,12 +40,13 @@ public class TileNukeRulesTests{
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.JUNGLE);
 
-        overlappedSettlment.add(new Settlement(new Coordinate(100,100), player1));
+        overlappedSettlement.add(new Settlement(new Coordinate(100,100), player1));
 
         secondSettlementCoords.add(new Coordinate(100, 100));
-        secondSettlementCoords.add(new Coordinate(101, 100));
+        secondSettlementCoords.add(new Coordinate(101, 101));
+        secondSettlementCoords.add(new Coordinate(100, 101));
 
-        validSettlment.add(new Settlement(secondSettlementCoords, player1));
+        validSettlement.add(new Settlement(secondSettlementCoords, player1));
 
         tile = new Tile(coordinates,terrains);
     }
@@ -53,7 +54,7 @@ public class TileNukeRulesTests{
     //TODO: test whether or not a settlement can be completly wiped out
     @Test
     public void coordsOverlapTest(){
-//        TileNukeRules.doCoordinatesOverlap(
+        assert TileNukeRules.doCoordinatesOverlap(coordinates, secondSettlementCoords);
     }
 
 }
