@@ -33,4 +33,5 @@ public class BuildRules extends Rules {
         }
         return playerSettlements;
     }
+
 }
