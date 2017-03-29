@@ -28,7 +28,7 @@ public class RulesTest {
         coordinates = new ArrayList<>();
         terrains = new ArrayList<>();
 
-        grid = new Grid(69);
+        grid = new Grid(420);
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
@@ -44,7 +44,6 @@ public class RulesTest {
     }
     @Test
     public void GameStartedTest(){
-        //TODO: THIS DOESN'T WORK
-        //Rules.GameStarted(grid);
+        assert Rules.GameStarted(grid) == true;
     }
 }
