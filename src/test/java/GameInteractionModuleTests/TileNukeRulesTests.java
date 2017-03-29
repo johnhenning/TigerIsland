@@ -50,6 +50,7 @@ public class TileNukeRulesTests{
         tile = new Tile(coordinates,terrains);
     }
 
+    //TODO: test whether or not a settlement can be completly wiped out
     @Test
     public void coordsOverlapTest(){
 //        TileNukeRules.doCoordinatesOverlap(

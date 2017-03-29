@@ -90,5 +90,5 @@ public class Grid {
         return placedTiles.get(tileIndex);
     }
 
-    public Hex[][] getGameboard(){return gameboard;}
+    public Hex[][] getGameboard(){ return gameboard; }
 }
