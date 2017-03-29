@@ -14,16 +14,30 @@ import java.util.Stack;
 public class SettlementExpansionRules extends BuildRules{
     public static ArrayList<Coordinate> expansionDFS(Hex[][] gameboard, TerrainType terrain, Settlement settlement){
         ArrayList<Coordinate> returnValue = settlement.getSettlementCoordinates(); //is this right?
-
         Stack<Coordinate> coords = new Stack();
         coords.addAll(returnValue);
 
         while(!coords.empty()){
             Coordinate currentAdjacentCoordinate = coords.pop();
             ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
+            for(int i=0; i<neighboringCoordinates.size(); i++){
+                if(contains(returnValue, neighboringCoordinates.get(i))== false){
+                    returnValue.add(neighboringCoordinates.get(i));
+                    coords.push(neighboringCoordinates.get(i));
+                }
+            }
         }
 
         return returnValue;
+    }
+
+    public static boolean contains(ArrayList<Coordinate> retVal, Coordinate coord){
+        for(Coordinate c : retVal){
+            if(c.getX() == coord.getX() && c.getY() == coord.getY()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static ArrayList<Coordinate> findAdjacentCoords(Hex[][] gameboard, TerrainType terrain, Coordinate coordinate){
