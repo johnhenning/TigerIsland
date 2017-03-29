@@ -1,4 +1,5 @@
 package GameInteractionModule.Rules;
+import GameStateModule.Coordinate;
 import GameStateModule.Hex;
 import GameStateModule.TerrainType;
 import GameStateModule.Tile;
@@ -33,6 +34,7 @@ public class TilePlacementRules extends Rules {
         for (Hex hex : tile.getHexes()) {
             int x = hex.getx();
             int y = hex.gety();
+            Coordinate hexCoord = new Coordinate(x, y);
 
             // TODO : need to figure out edge cases
             if(hex.getx() < 0 || hex.gety() > 200){
@@ -41,26 +43,23 @@ public class TilePlacementRules extends Rules {
             }
             else{
 
-                if(gameboard[x][y+1] != null)
+                if(downRight(gameboard, hexCoord) != null)
                     return true;
-                else if(gameboard[x][y-1] != null)
+                else if(downLeft(gameboard, hexCoord) != null)
                     return true;
-                else if(gameboard[x+1][y-1] != null)
+                else if(topRight(gameboard, hexCoord) != null)
                     return true;
-                else if(gameboard[x+1][y+1] != null)
+                else if(topLeft(gameboard, hexCoord) != null)
                     return true;
-                else if(gameboard[x+1][y] != null)
+                else if(rightOfHex(gameboard, hexCoord) != null)
                     return true;
-                else if(gameboard[x-1][y] != null)
-                    return true;
-                else if(gameboard[x-1][y+1] != null)
-                    return true;
-                else if(gameboard[x-1][y-1] != null)
+                else if(leftOfHex(gameboard, hexCoord) != null)
                     return true;
             }
         }
         return false;
     }
+
 
 
     public boolean IsValidTile(Tile tile) {

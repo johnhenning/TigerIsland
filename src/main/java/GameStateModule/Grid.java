@@ -89,4 +89,6 @@ public class Grid {
     public Tile getPlacedTile(int tileIndex) {
         return placedTiles.get(tileIndex);
     }
+
+    public Hex[][] getGameboard(){ return gameboard; }
 }
