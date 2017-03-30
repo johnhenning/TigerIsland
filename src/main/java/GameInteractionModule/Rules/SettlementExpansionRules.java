@@ -21,7 +21,7 @@ public class SettlementExpansionRules extends BuildRules{
             Coordinate currentAdjacentCoordinate = coords.pop();
             ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
             for(int i=0; i<neighboringCoordinates.size(); i++){
-                if(contains(returnValue, neighboringCoordinates.get(i))== false){
+                if(!contains(returnValue, neighboringCoordinates.get(i))){
                     returnValue.add(neighboringCoordinates.get(i));
                     coords.push(neighboringCoordinates.get(i));
                 }
@@ -31,7 +31,7 @@ public class SettlementExpansionRules extends BuildRules{
         return returnValue;
     }
 
-    public static boolean contains(ArrayList<Coordinate> retVal, Coordinate coord){
+    private static boolean contains(ArrayList<Coordinate> retVal, Coordinate coord){
         for(Coordinate c : retVal){
             if(c.getX() == coord.getX() && c.getY() == coord.getY()){
                 return true;

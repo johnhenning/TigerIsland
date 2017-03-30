@@ -189,7 +189,15 @@ public class GridStepDefs {
 
     @Then("^the new tile is saved at those coordinates$")
     public void the_new_tile_is_saved_at_those_coordinates() throws Throwable {
-        assert !exceptionThrown;
+        ArrayList<Tile> placedTiles = gameBoard.getPlacedTiles();
+        Tile tile = placedTiles.get(2);
+        ArrayList<Coordinate> coords = tile.getCoords();
+        if(!(coords.get(0).getX() == 100 && coords.get(0).getY() == 100 && coords.get(1).getX()==101 && coords.get(1).getY()==100
+                && coords.get(2).getX()==101 && coords.get(2).getY()== 101)){
+            fail("Tile not saved at new coordinates");
+
+        }
+
     }
 
 
