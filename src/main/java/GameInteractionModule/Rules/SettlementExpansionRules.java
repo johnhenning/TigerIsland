@@ -13,27 +13,27 @@ import java.util.Stack;
  */
 public class SettlementExpansionRules extends BuildRules{
     public static ArrayList<Coordinate> expansionDFS(Hex[][] gameboard, TerrainType terrain, Settlement settlement){
-        ArrayList<Coordinate> returnValue = settlement.getSettlementCoordinates(); //is this right?
+        ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
         Stack<Coordinate> coords = new Stack();
-        coords.addAll(returnValue);
+        coords.addAll(hexesEncountered);
 
         while(!coords.empty()){
             Coordinate currentAdjacentCoordinate = coords.pop();
             ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
             for(int i=0; i<neighboringCoordinates.size(); i++){
-                if(!contains(returnValue, neighboringCoordinates.get(i))){
-                    returnValue.add(neighboringCoordinates.get(i));
+                if(contains(hexesEncountered, neighboringCoordinates.get(i))== false){
+                    hexesEncountered.add(neighboringCoordinates.get(i));
                     coords.push(neighboringCoordinates.get(i));
                 }
             }
         }
 
-        return returnValue;
+        return hexesEncountered;
     }
 
-    private static boolean contains(ArrayList<Coordinate> retVal, Coordinate coord){
-        for(Coordinate c : retVal){
-            if(c.getX() == coord.getX() && c.getY() == coord.getY()){
+    public static boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){
+        for(Coordinate c : hexEncountered){
+            if(c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()){
                 return true;
             }
         }
