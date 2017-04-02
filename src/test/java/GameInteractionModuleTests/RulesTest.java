@@ -44,6 +44,6 @@ public class RulesTest {
     }
     @Test
     public void GameStartedTest(){
-        Rules.GameStarted(grid);
+        assert Rules.GameStarted(grid) == true;
     }
 }
