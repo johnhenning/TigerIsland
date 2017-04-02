@@ -10,7 +10,7 @@ public class GameState {
     private Grid gameboard;
     private Player player1;
     private Player player2;
-    private ArrayList<Settlement> settlementList;
+    private static ArrayList<Settlement> settlementList;
   
     public GameState(){
         gameboard = new Grid(200);
@@ -49,7 +49,7 @@ public class GameState {
         hex.addTotoro();
     }
 
-    public ArrayList<Settlement> getSettlementList() { 
+    public static ArrayList<Settlement> getSettlementList() {
         return settlementList; 
     }
 

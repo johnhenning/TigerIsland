@@ -1,7 +1,6 @@
 package GameInteractionModule.Rules;
-import GameStateModule.Hex;
-import GameStateModule.Player;
-import GameStateModule.Settlement;
+import GameStateModule.*;
+
 import java.util.ArrayList;
 
 /**
@@ -9,28 +8,47 @@ import java.util.ArrayList;
  */
 public class TotoroBuildRules extends BuildRules {
 
-    public boolean playerHasSizeFiveSettlement(ArrayList<Settlement> settlementList, Player player)
-    {
-        ArrayList<Settlement> CopyOfSettlementList = settlementsOfPlayer(settlementList, player);
-        CopyOfSettlementList = SettlementsGreaterThanFive(CopyOfSettlementList);
 
-        return CopyOfSettlementList.size() > 0;
+    public static boolean isHexAdjacentToSettlement(Hex hex)
+    {
+        ArrayList<Settlement> settlementList = GameState.getSettlementList();
+        Hex[][] gameboard = Grid.getGameboard();
+        ArrayList<Hex> adjacentHexes = TilePlacementRules.getAdjacentHexes(hex, gameboard);
+        for(Settlement s:settlementList)
+            for(Hex h: adjacentHexes)
+                if(CoordinateIsPartOfSettlement(s.getSettlementCoordinates(), h.getCoords()))
+                    return true;
+        return false;
     }
 
-    public boolean isHexAdjacentToSettlement(Hex hex, ArrayList<Settlement> settlementList, Player player)
-    {
-        return true;
+    public static boolean CoordinateIsPartOfSettlement(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){
+        for(Coordinate c : hexEncountered){
+            if(c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()){
+                return true;
+            }
+        }
+        return false;
     }
 
+    public static boolean playerHasSizeFiveSettlement(Player player)
+    {
+        ArrayList<Settlement> settlementList = GameState.getSettlementList();
+        ArrayList<Settlement> settlementListOfPlayer = settlementsOfPlayer(settlementList, player);
+        settlementListOfPlayer = SettlementsGreaterThanFive(settlementListOfPlayer);
+        return settlementListOfPlayer.size() > 0;
+    }
 
-    public ArrayList<Settlement> SettlementsGreaterThanFive(ArrayList<Settlement> settlements){
-        ArrayList<Settlement> bigSettlements = new ArrayList<Settlement>();
+    public static ArrayList<Settlement> SettlementsGreaterThanFive(ArrayList<Settlement> settlements){
+        ArrayList<Settlement> sizeFiveSettlements = new ArrayList<Settlement>();
         for(Settlement s: settlements){
             if(s.getSize() >= 5)
-                bigSettlements.add(s);
+                sizeFiveSettlements.add(s);
         }
-        return bigSettlements;
+        return sizeFiveSettlements;
+    }
 
+    public static boolean isValidTotoroLocation(Hex hex, Player player){
+        return playerHasSizeFiveSettlement(player) && isHexAdjacentToSettlement(hex) && isValidBuild(hex,player);
     }
 
 }
