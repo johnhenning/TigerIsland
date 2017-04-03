@@ -72,6 +72,10 @@ public class Hex {
         totoro = true;
     }
 
+    public void addTiger() {
+        tiger = true;
+    }
+
     public Coordinate getCoords(){ return coordinate; }
 
 }

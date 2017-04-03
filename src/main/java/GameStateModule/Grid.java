@@ -42,7 +42,7 @@ public class Grid {
         }
     }
 
-    public Hex getHexFromCoordinate(Coordinate coordinate) {
+    public static Hex getHexFromCoordinate(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();
         Hex hex = gameboard[x][y];

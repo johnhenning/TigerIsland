@@ -47,8 +47,28 @@ public class TotoroBuildRules extends BuildRules {
         return sizeFiveSettlements;
     }
 
+    public static boolean settlementNotContainTotoro(){
+        ArrayList<Settlement> settlementList = GameState.getSettlementList();
+        for(Settlement s:settlementList){
+            if(!isTotoroInSettlement(s.getSettlementCoordinates())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isTotoroInSettlement(ArrayList<Coordinate> settlementCoords){
+        for(Coordinate c : settlementCoords){
+            if(Grid.getHexFromCoordinate(c).hasTotoro()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean isValidTotoroLocation(Hex hex, Player player){
-        return playerHasSizeFiveSettlement(player) && isHexAdjacentToSettlement(hex) && isValidBuild(hex,player);
+        return playerHasSizeFiveSettlement(player) && isHexAdjacentToSettlement(hex) && isValidBuild(hex,player)
+                && settlementNotContainTotoro();
     }
 
 }

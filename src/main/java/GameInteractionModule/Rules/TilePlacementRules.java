@@ -64,7 +64,6 @@ public class TilePlacementRules extends Rules {
                 //do nothing
             }
             else{
-
                 if(downRight(gameboard, hex.getCoords()) != null)
                     adjacentHexes.add(downRight(gameboard, hex.getCoords()));
                 if(downLeft(gameboard, hex.getCoords()) != null)
