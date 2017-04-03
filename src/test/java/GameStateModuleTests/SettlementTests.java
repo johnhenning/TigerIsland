@@ -36,6 +36,26 @@ public class SettlementTests {
         settlement = new Settlement(settlementCoordinates,player1);
         settlementCoordinates = new ArrayList<Coordinate>();
         settlementCoordinates.add(new Coordinate(3,2));
-        settlement.ExpandSettlement(settlementCoordinates);
+        settlement.expandSettlement(settlementCoordinates);
+    }
+
+    @Test
+    public void coordinateAdjacency() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        ArrayList<Coordinate> newCoordinates = new ArrayList<>();
+        newCoordinates.add(new Coordinate(3,3));
+        newCoordinates.add(new Coordinate(1,4));
+        newCoordinates.add(new Coordinate(6,5));
+        assert settlement.areCoordinatesAdjacent(newCoordinates);
+    }
+
+    @Test
+    public void coordinateNonAdjacency() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        ArrayList<Coordinate> newCoordinates = new ArrayList<>();
+        newCoordinates.add(new Coordinate(3,4));
+        newCoordinates.add(new Coordinate(1,4));
+        newCoordinates.add(new Coordinate(6,5));
+        assert !settlement.areCoordinatesAdjacent(newCoordinates);
     }
 }

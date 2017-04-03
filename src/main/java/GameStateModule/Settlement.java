@@ -20,10 +20,9 @@ public class Settlement {
         this.owner = owner;
     }
 
-    public void ExpandSettlement(ArrayList<Coordinate> coordinates){
+    public void expandSettlement(ArrayList<Coordinate> coordinates){
         settlementCoordinates.addAll(coordinates);    
     }
-
 
     public Player getOwner(){ 
         return owner;
@@ -32,5 +31,37 @@ public class Settlement {
     public int getSize(){
         return settlementCoordinates.size();
     }
+
+    public ArrayList<Coordinate> getSettlementCoordinates() { return settlementCoordinates; }
+
+    public boolean areCoordinatesAdjacent(ArrayList<Coordinate> coordinates){
+        //lists should never contain the same x,y value going to ignore for now
+        for(Coordinate c: settlementCoordinates){
+            int x = c.getX();
+            int y = c.getY();
+            for(Coordinate d: coordinates){
+                int x1 = d.getX();
+                int y1 = d.getY();
+                if(x == x1 && y == y1+1)
+                    return true;
+                else if(x == x1 && y == y1-1)
+                    return true;
+                else if(x == x1-1 && y == y1+1)
+                    return true;
+                else if(x == x1-1 && y == y1-1)
+                    return true;
+                else if(x == x1-1 && y == y1)
+                    return true;
+                else if(x == x1+1 && y == y1)
+                    return true;
+                else if(x == x1+1 && y == y1+1)
+                    return true;
+                else if(x == x1+1 && y == y1-1)
+                    return true;
+            }
+        }
+        return false;
+    }
+
 
 }

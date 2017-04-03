@@ -8,13 +8,13 @@ import GameStateModule.Tile;
  */
 public class TileExpansionRules extends TilePlacementRules {
 
-    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard){ //changed to public so I can use in tests
-        for (Hex hex : tile.getHexes()) {
-            if (gameboard[hex.getx()][hex.gety()] != null) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    public boolean CheckForUnoccupiedHexes(Tile tile, Hex[][] gameboard){ //changed to public so I can use in tests
+//        for (Hex hex : tile.getHexes()) {
+//            if (gameboard[hex.getx()][hex.gety()] != null) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
 }

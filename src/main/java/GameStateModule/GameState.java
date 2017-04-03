@@ -1,4 +1,5 @@
 package GameStateModule;
+import GameInteractionModule.Rules.BuildRules;
 import GameInteractionModule.Rules.SettlementFoundationRules;
 import java.util.ArrayList;
 
@@ -9,39 +10,37 @@ public class GameState {
     private Grid gameboard;
     private Player player1;
     private Player player2;
-
-    private ArrayList<Settlement> settlementList;
+    private static ArrayList<Settlement> settlementList;
   
     public GameState(){
         gameboard = new Grid(200);
         player1 = new Player();
         player2 = new Player();
-
         settlementList = new ArrayList<Settlement>();
     }
 
-    public boolean foundSettlement(Coordinate coordinate, Player player) throws Exception{
-        //TODO: Work on Player Rules
-        //TODO: Add Victory Points
+    public void foundSettlement(Coordinate coordinate, Player player) throws Exception{
+      //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
+        if(!SettlementFoundationRules.isValidFoundation(h)) throw new AssertionError();
+
         if(SettlementFoundationRules.isValidFoundation(h)){
             player.removeMeeple();
             placeMeeple(coordinate);
             Settlement settlement = new Settlement(coordinate,player);
-            settlementList.add(settlement);
-            return true;
+            mergeSettlements(settlement);
         }
-        return false;
-    }
+}
 
     public void placeTile(Tile tile) {
         gameboard.placeTile(tile);
     }
+
+    public void levelTile(Tile tile) { gameboard.levelTile(tile); }
     
     public void placeMeeple(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
-        int tileIndex = hex.getTileIndex();
-        int level = gameboard.getPlacedTile(tileIndex).getLevel();
+        int level = hex.getLevel();
         hex.addMeeple(level);
     }
 
@@ -50,7 +49,7 @@ public class GameState {
         hex.addTotoro();
     }
 
-    public ArrayList<Settlement> getSettlementList() { 
+    public static ArrayList<Settlement> getSettlementList() {
         return settlementList; 
     }
 
@@ -60,6 +59,21 @@ public class GameState {
 
     public Grid getGameboard() {
         return gameboard;
+    }
+
+    private void mergeSettlements(Settlement newSettlement){
+        ArrayList<Coordinate> adjacentCoordiantes = newSettlement.getSettlementCoordinates();
+        ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
+
+        for(Settlement s: playersSettlements){
+            if(s.areCoordinatesAdjacent(adjacentCoordiantes)){
+                adjacentCoordiantes.addAll(s.getSettlementCoordinates());
+                settlementList.remove(s);
+            }
+        }
+
+        Settlement combinedSettlements = new Settlement(adjacentCoordiantes, newSettlement.getOwner());
+        settlementList.add(combinedSettlements);
     }
 
 }

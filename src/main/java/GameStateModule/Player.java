@@ -5,38 +5,45 @@ package GameStateModule;
  */
 public class Player {
     private int score;
-    private int Meeples;
-    private int Totoro;
+    private int numMeeples;
+    private int numTotoros;
+    private int numTigers;
 
     public Player() {
         score = 0;
-        Meeples = 20;
-        Totoro = 3;
+        numMeeples = 20;
+        numTotoros = 3;
+        numTigers = 2;
     }
 
     public int getScore() {
         return score;
     }
 
-    public int getMeeplesCount() {
-        return Meeples;
+    public int getNumMeeples() {
+        return numMeeples;
     }
 
-    public int getTotoroCount() {
-        return Totoro;
+    public int getNumTotoros() {
+        return numTotoros;
     }
+
+    public int getNumTigers(){ return numTigers;}
 
     public void removeMeeple(int amount) {
-        Meeples -= amount;
+        numMeeples -= amount;
     }
 
     public void removeMeeple() {
-        Meeples -= 1;
+        numMeeples -= 1;
     }
 
     public void removeTotoro() {
-        Totoro -= 2;
+        numTotoros -= 1;
     }
+
+    public void removeTiger() { numTigers -= 1; }
+
     public void addScore(int score) {
         this.score += score;
     }
