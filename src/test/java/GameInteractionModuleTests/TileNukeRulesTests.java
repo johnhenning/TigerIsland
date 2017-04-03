@@ -40,13 +40,15 @@ public class TileNukeRulesTests{
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.JUNGLE);
 
-        overlappedSettlement.add(new Settlement(new Coordinate(100,100), player1));
+        overlappedSettlement.add(new Settlement(new Coordinate(100,100), player1, 0));
 
         secondSettlementCoords.add(new Coordinate(100, 100));
         secondSettlementCoords.add(new Coordinate(101, 101));
         secondSettlementCoords.add(new Coordinate(100, 101));
 
-        validSettlement.add(new Settlement(secondSettlementCoords, player1));
+        validSettlement.add(new Settlement(secondSettlementCoords, player1, 1));
+
+
 
         tile = new Tile(coordinates,terrains);
     }

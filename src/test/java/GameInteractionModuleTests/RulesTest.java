@@ -25,8 +25,8 @@ public class RulesTest {
     @Before
     public void setup(){
 
-        coordinates = new ArrayList<>();
-        terrains = new ArrayList<>();
+        coordinates = new ArrayList<Coordinate>();
+        terrains = new ArrayList<TerrainType>();
 
         grid = new Grid(420);
         coordinates.add(new Coordinate(100,100));

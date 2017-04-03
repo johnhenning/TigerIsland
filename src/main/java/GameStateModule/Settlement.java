@@ -8,16 +8,19 @@ import java.util.ArrayList;
 public class Settlement {
     private ArrayList<Coordinate> settlementCoordinates;
     private Player owner; //Are we going to change the owner/player relationship as discussed?
+    private int settlementID;
 
-    public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner) {//Is this necessary? : yes for splitting settlements up
+    public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner, int settlementID) { //Is this necessary? : yes for splitting settlements up
         this.settlementCoordinates = settlementCoordinates;
         this.owner = owner;
+        this.settlementID = settlementID;
     }
 
-    public Settlement(Coordinate coordinate, Player owner) {
+    public Settlement(Coordinate coordinate, Player owner, int settlementID) {
         settlementCoordinates = new ArrayList<Coordinate>();
         settlementCoordinates.add(coordinate);
         this.owner = owner;
+        this.settlementID = settlementID;
     }
 
     public void expandSettlement(ArrayList<Coordinate> coordinates){
@@ -26,6 +29,10 @@ public class Settlement {
 
     public Player getOwner(){ 
         return owner;
+    }
+
+    public int getSettlementID() {
+        return settlementID;
     }
 
     public int getSize(){

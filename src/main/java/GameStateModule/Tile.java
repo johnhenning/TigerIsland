@@ -14,8 +14,6 @@ public class Tile {
         for (int i = 0; i < coordinates.size(); i++) {
             hexes.add(new Hex(coordinates.get(i).getX(), coordinates.get(i).getY(), terrains.get(i)));
         }
-
-
     }
 
     public void setLevel(int level) {
