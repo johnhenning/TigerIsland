@@ -5,10 +5,15 @@ package GameStateModule;
 import java.util.ArrayList;
 
 public class Tile {
-    private Hex[] hexes;
+    private ArrayList<Hex> hexes;
 
-    public Tile(Hex[] hexes) {//Should only need an array of three hexes, could reduce parameters to one
-       this.hexes = hexes;
+    public Tile(ArrayList<Coordinate> coordinates, ArrayList<TerrainType> terrains) {//Should only need an array of three hexes, could reduce parameters to one
+        assert coordinates.size() == terrains.size();//Why do we have an assert in a constructor
+        hexes = new ArrayList<Hex>();
+
+        for (int i = 0; i < coordinates.size(); i++) {
+            hexes.add(new Hex(coordinates.get(i).getX(), coordinates.get(i).getY(), terrains.get(i)));
+        }
     }
 
     public void setLevel(int level) {
@@ -16,7 +21,7 @@ public class Tile {
             h.setLevel(level);
     }
 
-    public Hex[] getHexes() {
+    public ArrayList<Hex> getHexes() {
         return hexes;
     }
 
