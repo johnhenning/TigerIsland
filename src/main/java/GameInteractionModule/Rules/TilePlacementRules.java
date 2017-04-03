@@ -1,8 +1,5 @@
 package GameInteractionModule.Rules;
-import GameStateModule.Coordinate;
-import GameStateModule.Hex;
-import GameStateModule.TerrainType;
-import GameStateModule.Tile;
+import GameStateModule.*;
 
 import java.util.ArrayList;
 
@@ -60,6 +57,29 @@ public class TilePlacementRules extends Rules {
         return false;
     }
 
+    public static ArrayList<Hex> getAdjacentHexes(Hex hex, Hex[][] gameboard){
+        ArrayList<Hex> adjacentHexes = new ArrayList<>();
+            // TODO : need to figure out edge cases
+            if(hex.getx() < 0 || hex.gety() > 200){
+                //do nothing
+            }
+            else{
+
+                if(downRight(gameboard, hex.getCoords()) != null)
+                    adjacentHexes.add(downRight(gameboard, hex.getCoords()));
+                if(downLeft(gameboard, hex.getCoords()) != null)
+                    adjacentHexes.add(downLeft(gameboard, hex.getCoords()));
+                if(topRight(gameboard, hex.getCoords()) != null)
+                    adjacentHexes.add(topRight(gameboard, hex.getCoords()));
+                if(topLeft(gameboard, hex.getCoords()) != null)
+                    adjacentHexes.add(topLeft(gameboard, hex.getCoords()));
+                if(rightOfHex(gameboard, hex.getCoords()) != null)
+                    adjacentHexes.add(rightOfHex(gameboard, hex.getCoords()));
+                if(leftOfHex(gameboard, hex.getCoords()) != null)
+                    adjacentHexes.add(leftOfHex(gameboard, hex.getCoords()));
+            }
+        return adjacentHexes;
+    }
 
 
     public boolean IsValidTile(Tile tile) {
