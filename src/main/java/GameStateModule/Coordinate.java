@@ -19,4 +19,13 @@ public class Coordinate {
     public int getY() {
         return y;
     }
+
+    public boolean equals(Coordinate coordinate) {
+        return (coordinate.getX() == x) && (coordinate.getY() == y);
+    }
+
+    public static Coordinate add(Coordinate c0, Coordinate c1) {
+        Coordinate coordinate = new Coordinate(c0.getX() + c1.getX(), c0.getY() + c1.getY());
+        return coordinate;
+    }
 }

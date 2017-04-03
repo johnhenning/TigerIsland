@@ -25,7 +25,7 @@ public class SettlementFoundationStepDefs {
         //TODO: find better way of dealing with coordinates
 
 
-        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        /*ArrayList<Coordinate> coordinates = new ArrayList<>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
@@ -33,9 +33,14 @@ public class SettlementFoundationStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.LAKE);*/
 
-        Tile tile = new Tile(coordinates, terrains);
+        Hex[] hexes = new Hex[3];
+        hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
+
+        Tile tile = new Tile(hexes);
 
 
 
@@ -72,16 +77,21 @@ public class SettlementFoundationStepDefs {
     @Given("^There is a hex occupied by another game piece$")
     public void there_is_a_hex_occupied_by_another_game_piece() throws Throwable {
 
-        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        /*ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.LAKE);*/
 
-        tile = new Tile(coordinates,terrains);
+        Hex[] hexes = new Hex[3];
+        hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
+
+        tile = new Tile(hexes);
 
         game.placeTile(tile);
         Coordinate c = new Coordinate(101,101);
@@ -129,7 +139,12 @@ public class SettlementFoundationStepDefs {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        tile = new Tile(coordinates,terrains);
+        Hex[] hexes = new Hex[3];
+        hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
+
+        tile = new Tile(hexes);
 
 
         game.placeTile(tile);

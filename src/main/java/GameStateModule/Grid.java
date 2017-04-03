@@ -24,6 +24,7 @@ public class Grid {
     public void placeTile(Tile tile) {
 
 
+
         TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
 
         placeTileOnGameboard(tile, 1);
@@ -57,9 +58,7 @@ public class Grid {
         TileNukeRules.isValidNuke(tile, gameboard);
         int newLevel = TileNukeRules.getNewTileLevel(tile, gameboard);
         placedTiles.add(tile);
-
         placeTileOnGameboard(tile, newLevel);
-        
     }
 
     public int getNumberOfPlacedTiles() {

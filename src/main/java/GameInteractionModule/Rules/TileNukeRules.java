@@ -4,20 +4,21 @@ import GameStateModule.*;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Created by johnhenning on 3/22/17.
  */
-public class TileNukeRules extends TilePlacementRules {
+public class TileNukeRules extends Rules {
+
+
 
     public static void isValidNuke(Tile tile, Hex[][] gameboard){
         CheckLowerHexesAreSameLevel(tile,gameboard);
-
-        //TODO: instead of this mess, throw inside functions
-        if(CheckHexesSpanMultipleTiles(tile, gameboard) == false) throw new AssertionError();
-        if(CheckVolcanoesLineUp(tile,gameboard) == false) throw new AssertionError();
-        if(CheckTileNotContainTotoro(tile, gameboard) == false) throw new AssertionError();
-        if(CheckTileNotContainTiger(tile, gameboard) == false) throw new AssertionError();
+        CheckHexesSpanMultipleTiles(tile, gameboard);
+        CheckVolcanoesLineUp(tile,gameboard);
+        CheckTileNotContainTotoro(tile, gameboard);
+        CheckTileNotContainTiger(tile, gameboard);
     }
 
     public static int getNewTileLevel(Tile tile, Hex[][] gameboard){
@@ -25,9 +26,9 @@ public class TileNukeRules extends TilePlacementRules {
         return lowerLevel+1;
     }
     public static int CheckLowerHexesAreSameLevel(Tile tile, Hex[][] gameboard) {
-        Hex hex0 = tile.getHexes().get(0);
-        Hex hex1 = tile.getHexes().get(1);
-        Hex hex2 = tile.getHexes().get(2);
+        Hex hex0 = tile.getHexes()[0];
+        Hex hex1 = tile.getHexes()[1];
+        Hex hex2 = tile.getHexes()[2];
 
         Hex lower_hex0 = gameboard[hex0.getx()][hex0.gety()];
         Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
@@ -47,9 +48,9 @@ public class TileNukeRules extends TilePlacementRules {
     }
 
     public static boolean CheckHexesSpanMultipleTiles(Tile tile, Hex[][] gameboard) {
-        Hex hex0 = tile.getHexes().get(0);
-        Hex hex1 = tile.getHexes().get(1);
-        Hex hex2 = tile.getHexes().get(2);
+        Hex hex0 = tile.getHexes()[0];
+        Hex hex1 = tile.getHexes()[1];
+        Hex hex2 = tile.getHexes()[2];
 
         Hex hex_zero = gameboard[hex0.getx()][hex0.gety()];
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
@@ -61,7 +62,12 @@ public class TileNukeRules extends TilePlacementRules {
         int tileIndex1 = hex_one.getTurnPlaced();
         int tileIndex2 = hex_two.getTurnPlaced();
 
-        return !(tileIndex0 == tileIndex1 && tileIndex1 == tileIndex2);
+        if(tileIndex0 == tileIndex1 && tileIndex1 == tileIndex2){
+            throw new AssertionError();
+        }
+
+        return true;
+
     }
 
     public static boolean CheckVolcanoesLineUp(Tile tile, Hex[][] gameboard) {
@@ -71,33 +77,41 @@ public class TileNukeRules extends TilePlacementRules {
                 if (gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) { return true; }
             }
         }
-        return false;
+        throw new AssertionError();
     }
 
     public static boolean CheckTileNotContainTotoro(Tile tile, Hex[][]gameboard){
-        Hex hex0 = tile.getHexes().get(0);
-        Hex hex1 = tile.getHexes().get(1);
-        Hex hex2 = tile.getHexes().get(2);
+        Hex hex0 = tile.getHexes()[0];
+        Hex hex1 = tile.getHexes()[1];
+        Hex hex2 = tile.getHexes()[2];
 
         Hex hex_zero = gameboard[hex0.getx()][hex0.gety()];
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
         Hex hex_two = gameboard[hex2.getx()][hex2.gety()];
 
-        return !(hex_zero.hasTotoro() || hex_one.hasTotoro() || hex_two.hasTotoro());
+        if (hex_zero.hasTotoro() || hex_one.hasTotoro() || hex_two.hasTotoro()){
+            throw new AssertionError();
+        }
+        return true;
+
     }
 
     public static boolean CheckTileNotContainTiger(Tile tile, Hex[][]gameboard){
-        Hex hex0 = tile.getHexes().get(0);
-        Hex hex1 = tile.getHexes().get(1);
-        Hex hex2 = tile.getHexes().get(2);
+        Hex hex0 = tile.getHexes()[0];
+        Hex hex1 = tile.getHexes()[1];
+        Hex hex2 = tile.getHexes()[2];
 
         Hex hex_zero = gameboard[hex0.getx()][hex0.gety()];
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
         Hex hex_two = gameboard[hex2.getx()][hex2.gety()];
 
-        return !(hex_zero.hasTiger() || hex_one.hasTiger() || hex_two.hasTiger());
+       if(hex_zero.hasTiger() || hex_one.hasTiger() || hex_two.hasTiger()){
+           throw new AssertionError();
+       }
+       return true;
+
     }
-    //TODO: look into making SettlementNukeRules class
+    //TODO: needs to be finished
     public static boolean CheckNukeDoesNotWipeoutSettlement(Tile tile, ArrayList<Settlement> settlementList){
         ArrayList<Coordinate> tileCoords = tile.getCoords();
         ArrayList<Settlement> settlementsInDanger = getSettlementsThatCouldBeWipedOut(settlementList);
@@ -138,6 +152,102 @@ public class TileNukeRules extends TilePlacementRules {
                 smallSettlements.add(s);
         }
         return smallSettlements;
+    }
+    public static ArrayList<Settlement> findAffectedSettlements(ArrayList<Settlement> settlements, Tile tile) {
+        ArrayList<Settlement> affectedSettlements = new ArrayList<>();
+        ArrayList<Coordinate> nukedCoords = tile.getCoords();
+
+        for (Settlement s : settlements) {
+            boolean found = false;
+            for (Coordinate c : nukedCoords) {
+                if (SettlementExpansionRules.contains(s.getSettlementCoordinates(), c)) {
+                    s.getSettlementCoordinates().remove(c);
+                    found = true;
+                }
+            }
+            if(found)
+                affectedSettlements.add(s);
+        }
+
+        return  affectedSettlements;
+    }
+
+    public static boolean settlmentContainsCoordinate(Settlement settlement, Coordinate coordinate){
+        for(Coordinate c : settlement.getSettlementCoordinates()){
+            if(c.equals(coordinate)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static ArrayList<Coordinate> findAdjacentSettlmentCoords(Hex[][] gameBoard, Coordinate coordinate, Settlement settlement){
+        ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
+        Hex hex;
+
+        hex = downLeft(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoords());
+        hex = downRight(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoords());
+        hex = topRight(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoords());
+        hex = topLeft(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoords());
+        hex = leftOfHex(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoords());
+        hex = rightOfHex(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoords());
+        return adjacentCoordinates;
+    }
+
+    public static void removeCoordsFromSettlement(ArrayList<Coordinate> coords, Settlement s){
+
+        for(int i = 0; i < s.getSettlementCoordinates().size(); i++){
+            for(int j = 0; j < coords.size(); j++){
+                if(s.getSettlementCoordinates().get(i).equals(coords.get(j)))
+                    s.getSettlementCoordinates().remove(i);
+            }
+        }
+
+    }
+
+    public static ArrayList<Settlement> divideSettlement(Hex[][] gameBoard, Settlement settlement){
+        ArrayList<Coordinate> hexesEncountered = new ArrayList<>();
+        ArrayList<Settlement> splitSettlements = new ArrayList<>();
+        Stack<Coordinate> coords = new Stack();
+        coords.add(settlement.getSettlementCoordinates().get(0));
+        hexesEncountered.add(settlement.getSettlementCoordinates().get(0));
+
+        while(!coords.empty()){
+            Coordinate currentAdjacentCoordinate = coords.pop();
+            ArrayList<Coordinate> neighboringCoords =
+                    findAdjacentSettlmentCoords(gameBoard, currentAdjacentCoordinate, settlement);
+            for(int i = 0; i < neighboringCoords.size(); i++){
+                if(!SettlementExpansionRules.contains(hexesEncountered, neighboringCoords.get(i))){
+                    hexesEncountered.add(neighboringCoords.get(i));
+                    coords.push(neighboringCoords.get(i));
+                }
+            }
+        }
+
+        removeCoordsFromSettlement(hexesEncountered, settlement);
+        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner());
+
+        if(settlement.getSettlementCoordinates().size() != 0){
+            splitSettlements.add(settlement);
+        }
+        splitSettlements.add(newSettlement);
+
+        return splitSettlements;
+    }
+
+    public static void bigDivideSettlements (Hex[][] gameBoard, Settlement settlementList, Tile tile){
+
     }
 
 }

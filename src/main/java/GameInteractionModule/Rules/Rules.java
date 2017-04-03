@@ -8,6 +8,8 @@ import GameStateModule.GameState;
 
 import GameStateModule.Hex;
 
+import java.util.ArrayList;
+
 /**
  * Created by johnhenning on 3/19/17.
  */
@@ -20,9 +22,8 @@ public class Rules {
             return true;
 
     }
-    static public boolean CheckIfHexEmpty(Hex hex, Hex[][] gameboard){
-        if(gameboard[hex.getx()][hex.gety()] == null) { return true; }
-        else { return false; }
+    public static boolean CheckIfHexEmpty(Hex hex, Hex[][] gameboard){
+        return gameboard[hex.getx()][hex.gety()] == null;
     }
 
 
@@ -31,8 +32,20 @@ public class Rules {
     }
 
     public static boolean HexesAreAdjacent(Hex hex0, Hex hex1) {
-        
-        return true;
+        Coordinate[][] directions = { { new Coordinate(1, 0), new Coordinate( 0, -1),
+                new Coordinate(-1, -1), new Coordinate(-1, 0), new Coordinate(-1, 1),
+                new Coordinate( 0, 1) }, { new Coordinate(1, 0), new Coordinate(1, -1),
+                new Coordinate( 0, -1), new Coordinate(-1, 0),
+                new Coordinate( 0, 1), new Coordinate(1, 1) } };
+
+
+        int parity = hex0.gety() & 1;
+        for ( int i = 0; i < directions[parity].length; i++) {
+            if (Coordinate.add(directions[parity][i],hex0.getCoordinate()).equals(hex1.getCoordinate())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static Hex downRight(Hex[][] gameboard, Coordinate coordinate){

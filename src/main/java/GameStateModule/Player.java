@@ -7,11 +7,13 @@ public class Player {
     private int score;
     private int numMeeples;
     private int numTotoros;
+    private int numTigers;
 
     public Player() {
         score = 0;
         numMeeples = 20;
         numTotoros = 3;
+        numTigers = 2;
     }
 
     public int getScore() {
@@ -26,6 +28,8 @@ public class Player {
         return numTotoros;
     }
 
+    public int getNumTigers(){ return numTigers;}
+
     public void removeMeeple(int amount) {
         numMeeples -= amount;
     }
@@ -37,6 +41,8 @@ public class Player {
     public void removeTotoro() {
         numTotoros -= 1;
     }
+
+    public void removeTiger() { numTigers -= 1; }
 
     public void addScore(int score) {
         this.score += score;

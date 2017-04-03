@@ -28,45 +28,45 @@ public class HexTests {
 
     @Test
     public void createHex(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
     }
 
     @Test
     public void coordinateXTest(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
 
         assertEquals(hex.getCoords().getX(), coordinate.getX());
     }
 
     public void coordinateYTest(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
 
         assertEquals(hex.getCoords().getY(), coordinate.getY());
     }
 
     @Test
     public void setHexLevel(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
         hex.setLevel(4);
         assert hex.getLevel() == 4;
     }
 
     @Test
     public void setTileIndexForHex(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
         hex.setTurnPlaced(3);
         assert hex.getTurnPlaced() == 3;
     }
 
     @Test
     public void checkTerrainType(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
         assertEquals("Types are not equal", TerrainType.VOLCANO, terrainType);
     }
 
     @Test
     public void addMeeplesTest(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
         hex.setLevel(4);
         hex.addMeeple(4);
         assert hex.getMeepleCount() == 4;
@@ -74,13 +74,13 @@ public class HexTests {
 
     @Test
     public void hasTotoroTest(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
         assertFalse(hex.hasTotoro());
     }
 
     @Test
     public void hasTigerTest(){
-        Hex hex = new Hex(x, y, terrainType);
+        Hex hex = new Hex(coordinate, terrainType);
         assertFalse(hex.hasTiger());
     }
 

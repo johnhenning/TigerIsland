@@ -31,7 +31,12 @@ public class TilePlacementRulesTest {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
-        tile = new Tile(coordinates, terrains);
+        Hex[] hexes = new Hex[3];
+        hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
+        hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
+        hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
+
+        tile = new Tile(hexes);
         grid = new Grid(200);
         grid.placeTile(tile);
         gameboard = grid.getGameboard();

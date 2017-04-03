@@ -20,9 +20,9 @@ public class SettlementFoundationRulesTest {
     @Before
     public void setup(){
 
-        hex = new Hex(100, 100, TerrainType.VOLCANO);
-        hex2 = new Hex(101, 101, TerrainType.LAKE);
-        hex3 = new Hex(101, 101, TerrainType.LAKE);
+        hex = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        hex2 = new Hex(new Coordinate(101, 101), TerrainType.LAKE);
+        hex3 = new Hex(new Coordinate(101, 101), TerrainType.LAKE);
         hex.setLevel(1);
         hex2.setLevel(1);
         hex3.setLevel(1);

@@ -12,6 +12,7 @@ import java.util.Stack;
  * Created by johnhenning on 3/22/17.
  */
 public class SettlementExpansionRules extends BuildRules{
+
     public static ArrayList<Coordinate> expansionDFS(Hex[][] gameboard, TerrainType terrain, Settlement settlement){
         ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
         Stack<Coordinate> coords = new Stack();

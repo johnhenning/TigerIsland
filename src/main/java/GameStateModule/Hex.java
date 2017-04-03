@@ -12,8 +12,8 @@ public class Hex {
     private boolean totoro;
     private boolean tiger;
 
-    public Hex(int x, int y, TerrainType terrain) {
-        this.coordinate = new Coordinate(x,y);
+    public Hex(Coordinate coordinate, TerrainType terrain) {
+        this.coordinate = coordinate;
         this.terrain = terrain;
         this.meepleCount = 0;
         this.totoro = false;
@@ -26,6 +26,10 @@ public class Hex {
 
     public int gety() {
         return coordinate.getY();
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
     public void setLevel(int level) { 
