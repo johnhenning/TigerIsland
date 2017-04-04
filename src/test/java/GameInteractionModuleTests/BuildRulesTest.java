@@ -13,24 +13,30 @@ import java.util.ArrayList;
  */
 public class BuildRulesTest {
 
-    public Hex hex;
+    private Hex hex;
+    private Hex hexToBuildOn;
     private Player player1;
     private Player player2;
     private ArrayList<Settlement> Settlement;
     private ArrayList<Settlement> Settlement2;
     private ArrayList<Coordinate> coordinates;
     private ArrayList<Coordinate> secondSettlementCoords;
+    private ArrayList<Settlement> allSettlements;
 
     private ArrayList<TerrainType> terrains;
-    private Tile tile;
 
     @Before
     public void setup() throws Exception{
         hex = new Hex(new Coordinate(100, 100), TerrainType.VOLCANO);
+        hexToBuildOn = new Hex(new Coordinate(100, 101), TerrainType.GRASSLAND);
+
+        player1 = new Player();
+        player2 = new Player();
 
         Settlement = new ArrayList<>();
         Settlement2 = new ArrayList<>();
         coordinates = new ArrayList<>();
+        allSettlements = new ArrayList<>();
         secondSettlementCoords = new ArrayList<>();
         terrains = new ArrayList<>();
 
@@ -49,6 +55,8 @@ public class BuildRulesTest {
         secondSettlementCoords.add(new Coordinate(102, 103));
 
         Settlement2.add(new Settlement(new Coordinate(102,102), player2));
+        allSettlements.addAll(Settlement);
+        allSettlements.addAll(Settlement2);
     }
 
     @Test
@@ -63,7 +71,15 @@ public class BuildRulesTest {
 
     @Test
     public void settlementOfPlayer(){
-        assert true;
+        ArrayList<Settlement> settlementOfPlayer2 = new ArrayList<>();
+        settlementOfPlayer2.addAll(BuildRules.settlementsOfPlayer(allSettlements, player2));
+        assert Settlement2.equals(settlementOfPlayer2);
+    }
+
+    @Test
+    public void isValidBuildTest(){
+        //TODO: Finish this test once checkEnoughEntities() is complete
+        //BuildRules.isValidBuild(hexToBuildOn, player1);
     }
 
 }
