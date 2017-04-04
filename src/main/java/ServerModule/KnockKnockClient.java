@@ -15,36 +15,37 @@ import java.net.UnknownHostException;
 
 public class KnockKnockClient {
 
-    static String[] message;
-    static int pid;
+    private static String[] message;
+    private static String delimiters = "[ +]+";
+    private static int pid;
     private static int cid;
     private static int numRounds;
-    static int rid;
-    static int oid;
-    static int gid;
-    static int moveNum;
-    static int tid;
-    static int xPlaced;
-    static int yPlaced;
-    static int zPlaced;
-    static int xBuilt;
-    static int yBuilt;
-    static int zBuilt;
-    static int orientation;
-    static int p1Score;
-    static int p2Score;
-    static String tileTypeOne;
-    static String tileTypeTwo;
-    static String terrainType;
-    static boolean founded;
-    static boolean expdanded;
-    static boolean totoro;
-    static boolean tiger;
+    private static int rid;
+    private static int oid;
+    private static int gid;
+    private static int moveNum;
+    private static int tid;
+    private static int xPlaced;
+    private static int yPlaced;
+    private static int zPlaced;
+    private static int xBuilt;
+    private static int yBuilt;
+    private static int zBuilt;
+    private static int orientation;
+    private static int p1Score;
+    private static int p2Score;
+    private static String tileTypeOne;
+    private static String tileTypeTwo;
+    private static String terrainType;
+    private static boolean founded;
+    private static boolean expdanded;
+    private static boolean totoro;
+    private static boolean tiger;
 
     public static void parseStringFromServer(String fromServer){
-        message = fromServer.split(" +");
+        message = fromServer.split(delimiters);
         if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN "))
-            pid = Integer.parseInt(fromServer.substring(fromServer.indexOf("WAIT FOR THE TOURNAMENT TO BEGIN "+1)));
+            pid = Integer.parseInt(message[6]);
         else if(fromServer.contains("NEW CHALLENGE ")){
             cid = Integer.parseInt(message[2]);
             numRounds = Integer.parseInt(message[6]);
@@ -57,9 +58,9 @@ public class KnockKnockClient {
             gid = Integer.parseInt(message[5]);
             moveNum = Integer.parseInt(message[10]);
             tileTypeOne = message[12];
-            tileTypeOne = message[13];
+            tileTypeTwo = message[13];
         }
-        else if(fromServer.contains("GAME")){
+        else if(fromServer.contains("PLACED")){
             gid = Integer.parseInt(message[1]);
             moveNum = Integer.parseInt(message[3]);
             pid = Integer.parseInt(message[5]);
@@ -118,6 +119,93 @@ public class KnockKnockClient {
         return numRounds;
     }
 
+    public static int getPid() {
+        return pid;
+    }
+
+    public static int getRid() {
+        return rid;
+    }
+
+    public static int getOid() {
+        return oid;
+    }
+
+    public static int getGid() {
+        return gid;
+    }
+
+    public static int getMoveNum() {
+        return moveNum;
+    }
+
+    public static int getTid() {
+        return tid;
+    }
+
+    public static int getxPlaced() {
+        return xPlaced;
+    }
+
+    public static int getyPlaced() {
+        return yPlaced;
+    }
+
+    public static int getzPlaced() {
+        return zPlaced;
+    }
+
+    public static int getxBuilt() {
+        return xBuilt;
+    }
+
+    public static int getyBuilt() {
+        return yBuilt;
+    }
+
+    public static int getzBuilt() {
+        return zBuilt;
+    }
+
+    public static int getOrientation() {
+        return orientation;
+    }
+
+    public static int getP1Score() {
+        return p1Score;
+    }
+
+    public static int getP2Score() {
+        return p2Score;
+    }
+
+    public static String getTileTypeOne() {
+        return tileTypeOne;
+    }
+
+    public static String getTileTypeTwo() {
+        return tileTypeTwo;
+    }
+
+    public static String getTerrainType() {
+        return terrainType;
+    }
+
+    public static boolean isFounded() {
+        return founded;
+    }
+
+    public static boolean isExpdanded() {
+        return expdanded;
+    }
+
+    public static boolean isTotoro() {
+        return totoro;
+    }
+
+    public static boolean isTiger() {
+        return tiger;
+    }
 
     public static void main(String[] args) throws IOException {
 
