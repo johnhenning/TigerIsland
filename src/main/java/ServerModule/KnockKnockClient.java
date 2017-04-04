@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import java.util.Scanner;
 /**
  * Created by jslocke on 4/3/17.
  */
@@ -44,8 +44,12 @@ public class KnockKnockClient {
 
     public static void parseStringFromServer(String fromServer){
         message = fromServer.split(delimiters);
-        if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN "))
+        if(fromServer.contains("WELCOME TO ANOTHER EDITION OF THUNDERDOME!")){
+           authenticationProtocol();
+        }
+        else if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN "))
             pid = Integer.parseInt(message[6]);
+
         else if(fromServer.contains("NEW CHALLENGE ")){
             cid = Integer.parseInt(message[2]);
             numRounds = Integer.parseInt(message[6]);
@@ -59,6 +63,7 @@ public class KnockKnockClient {
             moveNum = Integer.parseInt(message[10]);
             tileTypeOne = message[12];
             tileTypeTwo = message[13];
+
         }
         else if(fromServer.contains("PLACED")){
             gid = Integer.parseInt(message[1]);
@@ -111,6 +116,18 @@ public class KnockKnockClient {
 
     }
 
+    public static void authenticationProtocol() {
+        Scanner in = new Scanner(System.in);
+
+        String toServer;
+        String fromServer;
+        String enterThunderdome = "ENTER THUNDERDOME ";
+        toServer = in.next();
+        System.out.println(enterThunderdome + toServer);
+
+
+
+    }
     public static int getCid() {
         return cid;
     }

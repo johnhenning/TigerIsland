@@ -11,11 +11,14 @@ public class KnockKnockClientTests {
 
     private KnockKnockClient client;
     private String testString;
+    private String authenticationString;
 
     @Before
     public void setup()throws Exception{
         client = new KnockKnockClient();
         testString = "WAIT FOR THE TOURNAMENT TO BEGIN 2";
+        authenticationString = "WELCOME TO ANOTHER EDITION OF THUNDERDOME!";
+
     }
 
     @Test
@@ -122,6 +125,11 @@ public class KnockKnockClientTests {
         assert client.getNumRounds() == 2;
 
 
+    }
+
+    @Test
+    public void authenticationProtocolTest(){
+        client.parseStringFromServer(authenticationString);
 
     }
 }
