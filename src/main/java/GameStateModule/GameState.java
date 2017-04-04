@@ -1,6 +1,8 @@
 package GameStateModule;
 import GameInteractionModule.Rules.BuildRules;
 import GameInteractionModule.Rules.SettlementFoundationRules;
+import GameInteractionModule.Rules.TileNukeRules;
+
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,10 @@ public class GameState {
         gameboard.placeTile(tile);
     }
 
-    public void levelTile(Tile tile) { gameboard.levelTile(tile); }
+    public void levelTile(Tile tile) {
+        TileNukeRules.bigDivideSettlements(gameboard.getGameboard(), getSettlementList(), tile);
+        gameboard.levelTile(tile);
+    }
     
     public void placeMeeple(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
@@ -57,8 +62,8 @@ public class GameState {
         return gameboard.getHexFromCoordinate(coordinate); 
     }
 
-    public Grid getGameboard() {
-        return gameboard;
+    public Hex[][] getGameboard() {
+        return gameboard.getGameboard();
     }
 
     private void mergeSettlements(Settlement newSettlement){
