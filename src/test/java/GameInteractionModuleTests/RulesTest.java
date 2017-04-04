@@ -30,7 +30,7 @@ public class RulesTest {
 
         grid = new Grid(420);
         coordinates.add(new Coordinate(100,100));
-        coordinates.add(new Coordinate(101,101));
+        coordinates.add(new Coordinate(99,101));
         coordinates.add(new Coordinate(100,101));
 
         terrains.add(TerrainType.VOLCANO);
@@ -38,16 +38,74 @@ public class RulesTest {
         terrains.add(TerrainType.JUNGLE);
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(99,101), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
         tile = new Tile(hexes);
 
         grid.placeTile(tile);
+        gameboard = Grid.getGameboard();
 
     }
     @Test
     public void GameStartedTest(){
         assert Rules.GameStarted(grid) == true;
+    }
+
+    @Test
+    public void checkIfHexEmptyTest(){
+        assert Rules.CheckIfHexEmpty(new Hex(new Coordinate(99, 100), TerrainType.LAKE), gameboard) == true;
+    }
+
+    @Test
+    public void HexesAreAdjacentTest(){
+        assert Rules.HexesAreAdjacent(tile.getHexes()[0], tile.getHexes()[1]);
+    }
+
+    @Test
+    public void HexesAreNotAdjacentTest(){
+        assert !Rules.HexesAreAdjacent(tile.getHexes()[0], new Hex(new Coordinate(101,101), TerrainType.GRASSLAND));
+    }
+
+    @Test
+    public void downRightTest(){
+        assert coordinates.get(2).getX() == 100;
+        assert coordinates.get(2).getY() == 101;
+        assert tile.getHexes()[2].equals(Rules.downRight(gameboard, coordinates.get(0)));
+    }
+
+    @Test
+    public void downLeftTest(){
+        assert coordinates.get(1).getX() == 99;
+        assert coordinates.get(1).getY() == 101;
+        assert tile.getHexes()[1].equals(Rules.downLeft(gameboard, coordinates.get(0)));
+    }
+
+    @Test
+    public void topRightTest(){
+        assert coordinates.get(0).getX() == 100;
+        assert coordinates.get(0).getY() == 100;
+        assert tile.getHexes()[0].equals(Rules.topRight(gameboard, coordinates.get(1)));
+    }
+
+    @Test
+    public void topLeftTest(){
+        assert coordinates.get(0).getX() == 100;
+        assert coordinates.get(0).getY() == 100;
+        assert tile.getHexes()[0].equals(Rules.topLeft(gameboard, coordinates.get(2)));
+    }
+
+    @Test
+    public void leftOfHexTest(){
+        assert coordinates.get(1).getX() == 99;
+        assert coordinates.get(1).getY() == 101;
+        assert tile.getHexes()[1].equals(Rules.leftOfHex(gameboard, coordinates.get(2)));
+    }
+
+    @Test
+    public void rightOfHexTest(){
+        assert coordinates.get(2).getX() == 100;
+        assert coordinates.get(2).getY() == 101;
+        assert tile.getHexes()[2].equals(Rules.rightOfHex(gameboard, coordinates.get(1)));
     }
 }
