@@ -10,7 +10,115 @@ import java.net.UnknownHostException;
 /**
  * Created by jslocke on 4/3/17.
  */
+
+
+
 public class KnockKnockClient {
+
+    static String[] message;
+    static int pid;
+    private static int cid;
+    private static int numRounds;
+    static int rid;
+    static int oid;
+    static int gid;
+    static int moveNum;
+    static int tid;
+    static int xPlaced;
+    static int yPlaced;
+    static int zPlaced;
+    static int xBuilt;
+    static int yBuilt;
+    static int zBuilt;
+    static int orientation;
+    static int p1Score;
+    static int p2Score;
+    static String tileTypeOne;
+    static String tileTypeTwo;
+    static String terrainType;
+    static boolean founded;
+    static boolean expdanded;
+    static boolean totoro;
+    static boolean tiger;
+
+    public static void parseStringFromServer(String fromServer){
+        message = fromServer.split(" +");
+        if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN "))
+            pid = Integer.parseInt(fromServer.substring(fromServer.indexOf("WAIT FOR THE TOURNAMENT TO BEGIN "+1)));
+        else if(fromServer.contains("NEW CHALLENGE ")){
+            cid = Integer.parseInt(message[2]);
+            numRounds = Integer.parseInt(message[6]);
+        }
+        else if(fromServer.contains("BEGIN ROUND "))
+            rid = Integer.parseInt(message[2]);
+        else if(fromServer.contains("NEW MATCH BEGINNING"))
+            oid = Integer.parseInt(message[8]);
+        else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
+            gid = Integer.parseInt(message[5]);
+            moveNum = Integer.parseInt(message[10]);
+            tileTypeOne = message[12];
+            tileTypeOne = message[13];
+        }
+        else if(fromServer.contains("GAME")){
+            gid = Integer.parseInt(message[1]);
+            moveNum = Integer.parseInt(message[3]);
+            pid = Integer.parseInt(message[5]);
+            tileTypeOne = message[7];
+            tileTypeTwo = message[8];
+            xPlaced = Integer.parseInt(message[10]);
+            yPlaced = Integer.parseInt(message[11]);
+            zPlaced = Integer.parseInt(message[12]);
+            orientation = Integer.parseInt(message[13]);
+            if (fromServer.contains("FOUNDED")){
+                xBuilt = Integer.parseInt(message[17]);
+                yBuilt = Integer.parseInt(message[18]);
+                zBuilt = Integer.parseInt(message[19]);
+                founded = true;
+            }
+            else if (fromServer.contains("EXPANDED")){
+                xBuilt = Integer.parseInt(message[17]);
+                yBuilt = Integer.parseInt(message[18]);
+                zBuilt = Integer.parseInt(message[19]);
+                expdanded = true;
+                terrainType = message[20];
+            }
+            else if (fromServer.contains("TOTORO")){
+                xBuilt = Integer.parseInt(message[18]);
+                yBuilt = Integer.parseInt(message[19]);
+                zBuilt = Integer.parseInt(message[20]);
+                totoro = true;
+            }
+            else if (fromServer.contains("TIGER")){
+                xBuilt = Integer.parseInt(message[18]);
+                yBuilt = Integer.parseInt(message[19]);
+                zBuilt = Integer.parseInt(message[20]);
+                tiger = true;
+            }
+        }
+        else if (fromServer.contains("OVER PLAYER")){
+            gid = Integer.parseInt(message[1]);
+            pid = Integer.parseInt(message[4]);
+            p1Score = Integer.parseInt(message[5]);
+            oid = Integer.parseInt(message[7]);
+            p2Score = Integer.parseInt(message[8]);
+        }
+        else if(fromServer.contains("END OF ROUND")){
+            rid = Integer.parseInt(message[3]);
+            numRounds = Integer.parseInt(message[5]);
+        }
+
+
+    }
+
+    public static int getCid() {
+        return cid;
+    }
+
+    public static int getNumRounds() {
+        return numRounds;
+    }
+
+
     public static void main(String[] args) throws IOException {
 
         if (args.length != 2) {
@@ -29,103 +137,17 @@ public class KnockKnockClient {
                         new InputStreamReader(kkSocket.getInputStream()));
         ) {
             BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
+                new BufferedReader(new InputStreamReader(System.in));
             String fromServer;
             String fromUser;
 
-            String[] message;
-            int pid;
-            int cid;
-            int numRounds;
-            int rid;
-            int oid;
-            int gid;
-            int moveNum;
-            int tid;
-            int xPlaced;
-            int yPlaced;
-            int zPlaced;
-            int xBuilt;
-            int yBuilt;
-            int zBuilt;
-            int orientation;
-            int p1Score;
-            int p2Score;
-            String tileTypeOne;
-            String tileTypeTwo;
-            String terrainType;
-            boolean founded;
-            boolean expdanded;
-            boolean totoro;
-            boolean tiger;
+
 
             while ((fromServer = in.readLine()) != null) {
-                message = fromServer.split(" +");
-                if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN "))
-                    pid = Integer.parseInt(fromServer.substring(fromServer.indexOf("WAIT FOR THE TOURNAMENT TO BEGIN "+1)));
-                else if(fromServer.contains("NEW CHALLENGE ")){
-                   cid = Integer.parseInt(message[2]);
-                   numRounds = Integer.parseInt(message[6]);
-                }
-                else if(fromServer.contains("BEGIN ROUND "))
-                    rid = Integer.parseInt(message[2]);
-                else if(fromServer.contains("NEW MATCH BEGINNING"))
-                    oid = Integer.parseInt(message[8]);
-                else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
-                    gid = Integer.parseInt(message[5]);
-                    moveNum = Integer.parseInt(message[10]);
-                    tileTypeOne = message[12];
-                    tileTypeOne = message[13];
-                }
-                else if(fromServer.contains("GAME")){
-                    gid = Integer.parseInt(message[1]);
-                    moveNum = Integer.parseInt(message[3]);
-                    pid = Integer.parseInt(message[5]);
-                    tileTypeOne = message[7];
-                    tileTypeTwo = message[8];
-                    xPlaced = Integer.parseInt(message[10]);
-                    yPlaced = Integer.parseInt(message[11]);
-                    zPlaced = Integer.parseInt(message[12]);
-                    orientation = Integer.parseInt(message[13]);
-                    if (fromServer.contains("FOUNDED")){
-                       xBuilt = Integer.parseInt(message[17]);
-                       yBuilt = Integer.parseInt(message[18]);
-                       zBuilt = Integer.parseInt(message[19]);
-                       founded = true;
-                    }
-                    else if (fromServer.contains("EXPANDED")){
-                        xBuilt = Integer.parseInt(message[17]);
-                        yBuilt = Integer.parseInt(message[18]);
-                        zBuilt = Integer.parseInt(message[19]);
-                        expdanded = true;
-                        terrainType = message[20];
-                    }
-                    else if (fromServer.contains("TOTORO")){
-                        xBuilt = Integer.parseInt(message[18]);
-                        yBuilt = Integer.parseInt(message[19]);
-                        zBuilt = Integer.parseInt(message[20]);
-                        totoro = true;
-                    }
-                    else if (fromServer.contains("TIGER")){
-                        xBuilt = Integer.parseInt(message[18]);
-                        yBuilt = Integer.parseInt(message[19]);
-                        zBuilt = Integer.parseInt(message[20]);
-                        tiger = true;
-                    }
-                }
-                else if (fromServer.contains("OVER PLAYER")){
-                    gid = Integer.parseInt(message[1]);
-                    pid = Integer.parseInt(message[4]);
-                    p1Score = Integer.parseInt(message[5]);
-                    oid = Integer.parseInt(message[7]);
-                    p2Score = Integer.parseInt(message[8]);
-                }
-                else if(fromServer.contains("END OF ROUND")){
-                    rid = Integer.parseInt(message[3]);
-                    numRounds = Integer.parseInt(message[5]);
-                }
+                parseStringFromServer(fromServer);
                 if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE"))
                     break;
+
 
                 fromUser = stdIn.readLine();
                 if (fromUser != null) {
