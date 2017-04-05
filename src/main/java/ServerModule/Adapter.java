@@ -104,4 +104,19 @@ public class Adapter {
 
 
     }
+
+    public int[] convertCubeToAxial(int x, int y, int z){
+        int axialCoord[] = new int[2];
+        axialCoord[0] = (x + (z - (z&1)) / 2)+100;
+        axialCoord[1] = (z)+100;
+        return axialCoord;
+    }
+
+    public int[] convertAxialToCube(int x, int y){
+        int cubicCoord[] = new int[3];
+        cubicCoord[0] = ((x-100)-((y-100)-((y-100)&1))/2);
+        cubicCoord[2] = y-100;
+        cubicCoord[1] = (-(cubicCoord[0])-cubicCoord[2]);
+        return cubicCoord;
+    }
 }

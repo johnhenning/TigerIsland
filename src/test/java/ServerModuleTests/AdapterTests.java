@@ -13,12 +13,22 @@ public class AdapterTests {
     private Adapter adapter;
     private String testString;
     private String authenticationString;
+    private int[] cubicCoord;
+    private int[] axialCoord;
+    private int x;
+    private int y;
+    private int z;
+
 
     @Before
     public void setup()throws Exception{
         adapter = new Adapter();
         testString = "WAIT FOR THE TOURNAMENT TO BEGIN 2";
         authenticationString = "WELCOME TO ANOTHER EDITION OF THUNDERDOME!";
+        x = 0;
+        y = 0;
+        z = 0;
+
 
     }
 
@@ -129,4 +139,42 @@ public class AdapterTests {
 
     }
 
+    @Test
+    public void convertCubeToAxialTest(){
+        axialCoord = adapter.convertCubeToAxial(x,y,z);
+        assert axialCoord[0] == 100;
+        assert axialCoord[1] == 100;
+
+        x=0;
+        y=1;
+        z=-1;
+        axialCoord = adapter.convertCubeToAxial(x,y,z);
+        assert axialCoord[0] == 99;
+        assert axialCoord[1] == 99;
+    }
+
+    @Test
+    public void convertAxialToCubeTest(){
+        x = 100;
+        y = 100;
+        cubicCoord = adapter.convertAxialToCube(x,y);
+        assert cubicCoord[0] == 0;
+        assert cubicCoord[1]== 0;
+        assert cubicCoord[2]==0;
+
+        x=99;
+        y=99;
+        cubicCoord = adapter.convertAxialToCube(x,y);
+        assert cubicCoord[0] == 0;
+        assert cubicCoord[1] == 1;
+        assert cubicCoord[2] == -1;
+
+        x=100;
+        y=99;
+        cubicCoord = adapter.convertAxialToCube(x,y);
+        assert cubicCoord[0] == 1;
+        assert cubicCoord[1] == 0;
+        assert cubicCoord[2] == -1;
+
+    }
 }
