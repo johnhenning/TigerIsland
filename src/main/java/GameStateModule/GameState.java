@@ -1,7 +1,6 @@
 package GameStateModule;
-import GameInteractionModule.Rules.BuildRules;
-import GameInteractionModule.Rules.SettlementExpansionRules;
-import GameInteractionModule.Rules.SettlementFoundationRules;
+import GameInteractionModule.Rules.*;
+
 import java.util.ArrayList;
 
 /**
@@ -41,6 +40,9 @@ public class GameState {
 
     public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) throws Exception {
         Hex hex = getHex(coordinate);
+        if (hex == null) {
+            throw new Exception();
+        }
         Settlement settlement = getSettlementByID(hex.getSettlementID());
         SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
     }
@@ -80,7 +82,14 @@ public class GameState {
 
     public void placeTotoro(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
+        assert TotoroBuildRules.isValidTotoroLocation(hex,currentPlayer,this);
         hex.addTotoro();
+    }
+
+    public void placeTiger(Coordinate coordinate) {
+        Hex hex = gameboard.getHexFromCoordinate(coordinate);
+        assert TigerBuildRules.canPlaceTiger(hex, this);
+        hex.addTiger();
     }
 
     public ArrayList<Settlement> getSettlementList() { 
@@ -95,6 +104,10 @@ public class GameState {
         return gameboard;
     }
 
+    public void printSummary() {
+
+    }
+
     public void switchPlayer() {
         if (currentPlayer == player1) {
             currentPlayer = player2;
@@ -105,6 +118,10 @@ public class GameState {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public int getSettlementIDCount() {
+        return settlementIDCount;
     }
 
     private void mergeSettlements(Settlement newSettlement) {
@@ -121,8 +138,4 @@ public class GameState {
         Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner(), newSettlement.getSettlementID());
         settlementList.add(combinedSettlements);
     }
-
-
-
-
 }

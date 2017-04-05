@@ -20,8 +20,8 @@ public class Rules {
             return true;
 
     }
-    public static boolean CheckIfHexEmpty(Hex hex, Hex[][] gameboard){
-        return gameboard[hex.getx()][hex.gety()] == null;
+    public static boolean CheckIfHexEmpty(Hex hex, Grid gameboard){
+        return gameboard.getGameboard()[hex.getx()][hex.gety()] == null;
     }
 
 

@@ -24,15 +24,32 @@ public class Turn {
                 } catch (Exception e) {
                     return false;
                 }
+                break;
             case EXPANDSETTLEMENT:
                 try {
                     gameState.expandSettlement(buildMove.coordinate, gameState.getCurrentPlayer(), buildMove.terrainType);
                 } catch (Exception e) {
                     return false;
                 }
-            case PLACETIGER:;
-            case PLACETOTORO:;
+                break;
+            case PLACETIGER:
+                try {
+                    gameState.placeTiger(buildMove.coordinate);
+                } catch (Exception e){
+                    return false;
+                }
+                break;
+            case PLACETOTORO:
+                try {
+                    gameState.placeTotoro(buildMove.coordinate);
+                } catch (Exception e){
+                    return false;
+                }
+                break;
             default: return false;
         }
+        gameState.switchPlayer();
+
+        return true;
     }
 }

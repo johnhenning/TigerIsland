@@ -28,12 +28,12 @@ public class SettlementTests {
 
     @Test
     public void settlementCreation() throws Exception {
-        settlement = new Settlement(settlementCoordinates,player1);
+        settlement = new Settlement(settlementCoordinates,player1, 0);
     }
 
     @Test
     public void settlementExpansion() throws Exception {
-        settlement = new Settlement(settlementCoordinates,player1);
+        settlement = new Settlement(settlementCoordinates,player1, 0);
         settlementCoordinates = new ArrayList<Coordinate>();
         settlementCoordinates.add(new Coordinate(3,2));
         settlement.expandSettlement(settlementCoordinates);
@@ -41,7 +41,7 @@ public class SettlementTests {
 
     @Test
     public void coordinateAdjacency() throws Exception{
-        settlement = new Settlement(settlementCoordinates, player1);
+        settlement = new Settlement(settlementCoordinates, player1, 0);
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
         newCoordinates.add(new Coordinate(3,3));
         newCoordinates.add(new Coordinate(1,4));
@@ -51,7 +51,7 @@ public class SettlementTests {
 
     @Test
     public void coordinateNonAdjacency() throws Exception{
-        settlement = new Settlement(settlementCoordinates, player1);
+        settlement = new Settlement(settlementCoordinates, player1,0);
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
         newCoordinates.add(new Coordinate(3,4));
         newCoordinates.add(new Coordinate(1,4));

@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class TotoroBuildRules extends BuildRules {
 
 
-    public static boolean isHexAdjacentToSettlement(Hex hex)
+    public static boolean isHexAdjacentToSettlement(Hex hex, GameState gameState)
     {
-        ArrayList<Settlement> settlementList = GameState.getSettlementList();
-        Hex[][] gameboard = Grid.getGameboard();
+        ArrayList<Settlement> settlementList = gameState.getSettlementList();
+        Grid gameboard = gameState.getGameboard();
         ArrayList<Hex> adjacentHexes = TilePlacementRules.getAdjacentHexes(hex, gameboard);
         for(Settlement s:settlementList)
             for(Hex h: adjacentHexes)
-                if(CoordinateIsPartOfSettlement(s.getSettlementCoordinates(), h.getCoords()))
+                if(CoordinateIsPartOfSettlement(s.getSettlementCoordinates(), h.getCoordinate()))
                     return true;
         return false;
     }
@@ -30,9 +30,9 @@ public class TotoroBuildRules extends BuildRules {
         return false;
     }
 
-    public static boolean playerHasSizeFiveSettlement(Player player)
+    public static boolean playerHasSizeFiveSettlement(Player player, GameState gameState)
     {
-        ArrayList<Settlement> settlementList = GameState.getSettlementList();
+        ArrayList<Settlement> settlementList = gameState.getSettlementList();
         ArrayList<Settlement> settlementListOfPlayer = settlementsOfPlayer(settlementList, player);
         settlementListOfPlayer = SettlementsGreaterThanFive(settlementListOfPlayer);
         return settlementListOfPlayer.size() > 0;
@@ -47,28 +47,28 @@ public class TotoroBuildRules extends BuildRules {
         return sizeFiveSettlements;
     }
 
-    public static boolean settlementNotContainTotoro(){
-        ArrayList<Settlement> settlementList = GameState.getSettlementList();
+    public static boolean settlementNotContainTotoro(GameState gameState){
+        ArrayList<Settlement> settlementList = gameState.getSettlementList();
         for(Settlement s:settlementList){
-            if(!isTotoroInSettlement(s.getSettlementCoordinates())){
+            if(!isTotoroInSettlement(s.getSettlementCoordinates(), gameState)){
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isTotoroInSettlement(ArrayList<Coordinate> settlementCoords){
+    public static boolean isTotoroInSettlement(ArrayList<Coordinate> settlementCoords, GameState gameState){
         for(Coordinate c : settlementCoords){
-            if(Grid.getHexFromCoordinate(c).hasTotoro()){
+            if(gameState.getGameboard().getHexFromCoordinate(c).hasTotoro()){
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isValidTotoroLocation(Hex hex, Player player){
-        return playerHasSizeFiveSettlement(player) && isHexAdjacentToSettlement(hex) && isValidBuild(hex,player)
-                && settlementNotContainTotoro();
+    public static boolean isValidTotoroLocation(Hex hex, Player player, GameState gameState){
+        return playerHasSizeFiveSettlement(player, gameState) && isHexAdjacentToSettlement(hex, gameState) && isValidBuild(hex,player)
+                && settlementNotContainTotoro(gameState);
     }
 
 }

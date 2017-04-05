@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class TileTests {
     private static ArrayList<Coordinate> coordinates;
     private static ArrayList<TerrainType> terrains;
-    private static Hex[] hexes;
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -30,19 +29,15 @@ public class TileTests {
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
 
-        hexes = new Hex[3];
-        hexes[0] = new Hex(new Coordinate(1,1), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(1,2), TerrainType.GRASSLAND);
-        hexes[2] = new Hex(new Coordinate(2,2), TerrainType.LAKE);
     }
     @Test
     public void createTile() throws Exception {
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
     }
 
     @Test
     public void setTileLevel() throws Exception {
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         tile.setLevel(3);
     }
 }

@@ -48,13 +48,13 @@ public class BuildRulesTest {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.JUNGLE);
 
-        Settlement.add(new Settlement(new Coordinate(100,100), player1));
+        Settlement.add(new Settlement(new Coordinate(100,100), player1, 0));
 
         secondSettlementCoords.add(new Coordinate(102, 102));
         secondSettlementCoords.add(new Coordinate(103, 103));
         secondSettlementCoords.add(new Coordinate(102, 103));
 
-        Settlement2.add(new Settlement(new Coordinate(102,102), player2));
+        Settlement2.add(new Settlement(new Coordinate(102,102), player2, 0));
         allSettlements.addAll(Settlement);
         allSettlements.addAll(Settlement2);
     }

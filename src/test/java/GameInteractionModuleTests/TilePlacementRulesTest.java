@@ -17,7 +17,6 @@ public class TilePlacementRulesTest {
     private static Tile tile;
     private static Tile tile2;
     private ArrayList<Tile> placedTiles;
-    private Hex[][] gameboard;
 
     @Before
     public void setup(){
@@ -31,15 +30,11 @@ public class TilePlacementRulesTest {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
-        Hex[] hexes = new Hex[3];
-        hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
-        hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
-        hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
 
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
         grid = new Grid(200);
         grid.placeTile(tile);
-        gameboard = grid.getGameboard();
+
         placedTiles = grid.getPlacedTiles();
 
     }
@@ -51,7 +46,7 @@ public class TilePlacementRulesTest {
 
     @Test
     public void CheckForUnoccupiedHexesTest(){
-        assert TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard) == false;
+        assert TilePlacementRules.CheckForUnoccupiedHexes(tile, grid) == false;
     }
 
   

@@ -22,7 +22,7 @@ public class Grid {
     }
 
     public void placeTile(Tile tile) {
-        TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
+        TilePlacementRules.isValidTilePlacement(tile, this, placedTiles);
 
         placeTileOnGameboard(tile, 1);
 
