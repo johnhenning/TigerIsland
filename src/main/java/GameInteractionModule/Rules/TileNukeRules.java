@@ -251,9 +251,6 @@ public class TileNukeRules extends Rules {
         removeCoordsFromSettlement(hexesEncountered, settlement);
         Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner());
 
-//        if(settlement.getSettlementCoordinates().size() != 0){
-//            splitSettlements.add(settlement);
-//        }
         splitSettlements.add(newSettlement);
 
         return splitSettlements;

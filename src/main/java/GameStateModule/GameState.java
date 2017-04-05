@@ -21,7 +21,7 @@ public class GameState {
         settlementList = new ArrayList<Settlement>();
     }
 
-    public void foundSettlement(Coordinate coordinate, Player player) throws Exception{
+    public void foundSettlement(Coordinate coordinate, Player player) {
       //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
         if(!SettlementFoundationRules.isValidFoundation(h)) throw new AssertionError();
@@ -32,14 +32,14 @@ public class GameState {
             Settlement settlement = new Settlement(coordinate,player);
             mergeSettlements(settlement);
         }
-}
+    }
 
     public void placeTile(Tile tile) {
         gameboard.placeTile(tile);
     }
 
     public void levelTile(Tile tile) {
-        TileNukeRules.bigDivideSettlements(gameboard.getGameboard(), getSettlementList(), tile);
+        TileNukeRules.bigDivideSettlements(gameboard.getGameboard(), settlementList, tile);
         gameboard.levelTile(tile);
     }
     

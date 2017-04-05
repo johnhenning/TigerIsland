@@ -206,8 +206,8 @@ public class GridStepDefs {
         hexes[2] = new Hex(new Coordinate(101,101), TerrainType.LAKE);
 
         Tile tile = new Tile(hexes);
-//        try{ gameBoard.levelTile(tile); }
-//        catch (AssertionError e){ exceptionThrown = true; }
+        try{ gameBoard.levelTile(tile); }
+        catch (AssertionError e){ exceptionThrown = true; }
 
     }
 

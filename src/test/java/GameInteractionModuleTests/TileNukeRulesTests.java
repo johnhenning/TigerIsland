@@ -3,7 +3,6 @@ package GameInteractionModuleTests;
 import GameInteractionModule.Rules.TileNukeRules;
 import GameStateModule.*;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +11,19 @@ import java.util.ArrayList;
 /**
  * Created by Kyle on 3/28/2017.
  */
+
+/* *********** PLEASE READ BEFORE CONTINUING *************** /
+*   NOTE: THIS IS SUBJECT TO CHANGE WITH PLACEMENT OF FIRST TILE
+*
+*   These tests have a consistent tile layout which I've drawn
+*   a picture of according to our method of referring to tile
+*   placements. I've created a function that places the tile on
+*   the board so I can use in multiple tests without copy and pasting.
+*   The tile layout can be found on the google drive,
+*   TileNukeRulesTileLayout.jpg
+*************************************************************/
+
+
 public class TileNukeRulesTests{
 
     private GameState game;
@@ -19,6 +31,7 @@ public class TileNukeRulesTests{
     private ArrayList<Settlement> overlappedSettlement;
     private ArrayList<Settlement> validSettlement;
     private Player player1;
+    private Player player2;
     private boolean exceptionThrown;
 
     private ArrayList<Coordinate> coordinates;
@@ -40,6 +53,7 @@ public class TileNukeRulesTests{
         coordinates = new ArrayList<>();
         terrains = new ArrayList<>();
         player1 = new Player();
+        player2 = new Player();
         secondSettlementCoords = new ArrayList<>();
 
         coordinates.add(new Coordinate(100,100));
@@ -155,8 +169,6 @@ public class TileNukeRulesTests{
     @Test
     public void removeCoordsFromSettlementTest(){
         Settlement s = validSettlement.get(0);
-
-
         TileNukeRules.removeCoordsFromSettlement(coordinates, s);
         System.out.println(s.getSettlementCoordinates().size());
         assert  !(s.getSettlementCoordinates().size() > 0);
@@ -189,7 +201,7 @@ public class TileNukeRulesTests{
         assert  !exceptionThrown;
         settlementCoordinates.add(new Coordinate(99,103));
         settlementCoordinates.add(new Coordinate(100,102));
-        settlementCoordinates.add(new Coordinate(98,101));
+        settlementCoordinates.add(new Coordinate(101,100));
         settlementCoordinates.add(new Coordinate(101,99));
 
         Settlement testSettlement = new Settlement(settlementCoordinates, player1);
@@ -197,14 +209,77 @@ public class TileNukeRulesTests{
         settlementsReturned = TileNukeRules.divideSettlement(gameBoard.getGameboard(), testSettlement);
 
         assert settlementsReturned.get(0).getSettlementCoordinates().size() == 2;
-        assert settlementsReturned.get(1).getSettlementCoordinates().size() == 2;
+//        assert settlementsReturned.get(1).getSettlementCoordinates().size() == 2;
     }
 
     @Test
-    public void bigDivideSettlements() throws Throwable{
-//        gameBoard = new Grid(200);
-        ArrayList<Coordinate> settlementCoordinates = new ArrayList<>();
-        ArrayList<Settlement> settlementsReturned = new ArrayList<>();
+    public void bigDivideSettlementsTest() {
+        setupGameState(game);
+        Hex[] boomHexes = new Hex[3];
+        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(boomHexes);
+
+        game.levelTile(boomTile);
+        ArrayList<Settlement> checkingSettlments = game.getSettlementList();
+        assert checkingSettlments != null;
+    }
+
+    @Test
+    public void bigDivideSettlementsTestNonNuke() {
+        setupGameStateNonNuked(game);
+
+        Hex[] boomHexes = new Hex[3];
+        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(boomHexes);
+
+        game.levelTile(boomTile);
+        ArrayList<Settlement> checkingSettlments = game.getSettlementList();
+        assert checkingSettlments != null;
+    }
+    @Test
+    public void bigDivideSettlementsTest2Players() {
+        setupGameState2Players(game);
+
+        Hex[] boomHexes = new Hex[3];
+        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(boomHexes);
+
+        game.levelTile(boomTile);
+        ArrayList<Settlement> checkingSettlments = game.getSettlementList();
+        assert checkingSettlments != null;
+
+        Hex h = game.getHex(new Coordinate(100,100));
+        assert h.getLevel() == 2;
+
+    }
+    @Test
+    public void bigDivideSettlementsTestWithExpansion(){
+        setupGameState2Players(game);
+        Hex[] boomHexes = new Hex[3];
+        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(boomHexes);
+
+        game.levelTile(boomTile);
+        ArrayList<Settlement> checkingSettlments = game.getSettlementList();
+        assert checkingSettlments != null;
+
+        Hex h = game.getHex(new Coordinate(100,100));
+        assert h.getLevel() == 2;
+
+
+    }
+
+
+    //TODO: test whether or not a settlement can be completly wiped out
+    public  void setupTilesOnGameState(GameState game){
         try {game.placeTile(tile);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
@@ -220,39 +295,66 @@ public class TileNukeRulesTests{
         try {game.placeTile(tile5);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
-
+    }
+    public void setupSettlementSize5(GameState game){
         try {game.foundSettlement(new Coordinate(101,99), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
         try {game.foundSettlement(new Coordinate(101,100), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
-//        Hex h = game.getHex(new Coordinate(98, 101));
-//        assert h.getLevel() == 1;
         try {game.foundSettlement(new Coordinate(100,101), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
         try {game.foundSettlement(new Coordinate(100,102), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
-
         try {game.foundSettlement(new Coordinate(99,103), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
-
-        Hex[] boomHexes = new Hex[3];
-        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        Tile boomTile = new Tile(boomHexes);
-
-        game.levelTile(boomTile);
-        ArrayList<Settlement> checkingSettlments = game.getSettlementList();
-        assert checkingSettlments != null;
     }
+    public void setupSettlementNonNuked(GameState game){
+        try {game.foundSettlement(new Coordinate(98,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(99,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(100,102), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(99,103), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+    }
+    public void setupSettlement2Players(GameState game){
 
+        try {game.foundSettlement(new Coordinate(99,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(100,102), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(99,103), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+//        game.foundSettlement(new Coordinate(101,99), player2);
+        try {game.foundSettlement(new Coordinate(101,99), player2);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
 
-    //TODO: test whether or not a settlement can be completly wiped out
-
+    }
+    public void setupGameState(GameState game){
+        setupTilesOnGameState(game);
+        setupSettlementSize5(game);
+    }
+    public void setupGameStateNonNuked(GameState game){
+        setupTilesOnGameState(game);
+        setupSettlementNonNuked(game);
+    }
+    public void setupGameState2Players(GameState game){
+        setupTilesOnGameState(game);
+        setupSettlement2Players(game);
+    }
 
 }
