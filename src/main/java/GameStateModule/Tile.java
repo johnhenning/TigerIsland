@@ -12,13 +12,20 @@ public class Tile {
         hexes = new ArrayList<Hex>();
 
         for (int i = 0; i < coordinates.size(); i++) {
-            hexes.add(new Hex(coordinates.get(i).getX(), coordinates.get(i).getY(), terrains.get(i)));
+            hexes.add(new Hex(coordinates.get(i), terrains.get(i)));
         }
     }
 
     public void setLevel(int level) {
         for(Hex h: hexes)
             h.setLevel(level);
+    }
+
+    public void setCoordinates(ArrayList<Coordinate> coordinates) {
+        assert coordinates.size() == hexes.size();
+        for (int i = 0; i < coordinates.size(); i++) {
+            hexes.get(i).setCoordinate(coordinates.get(i));
+        }
     }
 
     public ArrayList<Hex> getHexes() {
@@ -28,7 +35,7 @@ public class Tile {
     public ArrayList<Coordinate> getCoords(){
         ArrayList<Coordinate> tileCoords = new ArrayList<>();
         for(Hex h: hexes)
-            tileCoords.add(h.getCoords());
+            tileCoords.add(h.getCoordinate());
 
         return tileCoords;
     }

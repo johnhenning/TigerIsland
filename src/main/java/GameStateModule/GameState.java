@@ -1,5 +1,6 @@
 package GameStateModule;
 import GameInteractionModule.Rules.BuildRules;
+import GameInteractionModule.Rules.SettlementExpansionRules;
 import GameInteractionModule.Rules.SettlementFoundationRules;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
  */
 public class GameState {
     private Grid gameboard;
+    private Player currentPlayer;
     private Player player1;
     private Player player2;
     private ArrayList<Settlement> settlementList;
@@ -19,9 +21,10 @@ public class GameState {
         player2 = new Player();
         settlementList = new ArrayList<Settlement>();
         settlementIDCount = 0;
+        currentPlayer = player1;
     }
 
-    public void foundSettlement(Coordinate coordinate, Player player) throws Exception{
+    public void foundSettlement(Coordinate coordinate, Player player) throws Exception {
       //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
 
@@ -36,11 +39,38 @@ public class GameState {
         }
     }
 
-    public void placeTile(Tile tile) {
-        gameboard.placeTile(tile);
+    public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) throws Exception {
+        Hex hex = getHex(coordinate);
+        Settlement settlement = getSettlementByID(hex.getSettlementID());
+        SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
     }
 
-    public void levelTile(Tile tile) { gameboard.levelTile(tile); }
+    public Settlement getSettlementByID(int settlementID) {
+        for (Settlement settlement : settlementList) {
+            if ( settlement.getSettlementID() == settlementID ) {
+                return settlement;
+            }
+        }
+        return null;
+    }
+
+    public boolean placeTile(Tile tile) {
+        try {
+            gameboard.placeTile(tile);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean levelTile(Tile tile) {
+        try {
+            gameboard.levelTile(tile);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     
     public void placeMeeple(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
@@ -65,19 +95,34 @@ public class GameState {
         return gameboard;
     }
 
-    private void mergeSettlements(Settlement newSettlement){
+    public void switchPlayer() {
+        if (currentPlayer == player1) {
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
+        }
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    private void mergeSettlements(Settlement newSettlement) {
         ArrayList<Coordinate> adjacentCoordinates = newSettlement.getSettlementCoordinates();
         ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
 
         for(Settlement s: playersSettlements){
-            if(s.areCoordinatesAdjacent(adjacentCoordinates)){
+            if(s.areCoordinatesAdjacent(adjacentCoordinates)) {
                 adjacentCoordinates.addAll(s.getSettlementCoordinates());
                 settlementList.remove(s);
             }
         }
 
-        Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner());
+        Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner(), newSettlement.getSettlementID());
         settlementList.add(combinedSettlements);
     }
+
+
+
 
 }
