@@ -1,5 +1,8 @@
 package ServerModule;
 
+import GameStateModule.Coordinate;
+import GameStateModule.Hex;
+
 /**
  * Created by carlos on 4/4/2017.
  */
@@ -118,5 +121,79 @@ public class Adapter {
         cubicCoord[2] = y-100;
         cubicCoord[1] = (-(cubicCoord[0])-cubicCoord[2]);
         return cubicCoord;
+    }
+
+    public Coordinate[] getCoordinatesOfOpponentsTile(Coordinate volcanoCoordinate, int orientation){
+        Coordinate habitableTerrainCoordinates[] = new Coordinate[2];
+        switch (orientation){
+            case 1:
+                habitableTerrainCoordinates[0] = topRight(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = topLeft(volcanoCoordinate);
+                break;
+            case 2:
+                habitableTerrainCoordinates[0] = topRight(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = rightOfHex(volcanoCoordinate);
+                break;
+            case 3:
+                habitableTerrainCoordinates[0] = rightOfHex(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = downRight(volcanoCoordinate);
+                break;
+            case 4:
+                habitableTerrainCoordinates[0] = downRight(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = downLeft(volcanoCoordinate);
+            case 5:
+                habitableTerrainCoordinates[0] = downLeft(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = leftOfHex(volcanoCoordinate);
+            case 6:
+                habitableTerrainCoordinates[0] = leftOfHex(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = topLeft(volcanoCoordinate);
+        }
+        return habitableTerrainCoordinates;
+    }
+    public static Coordinate downRight(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x,y+1);
+        return new Coordinate(x+1,y+1);
+    }
+    public static Coordinate downLeft(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x-1,y+1);
+        return new Coordinate(x,y+1);
+    }
+    public static Coordinate topRight(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x,y-1);
+        return new Coordinate(x+1,y-1);
+    }
+    public static Coordinate topLeft(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x-1,y-1);
+        return new Coordinate(x,y-1);
+    }
+
+    public static Coordinate leftOfHex(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        return new Coordinate(x-1,y);
+    }
+
+    public static Coordinate rightOfHex(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        return new Coordinate(x+1,y);
     }
 }
