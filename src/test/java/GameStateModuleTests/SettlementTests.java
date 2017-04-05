@@ -8,9 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-/**
- * Created by johnhenning on 3/23/17.
- */
+
 public class SettlementTests {
     private Settlement settlement;
     private Player player1;
@@ -23,7 +21,6 @@ public class SettlementTests {
         settlementCoordinates.add(new Coordinate(2,2));
         settlementCoordinates.add(new Coordinate(1,2));
     }
-
 
 
     @Test
