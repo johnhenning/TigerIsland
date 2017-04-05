@@ -26,8 +26,11 @@ public class serverTest {
             String inputLine, outputLine;
 
             out.println("WELCOME TO ANOTHER EDITION OF THUNDERDOME!");
+            out.println("TWO SHALL ENTER, ONE SHALL LEAVE");
+            out.println("WAIT FOR THE TOURNAMENT TO BEGIN 123");
+            out.println("THANK YOU FOR PLAYING! GOODBYE");
             while((inputLine = in.readLine()) != null){
-                System.out.println(inputLine);
+               System.out.println(inputLine);
             }
 
             return;

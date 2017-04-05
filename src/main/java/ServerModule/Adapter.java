@@ -35,10 +35,8 @@ public class Adapter {
 
     public static void parseStringFromServer(String fromServer){
         message = fromServer.split(delimiters);
-        if(fromServer.contains("WELCOME TO ANOTHER EDITION OF THUNDERDOME!")){
-            authentication=true;
-        }
-        else if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
+
+        if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
             pid = Integer.parseInt(message[6]);
         }
         else if(fromServer.contains("NEW CHALLENGE ")){

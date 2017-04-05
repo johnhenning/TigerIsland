@@ -32,12 +32,22 @@ public class KnockKnockClient {
         catch (IOException e){ System.out.println("Shits Fucked");}
     }
 
-    public String authenticateConnection(String tournamentPassword, String username, String userPassword){
-        getServerMessage();
+    public void authenticateConnection(String tournamentPassword, String username, String userPassword){
+        if(getServerMessage().contains("WELCOME TO ANOTHER EDITION OF THUNDERDOME!")){
+            out.println("ENTER THUNDERDOME"+ " " + tournamentPassword);
 
+        }
+        if(getServerMessage().contains("TWO SHALL ENTER, ONE SHALL LEAVE")){
+            out.println("I AM" + " " + username + " " + userPassword);
+        }
+        String serverMessage = getServerMessage();
+        if(serverMessage.contains("WAIT FOR THE TOURNAMENT TO BEGIN")){
+            String[] parsedString = serverMessage.split(" ");
+            int pid = Integer.parseInt(parsedString[6]);
+            //out.println("PID IS " + pid);
 
+        }
 
-        return getServerMessage();
     }
     public String getServerMessage(){
         String fromServer;
@@ -46,16 +56,17 @@ public class KnockKnockClient {
             while ((fromServer = serverMessage.readLine()) != null){
                 System.out.println("Server: " + fromServer);
                 out.println("Got it!");
+                if(fromServer.contains("THANK YOU FOR PLAYING")){
+                    break;
+                }
+                return fromServer;
             }
-
-            return fromServer;
+            return null;
         }
         catch (IOException e){}
         return null;
     }
-    public void sendServerMessage(String message){
 
-    }
 
 
     public static void main(String[] args) throws IOException {
