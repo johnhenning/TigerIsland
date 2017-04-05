@@ -19,11 +19,13 @@ public class TigerPlacementTest {
     boolean exceptionThrown;
     private Player player1;
     GameState gameStateObj;
+    ArrayList<Coordinate> coordinates;
+    Hex[] hexes;
 
     @Before
     public void setup() throws Exception {
         gameStateObj = new GameState();
-        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        coordinates = new ArrayList<Coordinate>();
 
 
         coordinates.add(new Coordinate(100, 100));
@@ -35,7 +37,7 @@ public class TigerPlacementTest {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        Hex[] hexes = new Hex[3];
+        hexes = new Hex[3];
         hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
         hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
         hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
@@ -129,9 +131,23 @@ public class TigerPlacementTest {
     }
 
     @Test
-    public void checkIfHexAdjacentToSettlementTest(){
-        assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile.getHexes()[2]);
+    public void coordinateInSettlement(){
+        Coordinate testCoord = new Coordinate(123, 132);
+        Coordinate testCoord1 = new Coordinate(121, 105);
+        ArrayList<Coordinate> containList = new ArrayList<>();
+        containList.add(testCoord);
+        containList.add(testCoord1);
+        assert TigerBuildRules.coordinateInSettlement(containList, testCoord);
     }
+
+    @Test
+    public void isTigerInSettlementTest(){
+        hexes[1].addTiger();
+        assert TigerBuildRules.isTigerInSettlement(coordinates);
+    }
+
+    @Test
+    public void checkIfHexAdjacentToSettlementTest(){ assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile.getHexes()[2]); }
 
     @Test
     public void checkIfHexLevelAtleastThreeTest(){

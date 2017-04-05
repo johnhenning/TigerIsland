@@ -70,7 +70,7 @@ public class BuildRulesTest {
     }
 
     @Test
-    public void settlementOfPlayer(){
+    public void settlementOfPlayerTest(){
         ArrayList<Settlement> settlementOfPlayer2 = new ArrayList<>();
         settlementOfPlayer2.addAll(BuildRules.settlementsOfPlayer(allSettlements, player2));
         assert Settlement2.equals(settlementOfPlayer2);

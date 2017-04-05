@@ -29,6 +29,7 @@ public class TileNukeRulesTests{
     static Tile tile3;
     static Tile tile4;
     static Tile tile5;
+    static Tile tile6;
 
 
     @Before
@@ -124,6 +125,22 @@ public class TileNukeRulesTests{
         hexes5[2] = new Hex(coordinates5.get(2), terrains5.get(2));
 
         tile5 = new Tile(hexes5);
+
+        ArrayList<Coordinate> coordinates6 = new ArrayList<Coordinate>();
+        coordinates6.add(new Coordinate(101,100));
+        coordinates6.add(new Coordinate(100,100));
+        coordinates6.add(new Coordinate(100,99));
+
+        ArrayList<TerrainType> terrains6 = new ArrayList<TerrainType>();
+        terrains6.add(TerrainType.GRASSLAND);
+        terrains6.add(TerrainType.VOLCANO);
+        terrains6.add(TerrainType.GRASSLAND);
+        Hex[] hexes6 = new Hex[3];
+        hexes6[0] = new Hex(coordinates6.get(0), terrains6.get(0));
+        hexes6[1] = new Hex(coordinates6.get(1), terrains6.get(1));
+        hexes6[2] = new Hex(coordinates6.get(2), terrains6.get(2));
+
+        tile6 = new Tile(hexes6);
     }
 
 
@@ -131,6 +148,50 @@ public class TileNukeRulesTests{
     public void coordsOverlapTest(){
         assert TileNukeRules.doCoordinatesOverlap(coordinates, secondSettlementCoords);
     }
+
+    @Test
+    public void checkLowerHexesAreSameLevelTest(){
+        gameBoard = new Grid(200);
+        try {gameBoard.placeTile(tile);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile2);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile3);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile4);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile5);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        assert TileNukeRules.CheckLowerHexesAreSameLevel(tile6, gameBoard.getGameboard()) == 1;
+    }
+
+    @Test
+    public void getNewTileLevelTest(){
+        gameBoard = new Grid(200);
+        try {gameBoard.placeTile(tile);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile2);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile3);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile4);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {gameBoard.placeTile(tile5);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        int level = TileNukeRules.getNewTileLevel(tile6, gameBoard.getGameboard());
+        assert level == 2;
+    }
+
 
     @Test
     public void findAffectedSettlementsTest(){

@@ -53,9 +53,7 @@ public class RulesTest {
     }
 
     @Test
-    public void checkIfHexEmptyTest(){
-        assert Rules.CheckIfHexEmpty(new Hex(new Coordinate(99, 100), TerrainType.LAKE), gameboard) == true;
-    }
+    public void checkIfHexEmptyTest(){ assert Rules.CheckIfHexEmpty(new Hex(new Coordinate(99, 100), TerrainType.LAKE), gameboard) == true; }
 
     @Test
     public void HexesAreAdjacentTest(){
@@ -63,9 +61,7 @@ public class RulesTest {
     }
 
     @Test
-    public void HexesAreNotAdjacentTest(){
-        assert !Rules.HexesAreAdjacent(tile.getHexes()[0], new Hex(new Coordinate(101,101), TerrainType.GRASSLAND));
-    }
+    public void HexesAreNotAdjacentTest(){ assert !Rules.HexesAreAdjacent(tile.getHexes()[0], new Hex(new Coordinate(101,101), TerrainType.GRASSLAND)); }
 
     @Test
     public void downRightTest(){

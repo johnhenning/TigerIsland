@@ -127,6 +127,17 @@ public class SettlementExpansionRulesTests {
     }
 
     @Test
+    public void containTest(){
+        ArrayList<Coordinate> tempCoordList = new ArrayList<>();
+        Coordinate coord = new Coordinate(127,128);
+        tempCoordList.add(new Coordinate(125, 126));
+        tempCoordList.add(coord);
+        assert SettlementExpansionRules.contains(tempCoordList, coord);
+
+    }
+
+
+    @Test
     public void expansionDFSTest(){
         gameBoard = new Grid(200);
         ArrayList<Coordinate> settlementCoordinates = new ArrayList<>();
@@ -169,6 +180,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
         newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard.getGameboard(),TerrainType.GRASSLAND,settlement1.get(0)));
+        assert !exceptionThrown;
         assert newCoordinates.size() == 4;
     }
 
@@ -196,6 +208,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
         newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard.getGameboard(),TerrainType.GRASSLAND,settlement1.get(0)));
+        assert !exceptionThrown;
         assert newCoordinates.size() == 6;
     }
 
@@ -226,6 +239,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
         newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard.getGameboard(),TerrainType.GRASSLAND,settlement1.get(0)));
+        assert exceptionThrown;//invalid tile was placed so should be true
         assert newCoordinates.size() == 6;
     }
 }
