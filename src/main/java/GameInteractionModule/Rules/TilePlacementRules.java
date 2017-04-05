@@ -88,9 +88,9 @@ public class TilePlacementRules extends Rules {
     }
 
     private static boolean HexesAreValid(Tile tile) {
-        return Rules.HexesAreAdjacent(tile.getHexes()[0], tile.getHexes()[1])
-                && Rules.HexesAreAdjacent(tile.getHexes()[0], tile.getHexes()[2])
-                && Rules.HexesAreAdjacent(tile.getHexes()[1],tile.getHexes()[2]);
+        return Rules.HexesAreAdjacent(tile.getHexes().get(0), tile.getHexes().get(1))
+                && Rules.HexesAreAdjacent(tile.getHexes().get(0), tile.getHexes().get(2))
+                && Rules.HexesAreAdjacent(tile.getHexes().get(1),tile.getHexes().get(2));
     }
 
 

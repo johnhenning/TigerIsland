@@ -37,12 +37,12 @@ public class TileTests {
     }
     @Test
     public void createTile() throws Exception {
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
     }
 
     @Test
     public void setTileLevel() throws Exception {
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         tile.setLevel(3);
     }
 }

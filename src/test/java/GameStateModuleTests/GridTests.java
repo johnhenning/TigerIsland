@@ -30,7 +30,7 @@ public class GridTests {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
     }
 
     @Test

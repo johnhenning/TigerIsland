@@ -41,7 +41,15 @@ public class GameState {
 
     public void levelTile(Tile tile) {
         TileNukeRules.bigDivideSettlements(gameboard.getGameboard(), settlementList, tile);
+        cleanSettlements();
         gameboard.levelTile(tile);
+    }
+    public void cleanSettlements(){
+        for(int i = 0; i < settlementList.size(); i++){
+            if(settlementList.get(i).getSettlementCoordinates().size() == 0) {
+                settlementList.remove(i--);
+            }
+        }
     }
     
     public void placeMeeple(Coordinate coordinate) {

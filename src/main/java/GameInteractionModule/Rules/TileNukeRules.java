@@ -26,9 +26,9 @@ public class TileNukeRules extends Rules {
         return lowerLevel+1;
     }
     public static int CheckLowerHexesAreSameLevel(Tile tile, Hex[][] gameboard) {
-        Hex hex0 = tile.getHexes()[0];
-        Hex hex1 = tile.getHexes()[1];
-        Hex hex2 = tile.getHexes()[2];
+        Hex hex0 = tile.getHexes().get(0);
+        Hex hex1 = tile.getHexes().get(1);
+        Hex hex2 = tile.getHexes().get(2);
 
         Hex lower_hex0 = gameboard[hex0.getx()][hex0.gety()];
         Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
@@ -48,9 +48,9 @@ public class TileNukeRules extends Rules {
     }
 
     public static boolean CheckHexesSpanMultipleTiles(Tile tile, Hex[][] gameboard) {
-        Hex hex0 = tile.getHexes()[0];
-        Hex hex1 = tile.getHexes()[1];
-        Hex hex2 = tile.getHexes()[2];
+        Hex hex0 = tile.getHexes().get(0);
+        Hex hex1 = tile.getHexes().get(1);
+        Hex hex2 = tile.getHexes().get(2);
 
         Hex hex_zero = gameboard[hex0.getx()][hex0.gety()];
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
@@ -81,9 +81,9 @@ public class TileNukeRules extends Rules {
     }
 
     public static boolean CheckTileNotContainTotoro(Tile tile, Hex[][]gameboard){
-        Hex hex0 = tile.getHexes()[0];
-        Hex hex1 = tile.getHexes()[1];
-        Hex hex2 = tile.getHexes()[2];
+        Hex hex0 = tile.getHexes().get(0);
+        Hex hex1 = tile.getHexes().get(1);
+        Hex hex2 = tile.getHexes().get(2);
 
         Hex hex_zero = gameboard[hex0.getx()][hex0.gety()];
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
@@ -97,9 +97,9 @@ public class TileNukeRules extends Rules {
     }
 
     public static boolean CheckTileNotContainTiger(Tile tile, Hex[][]gameboard){
-        Hex hex0 = tile.getHexes()[0];
-        Hex hex1 = tile.getHexes()[1];
-        Hex hex2 = tile.getHexes()[2];
+        Hex hex0 = tile.getHexes().get(0);
+        Hex hex1 = tile.getHexes().get(1);
+        Hex hex2 = tile.getHexes().get(2);
 
         Hex hex_zero = gameboard[hex0.getx()][hex0.gety()];
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];

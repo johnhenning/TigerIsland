@@ -36,7 +36,7 @@ public class TilePlacementRulesTest {
         hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
         hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
 
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
         grid = new Grid(200);
         grid.placeTile(tile);
         gameboard = grid.getGameboard();

@@ -40,7 +40,7 @@ public class SettlementExpansionRulesTests {
         hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
         hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
         hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
 
 
         ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
@@ -56,7 +56,7 @@ public class SettlementExpansionRulesTests {
         hexes2[0] = new Hex(new Coordinate(102,102), terrains2.get(0));
         hexes2[1] = new Hex(new Coordinate(101,101), terrains2.get(1));
         hexes2[2] = new Hex(new Coordinate(101,102), terrains2.get(2));
-        tile2 = new Tile(hexes2);
+        tile2 = new Tile(coordinates2, terrains2);
 
         ArrayList<Coordinate> coordinates3 = new ArrayList<Coordinate>();
         coordinates3.add(new Coordinate(100,103));
@@ -72,7 +72,7 @@ public class SettlementExpansionRulesTests {
         hexes3[1] = new Hex(coordinates3.get(1), terrains3.get(1));
         hexes3[2] = new Hex(coordinates3.get(2), terrains3.get(2));
 
-        tile3 = new Tile(hexes3);
+        tile3 = new Tile(coordinates3, terrains3);
 
         ArrayList<Coordinate> coordinates4 = new ArrayList<Coordinate>();
         coordinates4.add(new Coordinate(99,100));
@@ -88,7 +88,7 @@ public class SettlementExpansionRulesTests {
         hexes4[1] = new Hex(coordinates4.get(1), terrains4.get(1));
         hexes4[2] = new Hex(coordinates4.get(2), terrains4.get(2));
 
-        tile4 = new Tile(hexes4);
+        tile4 = new Tile(coordinates4, terrains4);
 
         ArrayList<Coordinate> coordinates5 = new ArrayList<Coordinate>();
         coordinates5.add(new Coordinate(120,120));
@@ -104,7 +104,7 @@ public class SettlementExpansionRulesTests {
         hexes5[1] = new Hex(coordinates5.get(1), terrains5.get(1));
         hexes5[2] = new Hex(coordinates5.get(2), terrains5.get(2));
 
-        tile5 = new Tile(hexes5);
+        tile5 = new Tile(coordinates5, terrains5);
     }
 
     @Test

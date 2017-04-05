@@ -5,10 +5,13 @@ package GameStateModule;
 import java.util.ArrayList;
 
 public class Tile {
-    private Hex[] hexes;
+    private ArrayList<Hex> hexes;
 
-    public Tile(Hex[] hexes) {//Should only need an array of three hexes, could reduce parameters to one
-       this.hexes = hexes;
+    public Tile(ArrayList<Coordinate> coordinates, ArrayList<TerrainType> terrains) {
+        hexes = new ArrayList<>();
+        for(int i = 0; i <  coordinates.size(); i++){
+            hexes.add(new Hex(coordinates.get(i), terrains.get(i)));
+        }
     }
 
     public void setLevel(int level) {
@@ -16,9 +19,10 @@ public class Tile {
             h.setLevel(level);
     }
 
-    public Hex[] getHexes() {
+    public ArrayList<Hex> getHexes(){
         return hexes;
     }
+
 
     public ArrayList<Coordinate> getCoords(){
         ArrayList<Coordinate> tileCoords = new ArrayList<>();
@@ -28,13 +32,27 @@ public class Tile {
         return tileCoords;
     }
     public static Tile getInitialTile(){
-        Hex[] initialTileHexes = new Hex[5];
-        initialTileHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        initialTileHexes[1] = new Hex(new Coordinate(100,99), TerrainType.LAKE);
-        initialTileHexes[2] = new Hex(new Coordinate(99,99), TerrainType.JUNGLE);
-        initialTileHexes[3] = new Hex(new Coordinate(99,101), TerrainType.ROCKY);
-        initialTileHexes[4] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        return new Tile(initialTileHexes);
+        ArrayList<Hex> initialTile = new ArrayList<>();
+        initialTile.add(new Hex(new Coordinate(100,100), TerrainType.VOLCANO));
+        initialTile.add(new Hex(new Coordinate(100,99), TerrainType.LAKE));
+        initialTile.add(new Hex(new Coordinate(99,99), TerrainType.JUNGLE));
+        initialTile.add(new Hex(new Coordinate(99,101), TerrainType.ROCKY));
+        initialTile.add(new Hex(new Coordinate(100,101), TerrainType.GRASSLAND));
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        coords.add(new Coordinate(100,100));
+        coords.add(new Coordinate(100,99));
+        coords.add(new Coordinate(99,99));
+        coords.add(new Coordinate(99,101));
+        coords.add(new Coordinate(100,101));
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.JUNGLE);
+        terrains.add(TerrainType.ROCKY);
+        terrains.add(TerrainType.GRASSLAND);
+
+
+        return new Tile(coords, terrains);
     }
 }
 

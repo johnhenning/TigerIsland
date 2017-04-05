@@ -32,7 +32,7 @@ public class GridStepDefs {
     public void player_places_the_first_tile(int arg1) throws Throwable {
         //TODO: find better way of dealing with coordinates
 
-/*        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
@@ -42,17 +42,13 @@ public class GridStepDefs {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        ArrayList<Hex> hexes1 = new ArrayList<>();
-        hexes.add(new Hex(new Coordinate(100,100), TerrainType.VOLCANO));
-        hexes.add(new Hex(new Coordinate(101,101), TerrainType.GRASSLAND));
-        hexes.add(new Hex(new Coordinate(100,101), TerrainType.LAKE));*/
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         try {gameBoard.placeTile(tile);}
         catch (AssertionError e) { exceptionThrown = true; }
 
@@ -67,7 +63,7 @@ public class GridStepDefs {
     @Given("^there are tiles placed on the board$")
     public void there_are_tiles_placed_on_the_board() throws Throwable {
         gameBoard = new Grid(200);
-        /*ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(100,101));
@@ -75,14 +71,14 @@ public class GridStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.LAKE);*/
+        terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         try {gameBoard.placeTile(tile);}
         catch (AssertionError e) { exceptionThrown = true; }
 
@@ -90,7 +86,7 @@ public class GridStepDefs {
 
     @When("^the player places a tile adjacent to other tiles$")
     public void the_player_places_a_tile_adjacent_to_other_tiles() throws Throwable {
-        /*ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(101,100));
         coordinates.add(new Coordinate(101,99));
         coordinates.add(new Coordinate(102,99));
@@ -98,14 +94,14 @@ public class GridStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.LAKE);*/
+        terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(101,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(101,99), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(102,99), TerrainType.LAKE);
 
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         try { gameBoard.placeTile(tile); }
         catch (AssertionError e) { exceptionThrown = true; }
     }
@@ -117,7 +113,7 @@ public class GridStepDefs {
 
     @When("^the player places a tile overlapping other tiles$")
     public void the_player_places_a_tile_overlapping_other_tiles() throws Throwable {
-       /* ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100, 100));
         coordinates.add(new Coordinate(100, 99));
         coordinates.add(new Coordinate(101, 99));
@@ -125,13 +121,13 @@ public class GridStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.LAKE);*/
+        terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(100,99), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(101,99), TerrainType.LAKE);
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         try { gameBoard.placeTile(tile); }
         catch (AssertionError e) { exceptionThrown = true; }
     }
@@ -146,41 +142,41 @@ public class GridStepDefs {
     public void there_is_a_valid_location_to_level_a_tile() throws Throwable {
         gameBoard = new Grid(200);
 
-        /*ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
-        coordinates.add(new Coordinate(100,100));
-        coordinates.add(new Coordinate(101,101));
-        coordinates.add(new Coordinate(100,101));
+        ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
+        coordinates2.add(new Coordinate(100,100));
+        coordinates2.add(new Coordinate(101,101));
+        coordinates2.add(new Coordinate(100,101));
 
-        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
-        terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.ROCKY);*/
+        ArrayList<TerrainType> terrains2 = new ArrayList<TerrainType>();
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.ROCKY);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates2, terrains2);
         try{gameBoard.placeTile(tile);}
         catch (AssertionError e){ exceptionThrown = true; }
 
 
 
-       /* coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(101,100));
         coordinates.add(new Coordinate(101,99));
         coordinates.add(new Coordinate(102,99));
 
-        terrains = new ArrayList<TerrainType>();
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
-        terrains.add(TerrainType.GRASSLAND);*/
+        terrains.add(TerrainType.GRASSLAND);
         hexes[0] = new Hex(new Coordinate(101,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(101,99), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(102,99), TerrainType.LAKE);
 
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
         try{ gameBoard.placeTile(tile); }
         catch (AssertionError e){ exceptionThrown = true; }
 
@@ -190,7 +186,7 @@ public class GridStepDefs {
     @When("^the player levels a tile at certain coordinates$")
     public void the_player_levels_a_tile_at_certain_coordinates() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        /*ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,100));
         coordinates.add(new Coordinate(101,101));
@@ -198,14 +194,14 @@ public class GridStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
-        terrains.add(TerrainType.JUNGLE);*/
+        terrains.add(TerrainType.JUNGLE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
         hexes[1] = new Hex(new Coordinate(101,100), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(101,101), TerrainType.LAKE);
 
-        Tile tile = new Tile(hexes);
+        Tile tile = new Tile(coordinates, terrains);
         try{ gameBoard.levelTile(tile); }
         catch (AssertionError e){ exceptionThrown = true; }
 

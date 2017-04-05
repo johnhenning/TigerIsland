@@ -40,7 +40,7 @@ public class TotoroPlacementRulesTest{
         hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
         hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
 
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
         gameStateObj.placeTile(tile);
 
         ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
@@ -58,7 +58,7 @@ public class TotoroPlacementRulesTest{
         hexes2[2] = new Hex(coordinates2.get(2), terrains2.get(2));
 
 
-        tile2 = new Tile(hexes2);
+        tile2 = new Tile(coordinates2, terrains2);
         gameStateObj.placeTile(tile2);
 
         ArrayList<Coordinate> coordinates3 = new ArrayList<Coordinate>();
@@ -76,7 +76,7 @@ public class TotoroPlacementRulesTest{
         hexes3[1] = new Hex(coordinates3.get(1), terrains3.get(1));
         hexes3[2] = new Hex(coordinates3.get(2), terrains3.get(2));
 
-        tile3 = new Tile(hexes3);
+        tile3 = new Tile(coordinates3, terrains3);
         gameStateObj.placeTile(tile3);
 
         ArrayList<Coordinate> coordinates4 = new ArrayList<Coordinate>();
@@ -94,7 +94,7 @@ public class TotoroPlacementRulesTest{
         hexes4[1] = new Hex(coordinates4.get(1), terrains4.get(1));
         hexes4[2] = new Hex(coordinates4.get(2), terrains4.get(2));
 
-        tile4 = new Tile(hexes4);
+        tile4 = new Tile(coordinates4, terrains4);
         gameStateObj.placeTile(tile4);
 
         ArrayList<Coordinate> coordinates5 = new ArrayList<Coordinate>();
@@ -112,7 +112,7 @@ public class TotoroPlacementRulesTest{
         hexes5[1] = new Hex(coordinates5.get(1), terrains5.get(1));
         hexes5[2] = new Hex(coordinates5.get(2), terrains5.get(2));
 
-        tile5 = new Tile(hexes5);
+        tile5 = new Tile(coordinates5, terrains5);
         gameStateObj.placeTile(tile5);
 
         player1 = new Player();
@@ -126,7 +126,7 @@ public class TotoroPlacementRulesTest{
 
     @Test
     public void isHexAdjacentToSettlementTest(){
-       assert TotoroBuildRules.isHexAdjacentToSettlement(tile.getHexes()[2]);
+       assert TotoroBuildRules.isHexAdjacentToSettlement(tile.getHexes().get(2));
     }
 
     @Test
@@ -148,6 +148,6 @@ public class TotoroPlacementRulesTest{
 
     @Test
     public void isValidTotoroLocationTest(){
-        assert TotoroBuildRules.isValidTotoroLocation(tile.getHexes()[2],player1);
+        assert TotoroBuildRules.isValidTotoroLocation(tile.getHexes().get(2),player1);
     }
 }

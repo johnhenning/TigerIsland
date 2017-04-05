@@ -3,9 +3,11 @@ package GameInteractionModuleTests;
 import GameInteractionModule.Rules.TileNukeRules;
 import GameStateModule.*;
 
+import gherkin.lexer.Ar;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -71,76 +73,12 @@ public class TileNukeRulesTests{
         secondSettlementCoords.add(new Coordinate(99, 101));
 
         validSettlement.add(new Settlement(secondSettlementCoords, player1));
+        Hex[] hexSetup = new Hex[3];
+        hexSetup[0] = new Hex(coordinates.get(0), terrains.get(0));
+        hexSetup[1] = new Hex(coordinates.get(1), terrains.get(1));
+        hexSetup[2] = new Hex(coordinates.get(2), terrains.get(2));
+        tile = new Tile(coordinates, terrains);
 
-        Hex[] hexes = new Hex[3];
-        hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
-        hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
-        hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
-        tile = new Tile(hexes);
-
-        ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
-        coordinates2.add(new Coordinate(102,102));
-        coordinates2.add(new Coordinate(101,101));
-        coordinates2.add(new Coordinate(101,102));
-
-        ArrayList<TerrainType> terrains2 = new ArrayList<TerrainType>();
-        terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
-
-        Hex[] hexes2 = new Hex[3];
-        hexes2[0] = new Hex(new Coordinate(102,102), terrains2.get(0));
-        hexes2[1] = new Hex(new Coordinate(101,101), terrains2.get(1));
-        hexes2[2] = new Hex(new Coordinate(101,102), terrains2.get(2));
-        tile2 = new Tile(hexes2);
-
-        ArrayList<Coordinate> coordinates3 = new ArrayList<Coordinate>();
-        coordinates3.add(new Coordinate(100,103));
-        coordinates3.add(new Coordinate(99,103));
-        coordinates3.add(new Coordinate(100,102));
-
-        ArrayList<TerrainType> terrains3 = new ArrayList<TerrainType>();
-        terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.LAKE);
-        terrains3.add(TerrainType.ROCKY);
-        Hex[] hexes3 = new Hex[3];
-        hexes3[0] = new Hex(coordinates3.get(0), terrains3.get(0));
-        hexes3[1] = new Hex(coordinates3.get(1), terrains3.get(1));
-        hexes3[2] = new Hex(coordinates3.get(2), terrains3.get(2));
-
-        tile3 = new Tile(hexes3);
-
-        ArrayList<Coordinate> coordinates4 = new ArrayList<Coordinate>();
-        coordinates4.add(new Coordinate(99,100));
-        coordinates4.add(new Coordinate(98,100));
-        coordinates4.add(new Coordinate(98,101));
-
-        ArrayList<TerrainType> terrains4 = new ArrayList<TerrainType>();
-        terrains4.add(TerrainType.VOLCANO);
-        terrains4.add(TerrainType.GRASSLAND);
-        terrains4.add(TerrainType.GRASSLAND);
-        Hex[] hexes4 = new Hex[3];
-        hexes4[0] = new Hex(coordinates4.get(0), terrains4.get(0));
-        hexes4[1] = new Hex(coordinates4.get(1), terrains4.get(1));
-        hexes4[2] = new Hex(coordinates4.get(2), terrains4.get(2));
-
-        tile4 = new Tile(hexes4);
-
-        ArrayList<Coordinate> coordinates5 = new ArrayList<Coordinate>();
-        coordinates5.add(new Coordinate(101,100));
-        coordinates5.add(new Coordinate(100,99));
-        coordinates5.add(new Coordinate(101,99));
-
-        ArrayList<TerrainType> terrains5 = new ArrayList<TerrainType>();
-        terrains5.add(TerrainType.GRASSLAND);
-        terrains5.add(TerrainType.VOLCANO);
-        terrains5.add(TerrainType.GRASSLAND);
-        Hex[] hexes5 = new Hex[3];
-        hexes5[0] = new Hex(coordinates5.get(0), terrains5.get(0));
-        hexes5[1] = new Hex(coordinates5.get(1), terrains5.get(1));
-        hexes5[2] = new Hex(coordinates5.get(2), terrains5.get(2));
-
-        tile5 = new Tile(hexes5);
     }
 
 
@@ -181,45 +119,26 @@ public class TileNukeRulesTests{
     }
     @Test
     public void divideSettlementsTest(){
-        gameBoard = new Grid(200);
-        ArrayList<Coordinate> settlementCoordinates = new ArrayList<>();
-        ArrayList<Settlement> settlementsReturned = new ArrayList<>();
-        try {gameBoard.placeTile(tile);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile3);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile4);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile5);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        settlementCoordinates.add(new Coordinate(99,103));
-        settlementCoordinates.add(new Coordinate(100,102));
-        settlementCoordinates.add(new Coordinate(101,100));
-        settlementCoordinates.add(new Coordinate(101,99));
-
-        Settlement testSettlement = new Settlement(settlementCoordinates, player1);
-
-        settlementsReturned = TileNukeRules.divideSettlement(gameBoard.getGameboard(), testSettlement);
-
-        assert settlementsReturned.get(0).getSettlementCoordinates().size() == 2;
-//        assert settlementsReturned.get(1).getSettlementCoordinates().size() == 2;
+        //removed because of redundancies
     }
 
     @Test
     public void bigDivideSettlementsTest() {
-        setupGameState(game);
+        setupGameStateSettlementSize5(game);
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        coords.add(new Coordinate(101,99));
+        coords.add(new Coordinate(102,100));
+        coords.add(new Coordinate(102,99));
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.GRASSLAND);
+
         Hex[] boomHexes = new Hex[3];
-        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        Tile boomTile = new Tile(boomHexes);
+        boomHexes[0] = new Hex(new Coordinate(101,99), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(102,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(102,99), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(coords, terrains);
 
         game.levelTile(boomTile);
         ArrayList<Settlement> checkingSettlments = game.getSettlementList();
@@ -229,12 +148,20 @@ public class TileNukeRulesTests{
     @Test
     public void bigDivideSettlementsTestNonNuke() {
         setupGameStateNonNuked(game);
-
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        coords.add(new Coordinate(101,99));
+        coords.add(new Coordinate(102,100));
+        coords.add(new Coordinate(102,99));
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.GRASSLAND);
         Hex[] boomHexes = new Hex[3];
-        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        Tile boomTile = new Tile(boomHexes);
+        boomHexes[0] = new Hex(new Coordinate(101,99), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(102,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(102,99), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(coords, terrains);
+
 
         game.levelTile(boomTile);
         ArrayList<Settlement> checkingSettlments = game.getSettlementList();
@@ -243,93 +170,180 @@ public class TileNukeRulesTests{
     @Test
     public void bigDivideSettlementsTest2Players() {
         setupGameState2Players(game);
-
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        coords.add(new Coordinate(101,99));
+        coords.add(new Coordinate(102,100));
+        coords.add(new Coordinate(102,99));
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.GRASSLAND);
         Hex[] boomHexes = new Hex[3];
-        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        Tile boomTile = new Tile(boomHexes);
+        boomHexes[0] = new Hex(new Coordinate(101,99), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(102,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(102,99), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(coords, terrains);
 
         game.levelTile(boomTile);
         ArrayList<Settlement> checkingSettlments = game.getSettlementList();
         assert checkingSettlments != null;
 
-        Hex h = game.getHex(new Coordinate(100,100));
+        Hex h = game.getHex(new Coordinate(102,99));
         assert h.getLevel() == 2;
 
     }
     @Test
     public void bigDivideSettlementsTestWithExpansion(){
         setupGameState2Players(game);
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        coords.add(new Coordinate(101,99));
+        coords.add(new Coordinate(102,100));
+        coords.add(new Coordinate(102,99));
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.GRASSLAND);
         Hex[] boomHexes = new Hex[3];
-        boomHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        boomHexes[1] = new Hex(new Coordinate(101,100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        Tile boomTile = new Tile(boomHexes);
+        boomHexes[0] = new Hex(new Coordinate(101,99), TerrainType.VOLCANO);
+        boomHexes[1] = new Hex(new Coordinate(102,100), TerrainType.LAKE);
+        boomHexes[2] = new Hex(new Coordinate(102,99), TerrainType.GRASSLAND);
+        Tile boomTile = new Tile(coords, terrains);
 
         game.levelTile(boomTile);
         ArrayList<Settlement> checkingSettlments = game.getSettlementList();
         assert checkingSettlments != null;
 
-        Hex h = game.getHex(new Coordinate(100,100));
+        Hex h = game.getHex(new Coordinate(101,99));
         assert h.getLevel() == 2;
-
-
     }
 
 
+    //TODO: test whether or not a settlement can be completly wiped out
+
+    public void setupSettlementSize5(GameState game){
+        try {game.foundSettlement(new Coordinate(101,102), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(101,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(102,100), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(102,99), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(102,98), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+    }
+
+    public void setupSettlementNonNuked(GameState game){
+        try {game.foundSettlement(new Coordinate(101,100), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(100,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(101,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(101,102), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+    }
+    public void setupSettlement2Players(GameState game){
+
+        try {game.foundSettlement(new Coordinate(101,102), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(101,101), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(102,100), player1);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(102,99), player2);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+        try {game.foundSettlement(new Coordinate(102,98), player2);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert  !exceptionThrown;
+
+    }
+    public void setupGameStateSettlementSize5(GameState game){
+        setupHexAndTilesOnGameState(game);
+        setupSettlementSize5(game);
+    }
+
+    public void setupGameStateNonNuked(GameState game){
+        setupHexAndTilesOnGameState(game);
+        setupSettlementNonNuked(game);
+    }
+    public void setupGameState2Players(GameState game){
+        setupHexAndTilesOnGameState(game);
+        setupSettlement2Players(game);
+    }
+
     public  void setupHexAndTilesOnGameState(GameState game){
-        Hex[] hexes1 = new Hex[3];
-        Hex[] hexes2 = new Hex[3];
-        Hex[] hexes3 = new Hex[3];
-        Hex[] hexes4 = new Hex[3];
-        Hex[] hexes5 = new Hex[3];
+//        Hex[] hexes1 = new Hex[3];
+//        Hex[] hexes2 = new Hex[3];
+//        Hex[] hexes3 = new Hex[3];
+//        Hex[] hexes4 = new Hex[3];
+//        Hex[] hexes5 = new Hex[3];
 
-        Coordinate hexes1Coord1 = new Coordinate(101, 99);
-        Coordinate hexes1Coord2 = new Coordinate(101, 100);
-        Coordinate hexes1Coord3 = new Coordinate(102, 100);
+        ArrayList<Coordinate> hexesCoord = new ArrayList<>();
+        hexesCoord.add( new Coordinate(101, 99));
+        hexesCoord.add(new Coordinate(101, 100));
+        hexesCoord.add(new Coordinate(102, 100));
+        ArrayList<Coordinate> hexesCoord2 = new ArrayList<>();
+        hexesCoord2.add(new Coordinate(102, 102));
+        hexesCoord2.add(new Coordinate(101, 101));
+        hexesCoord2.add(new Coordinate(101, 102));
+        ArrayList<Coordinate> hexesCoord3 = new ArrayList<>();
+        hexesCoord3.add(new Coordinate(103, 98));
+        hexesCoord3.add(new Coordinate(102, 98));
+        hexesCoord3.add(new Coordinate(102, 99));
+        ArrayList<Coordinate> hexesCoord4 = new ArrayList<>();
+        hexesCoord4.add(new Coordinate(98, 100));
+        hexesCoord4.add(new Coordinate(99, 100));
+        hexesCoord4.add(new Coordinate(98, 101));
+        ArrayList<Coordinate> hexesCoord5 = new ArrayList<>();
+        hexesCoord5.add(new Coordinate(99, 98));
+        hexesCoord5.add(new Coordinate(98, 99));
+        hexesCoord5.add(new Coordinate(98, 98));
 
-        Coordinate hexes2Coord1 = new Coordinate(102, 102);
-        Coordinate hexes2Coord2 = new Coordinate(101, 101);
-        Coordinate hexes2Coord3 = new Coordinate(101, 102);
+        ArrayList<TerrainType> terrains1 = new ArrayList<>();
+        ArrayList<TerrainType> terrains2 = new ArrayList<>();
+        ArrayList<TerrainType> terrains3 = new ArrayList<>();
+        ArrayList<TerrainType> terrains4 = new ArrayList<>();
+        ArrayList<TerrainType> terrains5 = new ArrayList<>();
 
-        Coordinate hexes3Coord1 = new Coordinate(103, 98);
-        Coordinate hexes3Coord2 = new Coordinate(102, 98);
-        Coordinate hexes3Coord3 = new Coordinate(102, 99);
+        terrains1.add(TerrainType.VOLCANO);
+        terrains1.add(TerrainType.LAKE);
+        terrains1.add(TerrainType.GRASSLAND);
 
-        Coordinate hexes4Coord1 = new Coordinate(98, 100);
-        Coordinate hexes4Coord2 = new Coordinate(99, 100);
-        Coordinate hexes4Coord3 = new Coordinate(98, 101);
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASSLAND);
 
-        Coordinate hexes5Coord1 = new Coordinate(99, 98);
-        Coordinate hexes5Coord2 = new Coordinate(98, 99);
-        Coordinate hexes5Coord3 = new Coordinate(98, 98);
+        terrains3.add(TerrainType.VOLCANO);
+        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASSLAND);
 
-        hexes1[0] = new Hex(hexes1Coord1, TerrainType.VOLCANO);
-        hexes1[1] = new Hex(hexes1Coord2, TerrainType.LAKE);
-        hexes1[2] = new Hex(hexes1Coord3, TerrainType.GRASSLAND);
+        terrains4.add(TerrainType.VOLCANO);
+        terrains4.add(TerrainType.JUNGLE);
+        terrains4.add(TerrainType.ROCKY);
 
-        hexes2[0] = new Hex(hexes2Coord1, TerrainType.VOLCANO);
-        hexes2[1] = new Hex(hexes2Coord2, TerrainType.GRASSLAND);
-        hexes2[2] = new Hex(hexes2Coord3, TerrainType.GRASSLAND);
+        terrains5.add(TerrainType.VOLCANO);
+        terrains5.add(TerrainType.JUNGLE);
+        terrains5.add(TerrainType.JUNGLE);
 
-        hexes3[0] = new Hex(hexes3Coord1, TerrainType.VOLCANO);
-        hexes3[1] = new Hex(hexes3Coord2, TerrainType.GRASSLAND);
-        hexes3[2] = new Hex(hexes3Coord3, TerrainType.GRASSLAND);
-
-        hexes4[0] = new Hex(hexes4Coord1, TerrainType.VOLCANO);
-        hexes4[1] = new Hex(hexes4Coord2, TerrainType.JUNGLE);
-        hexes4[2] = new Hex(hexes4Coord3, TerrainType.ROCKY);
-
-        hexes5[0] = new Hex(hexes5Coord1, TerrainType.VOLCANO);
-        hexes5[1] = new Hex(hexes5Coord2, TerrainType.JUNGLE);
-        hexes5[2] = new Hex(hexes5Coord3, TerrainType.JUNGLE);
-
-        Tile tile1 = new Tile(hexes1);
-        Tile tile2 = new Tile(hexes2);
-        Tile tile3 = new Tile(hexes3);
-        Tile tile4 = new Tile(hexes4);
-        Tile tile5 = new Tile(hexes5);
+        Tile tile1 = new Tile(hexesCoord, terrains1);
+        Tile tile2 = new Tile(hexesCoord2, terrains2);
+        Tile tile3 = new Tile(hexesCoord3, terrains3);
+        Tile tile4 = new Tile(hexesCoord4, terrains4);
+        Tile tile5 = new Tile(hexesCoord5, terrains5);
 
 
         try {game.placeTile(tile1);}
@@ -349,83 +363,5 @@ public class TileNukeRulesTests{
         assert  !exceptionThrown;
     }
 
-    //TODO: test whether or not a settlement can be completly wiped out
-    public  void setupTilesOnGameState(GameState game){
-        try {game.placeTile(tile);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile3);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile4);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile5);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-    }
-    public void setupSettlementSize5(GameState game){
-        try {game.foundSettlement(new Coordinate(101,99), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(101,100), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(100,101), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(100,102), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(99,103), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-    }
-    public void setupSettlementNonNuked(GameState game){
-        try {game.foundSettlement(new Coordinate(98,101), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(99,101), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(100,102), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(99,103), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-    }
-    public void setupSettlement2Players(GameState game){
-
-        try {game.foundSettlement(new Coordinate(99,101), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(100,102), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.foundSettlement(new Coordinate(99,103), player1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-//        game.foundSettlement(new Coordinate(101,99), player2);
-        try {game.foundSettlement(new Coordinate(101,99), player2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-
-    }
-    public void setupGameState(GameState game){
-        setupTilesOnGameState(game);
-        setupSettlementSize5(game);
-    }
-    public void setupGameStateNonNuked(GameState game){
-        setupTilesOnGameState(game);
-        setupSettlementNonNuked(game);
-    }
-    public void setupGameState2Players(GameState game){
-        setupTilesOnGameState(game);
-        setupSettlement2Players(game);
-    }
 
 }

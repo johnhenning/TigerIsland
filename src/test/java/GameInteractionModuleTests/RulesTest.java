@@ -41,7 +41,7 @@ public class RulesTest {
         hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
 
         grid.placeTile(tile);
 

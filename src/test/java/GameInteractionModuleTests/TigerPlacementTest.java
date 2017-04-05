@@ -41,7 +41,7 @@ public class TigerPlacementTest {
         hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
 
 
-        tile = new Tile(hexes);
+        tile = new Tile(coordinates, terrains);
         gameStateObj.placeTile(tile);
 
         ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
@@ -59,7 +59,7 @@ public class TigerPlacementTest {
         hexes2[2] = new Hex(coordinates2.get(2), terrains2.get(2));
 
 
-        tile2 = new Tile(hexes2);
+        tile2 = new Tile(coordinates2, terrains2);
         gameStateObj.placeTile(tile2);
 
         ArrayList<Coordinate> coordinates3 = new ArrayList<Coordinate>();
@@ -78,7 +78,7 @@ public class TigerPlacementTest {
         hexes3[2] = new Hex(coordinates3.get(2), terrains3.get(2));
 
 
-        tile3 = new Tile(hexes3);
+        tile3 = new Tile(coordinates3, terrains3);
         gameStateObj.placeTile(tile3);
 
         ArrayList<Coordinate> coordinates4 = new ArrayList<Coordinate>();
@@ -96,7 +96,7 @@ public class TigerPlacementTest {
         hexes4[2] = new Hex(coordinates4.get(2), terrains4.get(2));
 
 
-        tile4 = new Tile(hexes4);
+        tile4 = new Tile(coordinates4, terrains4);
         gameStateObj.placeTile(tile4);
 
         ArrayList<Coordinate> coordinates5 = new ArrayList<Coordinate>();
@@ -116,7 +116,7 @@ public class TigerPlacementTest {
         hexes5[2] = new Hex(coordinates5.get(2), terrains5.get(2));
 
 
-        tile5 = new Tile(hexes5);
+        tile5 = new Tile(coordinates5, terrains5);
         gameStateObj.placeTile(tile5);
 
         player1 = new Player();
@@ -125,17 +125,17 @@ public class TigerPlacementTest {
         gameStateObj.foundSettlement(new Coordinate(101, 102), player1);
         gameStateObj.foundSettlement(new Coordinate(101, 100), player1);
         gameStateObj.foundSettlement(new Coordinate(100, 102), player1);
-        tile.getHexes()[2].setLevel(3);
+        tile.getHexes().get(2).setLevel(3);
     }
 
     @Test
     public void checkIfHexAdjacentToSettlementTest(){
-        assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile.getHexes()[2]);
+        assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile.getHexes().get(2));
     }
 
     @Test
     public void checkIfHexLevelAtleastThreeTest(){
-        assert TigerBuildRules.hexLevelAtLeastThree(tile.getHexes()[2]);
+        assert TigerBuildRules.hexLevelAtLeastThree(tile.getHexes().get(2));
     }
 
     @Test
@@ -153,6 +153,6 @@ public class TigerPlacementTest {
 
     @Test
     public void canPlaceTigerTest(){
-        assert TigerBuildRules.canPlaceTiger(tile.getHexes()[2]);
+        assert TigerBuildRules.canPlaceTiger(tile.getHexes().get(2));
     }
 }
