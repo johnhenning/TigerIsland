@@ -1,6 +1,7 @@
 package ServerModuleTests;
 
 import ServerModule.Adapter;
+import GameStateModule.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,10 @@ public class AdapterTests {
     private int x;
     private int y;
     private int z;
+    private Coordinate habitableCoordinates[];
+    private Coordinate volcanoCoordinate;
+    int orientation;
+
 
 
     @Before
@@ -28,6 +33,10 @@ public class AdapterTests {
         x = 0;
         y = 0;
         z = 0;
+
+        volcanoCoordinate = new Coordinate(100, 100);
+        orientation = 1;
+
 
 
     }
@@ -176,5 +185,76 @@ public class AdapterTests {
         assert cubicCoord[1] == 0;
         assert cubicCoord[2] == -1;
 
+    }
+
+    @Test
+    public void getCoordinatesOfOpponentsTileTest(){
+        habitableCoordinates = adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, orientation);
+        assert (habitableCoordinates[0].getX() == 100) && (habitableCoordinates[0].getY() == 99);
+        assert (habitableCoordinates[1].getX() == 99) && (habitableCoordinates[1].getY() == 99);
+
+        volcanoCoordinate = new Coordinate(98,100);
+        orientation = 2;
+        habitableCoordinates = adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, orientation);
+        assert (habitableCoordinates[0].getX() == 99) && (habitableCoordinates[0].getY() == 100);
+        assert (habitableCoordinates[1].getX() == 98) && (habitableCoordinates[1].getY() == 99);
+
+        volcanoCoordinate = new Coordinate(98,100);
+        orientation = 3;
+        habitableCoordinates = adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, orientation);
+        assert (habitableCoordinates[0].getX() == 98) && (habitableCoordinates[0].getY() == 101);
+        assert (habitableCoordinates[1].getX() == 99) && (habitableCoordinates[1].getY() == 100);
+
+        volcanoCoordinate = new Coordinate(100,100);
+        orientation = 4;
+        habitableCoordinates = adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, orientation);
+        assert (habitableCoordinates[0].getX() == 99) && (habitableCoordinates[0].getY() == 101);
+        assert (habitableCoordinates[1].getX() == 100) && (habitableCoordinates[1].getY() == 101);
+
+        volcanoCoordinate = new Coordinate(103,98);
+        orientation = 5;
+        habitableCoordinates = adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, orientation);
+        assert (habitableCoordinates[0].getX() == 102) && (habitableCoordinates[0].getY() == 98);
+        assert (habitableCoordinates[1].getX() == 102) && (habitableCoordinates[1].getY() == 99);
+
+        volcanoCoordinate = new Coordinate(100,100);
+        orientation = 6;
+        habitableCoordinates = adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, orientation);
+        assert (habitableCoordinates[0].getX() == 99) && (habitableCoordinates[0].getY() == 99);
+        assert (habitableCoordinates[1].getX() == 99) && (habitableCoordinates[1].getY() == 100);
+    }
+
+    @Test
+    public void getOrientationFromOurTileTest(){
+        habitableCoordinates = new Coordinate[2];
+        habitableCoordinates[0] = new Coordinate(100,99);
+        habitableCoordinates[1] = new Coordinate(99,99);
+        orientation = adapter.getOrientationFromOurTile(volcanoCoordinate, habitableCoordinates);
+        assert orientation == 1;
+
+        habitableCoordinates[0] = new Coordinate(101,100);
+        habitableCoordinates[1] = new Coordinate(100,99);
+        orientation = adapter.getOrientationFromOurTile(volcanoCoordinate, habitableCoordinates);
+        assert orientation == 2;
+
+        habitableCoordinates[0] = new Coordinate(100,101);
+        habitableCoordinates[1] = new Coordinate(101,100);
+        orientation = adapter.getOrientationFromOurTile(volcanoCoordinate, habitableCoordinates);
+        assert orientation == 3;
+
+        habitableCoordinates[0] = new Coordinate(99,101);
+        habitableCoordinates[1] = new Coordinate(100,101);
+        orientation = adapter.getOrientationFromOurTile(volcanoCoordinate, habitableCoordinates);
+        assert orientation == 4;
+
+        habitableCoordinates[0] = new Coordinate(99,100);
+        habitableCoordinates[1] = new Coordinate(99,101);
+        orientation = adapter.getOrientationFromOurTile(volcanoCoordinate, habitableCoordinates);
+        assert orientation == 5;
+
+        habitableCoordinates[0] = new Coordinate(99,99);
+        habitableCoordinates[1] = new Coordinate(99,100);
+        orientation = adapter.getOrientationFromOurTile(volcanoCoordinate, habitableCoordinates);
+        assert orientation == 6;
     }
 }

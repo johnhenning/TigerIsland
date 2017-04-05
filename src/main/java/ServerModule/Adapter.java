@@ -131,24 +131,50 @@ public class Adapter {
                 habitableTerrainCoordinates[1] = topLeft(volcanoCoordinate);
                 break;
             case 2:
-                habitableTerrainCoordinates[0] = topRight(volcanoCoordinate);
-                habitableTerrainCoordinates[1] = rightOfHex(volcanoCoordinate);
+                habitableTerrainCoordinates[0] = rightOfHex(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = topRight(volcanoCoordinate);
                 break;
             case 3:
-                habitableTerrainCoordinates[0] = rightOfHex(volcanoCoordinate);
-                habitableTerrainCoordinates[1] = downRight(volcanoCoordinate);
+                habitableTerrainCoordinates[0] = downRight(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = rightOfHex(volcanoCoordinate);
                 break;
             case 4:
-                habitableTerrainCoordinates[0] = downRight(volcanoCoordinate);
-                habitableTerrainCoordinates[1] = downLeft(volcanoCoordinate);
-            case 5:
                 habitableTerrainCoordinates[0] = downLeft(volcanoCoordinate);
-                habitableTerrainCoordinates[1] = leftOfHex(volcanoCoordinate);
-            case 6:
+                habitableTerrainCoordinates[1] = downRight(volcanoCoordinate);
+                break;
+            case 5:
                 habitableTerrainCoordinates[0] = leftOfHex(volcanoCoordinate);
-                habitableTerrainCoordinates[1] = topLeft(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = downLeft(volcanoCoordinate);
+                break;
+            case 6:
+                habitableTerrainCoordinates[0] = topLeft(volcanoCoordinate);
+                habitableTerrainCoordinates[1] = leftOfHex(volcanoCoordinate);
+                break;
         }
         return habitableTerrainCoordinates;
+    }
+
+    public int getOrientationFromOurTile(Coordinate volcanoCoordinate, Coordinate ourCoordinate[]){
+        int ourOrientation = 0;
+        if(ourCoordinate[0].equals(topRight(volcanoCoordinate)) && ourCoordinate[1].equals(topLeft(volcanoCoordinate))){
+            ourOrientation = 1;
+        }
+        else if(ourCoordinate[0].equals(rightOfHex(volcanoCoordinate)) && ourCoordinate[1].equals(topRight(volcanoCoordinate))){
+            ourOrientation = 2;
+        }
+        else if(ourCoordinate[0].equals(downRight(volcanoCoordinate)) && ourCoordinate[1].equals(rightOfHex(volcanoCoordinate))){
+            ourOrientation = 3;
+        }
+        else if(ourCoordinate[0].equals(downLeft(volcanoCoordinate)) && ourCoordinate[1].equals(downRight(volcanoCoordinate))){
+            ourOrientation = 4;
+        }
+        else if(ourCoordinate[0].equals(leftOfHex(volcanoCoordinate)) && ourCoordinate[1].equals(downLeft(volcanoCoordinate))){
+            ourOrientation = 5;
+        }
+        else if(ourCoordinate[0].equals(topLeft(volcanoCoordinate)) && ourCoordinate[1].equals(leftOfHex(volcanoCoordinate))){
+            ourOrientation = 6;
+        }
+        return ourOrientation;
     }
     public static Coordinate downRight(Coordinate coordinate){
         int x, y;
