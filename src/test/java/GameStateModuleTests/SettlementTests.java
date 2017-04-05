@@ -58,4 +58,28 @@ public class SettlementTests {
         newCoordinates.add(new Coordinate(6,5));
         assert !settlement.areCoordinatesAdjacent(newCoordinates);
     }
+
+    @Test
+    public void getOwnerTest() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        assert settlement.getOwner() == player1;
+    }
+
+    @Test
+    public void getSizeTest() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        assert settlement.getSize() == 2;
+    }
+
+    @Test
+    public void getSettlementCoordinateTest() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+
+        ArrayList<Coordinate> settlementCoord;
+
+        settlementCoord = settlement.getSettlementCoordinates();
+
+        assert settlementCoord == settlementCoordinates;
+    }
+
 }
