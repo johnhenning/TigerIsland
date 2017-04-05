@@ -8,9 +8,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-/**
- * Created by johnhenning on 3/23/17.
- */
+
 public class SettlementTests {
     private Settlement settlement;
     private Player player1;
@@ -23,7 +21,6 @@ public class SettlementTests {
         settlementCoordinates.add(new Coordinate(2,2));
         settlementCoordinates.add(new Coordinate(1,2));
     }
-
 
 
     @Test
@@ -58,4 +55,28 @@ public class SettlementTests {
         newCoordinates.add(new Coordinate(6,5));
         assert !settlement.areCoordinatesAdjacent(newCoordinates);
     }
+
+    @Test
+    public void getOwnerTest() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        assert settlement.getOwner() == player1;
+    }
+
+    @Test
+    public void getSizeTest() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+        assert settlement.getSize() == 2;
+    }
+
+    @Test
+    public void getSettlementCoordinateTest() throws Exception{
+        settlement = new Settlement(settlementCoordinates, player1);
+
+        ArrayList<Coordinate> settlementCoord;
+
+        settlementCoord = settlement.getSettlementCoordinates();
+
+        assert settlementCoord == settlementCoordinates;
+    }
+
 }

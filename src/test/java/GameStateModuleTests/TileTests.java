@@ -40,4 +40,9 @@ public class TileTests {
         Tile tile = new Tile(coordinates, terrains);
         tile.setLevel(3);
     }
+
+    @Test
+    public void getHexesTest() throws Exception {
+
+    }
 }
