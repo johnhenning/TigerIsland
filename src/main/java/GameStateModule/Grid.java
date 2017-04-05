@@ -22,14 +22,11 @@ public class Grid {
     }
 
     public void placeTile(Tile tile) {
-
-
-
-        TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
+        TilePlacementRules.isValidTilePlacement(tile, this, placedTiles);
 
         placeTileOnGameboard(tile, 1);
 
-        placedTiles.add(tile); //this has to occur before above function, need to fix
+        placedTiles.add(tile);
 
 
     }

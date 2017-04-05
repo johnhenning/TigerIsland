@@ -33,13 +33,13 @@ public class HexTests {
     public void coordinateXTest(){
         Hex hex = new Hex(coordinate, terrainType);
 
-        assertEquals(hex.getCoords().getX(), coordinate.getX());
+        assertEquals(hex.getCoordinate().getX(), coordinate.getX());
     }
 
     public void coordinateYTest(){
         Hex hex = new Hex(coordinate, terrainType);
 
-        assertEquals(hex.getCoords().getY(), coordinate.getY());
+        assertEquals(hex.getCoordinate().getY(), coordinate.getY());
     }
 
     @Test

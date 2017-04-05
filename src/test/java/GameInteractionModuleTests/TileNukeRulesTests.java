@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class TileNukeRulesTests{
 
     private Grid gameBoard;
+    private GameState gameState;
     private ArrayList<Settlement> overlappedSettlement;
     private ArrayList<Settlement> validSettlement;
     private Player player1;
@@ -49,82 +50,89 @@ public class TileNukeRulesTests{
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        overlappedSettlement.add(new Settlement(new Coordinate(100,100), player1));
+        overlappedSettlement.add(new Settlement(new Coordinate(100,100), player1, 0));
 
         secondSettlementCoords.add(new Coordinate(100, 100));
         secondSettlementCoords.add(new Coordinate(100, 101));
         secondSettlementCoords.add(new Coordinate(99, 101));
 
-        validSettlement.add(new Settlement(secondSettlementCoords, player1));
+        validSettlement.add(new Settlement(secondSettlementCoords, player1, 1));
 
-        Hex[] hexes = new Hex[3];
-        hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
-        hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
-        hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
-        tile = new Tile(hexes);
+
+
+        gameState = new GameState();
+        gameBoard = gameState.getGameboard();
+
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+
+
+        coordinates.add(new Coordinate(100, 100));
+        coordinates.add(new Coordinate(100, 101));
+        coordinates.add(new Coordinate(99, 101));
+
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
+
+
+
+        tile = new Tile(coordinates, terrains);
+        gameState.placeTile(tile);
 
         ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
-        coordinates2.add(new Coordinate(102,102));
-        coordinates2.add(new Coordinate(101,101));
-        coordinates2.add(new Coordinate(101,102));
+        coordinates2.add(new Coordinate(102, 102));
+        coordinates2.add(new Coordinate(101, 101));
+        coordinates2.add(new Coordinate(101, 102));
 
         ArrayList<TerrainType> terrains2 = new ArrayList<TerrainType>();
         terrains2.add(TerrainType.VOLCANO);
         terrains2.add(TerrainType.GRASSLAND);
         terrains2.add(TerrainType.GRASSLAND);
-        Hex[] hexes2 = new Hex[3];
-        hexes2[0] = new Hex(new Coordinate(102,102), terrains2.get(0));
-        hexes2[1] = new Hex(new Coordinate(101,101), terrains2.get(1));
-        hexes2[2] = new Hex(new Coordinate(101,102), terrains2.get(2));
-        tile2 = new Tile(hexes2);
+
+        tile2 = new Tile(coordinates2, terrains2);
+        gameState.placeTile(tile2);
 
         ArrayList<Coordinate> coordinates3 = new ArrayList<Coordinate>();
-        coordinates3.add(new Coordinate(100,103));
-        coordinates3.add(new Coordinate(99,103));
-        coordinates3.add(new Coordinate(100,102));
+        coordinates3.add(new Coordinate(100, 103));
+        coordinates3.add(new Coordinate(99, 103));
+        coordinates3.add(new Coordinate(100, 102));
 
         ArrayList<TerrainType> terrains3 = new ArrayList<TerrainType>();
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.LAKE);
-        terrains3.add(TerrainType.ROCKY);
-        Hex[] hexes3 = new Hex[3];
-        hexes3[0] = new Hex(coordinates3.get(0), terrains3.get(0));
-        hexes3[1] = new Hex(coordinates3.get(1), terrains3.get(1));
-        hexes3[2] = new Hex(coordinates3.get(2), terrains3.get(2));
+        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASSLAND);
 
-        tile3 = new Tile(hexes3);
+        tile3 = new Tile(coordinates3, terrains3);
+        gameState.placeTile(tile3);
 
         ArrayList<Coordinate> coordinates4 = new ArrayList<Coordinate>();
-        coordinates4.add(new Coordinate(99,100));
-        coordinates4.add(new Coordinate(98,100));
-        coordinates4.add(new Coordinate(98,101));
+        coordinates4.add(new Coordinate(99, 100));
+        coordinates4.add(new Coordinate(98, 100));
+        coordinates4.add(new Coordinate(98, 101));
 
         ArrayList<TerrainType> terrains4 = new ArrayList<TerrainType>();
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.GRASSLAND);
         terrains4.add(TerrainType.GRASSLAND);
-        Hex[] hexes4 = new Hex[3];
-        hexes4[0] = new Hex(coordinates4.get(0), terrains4.get(0));
-        hexes4[1] = new Hex(coordinates4.get(1), terrains4.get(1));
-        hexes4[2] = new Hex(coordinates4.get(2), terrains4.get(2));
 
-        tile4 = new Tile(hexes4);
+        tile4 = new Tile(coordinates4, terrains4);
+        gameState.placeTile(tile4);
 
         ArrayList<Coordinate> coordinates5 = new ArrayList<Coordinate>();
-        coordinates5.add(new Coordinate(101,100));
-        coordinates5.add(new Coordinate(100,99));
-        coordinates5.add(new Coordinate(101,99));
+
+        coordinates5.add(new Coordinate(101, 100));
+        coordinates5.add(new Coordinate(100, 99));
+        coordinates5.add(new Coordinate(101, 99));
 
         ArrayList<TerrainType> terrains5 = new ArrayList<TerrainType>();
         terrains5.add(TerrainType.GRASSLAND);
         terrains5.add(TerrainType.VOLCANO);
         terrains5.add(TerrainType.GRASSLAND);
-        Hex[] hexes5 = new Hex[3];
-        hexes5[0] = new Hex(coordinates5.get(0), terrains5.get(0));
-        hexes5[1] = new Hex(coordinates5.get(1), terrains5.get(1));
-        hexes5[2] = new Hex(coordinates5.get(2), terrains5.get(2));
 
-        tile5 = new Tile(hexes5);
+
+        gameState.placeTile(tile5);
+
 
         ArrayList<Coordinate> coordinates6 = new ArrayList<Coordinate>();
         coordinates6.add(new Coordinate(101,100));
@@ -134,13 +142,9 @@ public class TileNukeRulesTests{
         ArrayList<TerrainType> terrains6 = new ArrayList<TerrainType>();
         terrains6.add(TerrainType.GRASSLAND);
         terrains6.add(TerrainType.VOLCANO);
-        terrains6.add(TerrainType.GRASSLAND);
-        Hex[] hexes6 = new Hex[3];
-        hexes6[0] = new Hex(coordinates6.get(0), terrains6.get(0));
-        hexes6[1] = new Hex(coordinates6.get(1), terrains6.get(1));
-        hexes6[2] = new Hex(coordinates6.get(2), terrains6.get(2));
+        terrains6.add(TerrainType.GRASSLAND)
 
-        tile6 = new Tile(hexes6);
+        tile6 = new Tile(coordinates6, terrains6);
     }
 
 
@@ -200,7 +204,7 @@ public class TileNukeRulesTests{
         coord2.add(new Coordinate(1,3));
         coord2.add(new Coordinate(1,4));
         coord2.add(new Coordinate(1,5));
-        Settlement s1 = new Settlement(coord2, player1);
+        Settlement s1 = new Settlement(coord2, player1, 0);
         validSettlement.add(s1);
         ArrayList<Settlement> affectedSettlements =
                         TileNukeRules.findAffectedSettlements(validSettlement, tile);
@@ -250,9 +254,9 @@ public class TileNukeRulesTests{
         settlementCoordinates.add(new Coordinate(101,98));
         settlementCoordinates.add(new Coordinate(101,99));
 
-        Settlement testSettlement = new Settlement(settlementCoordinates, player1);
+        Settlement testSettlement = new Settlement(settlementCoordinates, player1, 0);
 
-        settlementsReturned = TileNukeRules.divideSettlement(gameBoard.getGameboard(), testSettlement);
+        settlementsReturned = TileNukeRules.divideSettlement(gameState, testSettlement);
 
         assert settlementsReturned.get(0).getSettlementCoordinates().size() == 2;
         assert settlementsReturned.get(1).getSettlementCoordinates().size() == 2;

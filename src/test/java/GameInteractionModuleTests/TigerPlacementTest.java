@@ -11,147 +11,123 @@ import java.util.ArrayList;
  * Created by Daniel002 on 4/2/2017.
  */
 public class TigerPlacementTest {
-    static Tile tile1;
+    static Tile tile;
     static Tile tile2;
     static Tile tile3;
     static Tile tile4;
     static Tile tile5;
     boolean exceptionThrown;
     private Player player1;
-    GameState gameStateObj;
+    GameState gameState;
 
     @Before
     public void setup() throws Exception {
-        gameStateObj = new GameState();
+        gameState = new GameState();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 
-        setupHexAndTilesOnGameState(gameStateObj);
+
+        coordinates.add(new Coordinate(100, 100));
+        coordinates.add(new Coordinate(100, 101));
+        coordinates.add(new Coordinate(99, 101));
+
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
+
+
+
+        tile = new Tile(coordinates, terrains);
+        gameState.placeTile(tile);
+
+        ArrayList<Coordinate> coordinates2 = new ArrayList<Coordinate>();
+        coordinates2.add(new Coordinate(102, 102));
+        coordinates2.add(new Coordinate(101, 101));
+        coordinates2.add(new Coordinate(101, 102));
+
+        ArrayList<TerrainType> terrains2 = new ArrayList<TerrainType>();
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASSLAND);
+
+        tile2 = new Tile(coordinates2, terrains2);
+        gameState.placeTile(tile2);
+
+        ArrayList<Coordinate> coordinates3 = new ArrayList<Coordinate>();
+        coordinates3.add(new Coordinate(100, 103));
+        coordinates3.add(new Coordinate(99, 103));
+        coordinates3.add(new Coordinate(100, 102));
+
+        ArrayList<TerrainType> terrains3 = new ArrayList<TerrainType>();
+        terrains3.add(TerrainType.VOLCANO);
+        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASSLAND);
+
+        tile3 = new Tile(coordinates3, terrains3);
+        gameState.placeTile(tile3);
+
+        ArrayList<Coordinate> coordinates4 = new ArrayList<Coordinate>();
+        coordinates4.add(new Coordinate(99, 100));
+        coordinates4.add(new Coordinate(98, 100));
+        coordinates4.add(new Coordinate(98, 101));
+
+        ArrayList<TerrainType> terrains4 = new ArrayList<TerrainType>();
+        terrains4.add(TerrainType.VOLCANO);
+        terrains4.add(TerrainType.GRASSLAND);
+        terrains4.add(TerrainType.GRASSLAND);
+
+        tile4 = new Tile(coordinates4, terrains4);
+        gameState.placeTile(tile4);
+
+        ArrayList<Coordinate> coordinates5 = new ArrayList<Coordinate>();
+
+        coordinates5.add(new Coordinate(101, 100));
+        coordinates5.add(new Coordinate(100, 99));
+        coordinates5.add(new Coordinate(101, 99));
+
+        ArrayList<TerrainType> terrains5 = new ArrayList<TerrainType>();
+        terrains5.add(TerrainType.GRASSLAND);
+        terrains5.add(TerrainType.VOLCANO);
+        terrains5.add(TerrainType.GRASSLAND);
+
+
+        tile5 = new Tile(coordinates5, terrains5);
+        gameState.placeTile(tile5);
 
         player1 = new Player();
-        gameStateObj.foundSettlement(new Coordinate(100, 101), player1);
-        gameStateObj.foundSettlement(new Coordinate(100, 99), player1);
-        gameStateObj.foundSettlement(new Coordinate(99, 99), player1);
-        gameStateObj.foundSettlement(new Coordinate(101, 100), player1);
-        gameStateObj.foundSettlement(new Coordinate(101, 101), player1);
-        tile1.getHexes()[2].setLevel(3);
-    }
-
-
-    @Test
-    public void coordinateInSettlement(){
-        Coordinate testCoord = new Coordinate(123, 132);
-        Coordinate testCoord1 = new Coordinate(121, 105);
-        ArrayList<Coordinate> containList = new ArrayList<>();
-        containList.add(testCoord);
-        containList.add(testCoord1);
-        assert TigerBuildRules.coordinateInSettlement(containList, testCoord);
+        gameState.foundSettlement(new Coordinate(100, 101), player1);
+        gameState.foundSettlement(new Coordinate(101, 101), player1);
+        gameState.foundSettlement(new Coordinate(101, 102), player1);
+        gameState.foundSettlement(new Coordinate(101, 100), player1);
+        gameState.foundSettlement(new Coordinate(100, 102), player1);
+        tile.getHexes().get(2).setLevel(3);
     }
 
     @Test
-    public void isTigerInSettlementTest(){
-        tile1.getHexes()[1].addTiger();
-        assert TigerBuildRules.isTigerInSettlement(tile1.getCoords());
+    public void checkIfHexAdjacentToSettlementTest(){
+        assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile.getHexes().get(2), gameState);
     }
-
-    @Test
-    public void checkIfHexAdjacentToSettlementTest(){ assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile5.getHexes()[1]); }
 
     @Test
     public void checkIfHexLevelAtleastThreeTest(){
-        assert TigerBuildRules.hexLevelAtLeastThree(tile1.getHexes()[2]);
+        assert TigerBuildRules.hexLevelAtLeastThree(tile.getHexes().get(2));
     }
 
     @Test
     public void checkIfTigerNotInSettlementTest(){
-        assert TigerBuildRules.settlementNotContainTiger();
+        assert TigerBuildRules.settlementNotContainTiger(gameState);
     }
 
     @Test
     public void checkIfTigerInSettlementTest(){
-        Hex hex = gameStateObj.getHex(gameStateObj.getSettlementList().get(0).getSettlementCoordinates().get(0));
+        Hex hex = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
         hex.addTiger();
-        assert !TigerBuildRules.settlementNotContainTiger();
+        assert !TigerBuildRules.settlementNotContainTiger(gameState);
     }
 
 
     @Test
     public void canPlaceTigerTest(){
-        assert TigerBuildRules.canPlaceTiger(tile1.getHexes()[2]);
+        assert TigerBuildRules.canPlaceTiger(tile.getHexes().get(2), gameState);
     }
-
-
-    public  void setupHexAndTilesOnGameState(GameState game){
-
-        Hex[] hexes1 = new Hex[3];
-        Hex[] hexes2 = new Hex[3];
-        Hex[] hexes3 = new Hex[3];
-        Hex[] hexes4 = new Hex[3];
-        Hex[] hexes5 = new Hex[3];
-
-        Coordinate hexes1Coord1 = new Coordinate(101, 99);
-        Coordinate hexes1Coord2 = new Coordinate(101, 100);
-        Coordinate hexes1Coord3 = new Coordinate(102, 100);
-
-        hexes1[0] = new Hex(hexes1Coord1, TerrainType.VOLCANO);
-        hexes1[1] = new Hex(hexes1Coord2, TerrainType.LAKE);
-        hexes1[2] = new Hex(hexes1Coord3, TerrainType.GRASSLAND);
-
-        Coordinate hexes2Coord1 = new Coordinate(102, 102);
-        Coordinate hexes2Coord2 = new Coordinate(101, 101);
-        Coordinate hexes2Coord3 = new Coordinate(101, 102);
-
-        hexes2[0] = new Hex(hexes2Coord1, TerrainType.VOLCANO);
-        hexes2[1] = new Hex(hexes2Coord2, TerrainType.GRASSLAND);
-        hexes2[2] = new Hex(hexes2Coord3, TerrainType.GRASSLAND);
-
-        Coordinate hexes3Coord1 = new Coordinate(103, 98);
-        Coordinate hexes3Coord2 = new Coordinate(102, 98);
-        Coordinate hexes3Coord3 = new Coordinate(102, 99);
-
-        hexes3[0] = new Hex(hexes3Coord1, TerrainType.VOLCANO);
-        hexes3[1] = new Hex(hexes3Coord2, TerrainType.GRASSLAND);
-        hexes3[2] = new Hex(hexes3Coord3, TerrainType.GRASSLAND);
-
-        Coordinate hexes4Coord1 = new Coordinate(98, 100);
-        Coordinate hexes4Coord2 = new Coordinate(99, 100);
-        Coordinate hexes4Coord3 = new Coordinate(98, 101);
-
-        hexes4[0] = new Hex(hexes4Coord1, TerrainType.VOLCANO);
-        hexes4[1] = new Hex(hexes4Coord2, TerrainType.JUNGLE);
-        hexes4[2] = new Hex(hexes4Coord3, TerrainType.ROCKY);
-
-        Coordinate hexes5Coord1 = new Coordinate(99, 98);
-        Coordinate hexes5Coord2 = new Coordinate(98, 99);
-        Coordinate hexes5Coord3 = new Coordinate(98, 98);
-
-        hexes5[0] = new Hex(hexes5Coord1, TerrainType.VOLCANO);
-        hexes5[1] = new Hex(hexes5Coord2, TerrainType.JUNGLE);
-        hexes5[2] = new Hex(hexes5Coord3, TerrainType.JUNGLE);
-
-        tile1 = new Tile(hexes1);
-        tile2 = new Tile(hexes2);
-        tile3 = new Tile(hexes3);
-        tile4 = new Tile(hexes4);
-        tile5 = new Tile(hexes5);
-
-
-        try {game.placeTile(tile1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile3);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile4);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile5);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-    }
-
-
 }
-
-
