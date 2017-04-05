@@ -33,14 +33,9 @@ public class KnockKnockClient {
     }
 
     public String authenticateConnection(String tournamentPassword, String username, String userPassword){
-        if(getServerMessage() == "WELCOME TO ANOTHER EDITION OF THUNDERDOME!\n"){
-            out.println("ENTER THUNDERDOME " + tournamentPassword);
-        }else{throw new AssertionError();}
+        getServerMessage();
 
 
-        if(getServerMessage() == "TWO SHALL ENTER, ONE SHALL LEAVE\n") {
-            out.println("I AM " + username + " " + userPassword);
-        }else{throw new AssertionError();}
 
         return getServerMessage();
     }
@@ -48,7 +43,10 @@ public class KnockKnockClient {
         String fromServer;
         try
         {
-            while ((fromServer = serverMessage.readLine()) != null);
+            while ((fromServer = serverMessage.readLine()) != null){
+                System.out.println("Server: " + fromServer);
+                out.println("Got it!");
+            }
 
             return fromServer;
         }
