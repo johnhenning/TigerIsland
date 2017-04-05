@@ -25,24 +25,26 @@ public class GameStateTests {
         coordinates = new ArrayList<Coordinate>();
         terrains = new ArrayList<TerrainType>();
         player1 = new Player();
-        coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
-        coordinates.add(new Coordinate(100,101));
+        coordinates.add(new Coordinate(101,102));
+        coordinates.add(new Coordinate(102,102));
 
         terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.JUNGLE);
 
         Hex[] hexes = new Hex[3];
-        hexes[0] = new Hex(new Coordinate(100,100), TerrainType.GRASSLAND);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.VOLCANO);
-        hexes[2] = new Hex(new Coordinate(100,101), TerrainType.JUNGLE);
+        hexes[0] = new Hex(coordinates.get(0), terrains.get(0));
+        hexes[1] = new Hex(coordinates.get(1), terrains.get(1));
+        hexes[2] = new Hex(coordinates.get(2), terrains.get(2));
 
         tile = new Tile(hexes);
     }
 
     @Test
     public void placeTileTest() throws Exception {
+//        Hex h = gameState.getHex(new Coordinate(100,100));
+//        assert  h.getLevel() == 1;
         gameState.placeTile(tile);
     }
 
@@ -69,7 +71,7 @@ public class GameStateTests {
     public void settlementMergeTest() throws Exception{
         gameState.placeTile(tile);
         gameState.foundSettlement(coordinates.get(0), player1);
-        gameState.foundSettlement(coordinates.get(2), player1);
+        gameState.foundSettlement(coordinates.get(1), player1);
         assert  gameState.getSettlementList().size() == 1;
     }
 

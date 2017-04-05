@@ -27,5 +27,14 @@ public class Tile {
 
         return tileCoords;
     }
+    public static Tile getInitialTile(){
+        Hex[] initialTileHexes = new Hex[5];
+        initialTileHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
+        initialTileHexes[1] = new Hex(new Coordinate(100,99), TerrainType.LAKE);
+        initialTileHexes[2] = new Hex(new Coordinate(99,99), TerrainType.JUNGLE);
+        initialTileHexes[3] = new Hex(new Coordinate(99,101), TerrainType.ROCKY);
+        initialTileHexes[4] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
+        return new Tile(initialTileHexes);
+    }
 }
 

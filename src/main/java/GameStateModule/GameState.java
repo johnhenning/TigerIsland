@@ -19,6 +19,7 @@ public class GameState {
         player1 = new Player();
         player2 = new Player();
         settlementList = new ArrayList<Settlement>();
+        placeTile(Tile.getInitialTile());
     }
 
     public void foundSettlement(Coordinate coordinate, Player player) {
