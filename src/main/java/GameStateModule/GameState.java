@@ -47,7 +47,7 @@ public class GameState {
             final Settlement beforeExpansion = settlement;
             hexesToPlaceMeeplesOn = SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
             if(BuildRules.checkPlayerHasEnoughMeeples(player, SettlementExpansionRules.getMeeplesRequiredExpansion(this, hexesToPlaceMeeplesOn))){
-                expansionPlaceMeeples(hexesToPlaceMeeplesOn);
+                expansionPlaceMeeples(hexesToPlaceMeeplesOn, player);
             }
             else{
                 //TODO: Can we think of a way to throw from here so AI knows its expansion wasn't valid
@@ -92,16 +92,18 @@ public class GameState {
             }
         }
     }
-    public  void expansionPlaceMeeples(ArrayList<Coordinate> coordinates){
+    public  void expansionPlaceMeeples(ArrayList<Coordinate> coordinates, Player player){
         for(Coordinate c : coordinates){
-            placeMeeple(c);
+            int meeplesPlaced = placeMeeple(c);
+            player.removeMeeple(meeplesPlaced);
         }
     }
     
-    public void placeMeeple(Coordinate coordinate) {
+    public int placeMeeple(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         int level = hex.getLevel();
         hex.addMeeple(level);
+        return level;
     }
 
     public void placeTotoro(Coordinate coordinate) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Kyle on 3/28/2017.
  */
 public class SettlementExpansionRulesTests {
-
+    GameState gameState;
     Grid gameBoard;
     static Tile tile;
     static Tile tile2;
@@ -25,6 +25,7 @@ public class SettlementExpansionRulesTests {
     @Before
     public void setup(){
 
+        gameState = new GameState();
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 
 
@@ -226,5 +227,49 @@ public class SettlementExpansionRulesTests {
         newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASSLAND,settlement1.get(0)));
         assert exceptionThrown;//invalid tile was placed so should be true
         assert newCoordinates.size() == 4;
+    }
+
+    @Test
+    public void expandSettlmentToOccupiedHexTest(){
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+
+        coords.add(new Coordinate(98, 100));
+        coords.add(new Coordinate(98, 99));
+        coords.add(new Coordinate(99, 100));
+
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.JUNGLE);
+        terrains.add(TerrainType.LAKE);
+
+        Tile tile = new Tile(coords,terrains);
+        gameState.placeTile(tile);
+
+        ArrayList<Coordinate> coords2 = new ArrayList<>();
+        ArrayList<TerrainType> terrains2 = new ArrayList<>();
+
+        coords2.add(new Coordinate(98, 97));
+        coords2.add(new Coordinate(99, 97));
+        coords2.add(new Coordinate(99, 98));
+
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.JUNGLE);
+        terrains2.add(TerrainType.JUNGLE);
+
+        Tile tile2 = new Tile(coords2, terrains2);
+        gameState.placeTile(tile2);
+
+        gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(99,97), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(99,99), gameState.getCurrentPlayer());
+        gameState.expandSettlement(new Coordinate(99,99), gameState.getCurrentPlayer(),TerrainType.JUNGLE);
+        assert gameState.getSettlementList().size() == 2;
+
+
+
+
+
     }
 }
