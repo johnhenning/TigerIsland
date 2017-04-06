@@ -14,16 +14,18 @@ import java.util.ArrayList;
 public class GameStateTests {
 
     private GameState gameState;
-    private ArrayList<Coordinate> coordinates;
-    private ArrayList<TerrainType> terrains;
-    private Tile tile;
+    private ArrayList<Coordinate> coordinates, coordinates2;
+    private ArrayList<TerrainType> terrains, terrains2;
+    private Tile tile, tile2;
     private Player player1;
 
     @Before
     public void setup() throws Exception{
         gameState = new GameState();
         coordinates = new ArrayList<>();
+        coordinates2 = new ArrayList<>();
         terrains = new ArrayList<>();
+        terrains2 = new ArrayList<>();
         player1 = new Player();
         coordinates.add(new Coordinate(101,101));
         coordinates.add(new Coordinate(101,102));
@@ -33,8 +35,18 @@ public class GameStateTests {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.VOLCANO);
 
-
         tile = new Tile(coordinates,terrains);
+
+        coordinates2.add(new Coordinate(102,100));
+        coordinates2.add(new Coordinate(101,100));
+        coordinates2.add(new Coordinate(101,99));
+
+        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.LAKE);
+        terrains2.add(TerrainType.VOLCANO);
+
+        tile2 = new Tile(coordinates2, terrains2);
+
     }
 
     @Test
@@ -71,6 +83,16 @@ public class GameStateTests {
         assert  gameState.getSettlementList().size() == 1;
     }
 
+    @Test
+    public void settlementExpansionTest() throws Exception{
+        gameState.placeTile(tile);
+        gameState.placeTile(tile2);
+        gameState.foundSettlement(coordinates.get(0), player1);
+        gameState.foundSettlement(coordinates2.get(1),player1);
+        gameState.expandSettlement(coordinates.get(0),player1,TerrainType.GRASSLAND);
+        assert gameState.getSettlementList().get(0).getSize() == 5;
+
+    }
     @Test
     public void switchPlayerTest() throws Exception {
         Player originalPlayer = gameState.getCurrentPlayer();

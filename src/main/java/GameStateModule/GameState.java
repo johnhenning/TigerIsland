@@ -32,9 +32,10 @@ public class GameState {
         if (SettlementFoundationRules.isValidFoundation(h)) {
             player.removeMeeple();
             placeMeeple(coordinate);
-            Settlement settlement = new Settlement(coordinate,player,settlementIDCount);
-            settlementIDCount++;
+            Settlement settlement = new Settlement(coordinate,player, ++settlementIDCount);
+
             mergeSettlements(settlement);
+            switchPlayer();
         } else {
             throw new AssertionError();
         }
@@ -47,6 +48,8 @@ public class GameState {
         }
         Settlement settlement = getSettlementByID(hex.getSettlementID());
         SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
+        mergeSettlements(settlement);
+        switchPlayer();
     }
 
     public Settlement getSettlementByID(int settlementID) {
@@ -61,6 +64,7 @@ public class GameState {
     public boolean placeTile(Tile tile) {
         try {
             gameboard.placeTile(tile);
+            switchPlayer();
             return true;
         } catch (Exception e) {
             return false;
@@ -71,6 +75,7 @@ public class GameState {
         TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, getSettlementIDCount());
         cleanSettlements();
         gameboard.levelTile(tile);
+        switchPlayer();
         return true;
     }
     public void cleanSettlements(){
@@ -92,12 +97,14 @@ public class GameState {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         assert TotoroBuildRules.isValidTotoroLocation(hex,currentPlayer,this);
         hex.addTotoro();
+        switchPlayer();
     }
 
     public void placeTiger(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         assert TigerBuildRules.canPlaceTiger(hex, this);
         hex.addTiger();
+        switchPlayer();
     }
 
     public ArrayList<Settlement> getSettlementList() {
@@ -135,14 +142,20 @@ public class GameState {
     private void mergeSettlements(Settlement newSettlement) {
         ArrayList<Coordinate> adjacentCoordinates = newSettlement.getSettlementCoordinates();
         ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
-
+        playersSettlements.remove(newSettlement);
+        settlementList.remove(newSettlement);
         for(Settlement s: playersSettlements){
-            if(s.areCoordinatesAdjacent(adjacentCoordinates)) {
+            int newSettlmentID = newSettlement.getSettlementID();
+            if(s.areCoordinatesAdjacent(adjacentCoordinates) && (newSettlmentID != 0 || newSettlmentID != s.getSettlementID())) {
                 adjacentCoordinates.addAll(s.getSettlementCoordinates());
                 settlementList.remove(s);
             }
         }
         Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner(), newSettlement.getSettlementID());
+        for(Coordinate c : combinedSettlements.getSettlementCoordinates()){
+            Hex h = getHex(c);
+            h.setSettlementID(newSettlement.getSettlementID());
+        }
         settlementList.add(combinedSettlements);
     }
 }

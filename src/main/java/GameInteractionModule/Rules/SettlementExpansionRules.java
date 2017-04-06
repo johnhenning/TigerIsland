@@ -3,12 +3,60 @@ package GameInteractionModule.Rules;
 import GameStateModule.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Stack;
 
 /**
  * Created by johnhenning on 3/22/17.
  */
 public class SettlementExpansionRules extends BuildRules{
+
+    public static boolean getAdjacentSettlements(Grid gameBoard, Settlement newSettlement){
+        int newSettlementID = newSettlement.getSettlementID();
+        Hex h;
+        boolean adjacencyFound = false;
+        ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
+        for(Coordinate c : newSettlement.getSettlementCoordinates()){
+            h = downLeft(gameBoard, c);
+            if((h != null) && (h.getSettlementID() != newSettlementID) && (h.getSettlementID() != 0)){
+                adjacentCoordinates.add(c);
+                h.setSettlementID(newSettlementID);
+                adjacencyFound = true;
+            }
+            h = downRight(gameBoard, c);
+            if((h != null) && (h.getSettlementID() != newSettlementID) && (h.getSettlementID() != 0)){
+                adjacentCoordinates.add(c);
+                h.setSettlementID(newSettlementID);
+                adjacencyFound = true;
+            }
+            h = topRight(gameBoard, c);
+            if((h != null) && (h.getSettlementID() != newSettlementID) && (h.getSettlementID() != 0)){
+                adjacentCoordinates.add(c);
+                h.setSettlementID(newSettlementID);
+                adjacencyFound = true;
+            }
+            h = topLeft(gameBoard, c);
+            if((h != null) && (h.getSettlementID() != newSettlementID) && (h.getSettlementID() != 0)){
+                adjacentCoordinates.add(c);
+                h.setSettlementID(newSettlementID);
+                adjacencyFound = true;
+            }
+            h = leftOfHex(gameBoard, c);
+            if((h != null) && (h.getSettlementID() != newSettlementID) && (h.getSettlementID() != 0)){
+                adjacentCoordinates.add(c);
+                h.setSettlementID(newSettlementID);
+                adjacencyFound = true;
+            }
+            h = rightOfHex(gameBoard, c);
+            if((h != null) && (h.getSettlementID() != newSettlementID) && (h.getSettlementID() != 0)){
+                adjacentCoordinates.add(c);
+                h.setSettlementID(newSettlementID);
+                adjacencyFound = true;
+            }
+        }
+        newSettlement.getSettlementCoordinates().addAll(adjacentCoordinates);
+        return adjacencyFound;
+    }
 
     public static ArrayList<Coordinate> expansionDFS(Grid gameboard, TerrainType terrain, Settlement settlement){
         ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
