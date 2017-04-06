@@ -117,7 +117,6 @@ public class Rules {
         x = coordinate.getX();
         y = coordinate.getY();
         x += 1;
-
         return gameboard.getGameboard()[x][y];
     }
 }

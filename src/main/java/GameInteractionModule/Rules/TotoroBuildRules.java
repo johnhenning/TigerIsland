@@ -71,4 +71,7 @@ public class TotoroBuildRules extends BuildRules {
                 && settlementNotContainTotoro(gameState);
     }
 
+    public static boolean checkEnoughEntities(Player player){
+        return player.getNumTotoros()>0;
+    }
 }

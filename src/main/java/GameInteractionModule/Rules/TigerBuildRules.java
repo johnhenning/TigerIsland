@@ -58,4 +58,8 @@ public class TigerBuildRules extends BuildRules {
         }
         return false;
     }
+
+    public static boolean checkEnoughEntities(Player player){
+        return player.getNumTigers()>0;
+    }
 }

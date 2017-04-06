@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by jslocke on 3/23/17.
  */
 
-/* TODO: Why can't we use the same language in test?
+/*
  * Is this duplication of tests? How do we avoid it
  */
 public class SettlementFoundationStepDefs {
@@ -22,8 +22,6 @@ public class SettlementFoundationStepDefs {
     boolean exceptionThrown = false;
     @Given("^There is a tile with an unoccupied Terrain hex$")
     public void there_is_a_tile_with_an_unoccupied_Terrain_hex() throws Throwable {
-        //TODO: find better way of dealing with coordinates
-
 
         ArrayList<Coordinate> coordinates = new ArrayList<>();
         coordinates.add(new Coordinate(100,100));
@@ -35,14 +33,7 @@ public class SettlementFoundationStepDefs {
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
 
-        Hex[] hexes = new Hex[3];
-        hexes[0] = new Hex(new Coordinate(101,99), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(102,99), TerrainType.GRASSLAND);
-        hexes[2] = new Hex(new Coordinate(102,100), TerrainType.LAKE);
-
         Tile tile = new Tile(coordinates, terrains);
-
-
 
         try{ game.placeTile(tile); }
         catch (AssertionError e){ exceptionThrown = true; }
@@ -158,7 +149,6 @@ public class SettlementFoundationStepDefs {
 
     @Then("^The Player cannot found the settlement on that hex$")
     public void the_Player_cannot_found_the_settlement_on_that_hex() throws Throwable {
-        //TODO: might need to look at e?
         assert  exceptionThrown;
     }
 

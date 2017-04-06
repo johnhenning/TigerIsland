@@ -33,50 +33,36 @@ public class TilePlacementRules extends Rules {
             int y = hex.gety();
             Coordinate hexCoord = new Coordinate(x, y);
 
-            // TODO : need to figure out edge cases
-            if(hex.getx() < 0 || hex.gety() > 200){
-                //do nothing
-                continue;
-            }
-            else{
-
-                if(downRight(gameboard, hexCoord) != null)
-                    return true;
-                else if(downLeft(gameboard, hexCoord) != null)
-                    return true;
-                else if(topRight(gameboard, hexCoord) != null)
-                    return true;
-                else if(topLeft(gameboard, hexCoord) != null)
-                    return true;
-                else if(rightOfHex(gameboard, hexCoord) != null)
-                    return true;
-                else if(leftOfHex(gameboard, hexCoord) != null)
-                    return true;
-            }
+            if(downRight(gameboard, hexCoord) != null)
+                return true;
+            else if(downLeft(gameboard, hexCoord) != null)
+                return true;
+            else if(topRight(gameboard, hexCoord) != null)
+                return true;
+            else if(topLeft(gameboard, hexCoord) != null)
+                return true;
+            else if(rightOfHex(gameboard, hexCoord) != null)
+                return true;
+            else if(leftOfHex(gameboard, hexCoord) != null)
+                return true;
         }
         return false;
     }
 
     public static ArrayList<Hex> getAdjacentHexes(Hex hex, Grid gameboard){
         ArrayList<Hex> adjacentHexes = new ArrayList<>();
-            // TODO : need to figure out edge cases
-            if(hex.getx() < 0 || hex.gety() > 200){
-                //do nothing
-            }
-            else{
-                if(downRight(gameboard, hex.getCoordinate()) != null)
-                    adjacentHexes.add(downRight(gameboard, hex.getCoordinate()));
-                if(downLeft(gameboard, hex.getCoordinate()) != null)
-                    adjacentHexes.add(downLeft(gameboard, hex.getCoordinate()));
-                if(topRight(gameboard, hex.getCoordinate()) != null)
-                    adjacentHexes.add(topRight(gameboard, hex.getCoordinate()));
-                if(topLeft(gameboard, hex.getCoordinate()) != null)
-                    adjacentHexes.add(topLeft(gameboard, hex.getCoordinate()));
-                if(rightOfHex(gameboard, hex.getCoordinate()) != null)
-                    adjacentHexes.add(rightOfHex(gameboard, hex.getCoordinate()));
-                if(leftOfHex(gameboard, hex.getCoordinate()) != null)
-                    adjacentHexes.add(leftOfHex(gameboard, hex.getCoordinate()));
-            }
+        if(downRight(gameboard, hex.getCoordinate()) != null)
+            adjacentHexes.add(downRight(gameboard, hex.getCoordinate()));
+        if(downLeft(gameboard, hex.getCoordinate()) != null)
+            adjacentHexes.add(downLeft(gameboard, hex.getCoordinate()));
+        if(topRight(gameboard, hex.getCoordinate()) != null)
+            adjacentHexes.add(topRight(gameboard, hex.getCoordinate()));
+        if(topLeft(gameboard, hex.getCoordinate()) != null)
+            adjacentHexes.add(topLeft(gameboard, hex.getCoordinate()));
+        if(rightOfHex(gameboard, hex.getCoordinate()) != null)
+            adjacentHexes.add(rightOfHex(gameboard, hex.getCoordinate()));
+        if(leftOfHex(gameboard, hex.getCoordinate()) != null)
+            adjacentHexes.add(leftOfHex(gameboard, hex.getCoordinate()));
         return adjacentHexes;
     }
 
