@@ -170,7 +170,7 @@ public class TileNukeRulesTests{
     }
 
     @Test
-    public void bigDivideSettlementsTest() {
+    public void bigDivideSettlementsTest() throws Exception{
         setupGameStateSettlementSize5(game);
         ArrayList<Coordinate> coords = new ArrayList<>();
         ArrayList<TerrainType> terrains = new ArrayList<>();
@@ -193,7 +193,7 @@ public class TileNukeRulesTests{
     }
 
     @Test
-    public void bigDivideSettlementsTestNonNuke() {
+    public void bigDivideSettlementsTestNonNuke() throws Exception{
         setupGameStateNonNuked(game);
         ArrayList<Coordinate> coords = new ArrayList<>();
         ArrayList<TerrainType> terrains = new ArrayList<>();
@@ -215,7 +215,7 @@ public class TileNukeRulesTests{
         assert checkingSettlments != null;
     }
     @Test
-    public void bigDivideSettlementsTest2Players() {
+    public void bigDivideSettlementsTest2Players() throws Exception{
         setupGameState2Players(game);
         ArrayList<Coordinate> coords = new ArrayList<>();
         ArrayList<TerrainType> terrains = new ArrayList<>();
@@ -240,7 +240,7 @@ public class TileNukeRulesTests{
 
     }
     @Test
-    public void bigDivideSettlementsTestWithExpansion(){
+    public void bigDivideSettlementsTestWithExpansion() throws Exception{
         setupGameState2Players(game);
         ArrayList<Coordinate> coords = new ArrayList<>();
         ArrayList<TerrainType> terrains = new ArrayList<>();
@@ -267,7 +267,7 @@ public class TileNukeRulesTests{
 
     //TODO: test whether or not a settlement can be completly wiped out
 
-    public void setupSettlementSize5(GameState game){
+    public void setupSettlementSize5(GameState game) throws Exception{
         try {game.foundSettlement(new Coordinate(101,102), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
@@ -285,7 +285,7 @@ public class TileNukeRulesTests{
         assert  !exceptionThrown;
     }
 
-    public void setupSettlementNonNuked(GameState game){
+    public void setupSettlementNonNuked(GameState game) throws Exception{
         try {game.foundSettlement(new Coordinate(101,100), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
@@ -299,7 +299,7 @@ public class TileNukeRulesTests{
         catch (AssertionError e) { exceptionThrown = true; }
         assert  !exceptionThrown;
     }
-    public void setupSettlement2Players(GameState game){
+    public void setupSettlement2Players(GameState game) throws Exception{
 
         try {game.foundSettlement(new Coordinate(101,102), player1);}
         catch (AssertionError e) { exceptionThrown = true; }
@@ -318,16 +318,16 @@ public class TileNukeRulesTests{
         assert  !exceptionThrown;
 
     }
-    public void setupGameStateSettlementSize5(GameState game){
+    public void setupGameStateSettlementSize5(GameState game) throws Exception{
         setupHexAndTilesOnGameState(game);
         setupSettlementSize5(game);
     }
 
-    public void setupGameStateNonNuked(GameState game){
+    public void setupGameStateNonNuked(GameState game) throws Exception{
         setupHexAndTilesOnGameState(game);
         setupSettlementNonNuked(game);
     }
-    public void setupGameState2Players(GameState game){
+    public void setupGameState2Players(GameState game) throws Exception{
         setupHexAndTilesOnGameState(game);
         setupSettlement2Players(game);
     }

@@ -14,4 +14,12 @@ public class Message {
         this.tile = tile;
         this.buildMove = buildMove;
     }
+
+    Message(Tile tile){
+        this.tile = tile;
+    }
+
+    public void setBuildMove(BuildMove buildMove){
+        this.buildMove = buildMove;
+    }
 }

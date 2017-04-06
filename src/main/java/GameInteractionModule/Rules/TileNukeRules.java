@@ -109,16 +109,18 @@ public class TileNukeRules extends Rules {
        return true;
 
     }
-    //TODO: needs to be finished
-    public static boolean CheckNukeDoesNotWipeoutSettlement(Tile tile, ArrayList<Settlement> settlementList){
-        ArrayList<Coordinate> tileCoords = tile.getCoords();
-        ArrayList<Settlement> settlementsInDanger = getSettlementsThatCouldBeWipedOut(settlementList);
-        for(Settlement s: settlementsInDanger){
-            s.getSettlementCoordinates();
-            //see if all of s->coords is contained in tile->coords
-        }
-        return true;
 
+    public static boolean CheckNukeDoesNotWipeoutSettlement(Tile tile, ArrayList<Settlement> settlementList){
+            ArrayList<Coordinate> tileCoords = tile.getCoords();
+            ArrayList<Settlement> settlementsThatCouldBeWipedOut = getSettlementsThatCouldBeWipedOut(settlementList);
+            for(Settlement s: settlementsThatCouldBeWipedOut){
+                for(Coordinate c: tileCoords) {
+                    ArrayList<Coordinate> settlementCoordinates = s.getSettlementCoordinates();
+                    if (!settlementCoordinates.contains(tileCoords))
+                        return false;
+                }
+            }
+            return true;
     }
 
     public static boolean doCoordinatesOverlap(ArrayList<Coordinate> tile, ArrayList<Coordinate> settlementCoords){
@@ -225,13 +227,12 @@ public class TileNukeRules extends Rules {
 
     }
 
-    public static ArrayList<Settlement> divideSettlement(GameState gameState, Settlement settlement){
+    public static ArrayList<Settlement> divideSettlement(Grid gameBoard, Settlement settlement){
         ArrayList<Coordinate> hexesEncountered = new ArrayList<>();
         ArrayList<Settlement> splitSettlements = new ArrayList<>();
         Stack<Coordinate> coords = new Stack();
         coords.add(settlement.getSettlementCoordinates().get(0));
         hexesEncountered.add(settlement.getSettlementCoordinates().get(0));
-        Grid gameBoard = gameState.getGameboard();
 
         while(!coords.empty()){
             Coordinate currentAdjacentCoordinate = coords.pop();
@@ -246,14 +247,14 @@ public class TileNukeRules extends Rules {
         }
 
         removeCoordsFromSettlement(hexesEncountered, settlement);
-        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), gameState.getSettlementIDCount());
+        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), settlement.getSettlementID());
 
         splitSettlements.add(newSettlement);
 
         return splitSettlements;
     }
 
-    public static void bigDivideSettlements (Hex[][] gameBoard, ArrayList<Settlement> settlementList, Tile tile){
+    public static void bigDivideSettlements (Grid gameBoard, ArrayList<Settlement> settlementList, Tile tile){
         ArrayList<Settlement> affectedSettlements = findAffectedSettlements(settlementList, tile);
         ArrayList<Settlement> dividedSettlments = new ArrayList<>();
 
@@ -262,5 +263,6 @@ public class TileNukeRules extends Rules {
         }
         settlementList.addAll(dividedSettlments);
     }
+
 
 }

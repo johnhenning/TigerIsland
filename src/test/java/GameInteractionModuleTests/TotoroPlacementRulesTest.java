@@ -31,10 +31,10 @@ public class TotoroPlacementRulesTest{
 
         player1 = new Player();
         gameState.foundSettlement(new Coordinate(100,101),player1);
-        gameState.foundSettlement(new Coordinate(101,101),player1);
-        gameState.foundSettlement(new Coordinate(101,102),player1);
+        gameState.foundSettlement(new Coordinate(100,99),player1);
+        gameState.foundSettlement(new Coordinate(99,99),player1);
         gameState.foundSettlement(new Coordinate(101,100),player1);
-        gameState.foundSettlement(new Coordinate(100,102),player1);
+        gameState.foundSettlement(new Coordinate(101,101),player1);
 
     }
 

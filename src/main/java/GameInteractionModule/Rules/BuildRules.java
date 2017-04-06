@@ -21,9 +21,8 @@ public class BuildRules extends Rules {
     }
 
     public static boolean checkEnoughEntities(Player player){
-        return true; //TODO: Check if there enough entities to build/expand
+            return player.getNumMeeples()>0;
     }
-
     public static ArrayList<Settlement> settlementsOfPlayer(ArrayList<Settlement> settlements, Player player){
         ArrayList<Settlement> playerSettlements = new ArrayList<Settlement>();
         for(Settlement s: settlements){

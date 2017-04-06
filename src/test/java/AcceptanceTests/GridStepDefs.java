@@ -30,8 +30,6 @@ public class GridStepDefs {
 
     @When("^Player (\\d+) places the first tile,$")
     public void player_places_the_first_tile(int arg1) throws Throwable {
-        //TODO: find better way of dealing with coordinates
-
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
@@ -41,12 +39,6 @@ public class GridStepDefs {
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.LAKE);
-
-
-        Hex[] hexes = new Hex[3];
-        hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
-        hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
         try {gameBoard.placeTile(tile);}
