@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class TigerPlacementTest {
     Tile tile;
-    static Tile tile;
+    static Tile tile1;
     static Tile tile2;
     static Tile tile3;
     static Tile tile4;
@@ -23,10 +23,28 @@ public class TigerPlacementTest {
 
     @Before
     public void setup() throws Exception {
+
+        //TODO: needs to be looked at
         gameState = new GameState();
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 
         setupHexAndTilesOnGameState(gameState);
+
+
+
+        coordinates.add(new Coordinate(100, 100));
+        coordinates.add(new Coordinate(100, 101));
+        coordinates.add(new Coordinate(99, 101));
+
+        ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.LAKE);
+
+
+
+//        tile = new Tile(coordinates, terrains);
+//        gameState.placeTile(tile);
 
         player1 = new Player();
         gameState.foundSettlement(new Coordinate(100, 101), player1);
@@ -34,28 +52,28 @@ public class TigerPlacementTest {
         gameState.foundSettlement(new Coordinate(99, 99), player1);
         gameState.foundSettlement(new Coordinate(101, 100), player1);
         gameState.foundSettlement(new Coordinate(101, 101), player1);
-        tile.getHexes().get(2).setLevel(3);
+        tile1.getHexes().get(2).setLevel(3);
     }
 
 
     @Test
-    public void checkIfHexAdjacentToSettlementTest(){
-        assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile.getHexes().get(2), gameState);
+    public void checkIfHexAdjacentToSettlementTest() {
+        assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile1.getHexes().get(2), gameState);
     }
 
     @Test
-    public void checkIfHexLevelAtleastThreeTest(){
+    public void checkIfHexLevelAtleastThreeTest() {
         assert TigerBuildRules.hexLevelAtLeastThree(tile1.getHexes().get(2));
-        assert TigerBuildRules.hexLevelAtLeastThree(tile.getHexes().get(2));
+        assert TigerBuildRules.hexLevelAtLeastThree(tile1.getHexes().get(2));
     }
 
     @Test
-    public void checkIfTigerNotInSettlementTest(){
+    public void checkIfTigerNotInSettlementTest() {
         assert TigerBuildRules.settlementNotContainTiger(gameState);
     }
 
     @Test
-    public void checkIfTigerInSettlementTest(){
+    public void checkIfTigerInSettlementTest() {
         Hex hex = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
         hex.addTiger();
         assert !TigerBuildRules.settlementNotContainTiger(gameState);
@@ -63,12 +81,12 @@ public class TigerPlacementTest {
 
 
     @Test
-    public void canPlaceTigerTest(){
-        assert TigerBuildRules.canPlaceTiger(tile.getHexes().get(2), gameState);
+    public void canPlaceTigerTest() {
+        assert TigerBuildRules.canPlaceTiger(tile1.getHexes().get(2), gameState);
     }
 
 
-    public  void setupHexAndTilesOnGameState(GameState game){
+    public void setupHexAndTilesOnGameState(GameState game) {
 //        Hex[] hexes1 = new Hex[3];
 //        Hex[] hexes2 = new Hex[3];
 //        Hex[] hexes3 = new Hex[3];
@@ -76,7 +94,7 @@ public class TigerPlacementTest {
 //        Hex[] hexes5 = new Hex[3];
 
         ArrayList<Coordinate> hexesCoord = new ArrayList<>();
-        hexesCoord.add( new Coordinate(101, 99));
+        hexesCoord.add(new Coordinate(101, 99));
         hexesCoord.add(new Coordinate(101, 100));
         hexesCoord.add(new Coordinate(102, 100));
         ArrayList<Coordinate> hexesCoord2 = new ArrayList<>();
@@ -129,19 +147,35 @@ public class TigerPlacementTest {
         tile5 = new Tile(hexesCoord5, terrains5);
 
 
-        try {game.placeTile(tile1);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile3);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile4);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {game.placeTile(tile5);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
+        try {
+            game.placeTile(tile1);
+        } catch (AssertionError e) {
+            exceptionThrown = true;
+        }
+        assert !exceptionThrown;
+        try {
+            game.placeTile(tile2);
+        } catch (AssertionError e) {
+            exceptionThrown = true;
+        }
+        assert !exceptionThrown;
+        try {
+            game.placeTile(tile3);
+        } catch (AssertionError e) {
+            exceptionThrown = true;
+        }
+        assert !exceptionThrown;
+        try {
+            game.placeTile(tile4);
+        } catch (AssertionError e) {
+            exceptionThrown = true;
+        }
+        assert !exceptionThrown;
+        try {
+            game.placeTile(tile5);
+        } catch (AssertionError e) {
+            exceptionThrown = true;
+        }
+        assert !exceptionThrown;
     }
+}

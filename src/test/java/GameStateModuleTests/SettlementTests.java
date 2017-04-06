@@ -13,6 +13,7 @@ public class SettlementTests {
     private Settlement settlement;
     private Player player1;
     private ArrayList<Coordinate> settlementCoordinates;
+    int settlementID;
 
     @Before
     public void setup() throws Exception {
@@ -58,19 +59,19 @@ public class SettlementTests {
 
     @Test
     public void getOwnerTest() throws Exception{
-        settlement = new Settlement(settlementCoordinates, player1);
+        settlement = new Settlement(settlementCoordinates, player1, 0);
         assert settlement.getOwner() == player1;
     }
 
     @Test
     public void getSizeTest() throws Exception{
-        settlement = new Settlement(settlementCoordinates, player1);
+        settlement = new Settlement(settlementCoordinates, player1, 0);
         assert settlement.getSize() == 2;
     }
 
     @Test
     public void getSettlementCoordinateTest() throws Exception{
-        settlement = new Settlement(settlementCoordinates, player1);
+        settlement = new Settlement(settlementCoordinates, player1, 0);
 
         ArrayList<Coordinate> settlementCoord;
 

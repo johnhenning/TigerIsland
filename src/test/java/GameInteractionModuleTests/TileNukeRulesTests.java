@@ -50,7 +50,7 @@ public class TileNukeRulesTests{
 
 
     @Before
-    public void setup() throws Exception{
+    public void setup() {
         game = new GameState();
         overlappedSettlement = new ArrayList<>();
         validSettlement = new ArrayList<>();
@@ -59,6 +59,8 @@ public class TileNukeRulesTests{
         player1 = new Player();
         player2 = new Player();
         secondSettlementCoords = new ArrayList<>();
+
+
 
         coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(100,101));
@@ -92,45 +94,49 @@ public class TileNukeRulesTests{
 
     @Test
     public void checkLowerHexesAreSameLevelTest(){
-        gameBoard = new Grid(200);
-        try {gameBoard.placeTile(tile);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile3);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile4);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile5);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        assert TileNukeRules.CheckLowerHexesAreSameLevel(tile6, gameBoard.getGameboard()) == 1;
+        //TODO: needs to be redone
+        assert false;
+//        gameBoard = new Grid(200);
+//        try {gameBoard.placeTile(tile);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile2);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile3);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile4);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile5);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        assert TileNukeRules.CheckLowerHexesAreSameLevel(tile6, gameBoard.getGameboard()) == 1;
     }
 
     @Test
     public void getNewTileLevelTest(){
-        gameBoard = new Grid(200);
-        try {gameBoard.placeTile(tile);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile2);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile3);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile4);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        try {gameBoard.placeTile(tile5);}
-        catch (AssertionError e) { exceptionThrown = true; }
-        assert  !exceptionThrown;
-        int level = TileNukeRules.getNewTileLevel(tile6, gameBoard.getGameboard());
-        assert level == 2;
+        //TODO: needs to be redone
+        assert false;
+//        gameBoard = new Grid(200);
+//        try {gameBoard.placeTile(tile);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile2);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile3);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile4);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        try {gameBoard.placeTile(tile5);}
+//        catch (AssertionError e) { exceptionThrown = true; }
+//        assert  !exceptionThrown;
+//        int level = TileNukeRules.getNewTileLevel(tile6, gameBoard.getGameboard());
+//        assert level == 2;
     }
 
 

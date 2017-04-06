@@ -25,7 +25,7 @@ public class GameState {
         placeTile(Tile.getInitialTile());
     }
 
-    public void foundSettlement(Coordinate coordinate, Player player) throws Exception {
+    public void foundSettlement(Coordinate coordinate, Player player) {
       //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
 
@@ -40,10 +40,10 @@ public class GameState {
         }
 }
 
-    public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) throws Exception {
+    public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) {
         Hex hex = getHex(coordinate);
         if (hex == null) {
-            throw new Exception();
+            throw new AssertionError();
         }
         Settlement settlement = getSettlementByID(hex.getSettlementID());
         SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
@@ -67,10 +67,11 @@ public class GameState {
         }
     }
 
-    public void levelTile(Tile tile) {
-        TileNukeRules.bigDivideSettlements(gameboard.getGameboard(), settlementList, tile);
+    public boolean levelTile(Tile tile) {
+        TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, getSettlementIDCount());
         cleanSettlements();
         gameboard.levelTile(tile);
+        return true;
     }
     public void cleanSettlements(){
         for(int i = 0; i < settlementList.size(); i++){
@@ -87,6 +88,7 @@ public class GameState {
     }
 
     public void placeTotoro(Coordinate coordinate) {
+        //TODO: fixplz
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         assert TotoroBuildRules.isValidTotoroLocation(hex,currentPlayer,this);
         hex.addTotoro();
@@ -140,7 +142,6 @@ public class GameState {
                 settlementList.remove(s);
             }
         }
-
         Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner(), newSettlement.getSettlementID());
         settlementList.add(combinedSettlements);
     }

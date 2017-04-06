@@ -51,8 +51,10 @@ public class GameStateTests {
 
     @Test
     public void placeTotoroTest() throws Exception {
-        gameState.placeTile(tile);
-        gameState.placeTotoro(coordinates.get(0));
+        //TODO: needs to be looked at
+        assert false;
+//        gameState.placeTile(tile);
+//        gameState.placeTotoro(coordinates.get(0));
     }
 
     @Test

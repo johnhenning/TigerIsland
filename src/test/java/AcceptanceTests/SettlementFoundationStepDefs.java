@@ -1,4 +1,4 @@
-package GameInteractionModuleTests;
+package AcceptanceTests;
 
 import GameInteractionModule.Rules.SettlementFoundationRules;
 import GameStateModule.*;
