@@ -124,7 +124,7 @@ public class Adapter {
         return cubicCoord;
     }
 
-    public Coordinate[] getCoordinatesOfOpponentsTile(Coordinate volcanoCoordinate, int orientation){
+    public static Coordinate[] getCoordinatesOfOpponentsTile(Coordinate volcanoCoordinate, int orientation){
         Coordinate habitableTerrainCoordinates[] = new Coordinate[2];
         switch (orientation){
             case 1:
@@ -155,7 +155,7 @@ public class Adapter {
         return habitableTerrainCoordinates;
     }
 
-    public int getOrientationFromOurTile(Coordinate volcanoCoordinate, Coordinate ourCoordinate[]){
+    public static int getOrientationFromOurTile(Coordinate volcanoCoordinate, Coordinate ourCoordinate[]){
         if(ourCoordinate[0].equals(topLeft(volcanoCoordinate))
                 && ourCoordinate[1].equals(topRight(volcanoCoordinate)))
             return 1;

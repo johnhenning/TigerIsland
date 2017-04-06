@@ -2,6 +2,7 @@ import GameInteractionModule.Game;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.Message;
+import ServerModule.Adapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,16 +38,20 @@ public class TigerIsland {
 
     public static Tile generateTile(){
         ArrayList<TerrainType> terrains = new ArrayList<>();
-        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(generateTerrain());
         terrains.add(generateTerrain());
         System.out.println(terrains.get(1).toString() + " " + terrains.get(2).toString());
-        System.out.println("Enter coordinates: ");
+        System.out.println("Enter coordinates for volcano: ");
         Scanner in = new Scanner(System.in);
-        for(int i = 0; i<3; i++){
-            coordinates.add(new Coordinate(in.nextInt(), in.nextInt()));
-        }
+        Coordinate coordinateOfVolcanoHex = new Coordinate(in.nextInt(),in.nextInt());
+        System.out.println("Enter the orientation of the tile: ");
+        int orientation = in.nextInt();
+        Coordinate[] habitableTerrainCoordinates = Adapter.getCoordinatesOfOpponentsTile(coordinateOfVolcanoHex,orientation);
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+        coordinates.add(coordinateOfVolcanoHex);
+        coordinates.add(habitableTerrainCoordinates[0]);
+        coordinates.add(habitableTerrainCoordinates[1]);
         return new Tile(coordinates,terrains);
 
 
