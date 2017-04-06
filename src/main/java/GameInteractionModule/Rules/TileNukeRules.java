@@ -103,10 +103,10 @@ public class TileNukeRules extends Rules {
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
         Hex hex_two = gameboard[hex2.getx()][hex2.gety()];
 
-       if(hex_zero.hasTiger() || hex_one.hasTiger() || hex_two.hasTiger()){
-           throw new AssertionError();
-       }
-       return true;
+        if(hex_zero.hasTiger() || hex_one.hasTiger() || hex_two.hasTiger()){
+            throw new AssertionError();
+        }
+        return true;
 
     }
     //TODO: needs to be finished
@@ -245,7 +245,7 @@ public class TileNukeRules extends Rules {
         }
 
         removeCoordsFromSettlement(hexesEncountered, settlement);
-        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), ++settlementID);
+        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), settlementID);
         splitSettlements.add(newSettlement);
 
         return splitSettlements;

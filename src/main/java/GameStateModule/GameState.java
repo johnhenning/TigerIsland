@@ -80,7 +80,7 @@ public class GameState {
     }
 
     public boolean levelTile(Tile tile) {
-        TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, ++settlementIDCount);
+        TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, settlementIDCount);
         cleanSettlements();
         gameboard.levelTile(tile);
         return true;
