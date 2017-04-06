@@ -39,15 +39,28 @@ public class Tile {
 
         return tileCoords;
     }
-
     public static Tile getInitialTile(){
-        Hex[] initialTileHexes = new Hex[5];
-        initialTileHexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        initialTileHexes[1] = new Hex(new Coordinate(100,99), TerrainType.LAKE);
-        initialTileHexes[2] = new Hex(new Coordinate(99,99), TerrainType.JUNGLE);
-        initialTileHexes[3] = new Hex(new Coordinate(99,101), TerrainType.ROCKY);
-        initialTileHexes[4] = new Hex(new Coordinate(100,101), TerrainType.GRASSLAND);
-        return new Tile(initialTileHexes);
+        ArrayList<Hex> initialTile = new ArrayList<>();
+        initialTile.add(new Hex(new Coordinate(100,100), TerrainType.VOLCANO));
+        initialTile.add(new Hex(new Coordinate(100,99), TerrainType.LAKE));
+        initialTile.add(new Hex(new Coordinate(99,99), TerrainType.JUNGLE));
+        initialTile.add(new Hex(new Coordinate(99,101), TerrainType.ROCKY));
+        initialTile.add(new Hex(new Coordinate(100,101), TerrainType.GRASSLAND));
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        coords.add(new Coordinate(100,100));
+        coords.add(new Coordinate(100,99));
+        coords.add(new Coordinate(99,99));
+        coords.add(new Coordinate(99,101));
+        coords.add(new Coordinate(100,101));
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.JUNGLE);
+        terrains.add(TerrainType.ROCKY);
+        terrains.add(TerrainType.GRASSLAND);
+
+
+        return new Tile(coords, terrains);
     }
 }
 

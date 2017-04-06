@@ -25,7 +25,6 @@ public class SettlementExpansionRules extends BuildRules{
                 }
             }
         }
-
         return hexesEncountered;
     }
 

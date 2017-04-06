@@ -38,7 +38,7 @@ public class GameState {
         } else {
             throw new AssertionError();
         }
-    }
+}
 
     public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) throws Exception {
         Hex hex = getHex(coordinate);
@@ -67,12 +67,16 @@ public class GameState {
         }
     }
 
-    public boolean levelTile(Tile tile) {
-        try {
-            gameboard.levelTile(tile);
-            return true;
-        } catch (Exception e) {
-            return false;
+    public void levelTile(Tile tile) {
+        TileNukeRules.bigDivideSettlements(gameboard.getGameboard(), settlementList, tile);
+        cleanSettlements();
+        gameboard.levelTile(tile);
+    }
+    public void cleanSettlements(){
+        for(int i = 0; i < settlementList.size(); i++){
+            if(settlementList.get(i).getSettlementCoordinates().size() == 0) {
+                settlementList.remove(i--);
+            }
         }
     }
     
@@ -94,7 +98,7 @@ public class GameState {
         hex.addTiger();
     }
 
-    public ArrayList<Settlement> getSettlementList() { 
+    public ArrayList<Settlement> getSettlementList() {
         return settlementList; 
     }
 

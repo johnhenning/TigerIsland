@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by johnhenning on 3/22/17.
  */
 
-//Done
+
 public class GameStateTests {
 
     private GameState gameState;
@@ -25,13 +25,14 @@ public class GameStateTests {
         coordinates = new ArrayList<>();
         terrains = new ArrayList<>();
         player1 = new Player();
-        coordinates.add(new Coordinate(100,100));
         coordinates.add(new Coordinate(101,101));
-        coordinates.add(new Coordinate(100,101));
+        coordinates.add(new Coordinate(101,102));
+        coordinates.add(new Coordinate(102,102));
 
         terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASSLAND);
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.JUNGLE);
+
 
         tile = new Tile(coordinates,terrains);
     }
@@ -64,7 +65,7 @@ public class GameStateTests {
     public void settlementMergeTest() throws Exception {
         gameState.placeTile(tile);
         gameState.foundSettlement(coordinates.get(0), player1);
-        gameState.foundSettlement(coordinates.get(2), player1);
+        gameState.foundSettlement(coordinates.get(1), player1);
         assert  gameState.getSettlementList().size() == 1;
     }
 

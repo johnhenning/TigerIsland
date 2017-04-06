@@ -3,6 +3,7 @@ package GameInteractionModule.Rules;
 import GameStateModule.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -150,6 +151,15 @@ public class TileNukeRules extends Rules {
         }
         return smallSettlements;
     }
+    private static int coordinateIndex(ArrayList<Coordinate> settlementCoords, Coordinate nukedCoord){
+        for(Coordinate c : settlementCoords){
+            if(c.getX() == nukedCoord.getX() && c.getY() == nukedCoord.getY()){
+                return settlementCoords.indexOf(c);
+            }
+        }
+        return -1;
+    }
+
     public static ArrayList<Settlement> findAffectedSettlements(ArrayList<Settlement> settlements, Tile tile) {
         ArrayList<Settlement> affectedSettlements = new ArrayList<>();
         ArrayList<Coordinate> nukedCoords = tile.getCoords();
@@ -157,8 +167,10 @@ public class TileNukeRules extends Rules {
         for (Settlement s : settlements) {
             boolean found = false;
             for (Coordinate c : nukedCoords) {
-                if (SettlementExpansionRules.contains(s.getSettlementCoordinates(), c)) {
-                    s.getSettlementCoordinates().remove(c);
+                int i;
+                i = coordinateIndex(s.getSettlementCoordinates(), c);
+                if (i >= 0) {
+                    s.getSettlementCoordinates().remove(i);
                     found = true;
                 }
             }
@@ -236,16 +248,19 @@ public class TileNukeRules extends Rules {
         removeCoordsFromSettlement(hexesEncountered, settlement);
         Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), gameState.getSettlementIDCount());
 
-        if(settlement.getSettlementCoordinates().size() != 0){
-            splitSettlements.add(settlement);
-        }
         splitSettlements.add(newSettlement);
 
         return splitSettlements;
     }
 
-    public static void bigDivideSettlements (Hex[][] gameBoard, Settlement settlementList, Tile tile){
+    public static void bigDivideSettlements (Hex[][] gameBoard, ArrayList<Settlement> settlementList, Tile tile){
+        ArrayList<Settlement> affectedSettlements = findAffectedSettlements(settlementList, tile);
+        ArrayList<Settlement> dividedSettlments = new ArrayList<>();
 
+        for(Settlement s : affectedSettlements){
+            dividedSettlments.addAll(divideSettlement(gameBoard, s));
+        }
+        settlementList.addAll(dividedSettlments);
     }
 
 }
