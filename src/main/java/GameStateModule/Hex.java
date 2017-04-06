@@ -91,6 +91,26 @@ public class Hex {
         tiger = true;
     }
 
+    public void printCoord(){ System.out.println("x " + coordinate.getX() + " y " + coordinate.getY());}
+
+    public void printTerrainType(){ System.out.println(terrain.toString()); }
+
+    public void printEntities() {
+        System.out.print("Meeples " + meepleCount);
+        System.out.print("Tortoro" + totoro);
+        System.out.print("Tiger" + tiger);
+    }
+
+    public void printHexInfo(){
+        System.out.println("Hex level " + level + " SettlementID " + settlementID);
+    }
+    public void printHex(){
+        printCoord();
+        printTerrainType();
+        printEntities();
+        printHexInfo();
+    }
+
+
 
 }
-

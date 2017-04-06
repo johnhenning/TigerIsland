@@ -87,4 +87,10 @@ public class Grid {
     }
 
     public static Hex[][] getGameboard(){ return gameboard; }
+
+    public void printLog(){
+        for(int i = 0; i < placedTiles.size(); i++){
+            placedTiles.get(i).printTile();
+        }
+    }
 }

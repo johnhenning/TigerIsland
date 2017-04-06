@@ -62,5 +62,10 @@ public class Tile {
 
         return new Tile(coords, terrains);
     }
+    public void printTile(){
+        for(int i = 0; i < hexes.size(); i++){
+            hexes.get(i).printHex();
+        }
+    }
 }
 

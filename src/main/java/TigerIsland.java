@@ -41,6 +41,7 @@ public class TigerIsland {
         terrains.add(TerrainType.VOLCANO);
         terrains.add(generateTerrain());
         terrains.add(generateTerrain());
+        System.out.println(terrains.get(1).toString() + " " + terrains.get(2).toString());
         System.out.println("Enter coordinates: ");
         Scanner in = new Scanner(System.in);
         for(int i = 0; i<3; i++){
@@ -115,7 +116,7 @@ public class TigerIsland {
     while(GameOver){
         Player1Turn = true;
         Player2Turn = true;
-        System.out.println("Fuck Schwartz");
+        System.out.println("Player 1's turn!");
         while(Player1Turn){
             boolean invalidTilePlacement = true;
             while(invalidTilePlacement){
@@ -140,6 +141,7 @@ public class TigerIsland {
             }
             //String s = in.nextLine();
            // System.out.println(s);
+
             Player1Turn = false;
         }
         System.out.println("Player 2's turn!");
@@ -167,6 +169,26 @@ public class TigerIsland {
             }
             Player2Turn = false;
         }
+        System.out.println("Would you like a game summary? y/n");
+        String s = in.nextLine();
+        if(s.contains("n")){
+
+        }
+        else if(s.contains("y")){
+            System.out.println("Settlement Summary: ");
+            gameState.printSettlementSummary();
+            System.out.println();
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println("Placed tiles: ");
+            gameState.printPlacedTiles();
+            System.out.println("Would you like information about a specific hex on the gameboard? y/n");
+            String s2 = in.nextLine();
+            if(s2.contains("y")){
+                System.out.println("Enter Hex coordinates");
+                gameState.printHexSummary(in.nextInt(), in.nextInt());
+            }
+        }
+
     }
 
     /*

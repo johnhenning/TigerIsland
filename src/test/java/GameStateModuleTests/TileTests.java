@@ -38,6 +38,7 @@ public class TileTests {
     @Test
     public void setTileLevel() throws Exception {
         Tile tile = new Tile(coordinates, terrains);
+        tile.getHexes().get(0).printTerrainType();
         tile.setLevel(3);
     }
 

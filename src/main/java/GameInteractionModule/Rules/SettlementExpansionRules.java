@@ -10,6 +10,14 @@ import java.util.Stack;
  * Created by johnhenning on 3/22/17.
  */
 public class SettlementExpansionRules extends BuildRules{
+    public static int getMeeplesRequiredExpansion(GameState gameState, ArrayList<Coordinate> coordinates){
+        int meeplesRequired = 0;
+        for(Coordinate c: coordinates){
+            Hex h = gameState.getHex(c);
+            meeplesRequired += h.getLevel();
+        }
+        return meeplesRequired;
+    }
 
     public static boolean expansionIsValid(Hex hex){
         if(hex != null && hex.getSettlementID() != 0 && isNotVolcano(hex)){
@@ -68,6 +76,7 @@ public class SettlementExpansionRules extends BuildRules{
 
     public static ArrayList<Coordinate> expansionDFS(Grid gameboard, TerrainType terrain, Settlement settlement){
         ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
+        ArrayList<Coordinate> newHexesAdded = new ArrayList<>();
         Stack<Coordinate> coords = new Stack();
         coords.addAll(hexesEncountered);
 
@@ -76,12 +85,13 @@ public class SettlementExpansionRules extends BuildRules{
             ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
             for(int i=0; i<neighboringCoordinates.size(); i++){
                 if(contains(hexesEncountered, neighboringCoordinates.get(i))== false){
+                    newHexesAdded.add(neighboringCoordinates.get(i));
                     hexesEncountered.add(neighboringCoordinates.get(i));
                     coords.push(neighboringCoordinates.get(i));
                 }
             }
         }
-        return hexesEncountered;
+        return newHexesAdded;
     }
 
     public static boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){

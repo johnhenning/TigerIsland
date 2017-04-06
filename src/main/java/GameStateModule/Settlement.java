@@ -70,5 +70,14 @@ public class Settlement {
         return false;
     }
 
+    public void printSettlementInfo(){
+        System.out.println("settlementID " + settlementID);
+        System.out.println("Coordinates in Settlement");
+        for(Coordinate c : settlementCoordinates){
+            System.out.println("x "+c.getX()+ " y " + c.getY());
+        }
+
+    }
+
 
 }

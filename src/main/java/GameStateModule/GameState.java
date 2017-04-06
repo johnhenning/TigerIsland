@@ -2,6 +2,7 @@ package GameStateModule;
 import GameInteractionModule.Rules.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by johnhenning on 3/19/17.
@@ -28,12 +29,10 @@ public class GameState {
     public void foundSettlement(Coordinate coordinate, Player player) {
       //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
-
-        if (SettlementFoundationRules.isValidFoundation(h)) {
+        if (SettlementFoundationRules.isValidFoundation(h, player)) {
             player.removeMeeple();
             placeMeeple(coordinate);
             Settlement settlement = new Settlement(coordinate,player, ++settlementIDCount);
-
             mergeSettlements(settlement);
         } else {
             throw new AssertionError();
@@ -42,9 +41,18 @@ public class GameState {
 
     public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) {
         Hex hex = getHex(coordinate);
+        ArrayList<Coordinate> hexesToPlaceMeeplesOn = new ArrayList<>();
         if (SettlementExpansionRules.expansionIsValid(hex)) {
             Settlement settlement = getSettlementByID(hex.getSettlementID());
-            SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
+            final Settlement beforeExpansion = settlement;
+            hexesToPlaceMeeplesOn = SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
+            if(BuildRules.checkPlayerHasEnoughMeeples(player, SettlementExpansionRules.getMeeplesRequiredExpansion(this, hexesToPlaceMeeplesOn))){
+                expansionPlaceMeeples(hexesToPlaceMeeplesOn);
+            }
+            else{
+                //TODO: Can we think of a way to throw from here so AI knows its expansion wasn't valid
+                settlement = beforeExpansion;
+            }
             mergeSettlements(settlement);
         }
         else{
@@ -66,13 +74,13 @@ public class GameState {
         try {
             gameboard.placeTile(tile);
             return true;
-        } catch (Exception e) {
+        } catch (AssertionError e) {
             return false;
         }
     }
 
     public boolean levelTile(Tile tile) {
-        TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, getSettlementIDCount());
+        TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, ++settlementIDCount);
         cleanSettlements();
         gameboard.levelTile(tile);
         return true;
@@ -82,6 +90,11 @@ public class GameState {
             if(settlementList.get(i).getSettlementCoordinates().size() == 0) {
                 settlementList.remove(i--);
             }
+        }
+    }
+    public  void expansionPlaceMeeples(ArrayList<Coordinate> coordinates){
+        for(Coordinate c : coordinates){
+            placeMeeple(c);
         }
     }
     
@@ -94,14 +107,19 @@ public class GameState {
     public void placeTotoro(Coordinate coordinate) {
         //TODO: fixplz
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
-        assert TotoroBuildRules.isValidTotoroLocation(hex,currentPlayer,this);
+        assert TotoroBuildRules.isValidTotoroLocation(hex, currentPlayer,this);
         hex.addTotoro();
+        Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
+        mergeSettlements(settlement);
+
     }
 
     public void placeTiger(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         assert TigerBuildRules.canPlaceTiger(hex, this);
         hex.addTiger();
+        Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
+        mergeSettlements(settlement);
     }
 
     public ArrayList<Settlement> getSettlementList() {
@@ -116,9 +134,7 @@ public class GameState {
         return gameboard;
     }
 
-    public void printSummary() {
 
-    }
 
     public void switchPlayer() {
         if (currentPlayer == player1) {
@@ -154,5 +170,20 @@ public class GameState {
             h.setSettlementID(newSettlement.getSettlementID());
         }
         settlementList.add(combinedSettlements);
+    }
+
+
+    public void printHexSummary(int x, int y) {
+        //TODO: don't kill me plz
+        //printing tiles placed with coords
+        gameboard.getHexFromCoordinate(new Coordinate(x, y)).printHex();
+    }
+    public void printPlacedTiles(){
+        gameboard.printLog();
+    }
+    public void printSettlementSummary(){
+        for(Settlement s: settlementList){
+            s.printSettlementInfo();
+        }
     }
 }
