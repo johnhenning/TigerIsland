@@ -8,8 +8,6 @@ import GameStateModule.GameState;
 
 import GameStateModule.Hex;
 
-import java.util.ArrayList;
-
 /**
  * Created by johnhenning on 3/19/17.
  */
@@ -22,8 +20,8 @@ public class Rules {
             return true;
 
     }
-    public static boolean CheckIfHexEmpty(Hex hex, Hex[][] gameboard){
-        return gameboard[hex.getx()][hex.gety()] == null;
+    public static boolean CheckIfHexEmpty(Hex hex, Grid gameboard){
+        return gameboard.getGameboard()[hex.getx()][hex.gety()] == null;
     }
 
 
@@ -48,78 +46,78 @@ public class Rules {
         return false;
     }
 
-    public static Hex downRight(Hex[][] gameboard, Coordinate coordinate){
+    public static Hex downRight(Grid gameboard, Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
         if((y % 2) == 0) {  //even
             y += 1;
-            return gameboard[x][y];
-        }
+            return gameboard.getGameboard()[x][y];
+    }
         else {  //odd
             x += 1;
             y += 1;
-            return  gameboard[x][y];
+            return  gameboard.getGameboard()[x][y];
         }
     }
-    public static Hex downLeft(Hex[][] gameboard, Coordinate coordinate){
+    public static Hex downLeft(Grid gameboard, Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
         if((y % 2) == 0) {  //even
             x -= 1;
             y += 1;
-            return gameboard[x][y];
+            return gameboard.getGameboard()[x][y];
         }
         else {  //odd
             y += 1;
-            return  gameboard[x][y];
+            return  gameboard.getGameboard()[x][y];
         }
     }
-    public static Hex topRight(Hex[][] gameboard, Coordinate coordinate){
+    public static Hex topRight(Grid gameboard, Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
         if((y % 2) == 0) {  //even
             y -= 1;
-            return gameboard[x][y];
+            return gameboard.getGameboard()[x][y];
         }
         else {  //odd
             x += 1;
             y -= 1;
-            return  gameboard[x][y];
+            return  gameboard.getGameboard()[x][y];
         }
     }
-    public static Hex topLeft(Hex[][] gameboard, Coordinate coordinate){
+    public static Hex topLeft(Grid gameboard, Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
         if((y % 2) == 0) {  //even
             x -= 1;
             y -= 1;
-            return gameboard[x][y];
+            return gameboard.getGameboard()[x][y];
         }
         else {  //odd
             y -= 1;
-            return  gameboard[x][y];
+            return gameboard.getGameboard()[x][y];
         }
     }
 
-    public static Hex leftOfHex(Hex[][] gameboard, Coordinate coordinate){
+    public static Hex leftOfHex(Grid gameboard, Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
         x -= 1;
 
-        return  gameboard[x][y];
+        return gameboard.getGameboard()[x][y];
     }
 
-    public static Hex rightOfHex(Hex[][] gameboard, Coordinate coordinate){
+    public static Hex rightOfHex(Grid gameboard, Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
         x += 1;
 
-        return  gameboard[x][y];
+        return gameboard.getGameboard()[x][y];
     }
 }

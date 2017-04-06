@@ -13,19 +13,19 @@ public class TigerBuildRules extends BuildRules {
         return hex.getLevel() >= 3;
     }
 
-    public static boolean canPlaceTiger(Hex hex){
-        return hexLevelAtLeastThree(hex) && isNotVolcano(hex) && checkIfHexAdjacentToSettlement(hex)
-                && settlementNotContainTiger();
+    public static boolean canPlaceTiger(Hex hex, GameState gameState){
+        return hexLevelAtLeastThree(hex) && isNotVolcano(hex) && checkIfHexAdjacentToSettlement(hex, gameState)
+                && settlementNotContainTiger(gameState);
     }
 
-    public static boolean checkIfHexAdjacentToSettlement(Hex hex)
+    public static boolean checkIfHexAdjacentToSettlement(Hex hex, GameState gameState)
     {
-        ArrayList<Settlement> settlementList = GameState.getSettlementList();
-        Hex[][] gameboard = Grid.getGameboard();
+        ArrayList<Settlement> settlementList = gameState.getSettlementList();
+        Grid gameboard = gameState.getGameboard();
         ArrayList<Hex> adjacentHexes = TilePlacementRules.getAdjacentHexes(hex, gameboard);
         for(Settlement s:settlementList)
             for(Hex h: adjacentHexes)
-                if(coordinateInSettlement(s.getSettlementCoordinates(), h.getCoords()))
+                if(coordinateInSettlement(s.getSettlementCoordinates(), h.getCoordinate()))
                     return true;
         return false;
     }
@@ -40,8 +40,8 @@ public class TigerBuildRules extends BuildRules {
         return false;
     }
 
-    public static boolean settlementNotContainTiger(){
-        ArrayList<Settlement> settlementList = GameState.getSettlementList();
+    public static boolean settlementNotContainTiger(GameState gameState){
+        ArrayList<Settlement> settlementList = gameState.getSettlementList();
         for(Settlement s:settlementList){
             if(!isTigerInSettlement(s.getSettlementCoordinates())){
                 return true;
