@@ -35,7 +35,6 @@ public class GameState {
             Settlement settlement = new Settlement(coordinate,player, ++settlementIDCount);
 
             mergeSettlements(settlement);
-            switchPlayer();
         } else {
             throw new AssertionError();
         }
@@ -43,13 +42,15 @@ public class GameState {
 
     public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) {
         Hex hex = getHex(coordinate);
-        if (hex == null) {
+        if (SettlementExpansionRules.expansionIsValid(hex)) {
+            Settlement settlement = getSettlementByID(hex.getSettlementID());
+            SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
+            mergeSettlements(settlement);
+        }
+        else{
             throw new AssertionError();
         }
-        Settlement settlement = getSettlementByID(hex.getSettlementID());
-        SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
-        mergeSettlements(settlement);
-        switchPlayer();
+
     }
 
     public Settlement getSettlementByID(int settlementID) {
@@ -64,7 +65,6 @@ public class GameState {
     public boolean placeTile(Tile tile) {
         try {
             gameboard.placeTile(tile);
-            switchPlayer();
             return true;
         } catch (Exception e) {
             return false;
@@ -75,7 +75,6 @@ public class GameState {
         TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, getSettlementIDCount());
         cleanSettlements();
         gameboard.levelTile(tile);
-        switchPlayer();
         return true;
     }
     public void cleanSettlements(){
@@ -97,14 +96,12 @@ public class GameState {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         assert TotoroBuildRules.isValidTotoroLocation(hex,currentPlayer,this);
         hex.addTotoro();
-        switchPlayer();
     }
 
     public void placeTiger(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         assert TigerBuildRules.canPlaceTiger(hex, this);
         hex.addTiger();
-        switchPlayer();
     }
 
     public ArrayList<Settlement> getSettlementList() {

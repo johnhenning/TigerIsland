@@ -1,16 +1,173 @@
+import GameInteractionModule.Game;
+import GameInteractionModule.Turn;
+import GameStateModule.*;
+import IOModule.Message;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by johnhenning on 3/19/17.
  */
 public class TigerIsland {
+
+    public static TerrainType generateTerrain(){
+        Random rand = new Random();
+        int randNum = rand.nextInt(4)+1;
+
+        switch(randNum){
+            case 1:
+                return TerrainType.GRASSLAND;
+            case 2:
+                return TerrainType.LAKE;
+            case 3:
+                return TerrainType.JUNGLE;
+            case 4:
+                return TerrainType.ROCKY;
+        }
+        return null;
+    }
+
+    public static Tile generateTile(){
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(generateTerrain());
+        terrains.add(generateTerrain());
+        System.out.println("Enter coordinates: ");
+        Scanner in = new Scanner(System.in);
+        for(int i = 0; i<3; i++){
+            coordinates.add(new Coordinate(in.nextInt(), in.nextInt()));
+        }
+        return new Tile(coordinates,terrains);
+
+
+    }
+    public static BuildMove getBuildMove(){
+        BuildMove buildMove;
+        BuildMoveType buildType;
+        Coordinate coord;
+        TerrainType terrain = TerrainType.ROCKY;
+        String buildTypeString;
+        String terrainString;
+
+        System.out.println("Enter build move: ");
+        Scanner in = new Scanner(System.in);
+        buildTypeString = in.nextLine();
+        switch(buildTypeString.toUpperCase()){
+            case "F":
+                buildType = BuildMoveType.FOUNDSETTLEMENT;
+                System.out.println("Enter coordinate: ");
+                coord = new Coordinate(in.nextInt(),in.nextInt());
+                return new BuildMove(buildType, coord, terrain);
+            case "E":
+                buildType = BuildMoveType.EXPANDSETTLEMENT;
+                System.out.println("Enter coordinate: ");
+                coord = new Coordinate(in.nextInt(), in.nextInt());
+                System.out.println("Enter terrain: ");
+                terrainString = in.next();
+                switch(terrainString.toUpperCase()){
+                    case "G":
+                        terrain = TerrainType.GRASSLAND;
+                        break;
+                    case "L":
+                        terrain = TerrainType.LAKE;
+                        break;
+                    case "J":
+                        terrain = TerrainType.JUNGLE;
+                        break;
+                    case "R":
+                        terrain = TerrainType.ROCKY;
+                        break;
+                }
+                return new BuildMove(buildType, coord, terrain);
+            case "T":
+                buildType = BuildMoveType.PLACETOTORO;
+                System.out.println("Enter coordinate: ");
+                coord = new Coordinate(in.nextInt(), in.nextInt());
+                return new BuildMove(buildType, coord, terrain);
+            case "G":
+                buildType = BuildMoveType.PLACETIGER;
+                System.out.println("Enter coordinate: ");
+                coord = new Coordinate(in.nextInt(), in.nextInt());
+                return new BuildMove(buildType, coord, terrain);
+        }
+        return null;
+    }
     public static void main(String[] args) {
 
+    GameState gameState = new GameState();
+    Turn turn = new Turn();
+    TerrainType terrain;
+    boolean GameOver = true;
+    boolean Player1Turn = true;
+    boolean Player2Turn = true;
+    Scanner in = new Scanner(System.in);
+
+
+    while(GameOver){
+        Player1Turn = true;
+        Player2Turn = true;
+        System.out.println("Fuck Schwartz");
+        while(Player1Turn){
+            boolean invalidTilePlacement = true;
+            while(invalidTilePlacement){
+                Tile tile = generateTile();
+                if(turn.makeTileMove(tile, gameState)){
+                    invalidTilePlacement = false;
+                }
+                else
+                {
+                    System.out.println("Invalid tile placement!!!");
+                }
+            }
+            boolean invalidBuildMove = true;
+            while(invalidBuildMove){
+                BuildMove buildMove = getBuildMove();
+                if(turn.makeBuildMove(buildMove,gameState)){
+                    invalidBuildMove = false;
+                }
+                else{
+                    System.out.println("Invalid build move!!!");
+                }
+            }
+            //String s = in.nextLine();
+           // System.out.println(s);
+            Player1Turn = false;
+        }
+        System.out.println("Player 2's turn!");
+        while(Player2Turn){
+            boolean invalidTilePlacement = true;
+            while(invalidTilePlacement){
+                Tile tile = generateTile();
+                if(turn.makeTileMove(tile, gameState)){
+                    invalidTilePlacement = false;
+                }
+                else
+                {
+                    System.out.println("Invalid tile placement!!!");
+                }
+            }
+            boolean invalidBuildMove = true;
+            while(invalidBuildMove){
+                BuildMove buildMove = getBuildMove();
+                if(turn.makeBuildMove(buildMove,gameState)){
+                    invalidBuildMove = false;
+                }
+                else{
+                    System.out.println("Invalid build move!!!");
+                }
+            }
+            Player2Turn = false;
+        }
+    }
 
     /*
         Game game = new Game();

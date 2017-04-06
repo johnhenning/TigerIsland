@@ -11,6 +11,14 @@ import java.util.Stack;
  */
 public class SettlementExpansionRules extends BuildRules{
 
+    public static boolean expansionIsValid(Hex hex){
+        if(hex != null && hex.getSettlementID() != 0 && isNotVolcano(hex)){
+            return true;
+        }
+        else{
+            throw new AssertionError();
+        }
+    }
     public static boolean getAdjacentSettlements(Grid gameBoard, Settlement newSettlement){
         int newSettlementID = newSettlement.getSettlementID();
         Hex h;
