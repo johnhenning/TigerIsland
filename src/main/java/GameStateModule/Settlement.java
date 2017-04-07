@@ -44,26 +44,18 @@ public class Settlement {
     public boolean areCoordinatesAdjacent(ArrayList<Coordinate> coordinates){
         //lists should never contain the same x,y value going to ignore for now
         for(Coordinate c: settlementCoordinates){
-            int x = c.getX();
-            int y = c.getY();
             for(Coordinate d: coordinates){
-                int x1 = d.getX();
-                int y1 = d.getY();
-                if(x == x1 && y == y1+1)
+                if(c.equals(downRight(d)))
                     return true;
-                else if(x == x1 && y == y1-1)
+                else if(c.equals(downLeft(d)))
                     return true;
-                else if(x == x1-1 && y == y1+1)
+                else if(c.equals(topRight(d)))
                     return true;
-                else if(x == x1-1 && y == y1-1)
+                else if(c.equals(topLeft(d)))
                     return true;
-                else if(x == x1-1 && y == y1)
+                else if(c.equals(leftOfHex(d)))
                     return true;
-                else if(x == x1+1 && y == y1)
-                    return true;
-                else if(x == x1+1 && y == y1+1)
-                    return true;
-                else if(x == x1+1 && y == y1-1)
+                else if(c.equals(rightOfHex(d)))
                     return true;
             }
         }
@@ -78,6 +70,53 @@ public class Settlement {
         }
 
     }
+    public static Coordinate downRight(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x,y+1);
+        return new Coordinate(x+1,y+1);
+    }
+    public static Coordinate downLeft(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x-1,y+1);
+        return new Coordinate(x,y+1);
+    }
+    public static Coordinate topRight(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x,y-1);
+        return new Coordinate(x+1,y-1);
+    }
+    public static Coordinate topLeft(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0)
+            return new Coordinate(x-1,y-1);
+        return new Coordinate(x,y-1);
+    }
+
+    public static Coordinate leftOfHex(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        return new Coordinate(x-1,y);
+    }
+
+    public static Coordinate rightOfHex(Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        return new Coordinate(x+1,y);
+    }
+
 
 
 }

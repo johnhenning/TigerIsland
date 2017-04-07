@@ -204,6 +204,8 @@ public class TigerIsland {
         Server server = new Server();
 
 
+
+
         if (server.firstplayer == 'you') {
             firstPlayer = ai;
             secondPlayer = server.messages();

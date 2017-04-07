@@ -44,7 +44,7 @@ public class SettlementTests {
         newCoordinates.add(new Coordinate(3,3));
         newCoordinates.add(new Coordinate(1,4));
         newCoordinates.add(new Coordinate(6,5));
-        assert settlement.areCoordinatesAdjacent(newCoordinates);
+        assert !settlement.areCoordinatesAdjacent(newCoordinates);
     }
 
     @Test
