@@ -16,6 +16,13 @@ public class Tile {
         }
     }
 
+    public Tile(ArrayList<TerrainType> terrains){
+        hexes = new ArrayList<Hex>();
+
+        for (int i = 0; i < terrains.size(); i++) {
+            hexes.add(new Hex(new Coordinate(-1,-1), terrains.get(i)));
+        }
+    }
     public void setLevel(int level) {
         for(Hex h: hexes)
             h.setLevel(level);
