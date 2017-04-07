@@ -52,6 +52,7 @@ public class GameState {
             else{
                 //TODO: Can we think of a way to throw from here so AI knows its expansion wasn't valid
                 settlement = beforeExpansion;
+                throw new AssertionError();
             }
             mergeSettlements(settlement);
         }
@@ -112,10 +113,10 @@ public class GameState {
     }
 
     public void placeTotoro(Coordinate coordinate) {
-        //TODO: fixplz
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
         if(TotoroBuildRules.isValidTotoroLocation(hex, currentPlayer,this)) {
             hex.addTotoro();
+            currentPlayer.removeTotoro();
             Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
             mergeSettlements(settlement);
         }
@@ -127,10 +128,15 @@ public class GameState {
 
     public void placeTiger(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
-        assert TigerBuildRules.canPlaceTiger(hex, this);
-        hex.addTiger();
-        Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
-        mergeSettlements(settlement);
+        if(TigerBuildRules.canPlaceTiger(hex, this)){
+            hex.addTiger();
+            currentPlayer.removeTiger();
+            Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
+            mergeSettlements(settlement);
+        }
+        else{
+            throw new AssertionError();
+        }
     }
 
     public ArrayList<Settlement> getSettlementList() {

@@ -23,8 +23,6 @@ public class TigerPlacementTest {
 
     @Before
     public void setup() throws Exception {
-
-        //TODO: needs to be looked at
         gameState = new GameState();
         ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 

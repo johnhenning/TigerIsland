@@ -58,7 +58,6 @@ public class GameStateTests {
 
     @Test
     public void placeTotoroTest() throws Exception {
-        //TODO: needs to be looked at
           gameState.placeTile(tile1);
           gameState.placeTile(tile2);
           gameState.placeTile(tile3);
@@ -82,8 +81,34 @@ public class GameStateTests {
     public void settlementMergeTest() throws Exception {
         gameState.placeTile(tile1);
         gameState.foundSettlement(tile1.getCoords().get(1), player1);
-        gameState.foundSettlement(tile1.getCoords().get(2), player1);
         assert  gameState.getSettlementList().size() == 1;
+
+        gameState.placeTile(tile2);
+        gameState.placeTile(tile3);
+        gameState.foundSettlement(new Coordinate(99,99), player1);
+        gameState.foundSettlement(new Coordinate(100,99), player1);
+        gameState.foundSettlement(new Coordinate(100, 101), player1);
+        gameState.foundSettlement(new Coordinate(101,101), player1);
+        //tile1.getHexes().get(2).setLevel(3);
+
+        gameState.foundSettlement(new Coordinate(102,98), player1);
+        gameState.foundSettlement(new Coordinate(102,99), player1);
+
+        System.out.println(gameState.getSettlementList().size());
+        assert gameState.getSettlementList().size() == 2;
+
+    }
+
+    @Test
+    public void settlmentExpansionTest() throws Exception{
+        gameState.placeTile(tile1);
+        gameState.placeTile(tile2);
+        gameState.foundSettlement(tile1.getCoords().get(2), player1);
+        player1.removeMeeple(17);
+        try {gameState.expandSettlement(tile1.getCoords().get(2), player1, TerrainType.GRASSLAND);}
+        catch (AssertionError e) { exceptionThrown = true; }
+        assert exceptionThrown;
+
     }
 
     @Test
