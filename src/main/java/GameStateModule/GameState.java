@@ -114,10 +114,14 @@ public class GameState {
     public void placeTotoro(Coordinate coordinate) {
         //TODO: fixplz
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
-        assert TotoroBuildRules.isValidTotoroLocation(hex, currentPlayer,this);
-        hex.addTotoro();
-        Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
-        mergeSettlements(settlement);
+        if(TotoroBuildRules.isValidTotoroLocation(hex, currentPlayer,this)) {
+            hex.addTotoro();
+            Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
+            mergeSettlements(settlement);
+        }
+        else{
+            throw new AssertionError();
+        }
 
     }
 

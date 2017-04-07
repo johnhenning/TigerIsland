@@ -29,11 +29,16 @@ public class TotoroPlacementRulesTest{
 
         player1 = new Player();
         gameState.foundSettlement(new Coordinate(100,101),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,101),gameState.getCurrentPlayer());
+//        gameState.foundSettlement(new Coordinate(100,99),gameState.getCurrentPlayer());
+//        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
+//        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
+//        gameState.foundSettlement(new Coordinate(101,101),gameState.getCurrentPlayer());
 
+    }
+
+    @Test
+    public void placeTotoroNotValid(){
+        gameState.placeTotoro(new Coordinate(100, 99));
     }
 
     @Test
