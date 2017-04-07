@@ -96,13 +96,13 @@ public class Hex {
     public void printTerrainType(){ System.out.println(terrain.toString()); }
 
     public void printEntities() {
-        System.out.print("Meeples: " + meepleCount + " ");
-        System.out.print("Tortoro: " + totoro + " ");
-        System.out.print("Tiger: " + tiger + " ");
+        System.out.print("| Meeples: " + meepleCount + " | ");
+        System.out.print("Totoro: " + totoro + " | ");
+        System.out.print("Tiger: " + tiger + " | ");
     }
 
     public void printHexInfo(){
-        System.out.println("Hex level: " + level + " SettlementID: " + settlementID);
+        System.out.println(" Hex level: " + level + " SettlementID: " + settlementID + " |");
     }
 
     public void printHex(){

@@ -192,6 +192,7 @@ public class GameState {
     public void printSettlementSummary(){
         for(Settlement s: settlementList){
             s.printSettlementInfo();
+            System.out.println();
         }
     }
 }

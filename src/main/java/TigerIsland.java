@@ -181,10 +181,12 @@ public class TigerIsland {
         }
         else if(s.contains("y")){
             System.out.println("Settlement Summary: ");
+            System.out.println();
             gameState.printSettlementSummary();
             System.out.println();
             System.out.println("-----------------------------------------------------------------");
             System.out.println("Placed tiles: ");
+            System.out.println();
             gameState.printPlacedTiles();
             System.out.println("Would you like information about a specific hex on the gameboard? y/n");
             String s2 = in.nextLine();
