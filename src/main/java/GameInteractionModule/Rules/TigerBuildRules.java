@@ -15,7 +15,7 @@ public class TigerBuildRules extends BuildRules {
 
     public static boolean canPlaceTiger(Hex hex, GameState gameState){
         return hexLevelAtLeastThree(hex) && isNotVolcano(hex) && checkIfHexAdjacentToSettlement(hex, gameState)
-                && settlementNotContainTiger(gameState);
+                && settlementNotContainTiger(gameState) && checkEnoughTigers(gameState.getCurrentPlayer());
     }
 
     public static boolean checkIfHexAdjacentToSettlement(Hex hex, GameState gameState)
@@ -59,7 +59,7 @@ public class TigerBuildRules extends BuildRules {
         return false;
     }
 
-    public static boolean checkEnoughEntities(Player player){
+    public static boolean checkEnoughTigers(Player player){
         return player.getNumTigers()>0;
     }
 }

@@ -11,10 +11,6 @@ public class Grid {
     private static Hex[][] gameboard;
     private ArrayList<Tile> placedTiles;
 
-
-    //TODO: should we use a beginning of game flag to check if a tile has been placed?
-    //I think we can check that by the size of the placed tiles ArrayList
-
     public Grid(int size) {
         gameboard = new Hex[size][size];
         placedTiles = new ArrayList<Tile>();
@@ -52,7 +48,6 @@ public class Grid {
     }
 
     public void levelTile(Tile tile) {
-        TileNukeRules.isValidNuke(tile, gameboard);
         int newLevel = TileNukeRules.getNewTileLevel(tile, gameboard);
         placedTiles.add(tile);
         placeTileOnGameboard(tile, newLevel);

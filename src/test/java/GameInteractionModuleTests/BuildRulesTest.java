@@ -78,8 +78,8 @@ public class BuildRulesTest {
 
     @Test
     public void isValidBuildTest(){
-        //TODO: Finish this test once checkEnoughEntities() is complete
-        //BuildRules.isValidBuild(hexToBuildOn, player1);
+
+        BuildRules.isValidBuild(hexToBuildOn, player1);
     }
 
 }

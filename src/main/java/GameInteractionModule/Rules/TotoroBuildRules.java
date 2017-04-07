@@ -68,10 +68,10 @@ public class TotoroBuildRules extends BuildRules {
 
     public static boolean isValidTotoroLocation(Hex hex, Player player, GameState gameState){
         return playerHasSizeFiveSettlement(player, gameState) && isHexAdjacentToSettlement(hex, gameState) && isValidBuild(hex,player)
-                && settlementNotContainTotoro(gameState);
+                && settlementNotContainTotoro(gameState) && checkEnoughTotoros(player);
     }
 
-    public static boolean checkEnoughEntities(Player player){
+    public static boolean checkEnoughTotoros(Player player){
         return player.getNumTotoros()>0;
     }
 }

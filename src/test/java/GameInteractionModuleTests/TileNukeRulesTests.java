@@ -79,15 +79,8 @@ public class TileNukeRulesTests {
 
     }
 
-
-    @Test
-    public void coordsOverlapTest() {
-        assert !TileNukeRules.doCoordinatesOverlap(coordinates, secondSettlementCoords);
-    }
-
     @Test
     public void checkLowerHexesAreSameLevelTest() {
-        //TODO: needs to be redone
 
         gameBoard = new Grid(200);
 
@@ -158,7 +151,7 @@ public class TileNukeRulesTests {
 
     @Test
     public void getNewTileLevelTest() {
-        //TODO: needs to be redone
+
         gameBoard = new Grid(200);
 
         ArrayList<Coordinate> hexesCoord = new ArrayList<>();
@@ -422,6 +415,41 @@ public class TileNukeRulesTests {
         assert h.getLevel() == 2;
 
     }
+    @Test
+    public void testingValidNuking(){
+        setupHexAndTilesOnGameState(game);
+        game.foundSettlement(new Coordinate(98, 101), game.getCurrentPlayer());
+        game.foundSettlement(new Coordinate(99, 101), game.getCurrentPlayer());
+        game.switchPlayer();
+        game.foundSettlement(new Coordinate(100, 101), game.getCurrentPlayer());
+        game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer());
+
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        coords.add(new Coordinate(100, 102));
+        coords.add(new Coordinate(99, 102));
+        coords.add(new Coordinate(99, 103));
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.GRASSLAND);
+
+        Tile boomTile = new Tile(coords, terrains);
+
+        game.placeTile(boomTile);
+
+        ArrayList<Coordinate> coords2 = new ArrayList<>();
+        ArrayList<TerrainType> terrains2 = new ArrayList<>();
+        coords2.add(new Coordinate(100, 102));
+        coords2.add(new Coordinate(99, 101));
+        coords2.add(new Coordinate(100, 101));
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.LAKE);
+        terrains2.add(TerrainType.GRASSLAND);
+
+        Tile boomTile2 = new Tile(coords2, terrains2);
+
+        game.levelTile(boomTile2);
+    }
 
     @Test
     public void bigDivideSettlementsTestWithExpansion() {
@@ -449,7 +477,6 @@ public class TileNukeRulesTests {
     }
 
 
-    //TODO: test whether or not a settlement can be completly wiped out
 
     public void setupSettlementSize5(GameState game) {
         try {

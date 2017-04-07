@@ -27,7 +27,6 @@ public class GameState {
     }
 
     public void foundSettlement(Coordinate coordinate, Player player) {
-      //TODO: Add Victory Points
         Hex h = gameboard.getHexFromCoordinate(coordinate);
         if (SettlementFoundationRules.isValidFoundation(h, player)) {
             player.removeMeeple();
@@ -53,9 +52,7 @@ public class GameState {
                 settlement = beforeExpansion;
             }
             else{
-                //TODO: Can we think of a way to throw from here so AI knows its expansion wasn't valid
                 throw new AssertionError();
-
             }
             mergeSettlements(settlement);
         }
@@ -85,6 +82,7 @@ public class GameState {
 
     public boolean levelTile(Tile tile) {
         try {
+            TileNukeRules.isValidNuke(tile, gameboard.getGameboard(), this);
             TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, settlementIDCount);
             cleanSettlements();
             gameboard.levelTile(tile);
@@ -205,7 +203,6 @@ public class GameState {
 
 
     public void printHexSummary(int x, int y) {
-        //TODO: don't kill me plz
         //printing tiles placed with coords
         gameboard.getHexFromCoordinate(new Coordinate(x, y)).printHex();
     }

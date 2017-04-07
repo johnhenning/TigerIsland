@@ -11,12 +11,13 @@ import java.util.Stack;
  */
 public class TileNukeRules extends Rules {
 
-    public static void isValidNuke(Tile tile, Hex[][] gameboard){
+    public static void isValidNuke(Tile tile, Hex[][] gameboard, GameState gameState){
         CheckLowerHexesAreSameLevel(tile,gameboard);
         CheckHexesSpanMultipleTiles(tile, gameboard);
         CheckVolcanoesLineUp(tile,gameboard);
         CheckTileNotContainTotoro(tile, gameboard);
         CheckTileNotContainTiger(tile, gameboard);
+        if(CheckNukeDoesNotWipeoutSettlement(tile, gameState)) throw new AssertionError();
     }
 
     public static int getNewTileLevel(Tile tile, Hex[][] gameboard){
@@ -111,45 +112,53 @@ public class TileNukeRules extends Rules {
         return true;
 
     }
-    //TODO: needs to be finished
-    public static boolean CheckNukeDoesNotWipeoutSettlement(Tile tile, ArrayList<Settlement> settlementList){
-        ArrayList<Coordinate> tileCoords = tile.getCoords();
-        ArrayList<Settlement> settlementsInDanger = getSettlementsThatCouldBeWipedOut(settlementList);
-        for(Settlement s: settlementsInDanger){
-            s.getSettlementCoordinates();
-            //see if all of s->coords is contained in tile->coords
-        }
-        return true;
 
+    public static boolean CheckNukeDoesNotWipeoutSettlement(Tile tile, GameState gameState){
+//        ArrayList<Coordinate> tileCoords = tile.getCoords();
+        ArrayList<Settlement> settlementsInDanger = new ArrayList<>();
+//        for(Settlement s: settlementsInDanger){
+//            s.getSettlementCoordinates();
+//        }
+//        return true
+        ArrayList<Hex> hexes = new ArrayList<>();
+        for(Hex h : tile.getHexes()){
+            if(h.getTerrain() != TerrainType.VOLCANO){
+                hexes.add(h);
+            }
+        }
+        Hex h = gameState.getHex(hexes.get(0).getCoordinate());
+        Hex h2 = gameState.getHex(hexes.get(1).getCoordinate());
+        if(h.getSettlementID() != h2.getSettlementID()){
+            settlementsInDanger.add(gameState.getSettlementByID(h.getSettlementID()));
+            settlementsInDanger.add(gameState.getSettlementByID(h2.getSettlementID()));
+        }
+        else {
+        settlementsInDanger.add(gameState.getSettlementByID(h.getSettlementID()));
+        }
+        settlementsInDanger = getSettlementsThatCouldBeWipedOut(settlementsInDanger);
+
+        for(Settlement s : settlementsInDanger){
+            if(s.getSettlementCoordinates().size() == 2){
+                if(settlmentContainsCoordinate(s, h.getCoordinate()) && settlmentContainsCoordinate(s, h2.getCoordinate())){
+                    return true;
+                }
+            }
+            else if(s.getSettlementCoordinates().size() == 1){
+                if(settlmentContainsCoordinate(s, h.getCoordinate()) || settlmentContainsCoordinate(s, h2.getCoordinate())){
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
     }
 
-    public static boolean doCoordinatesOverlap(ArrayList<Coordinate> tileCoords, ArrayList<Coordinate> settlementCoords){
-
-        Coordinate t1 = tileCoords.get(0);
-        Coordinate t2 = tileCoords.get(1);
-        Coordinate t3 = tileCoords.get(2);
-
-
-        Coordinate s1 = settlementCoords.get(0);
-        Coordinate s2 = settlementCoords.get(1);
-        Coordinate s3 = settlementCoords.get(2);
-
-
-
-        if((t1.getX()==s1.getX())&&(t2.getX()==s2.getX())&&(t3.getX()==s3.getX()) && (t1.getY() == s1.getY())
-                && (t2.getY()== s2.getY()) && (t3.getY()==s3.getY())){
-            return true;
-        }
-        else{
-            return false;
-        }
-
-    }
 
     private static ArrayList<Settlement> getSettlementsThatCouldBeWipedOut(ArrayList<Settlement> settlementList){
         ArrayList<Settlement> smallSettlements = new ArrayList<>();
         for(Settlement s: settlementList){
-            if(s.getSettlementCoordinates().size() < 3)
+            if(s != null && s.getSettlementCoordinates().size() < 3)
                 smallSettlements.add(s);
         }
         return smallSettlements;

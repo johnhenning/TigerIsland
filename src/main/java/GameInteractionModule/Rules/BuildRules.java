@@ -20,17 +20,9 @@ public class BuildRules extends Rules {
         return !hex.getTerrain().equals(TerrainType.VOLCANO);
     }
 
-    public static boolean checkEnoughEntities(Player player){
-        return true; //TODO: Check if there enough entities to build/expand
-    }
+
     public static boolean checkPlayerHasEnoughMeeples(Player player, int numMeeples){
         return player.getNumMeeples() >= numMeeples;
-    }
-    public static boolean checkPlayerHasATotoro(Player player){
-        return player.getNumTotoros() > 0;
-    }
-    public static boolean checkPlayerHasATiger(Player player){
-        return player.getNumTigers() > 0;
     }
 
     public static ArrayList<Settlement> settlementsOfPlayer(ArrayList<Settlement> settlements, Player player){
@@ -43,7 +35,7 @@ public class BuildRules extends Rules {
     }
 
     public static boolean isValidBuild(Hex h, Player p){
-        return isUnnocupied(h) && isNotVolcano(h) && checkEnoughEntities(p);
+        return isUnnocupied(h) && isNotVolcano(h);
     }
 
 }
