@@ -44,15 +44,17 @@ public class GameState {
         ArrayList<Coordinate> hexesToPlaceMeeplesOn = new ArrayList<>();
         if (SettlementExpansionRules.expansionIsValid(hex)) {
             Settlement settlement = getSettlementByID(hex.getSettlementID());
-            final Settlement beforeExpansion = settlement;
-            hexesToPlaceMeeplesOn = SettlementExpansionRules.expansionDFS(gameboard, terrainType, settlement);
+            ArrayList<Coordinate> beforeExpansionCoordinates = getCoordinatesofSettlement(settlement);
+            Settlement beforeExpansion = new Settlement(beforeExpansionCoordinates, player, settlement.getSettlementID());
+            hexesToPlaceMeeplesOn = SettlementExpansionRules.expansionDFS(gameboard, terrainType, beforeExpansion);
             if(BuildRules.checkPlayerHasEnoughMeeples(player, SettlementExpansionRules.getMeeplesRequiredExpansion(this, hexesToPlaceMeeplesOn))){
                 expansionPlaceMeeples(hexesToPlaceMeeplesOn, player);
+                settlement = beforeExpansion;
             }
             else{
                 //TODO: Can we think of a way to throw from here so AI knows its expansion wasn't valid
-                settlement = beforeExpansion;
                 throw new AssertionError();
+
             }
             mergeSettlements(settlement);
         }
@@ -97,6 +99,13 @@ public class GameState {
                 settlementList.remove(i--);
             }
         }
+    }
+    public ArrayList<Coordinate> getCoordinatesofSettlement(Settlement settlement){
+        ArrayList<Coordinate> copyOfCoordinates= new ArrayList<Coordinate>();
+        for(Coordinate c : settlement.getSettlementCoordinates()){
+            copyOfCoordinates.add(c);
+        }
+        return copyOfCoordinates;
     }
     public  void expansionPlaceMeeples(ArrayList<Coordinate> coordinates, Player player){
         for(Coordinate c : coordinates){

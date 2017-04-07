@@ -24,7 +24,7 @@ public class BuildRules extends Rules {
         return true; //TODO: Check if there enough entities to build/expand
     }
     public static boolean checkPlayerHasEnoughMeeples(Player player, int numMeeples){
-        return player.getNumMeeples() > numMeeples;
+        return player.getNumMeeples() >= numMeeples;
     }
     public static boolean checkPlayerHasATotoro(Player player){
         return player.getNumTotoros() > 0;

@@ -94,7 +94,6 @@ public class GameStateTests {
         gameState.foundSettlement(new Coordinate(102,98), player1);
         gameState.foundSettlement(new Coordinate(102,99), player1);
 
-        System.out.println(gameState.getSettlementList().size());
         assert gameState.getSettlementList().size() == 2;
 
     }

@@ -116,7 +116,7 @@ public class TigerIsland {
     boolean Player1Turn = true;
     boolean Player2Turn = true;
     Scanner in = new Scanner(System.in);
-
+    gameState.getCurrentPlayer().removeMeeple(17);
 
     while(GameOver){
         Player1Turn = true;
