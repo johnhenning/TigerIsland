@@ -47,11 +47,11 @@ public class TigerPlacementTest {
 //        gameState.placeTile(tile);
 
         player1 = new Player();
-        gameState.foundSettlement(new Coordinate(100, 101), player1);
-        gameState.foundSettlement(new Coordinate(100, 99), player1);
-        gameState.foundSettlement(new Coordinate(99, 99), player1);
-        gameState.foundSettlement(new Coordinate(101, 100), player1);
-        gameState.foundSettlement(new Coordinate(101, 101), player1);
+        gameState.foundSettlement(new Coordinate(100, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 101), gameState.getCurrentPlayer());
         tile1.getHexes().get(2).setLevel(3);
     }
 

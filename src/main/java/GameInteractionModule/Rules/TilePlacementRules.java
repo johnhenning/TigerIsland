@@ -67,7 +67,7 @@ public class TilePlacementRules extends Rules {
     }
 
 
-    public boolean IsValidTile(Tile tile) {
+    public static boolean IsValidTile(Tile tile) {
         if (HasVolcano(tile) && HexesAreValid(tile)) { return true; }
 
         return false;

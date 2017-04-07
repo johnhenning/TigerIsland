@@ -123,11 +123,12 @@ public class TileNukeRules extends Rules {
 
     }
 
-    public static boolean doCoordinatesOverlap(ArrayList<Coordinate> tile, ArrayList<Coordinate> settlementCoords){
+    public static boolean doCoordinatesOverlap(ArrayList<Coordinate> tileCoords, ArrayList<Coordinate> settlementCoords){
 
-        Coordinate t1 = tile.get(0);
-        Coordinate t2 = tile.get(1);
-        Coordinate t3 = tile.get(2);
+        Coordinate t1 = tileCoords.get(0);
+        Coordinate t2 = tileCoords.get(1);
+        Coordinate t3 = tileCoords.get(2);
+
 
         Coordinate s1 = settlementCoords.get(0);
         Coordinate s2 = settlementCoords.get(1);

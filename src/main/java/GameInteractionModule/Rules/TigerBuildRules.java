@@ -43,16 +43,16 @@ public class TigerBuildRules extends BuildRules {
     public static boolean settlementNotContainTiger(GameState gameState){
         ArrayList<Settlement> settlementList = gameState.getSettlementList();
         for(Settlement s:settlementList){
-            if(!isTigerInSettlement(s.getSettlementCoordinates())){
+            if(!isTigerInSettlement(s.getSettlementCoordinates(), gameState)){
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isTigerInSettlement(ArrayList<Coordinate> settlementCoords){
+    public static boolean isTigerInSettlement(ArrayList<Coordinate> settlementCoords, GameState gameState){
         for(Coordinate c : settlementCoords){
-            if(Grid.getHexFromCoordinate(c).hasTiger()){
+            if(gameState.getGameboard().getHexFromCoordinate(c).hasTiger()){
                 return true;
             }
         }

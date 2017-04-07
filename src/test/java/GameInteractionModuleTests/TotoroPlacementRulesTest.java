@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class TotoroPlacementRulesTest{
     GameState gameState;
-    static Tile tile;
+    static Tile tile1;
     static Tile tile2;
     static Tile tile3;
     static Tile tile4;
@@ -24,28 +24,48 @@ public class TotoroPlacementRulesTest{
     @Before
     public void setup() throws Exception {
         gameState = new GameState();
-        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
-
 
         setupHexAndTilesOnGameState(gameState);
 
         player1 = new Player();
-        gameState.foundSettlement(new Coordinate(100,101),player1);
-        gameState.foundSettlement(new Coordinate(100,99),player1);
-        gameState.foundSettlement(new Coordinate(99,99),player1);
-        gameState.foundSettlement(new Coordinate(101,100),player1);
-        gameState.foundSettlement(new Coordinate(101,101),player1);
+        gameState.foundSettlement(new Coordinate(100,101),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100,99),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101,101),gameState.getCurrentPlayer());
 
     }
 
     @Test
     public void isHexAdjacentToSettlementTest(){
-       assert TotoroBuildRules.isHexAdjacentToSettlement(tile.getHexes().get(2), gameState);
+       assert TotoroBuildRules.isHexAdjacentToSettlement(tile1.getHexes().get(2), gameState);
+    }
+
+    @Test
+    public void coordinateInSettlementTest(){
+       assert TotoroBuildRules.CoordinateIsPartOfSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), new Coordinate(99, 99));
+    }
+
+    @Test
+    public void settlementIsGreaterThanFiveTest(){
+        assert TotoroBuildRules.SettlementsGreaterThanFive(gameState.getSettlementList()).size() == 1;
     }
 
     @Test
     public void playerHasSizeFiveSettlementTest(){
-        assert TotoroBuildRules.playerHasSizeFiveSettlement(player1, gameState);
+        assert TotoroBuildRules.playerHasSizeFiveSettlement(gameState.getCurrentPlayer(), gameState);
+    }
+
+    @Test
+    public void isTotoroNotInSettlementTest(){
+        assert !TotoroBuildRules.isTotoroInSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), gameState);
+    }
+
+    @Test
+    public void isTotoroInSettlementTest(){
+        Hex hex = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
+        hex.addTotoro();
+        assert TotoroBuildRules.isTotoroInSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), gameState);
     }
 
     @Test
@@ -62,17 +82,12 @@ public class TotoroPlacementRulesTest{
 
     @Test
     public void isValidTotoroLocationTest(){
-        assert TotoroBuildRules.isValidTotoroLocation(tile.getHexes().get(2),player1, gameState);
+        assert TotoroBuildRules.isValidTotoroLocation(tile1.getHexes().get(2),gameState.getCurrentPlayer(), gameState);
     }
 
 
 
     public  void setupHexAndTilesOnGameState(GameState game){
-//        Hex[] hexes1 = new Hex[3];
-//        Hex[] hexes2 = new Hex[3];
-//        Hex[] hexes3 = new Hex[3];
-//        Hex[] hexes4 = new Hex[3];
-//        Hex[] hexes5 = new Hex[3];
 
         ArrayList<Coordinate> hexesCoord = new ArrayList<>();
         hexesCoord.add( new Coordinate(101, 99));
@@ -121,11 +136,11 @@ public class TotoroPlacementRulesTest{
         terrains5.add(TerrainType.JUNGLE);
         terrains5.add(TerrainType.JUNGLE);
 
-        Tile tile1 = new Tile(hexesCoord, terrains1);
-        Tile tile2 = new Tile(hexesCoord2, terrains2);
-        Tile tile3 = new Tile(hexesCoord3, terrains3);
-        Tile tile4 = new Tile(hexesCoord4, terrains4);
-        Tile tile5 = new Tile(hexesCoord5, terrains5);
+        tile1 = new Tile(hexesCoord, terrains1);
+        tile2 = new Tile(hexesCoord2, terrains2);
+        tile3 = new Tile(hexesCoord3, terrains3);
+        tile4 = new Tile(hexesCoord4, terrains4);
+        tile5 = new Tile(hexesCoord5, terrains5);
 
 
         try {game.placeTile(tile1);}
