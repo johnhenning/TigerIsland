@@ -32,6 +32,7 @@ public class GameState {
         if (SettlementFoundationRules.isValidFoundation(h, player)) {
             player.removeMeeple();
             placeMeeple(coordinate);
+            player.addScore(ScoringRules.settlementFounded());
             Settlement settlement = new Settlement(coordinate,player, ++settlementIDCount);
             mergeSettlements(settlement);
         } else {
@@ -109,6 +110,8 @@ public class GameState {
     }
     public  void expansionPlaceMeeples(ArrayList<Coordinate> coordinates, Player player){
         for(Coordinate c : coordinates){
+            Hex hex = gameboard.getHexFromCoordinate(c);
+            player.addScore(ScoringRules.settlementExpanded(hex));
             int meeplesPlaced = placeMeeple(c);
             player.removeMeeple(meeplesPlaced);
         }
@@ -126,6 +129,7 @@ public class GameState {
         if(TotoroBuildRules.isValidTotoroLocation(hex, currentPlayer,this)) {
             hex.addTotoro();
             currentPlayer.removeTotoro();
+            currentPlayer.addScore(ScoringRules.totoroSanctuaryBuilt());
             Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
             mergeSettlements(settlement);
         }
@@ -140,6 +144,7 @@ public class GameState {
         if(TigerBuildRules.canPlaceTiger(hex, this)){
             hex.addTiger();
             currentPlayer.removeTiger();
+            currentPlayer.addScore(ScoringRules.tigerPlaygroundBuilt());
             Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
             mergeSettlements(settlement);
         }
