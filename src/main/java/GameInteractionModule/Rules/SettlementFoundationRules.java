@@ -14,6 +14,6 @@ public class SettlementFoundationRules extends BuildRules{
     }
 
     public static boolean isValidFoundation(Hex hex, Player player){
-        return hexIsLevelOne(hex) && isUnnocupied(hex) && isNotVolcano(hex) && BuildRules.checkPlayerHasEnoughMeeples(player, 1);
+        return hex != null && hexIsLevelOne(hex) && isUnnocupied(hex) && isNotVolcano(hex) && BuildRules.checkPlayerHasEnoughMeeples(player, 1);
     }
 }

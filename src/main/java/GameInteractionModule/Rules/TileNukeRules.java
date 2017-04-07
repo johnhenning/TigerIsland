@@ -32,7 +32,7 @@ public class TileNukeRules extends Rules {
         Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
         Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
 
-        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) { return -1; }
+        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) { throw new AssertionError(); }
 
         int lowerLevel0 = lower_hex0.getLevel();
         int lowerLevel1 = lower_hex1.getLevel();
@@ -72,7 +72,7 @@ public class TileNukeRules extends Rules {
 
         for (Hex hex : tile.getHexes()) {
             if (hex.getTerrain() == TerrainType.VOLCANO) {
-                if (gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) { return true; }
+                if (gameboard[hex.getx()][hex.gety()] != null && gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) { return true; }
             }
         }
         throw new AssertionError();
@@ -87,7 +87,8 @@ public class TileNukeRules extends Rules {
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
         Hex hex_two = gameboard[hex2.getx()][hex2.gety()];
 
-        if (hex_zero.hasTotoro() || hex_one.hasTotoro() || hex_two.hasTotoro()){
+        if ((hex_zero != null && hex_zero.hasTotoro()) || (hex_one != null && hex_one.hasTotoro())
+                || (hex_two != null && hex_two.hasTotoro())){
             throw new AssertionError();
         }
         return true;
@@ -103,7 +104,8 @@ public class TileNukeRules extends Rules {
         Hex hex_one = gameboard[hex1.getx()][hex1.gety()];
         Hex hex_two = gameboard[hex2.getx()][hex2.gety()];
 
-        if(hex_zero.hasTiger() || hex_one.hasTiger() || hex_two.hasTiger()){
+        if((hex_zero != null && hex_zero.hasTiger()) || (hex_one != null && hex_one.hasTiger())
+        || (hex_two != null && hex_two.hasTiger())){
             throw new AssertionError();
         }
         return true;

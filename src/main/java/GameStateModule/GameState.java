@@ -80,10 +80,15 @@ public class GameState {
     }
 
     public boolean levelTile(Tile tile) {
-        TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, settlementIDCount);
-        cleanSettlements();
-        gameboard.levelTile(tile);
-        return true;
+        try {
+            TileNukeRules.bigDivideSettlements(gameboard, settlementList, tile, settlementIDCount);
+            cleanSettlements();
+            gameboard.levelTile(tile);
+            return true;
+        } catch (AssertionError e) {
+            return false;
+        }
+
     }
     public void cleanSettlements(){
         for(int i = 0; i < settlementList.size(); i++){
@@ -183,6 +188,7 @@ public class GameState {
     public void printPlacedTiles(){
         gameboard.printLog();
     }
+
     public void printSettlementSummary(){
         for(Settlement s: settlementList){
             s.printSettlementInfo();
