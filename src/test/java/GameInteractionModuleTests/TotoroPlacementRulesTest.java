@@ -19,7 +19,6 @@ public class TotoroPlacementRulesTest{
     static Tile tile4;
     static Tile tile5;
     boolean exceptionThrown;
-    private Player player1;
 
     @Before
     public void setup() throws Exception {
@@ -27,19 +26,27 @@ public class TotoroPlacementRulesTest{
 
         setupHexAndTilesOnGameState(gameState);
 
-        player1 = new Player();
-        gameState.foundSettlement(new Coordinate(100,101),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,101),gameState.getCurrentPlayer());
+        gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
 
     }
 
-//    @Test
-//    public void placeTotoroNotValid(){
-//        gameState.placeTotoro(new Coordinate(100, 99));
-//    }
+    @Test
+    public void placeTotoroIsValidTest(){
+        gameState.placeTotoro(new Coordinate(99, 99));
+    }
 
     @Test
     public void isHexAdjacentToSettlementTest(){
@@ -47,47 +54,72 @@ public class TotoroPlacementRulesTest{
     }
 
     @Test
+    public void checkEnoughEntitiesTest(){
+        Hex hex = gameState.getHex(new Coordinate(99, 99));
+        hex.addTotoro();
+        assert TotoroBuildRules.checkEnoughEntities(gameState.getCurrentPlayer());
+    }
+
+    @Test
     public void coordinateInSettlementTest(){
-       assert TotoroBuildRules.CoordinateIsPartOfSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), new Coordinate(99, 99));
+       assert TotoroBuildRules.CoordinateIsPartOfSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), new Coordinate(98, 99));
     }
 
     @Test
     public void settlementIsGreaterThanFiveTest(){
-        assert TotoroBuildRules.SettlementsGreaterThanFive(gameState.getSettlementList()).size() == 1;
+        assert TotoroBuildRules.SettlementsGreaterThanFive(gameState.getSettlementList()).size() == 2;
     }
 
     @Test
     public void playerHasSizeFiveSettlementTest(){
-        assert TotoroBuildRules.playerHasSizeFiveSettlement(gameState.getCurrentPlayer(), gameState);
+        ArrayList<Settlement> playerS = TotoroBuildRules.playerHasSizeFiveSettlement(gameState.getCurrentPlayer(), gameState);
+        assert playerS.get(0) == gameState.getSettlementList().get(1);
     }
 
     @Test
-    public void isTotoroNotInSettlementTest(){
-        assert !TotoroBuildRules.isTotoroInSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), gameState);
+    public void placeTotoroAdjToSettlementSize5Test(){
+        Hex hex1 = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
+        hex1.addTotoro();
+        Hex hex = gameState.getHex(new Coordinate(99, 99));
+        assert TotoroBuildRules.playerHasValidAdjSettlementForTortoro(hex, gameState);
     }
 
     @Test
-    public void isTotoroInSettlementTest(){
-        Hex hex = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
-        hex.addTotoro();
-        assert TotoroBuildRules.isTotoroInSettlement(gameState.getSettlementList().get(0).getSettlementCoordinates(), gameState);
+    public void cannotPlaceTotoroAdjToSettlementSize5Test(){
+        Hex hex1 = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
+        hex1.addTotoro();
+        Hex hex2 = gameState.getHex(gameState.getSettlementList().get(1).getSettlementCoordinates().get(0));
+        hex2.addTotoro();
+        Hex hex = gameState.getHex(new Coordinate(99, 99));
+        assert !TotoroBuildRules.playerHasValidAdjSettlementForTortoro(hex, gameState);
+    }
+
+    @Test
+    public void cannotPlaceTotoroAdjToSettlementSize5Test2(){
+        Hex hex2 = gameState.getHex(gameState.getSettlementList().get(1).getSettlementCoordinates().get(0));
+        hex2.addTotoro();
+        Hex hex = gameState.getHex(new Coordinate(99, 99));
+        assert !TotoroBuildRules.playerHasValidAdjSettlementForTortoro(hex, gameState);
     }
 
     @Test
     public void settlementNotContainTotoroTest(){
-        assert TotoroBuildRules.settlementNotContainTotoro(gameState);
+        Settlement settlement = gameState.getSettlementList().get(1);
+        assert TotoroBuildRules.settlementNotContainTotoros(settlement, gameState);
     }
 
     @Test
     public void settlementContainTotoroTest(){
+        Settlement settlement = gameState.getSettlementList().get(0);
         Hex hex = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
         hex.addTotoro();
-        assert !TotoroBuildRules.settlementNotContainTotoro(gameState);
+        assert !TotoroBuildRules.settlementNotContainTotoros(settlement, gameState);
     }
 
     @Test
     public void isValidTotoroLocationTest(){
-        assert TotoroBuildRules.isValidTotoroLocation(tile1.getHexes().get(2),gameState.getCurrentPlayer(), gameState);
+        Hex hex = gameState.getHex(new Coordinate(99, 99));
+        assert TotoroBuildRules.isValidTotoroLocation(hex,gameState.getCurrentPlayer(), gameState);
     }
 
 

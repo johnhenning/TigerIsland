@@ -9,14 +9,17 @@ import java.util.ArrayList;
  */
 public class TigerBuildRules extends BuildRules {
 
+    public static boolean canPlaceTiger(Hex hex, GameState gameState){
+        return hexLevelAtLeastThree(hex) && isNotVolcano(hex) && isUnnocupied(hex)
+                && checkIfHexAdjacentToSettlement(hex, gameState)
+                && playerHasValidAdjSettlementForTiger(hex, gameState)
+                && checkEnoughEntities(gameState.getCurrentPlayer());
+    }
+
     public static boolean hexLevelAtLeastThree(Hex hex){
         return hex.getLevel() >= 3;
     }
 
-    public static boolean canPlaceTiger(Hex hex, GameState gameState){
-        return hexLevelAtLeastThree(hex) && isNotVolcano(hex) && checkIfHexAdjacentToSettlement(hex, gameState)
-                && settlementNotContainTiger(gameState) && checkEnoughTigers(gameState.getCurrentPlayer());
-    }
 
     public static boolean checkIfHexAdjacentToSettlement(Hex hex, GameState gameState)
     {
@@ -40,26 +43,64 @@ public class TigerBuildRules extends BuildRules {
         return false;
     }
 
-    public static boolean settlementNotContainTiger(GameState gameState){
-        ArrayList<Settlement> settlementList = gameState.getSettlementList();
-        for(Settlement s:settlementList){
-            if(!isTigerInSettlement(s.getSettlementCoordinates(), gameState)){
+    public static boolean playerHasValidAdjSettlementForTiger(Hex hex, GameState gameState){
+        ArrayList<Settlement> adjSettlements = getAdjacentSettlementsGreaterThanFive(hex, gameState);
+        ArrayList<Settlement> playerAdjSettlements = settlementsOfPlayer(adjSettlements, gameState.getCurrentPlayer());
+        for(Settlement s: playerAdjSettlements){
+            if(settlementNotContainTigers(s, gameState)){
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean isTigerInSettlement(ArrayList<Coordinate> settlementCoords, GameState gameState){
-        for(Coordinate c : settlementCoords){
+    public static ArrayList<Settlement> getAdjacentSettlementsGreaterThanFive(Hex hex, GameState gameState){
+
+        Grid gameboard = gameState.getGameboard();
+        ArrayList<Hex> adjacentHexes = TilePlacementRules.getAdjacentHexes(hex, gameboard);
+        ArrayList<Integer> adjSettlementsID = new ArrayList<>();
+
+        for(Hex h: adjacentHexes){
+            if(adjSettlementIDNotInList(h.getSettlementID(), adjSettlementsID)){
+                adjSettlementsID.add(h.getSettlementID());
+            }
+        }
+
+        ArrayList<Settlement> allAdjSettlements = new ArrayList<>();
+
+        for(Integer i: adjSettlementsID){
+            if(i != null){
+                Settlement adjSettlement = gameState.getSettlementByID(i);
+                if(adjSettlement != null){
+                    allAdjSettlements.add(gameState.getSettlementByID(i));
+                }
+            }
+        }
+        return allAdjSettlements;
+    }
+
+    public static boolean adjSettlementIDNotInList(int settlementID, ArrayList<Integer> AdjacentIDList){
+        for(Integer i: AdjacentIDList){
+            if(settlementID == i){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public static boolean settlementNotContainTigers(Settlement s, GameState gameState){
+        for(Coordinate c: s.getSettlementCoordinates()){
             if(gameState.getGameboard().getHexFromCoordinate(c).hasTiger()){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
-    public static boolean checkEnoughTigers(Player player){
+
+    public static boolean checkEnoughEntities(Player player){
         return player.getNumTigers()>0;
     }
+
 }

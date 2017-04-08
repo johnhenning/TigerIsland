@@ -28,8 +28,6 @@ public class TigerPlacementTest {
 
         setupHexAndTilesOnGameState(gameState);
 
-
-
         coordinates.add(new Coordinate(100, 100));
         coordinates.add(new Coordinate(100, 101));
         coordinates.add(new Coordinate(99, 101));
@@ -40,23 +38,38 @@ public class TigerPlacementTest {
         terrains.add(TerrainType.LAKE);
 
 
-
-//        tile = new Tile(coordinates, terrains);
-//        gameState.placeTile(tile);
-
-        player1 = new Player();
         gameState.foundSettlement(new Coordinate(100, 101), gameState.getCurrentPlayer());
         gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
         gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer());
         gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
         gameState.foundSettlement(new Coordinate(101, 101), gameState.getCurrentPlayer());
         tile1.getHexes().get(2).setLevel(3);
+
+        gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
+
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
+
+
     }
 
+    @Test
+    public void placeTigerIsValidTest(){
+        gameState.placeTiger(new Coordinate(102, 100));
+    }
 
     @Test
     public void checkIfHexAdjacentToSettlementTest() {
         assert TigerBuildRules.checkIfHexAdjacentToSettlement(tile1.getHexes().get(2), gameState);
+    }
+
+    @Test
+    public void checkEnoughEntitiesTest(){
+        Hex hex = gameState.getHex(new Coordinate(102, 100));
+        hex.addTiger();
+        assert TigerBuildRules.checkEnoughEntities(gameState.getCurrentPlayer());
     }
 
     @Test
@@ -67,16 +80,47 @@ public class TigerPlacementTest {
 
     @Test
     public void checkIfTigerNotInSettlementTest() {
-        assert TigerBuildRules.settlementNotContainTiger(gameState);
+        assert TigerBuildRules.settlementNotContainTigers(gameState.getSettlementList().get(0), gameState);
     }
 
     @Test
     public void checkIfTigerInSettlementTest() {
         Hex hex = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
         hex.addTiger();
-        assert !TigerBuildRules.settlementNotContainTiger(gameState);
+        assert !TigerBuildRules.settlementNotContainTigers(gameState.getSettlementList().get(0),gameState);
     }
 
+    @Test
+    public void checkAdjSettlementOfPlayerNotContainTigerTest(){
+        Hex hex = tile1.getHexes().get(2);
+        assert TigerBuildRules.playerHasValidAdjSettlementForTiger(hex, gameState);
+    }
+
+    @Test
+    public void checkAdjSettlementsDoesContainTigerTest(){
+        Hex hex1 = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
+        hex1.addTiger();
+        Hex hex2 = gameState.getHex(gameState.getSettlementList().get(1).getSettlementCoordinates().get(0));
+        hex2.addTiger();
+        Hex hex = tile1.getHexes().get(2);
+        assert !TigerBuildRules.playerHasValidAdjSettlementForTiger(hex, gameState);
+    }
+
+    @Test
+    public void checkNotPlayerAdjSettlementsDoesContainTigerTest(){
+        Hex hex1 = gameState.getHex(gameState.getSettlementList().get(0).getSettlementCoordinates().get(0));
+        hex1.addTiger();
+        Hex hex = tile1.getHexes().get(2);
+        assert TigerBuildRules.playerHasValidAdjSettlementForTiger(hex, gameState);
+    }
+
+    @Test
+    public void checkNotPlayerAdjSettlementsDoesNotContainTigerTest(){
+        Hex hex2 = gameState.getHex(gameState.getSettlementList().get(1).getSettlementCoordinates().get(0));
+        hex2.addTiger();
+        Hex hex = tile1.getHexes().get(2);
+        assert !TigerBuildRules.playerHasValidAdjSettlementForTiger(hex, gameState);
+    }
 
     @Test
     public void canPlaceTigerTest() {
@@ -85,11 +129,6 @@ public class TigerPlacementTest {
 
 
     public void setupHexAndTilesOnGameState(GameState game) {
-//        Hex[] hexes1 = new Hex[3];
-//        Hex[] hexes2 = new Hex[3];
-//        Hex[] hexes3 = new Hex[3];
-//        Hex[] hexes4 = new Hex[3];
-//        Hex[] hexes5 = new Hex[3];
 
         ArrayList<Coordinate> hexesCoord = new ArrayList<>();
         hexesCoord.add(new Coordinate(101, 99));
