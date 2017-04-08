@@ -5,4 +5,6 @@ package GameStateModule;
  */
 public enum BuildMoveType {
     FOUNDSETTLEMENT, EXPANDSETTLEMENT, PLACETOTORO, PLACETIGER
+
+
 }

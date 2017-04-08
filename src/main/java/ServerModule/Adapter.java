@@ -1,15 +1,19 @@
 package ServerModule;
 
+import GameStateModule.BuildMove;
 import GameStateModule.Coordinate;
-import GameStateModule.Hex;
+import GameStateModule.TerrainType;
+import GameStateModule.Tile;
 import IOModule.Message;
+
+import java.util.ArrayList;
 
 /**
  * Created by carlos on 4/4/2017.
  */
 public class Adapter {
-
-    public static String[] message;
+    //TODO: alphanumeric pid gid rid etc...
+    public static String[] serverMessage;
     public static String delimiters = "[ +]+";
     public static int pid;
     public static int cid;
@@ -36,74 +40,88 @@ public class Adapter {
     public static boolean totoro;
     public static boolean tiger;
     public static boolean authentication;
+    private KnockKnockClient kkc;
+
+    public Adapter(KnockKnockClient kkc){
+        this.kkc = kkc;
+    }
+
+    public Message getAITileInfo(){
+        parseStringFromServer(kkc.receiveMessage());
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        return new Message(new Tile(terrains), null);
+    }
 
     public static void parseStringFromServer(String fromServer){
-        message = fromServer.split(delimiters);
+        serverMessage = fromServer.split(delimiters);
 
         if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
-            pid = Integer.parseInt(message[6]);
+            pid = Integer.parseInt(serverMessage[6]);
         }
         else if(fromServer.contains("NEW CHALLENGE ")){
-            cid = Integer.parseInt(message[2]);
-            numRounds = Integer.parseInt(message[6]);
+            cid = Integer.parseInt(serverMessage[2]);
+            numRounds = Integer.parseInt(serverMessage[6]);
         }
         else if(fromServer.contains("BEGIN ROUND "))
-            rid = Integer.parseInt(message[2]);
+            rid = Integer.parseInt(serverMessage[2]);
         else if(fromServer.contains("NEW MATCH BEGINNING"))
-            oid = Integer.parseInt(message[8]);
+            oid = Integer.parseInt(serverMessage[8]);
         else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
-            gid = Integer.parseInt(message[5]);
-            moveNum = Integer.parseInt(message[10]);
-            tileTypeOne = message[12];
-            tileTypeTwo = message[13];
+            gid = Integer.parseInt(serverMessage[5]);
+            moveNum = Integer.parseInt(serverMessage[10]);
+            tileTypeOne = serverMessage[11];
+            tileTypeTwo = serverMessage[12];
 
         }
         else if(fromServer.contains("PLACED")){
-            gid = Integer.parseInt(message[1]);
-            moveNum = Integer.parseInt(message[3]);
-            pid = Integer.parseInt(message[5]);
-            tileTypeOne = message[7];
-            tileTypeTwo = message[8];
-            xPlaced = Integer.parseInt(message[10]);
-            yPlaced = Integer.parseInt(message[11]);
-            zPlaced = Integer.parseInt(message[12]);
-            orientation = Integer.parseInt(message[13]);
+            gid = Integer.parseInt(serverMessage[1]);
+            moveNum = Integer.parseInt(serverMessage[3]);
+            pid = Integer.parseInt(serverMessage[5]);
+            tileTypeOne = serverMessage[7];
+            tileTypeTwo = serverMessage[8];
+            xPlaced = Integer.parseInt(serverMessage[10]);
+            yPlaced = Integer.parseInt(serverMessage[11]);
+            zPlaced = Integer.parseInt(serverMessage[12]);
+            orientation = Integer.parseInt(serverMessage[13]);
             if (fromServer.contains("FOUNDED")){
-                xBuilt = Integer.parseInt(message[17]);
-                yBuilt = Integer.parseInt(message[18]);
-                zBuilt = Integer.parseInt(message[19]);
+                xBuilt = Integer.parseInt(serverMessage[17]);
+                yBuilt = Integer.parseInt(serverMessage[18]);
+                zBuilt = Integer.parseInt(serverMessage[19]);
                 founded = true;
             }
             else if (fromServer.contains("EXPANDED")){
-                xBuilt = Integer.parseInt(message[17]);
-                yBuilt = Integer.parseInt(message[18]);
-                zBuilt = Integer.parseInt(message[19]);
+                xBuilt = Integer.parseInt(serverMessage[17]);
+                yBuilt = Integer.parseInt(serverMessage[18]);
+                zBuilt = Integer.parseInt(serverMessage[19]);
                 expdanded = true;
-                terrainType = message[20];
+                terrainType = serverMessage[20];
             }
             else if (fromServer.contains("TOTORO")){
-                xBuilt = Integer.parseInt(message[18]);
-                yBuilt = Integer.parseInt(message[19]);
-                zBuilt = Integer.parseInt(message[20]);
+                xBuilt = Integer.parseInt(serverMessage[18]);
+                yBuilt = Integer.parseInt(serverMessage[19]);
+                zBuilt = Integer.parseInt(serverMessage[20]);
                 totoro = true;
             }
             else if (fromServer.contains("TIGER")){
-                xBuilt = Integer.parseInt(message[18]);
-                yBuilt = Integer.parseInt(message[19]);
-                zBuilt = Integer.parseInt(message[20]);
+                xBuilt = Integer.parseInt(serverMessage[18]);
+                yBuilt = Integer.parseInt(serverMessage[19]);
+                zBuilt = Integer.parseInt(serverMessage[20]);
                 tiger = true;
             }
         }
         else if (fromServer.contains("OVER PLAYER")){
-            gid = Integer.parseInt(message[1]);
-            pid = Integer.parseInt(message[4]);
-            p1Score = Integer.parseInt(message[5]);
-            oid = Integer.parseInt(message[7]);
-            p2Score = Integer.parseInt(message[8]);
+            gid = Integer.parseInt(serverMessage[1]);
+            pid = Integer.parseInt(serverMessage[4]);
+            p1Score = Integer.parseInt(serverMessage[5]);
+            oid = Integer.parseInt(serverMessage[7]);
+            p2Score = Integer.parseInt(serverMessage[8]);
         }
         else if(fromServer.contains("END OF ROUND")){
-            rid = Integer.parseInt(message[3]);
-            numRounds = Integer.parseInt(message[5]);
+            rid = Integer.parseInt(serverMessage[3]);
+            numRounds = Integer.parseInt(serverMessage[5]);
         }
 
 
@@ -223,6 +241,34 @@ public class Adapter {
         return new Coordinate(x+1,y);
     }
 
+    public void sendAIMove(Message message){
+        sendTileMove(message);
+        sendBuildMove(message);
+    }
+    public void sendTileMove(Message message){
+        Tile tile = message.tile;
+        Coordinate[] coordinates2 = new Coordinate[2];
+        coordinates2[0] = tile.getCoords().get(1);
+        coordinates2[1] = tile.getCoords().get(2);
+        String tileMessage = "Placed ";
+        tileMessage += tile.getHexes().get(1).getTerrain().toString() + "+" + tile.getHexes().get(2).getTerrain().toString();
+        Coordinate volcanoCoordinate = tile.getCoords().get(0);
+        int[] coordinates = convertAxialToCube(volcanoCoordinate.getX(), volcanoCoordinate.getY());
+        tileMessage += " AT " + coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
+        tileMessage += " " + getOrientationFromOurTile(volcanoCoordinate, coordinates2);
+
+        kkc.sendMessage(tileMessage);
+    }
+    public void sendBuildMove(Message message){
+        BuildMove buildMove = message.buildMove;
+        String buildMessage = buildMove.toString(buildMove.buildMoveType);
+        int [] coordinates = convertAxialToCube(buildMove.coordinate.getX(), buildMove.coordinate.getY());
+        buildMessage += coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
+        if(buildMove.terrainType != null)
+            buildMessage += " " + buildMove.terrainType.toString();
+        kkc.sendMessage(buildMessage);
+
+    }
     /*public static Message makeAIMessage(String terrainTypeOne, String terrainTypeTwo){
         //Arr
     }

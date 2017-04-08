@@ -1,6 +1,7 @@
 import GameInteractionModule.Game;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
+import IOModule.AI;
 import IOModule.Message;
 import ServerModule.Adapter;
 
@@ -34,6 +35,13 @@ public class TigerIsland {
                 return TerrainType.ROCKY;
         }
         return null;
+    }
+    public static Tile generateTileForRobot(){
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(generateTerrain());
+        terrains.add(generateTerrain());
+        return new Tile(terrains);
     }
 
     public static Tile generateTile(){
@@ -116,6 +124,8 @@ public class TigerIsland {
     boolean Player1Turn = true;
     boolean Player2Turn = true;
     Scanner in = new Scanner(System.in);
+
+    AI player1 = new AI();
 
     while(GameOver){
         Player1Turn = true;

@@ -27,7 +27,7 @@ public class AdapterTests {
 
     @Before
     public void setup()throws Exception{
-        adapter = new Adapter();
+        adapter = new Adapter(null);
         testString = "WAIT FOR THE TOURNAMENT TO BEGIN 2";
         authenticationString = "WELCOME TO ANOTHER EDITION OF THUNDERDOME!";
         x = 0;

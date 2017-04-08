@@ -10,7 +10,7 @@ public class Message {
     public BuildMove buildMove;
 
 
-    Message(Tile tile, BuildMove buildMove) {
+    public Message(Tile tile, BuildMove buildMove) {
         this.tile = tile;
         this.buildMove = buildMove;
     }

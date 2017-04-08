@@ -13,4 +13,18 @@ public class BuildMove {
         this.coordinate = coordinate;
         this.terrainType = terrainType;
     }
+    public String toString(BuildMoveType buildMoveType){
+        switch (buildMoveType){
+            case FOUNDSETTLEMENT:
+                return "FOUNDED SETTLEMENT AT ";
+            case EXPANDSETTLEMENT:
+                return "EXPANDED SETTLEMENT AT ";
+            case PLACETOTORO:
+                return "BUILT TOTORO SANCTUARY AT ";
+            case PLACETIGER:
+                return "BUILT TIGER PLAYGROUND AT ";
+            default:
+                return null;
+        }
+    }
 }
