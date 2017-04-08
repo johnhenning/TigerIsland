@@ -109,91 +109,87 @@ public class TigerIsland {
     }
     public static void main(String[] args) {
 
-    GameState gameState = new GameState();
-    Turn turn = new Turn();
-    TerrainType terrain;
-    boolean GameOver = true;
-    boolean Player1Turn = true;
-    boolean Player2Turn = true;
-    Scanner in = new Scanner(System.in);
+        GameState gameState = new GameState();
+        TerrainType terrain;
+        boolean GameOver = true;
+        boolean Player1Turn = true;
+        boolean Player2Turn = true;
+        Scanner in = new Scanner(System.in);
 
-    while(GameOver){
-        Player1Turn = true;
-        Player2Turn = true;
-        System.out.println("Player 1's turn!");
-        while(Player1Turn){
-            boolean invalidTilePlacement = true;
-            while(invalidTilePlacement){
-                Tile tile = generateTile();
-                if(turn.makeTileMove(tile, gameState)){
-                    invalidTilePlacement = false;
+        while(GameOver){
+            Player1Turn = true;
+            Player2Turn = true;
+            System.out.println("Player 1's turn!");
+            while(Player1Turn){
+                boolean invalidTilePlacement = true;
+                while(invalidTilePlacement) {
+                    Tile tile = generateTile();
+                    if(Turn.makeTileMove(tile, gameState)){
+                        invalidTilePlacement = false;
+                    }
+                    else
+                    {
+                        System.out.println("Invalid tile placement!!!");
+                    }
                 }
-                else
-                {
-                    System.out.println("Invalid tile placement!!!");
+                boolean invalidBuildMove = true;
+                while(invalidBuildMove){
+                    BuildMove buildMove = getBuildMove();
+                    if(Turn.makeBuildMove(buildMove,gameState)){
+                        invalidBuildMove = false;
+                    }
+                    else{
+                        System.out.println("Invalid build move!!!");
+                    }
                 }
-            }
-            boolean invalidBuildMove = true;
-            while(invalidBuildMove){
-                BuildMove buildMove = getBuildMove();
-                if(turn.makeBuildMove(buildMove,gameState)){
-                    invalidBuildMove = false;
-                }
-                else{
-                    System.out.println("Invalid build move!!!");
-                }
-            }
-            //String s = in.nextLine();
-           // System.out.println(s);
+                //String s = in.nextLine();
+               // System.out.println(s);
 
-            Player1Turn = false;
-        }
-        System.out.println("Player 2's turn!");
-        while(Player2Turn){
-            boolean invalidTilePlacement = true;
-            while(invalidTilePlacement){
-                Tile tile = generateTile();
-                if(turn.makeTileMove(tile, gameState)){
-                    invalidTilePlacement = false;
+                Player1Turn = false;
+            }
+            System.out.println("Player 2's turn!");
+            while(Player2Turn){
+                boolean invalidTilePlacement = true;
+                while(invalidTilePlacement){
+                    Tile tile = generateTile();
+                    if(Turn.makeTileMove(tile, gameState)){
+                        invalidTilePlacement = false;
+                    }
+                    else
+                    {
+                        System.out.println("Invalid tile placement!!!");
+                    }
                 }
-                else
-                {
-                    System.out.println("Invalid tile placement!!!");
+                boolean invalidBuildMove = true;
+                while(invalidBuildMove){
+                    BuildMove buildMove = getBuildMove();
+                    if(Turn.makeBuildMove(buildMove,gameState)){
+                        invalidBuildMove = false;
+                    }
+                    else{
+                        System.out.println("Invalid build move!!!");
+                    }
+                }
+                Player2Turn = false;
+            }
+            System.out.println("Would you like a game summary? y/n");
+            String s = in.nextLine();
+            if (s.contains("y")) {
+                System.out.println("Settlement Summary: ");
+                System.out.println();
+                gameState.printSettlementSummary();
+                System.out.println();
+                System.out.println("-----------------------------------------------------------------");
+                System.out.println("Placed tiles: ");
+                System.out.println();
+                gameState.printPlacedTiles();
+                System.out.println("Would you like information about a specific hex on the gameboard? y/n");
+                String s2 = in.nextLine();
+                if(s2.contains("y")){
+                    System.out.println("Enter Hex coordinates");
+                    gameState.printHexSummary(in.nextInt(), in.nextInt());
                 }
             }
-            boolean invalidBuildMove = true;
-            while(invalidBuildMove){
-                BuildMove buildMove = getBuildMove();
-                if(turn.makeBuildMove(buildMove,gameState)){
-                    invalidBuildMove = false;
-                }
-                else{
-                    System.out.println("Invalid build move!!!");
-                }
-            }
-            Player2Turn = false;
-        }
-        System.out.println("Would you like a game summary? y/n");
-        String s = in.nextLine();
-        if(s.contains("n")){
-
-        }
-        else if(s.contains("y")){
-            System.out.println("Settlement Summary: ");
-            System.out.println();
-            gameState.printSettlementSummary();
-            System.out.println();
-            System.out.println("-----------------------------------------------------------------");
-            System.out.println("Placed tiles: ");
-            System.out.println();
-            gameState.printPlacedTiles();
-            System.out.println("Would you like information about a specific hex on the gameboard? y/n");
-            String s2 = in.nextLine();
-            if(s2.contains("y")){
-                System.out.println("Enter Hex coordinates");
-                gameState.printHexSummary(in.nextInt(), in.nextInt());
-            }
-        }
 
     }
 

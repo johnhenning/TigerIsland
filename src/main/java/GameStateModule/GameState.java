@@ -14,16 +14,18 @@ public class GameState {
     private Player player2;
     private ArrayList<Settlement> settlementList;
     private int settlementIDCount;
+    private Coordinate rightMostCoordinate;
 
     public GameState(){
         gameboard = new Grid(200);
         player1 = new Player();
         player2 = new Player();
-        settlementList = new ArrayList<Settlement>();
+        settlementList = new ArrayList<>();
 
         settlementIDCount = 0;
         currentPlayer = player1;
         placeTile(Tile.getInitialTile());
+        rightMostCoordinate = new Coordinate(100, 101);
     }
 
     public void foundSettlement(Coordinate coordinate, Player player) {
@@ -215,5 +217,13 @@ public class GameState {
             s.printSettlementInfo();
             System.out.println();
         }
+    }
+
+    public void setRightMostCoordinate(Coordinate coordinate) {
+        rightMostCoordinate = coordinate;
+    }
+
+    public Coordinate getRightMostCoordinate() {
+        return rightMostCoordinate;
     }
 }
