@@ -124,7 +124,7 @@ public class TigerPlacementTest {
 
     @Test
     public void canPlaceTigerTest() {
-        assert TigerBuildRules.canPlaceTiger(tile1.getHexes().get(2), gameState);
+        assert TigerBuildRules.canPlaceTiger(tile1.getHexes().get(2), gameState.getCurrentPlayer(), gameState);
     }
 
 

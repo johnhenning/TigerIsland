@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class TigerBuildRules extends BuildRules {
 
-    public static boolean canPlaceTiger(Hex hex, GameState gameState){
-        return hexLevelAtLeastThree(hex) && isNotVolcano(hex) && isUnnocupied(hex)
+    public static boolean canPlaceTiger(Hex hex, Player player, GameState gameState){
+        return hexLevelAtLeastThree(hex) && isValidBuild(hex, player)
                 && checkIfHexAdjacentToSettlement(hex, gameState)
                 && playerHasValidAdjSettlementForTiger(hex, gameState)
                 && checkEnoughEntities(gameState.getCurrentPlayer());

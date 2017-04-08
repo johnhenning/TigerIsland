@@ -139,7 +139,7 @@ public class GameState {
 
     public void placeTiger(Coordinate coordinate) {
         Hex hex = gameboard.getHexFromCoordinate(coordinate);
-        if(TigerBuildRules.canPlaceTiger(hex, this)){
+        if(TigerBuildRules.canPlaceTiger(hex,currentPlayer, this)){
             hex.addTiger();
             currentPlayer.removeTiger();
             currentPlayer.addScore(ScoringRules.tigerPlaygroundBuilt());
