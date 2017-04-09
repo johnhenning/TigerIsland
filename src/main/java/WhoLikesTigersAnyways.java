@@ -1,3 +1,4 @@
+import ServerModule.Adapter;
 import ServerModule.KnockKnockClient;
 
 import java.io.BufferedReader;
@@ -8,35 +9,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by jslocke on 4/5/17.
+ * Created by Kyle on 4/9/2017.
  */
-public class Tiger {
-    public static void main(String[] args)
-    {
-        Thread tigerIsland = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int portNumber = 2222;
-                KnockKnockClient kkc = new KnockKnockClient("localhost",portNumber);
-                kkc.authenticateConnection("Cheese", "Cheese123", "Cheddar");
-                kkc.waitForChallenge();
-                kkc.roundProtocol();
-                kkc.moveProtocol();
-                kkc.moveProtocol();
-                kkc.moveProtocol();
-                kkc.roundProtocol();
-                kkc.roundProtocol();
-                kkc.moveProtocol();
-                kkc.moveProtocol();
-                kkc.moveProtocol();
-
-                kkc.moveProtocol();
-                kkc.roundProtocol();
-                System.out.println("we did it");
-                return;
-            }
-        });
-
+public class WhoLikesTigersAnyways {
+    public static void main(String[] args) {
         Thread serverTest = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -74,31 +50,37 @@ public class Tiger {
                     out.println("BEGIN ROUND 1 OF 2");
                     out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
                     out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
-                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACE LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
                     out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
                     out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
-                    out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED:ILLEGAL BUILD");
+                    out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED: ILLEGAL BUILD");
                     out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
                     out.println("GAME 2 OVER PLAYER 69 1 PLAYER 420 1");
                     out.println("END OF ROUND 1 OF 2 WAIT FOR THE NEXT MATCH");
                     out.println("BEGIN ROUND 2 OF 2");
                     out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
-                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
-                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACE LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
-                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
-//                    out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED: ILLEGAL BUILD");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
-                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
 
+                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
+
+                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+
+                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
+//                    out.println("GAME 1 MOVE 2 PLAYER PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+//                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+//
+//                    out.println("GAME 1 MOVE 2 PLAYER PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+//                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+
+                    out.println("GAME 1 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
 
                     out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
                     out.println("GAME 2 OVER PLAYER 69 1 PLAYER 420 1");
+
                     out.println("END OF ROUND 2 OF 2");
-                    //out.println("END OF CHALLENGES");
+                    out.println("END OF CHALLENGES");
                     //out.println("THANK YOU FOR PLAYING! GOODBYE");
                     return;
 
@@ -109,7 +91,50 @@ public class Tiger {
                 }
             }
         });
-        tigerIsland.start();
         serverTest.start();
+
+
+
+
+
+        KnockKnockClient gameClient = new KnockKnockClient("localhost", 2222);
+        Adapter adapter = new Adapter(gameClient);
+        gameClient.authenticateConnection("Cheese", "Cheese123", "456");
+
+        gameClient.waitForChallenge();
+
+        while(!gameClient.endOfChallenge){
+            for(int i = 0; i < gameClient.rounds; i++){
+                gameClient.roundProtocol();
+                boolean firstMove = true;
+                while(!gameClient.endOfMatch){
+
+                    if(gameClient.gameOneNotOver){
+                        if(firstMove){
+                            firstMove = false;
+                            //AI's first move
+                        }else{
+                            gameClient.moveProtocol();
+                            //make opponent Move
+
+                            //make AI move
+                        }
+                    }
+
+                    if(gameClient.gameTwoNotOver){
+                        gameClient.moveProtocol();
+                        //make opponent move
+
+                        //make AI move
+
+                    }
+                }
+
+            }
+            gameClient.roundProtocol();
+            gameClient.waitForChallenge();
+        }
+        System.out.println("we played a game");
     }
+
 }

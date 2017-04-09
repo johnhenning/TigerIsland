@@ -62,14 +62,14 @@ public class AdapterTests {
 
         testString = "MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECONDS: MOVE 5 PLACE LAKE+ROCK";
         adapter.parseStringFromServer(testString);
-        assert adapter.gid.equals("2");
+        assert adapter.gidOne.equals("2");
         assert adapter.moveNum == 5;
         assert adapter.tileTypeOne.equals("LAKE");
         assert adapter.tileTypeTwo.equals("ROCK");
 
         testString = "GAME 2 MOVE 8 PLAYER 222 PLACED JUNGLE+GRASS AT -1 -1 -2 1 FOUNDED SETTLEMENT AT -1 -2 3";
         adapter.parseStringFromServer(testString);
-        assert adapter.gid.equals("2");;
+        assert adapter.gidTwo.equals("2");;
         assert adapter.moveNum == 8;
         assert adapter.pid.equals("222");
         assert adapter.tileTypeOne.equals("JUNGLE");
@@ -85,7 +85,7 @@ public class AdapterTests {
 
         testString = "GAME 1 MOVE 10 PLAYER 223 PLACED GRASS+LAKE AT -3 -3 3 2 EXPANDED SETTLEMENT AT -4 -4 4 LAKE";
         adapter.parseStringFromServer(testString);
-        assert adapter.gid.equals("1");;
+        assert adapter.gidTwo.equals("1");;
         assert adapter.moveNum == 10;
         assert adapter.pid.equals("223");;
         assert adapter.tileTypeOne.equals("GRASS");
@@ -102,7 +102,7 @@ public class AdapterTests {
 
         testString = "GAME 1 MOVE 20 PLAYER 222 PLACED JUNGLE+JUNGLE AT -1 -1 -1 5 BUILT TOTORO SANCTUARY AT -5 -5 -5";
         adapter.parseStringFromServer(testString);
-        assert adapter.gid.equals("1");;
+        assert adapter.gidTwo.equals("1");;
         assert adapter.moveNum== 20;
         assert adapter.pid.equals("222");
         assert adapter.tileTypeOne.equals("JUNGLE");
@@ -118,7 +118,7 @@ public class AdapterTests {
 
         testString = "GAME 2 MOVE 22 PLAYER 223 PLACED GRASS+GRASS AT -1 -1 -5 4 BUILT TIGER PLAYGROUND AT -6 -6 -6";
         adapter.parseStringFromServer(testString);
-        assert adapter.gid.equals("2");
+        assert adapter.gidTwo.equals("2");
         assert adapter.moveNum == 22;
         assert adapter.pid.equals("223");
         assert adapter.tileTypeOne.equals("GRASS");
@@ -134,7 +134,7 @@ public class AdapterTests {
 
         testString = "GAME 2 OVER PLAYER 1 200 PLAYER 2 205";
         adapter.parseStringFromServer(testString);
-        assert adapter.gid.equals("2");
+        assert adapter.gidTwo.equals("2");
         assert adapter.pid.equals("1");
         assert adapter.p1Score== 200;
         assert adapter.oid.equals("2");

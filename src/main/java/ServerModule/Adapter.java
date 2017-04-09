@@ -20,7 +20,8 @@ public class Adapter {
     public static String numRounds;
     public static String rid;
     public static String oid;
-    public static String gid;
+    public static String gidOne;
+    public static String gidTwo;
     public static int moveNum;
 
     public static int xPlaced;
@@ -40,10 +41,13 @@ public class Adapter {
     public static boolean totoro;
     public static boolean tiger;
 
+    public static boolean gameJustStarted;
+
     private KnockKnockClient kkc;
 
     public Adapter(KnockKnockClient kkc){
         this.kkc = kkc;
+
     }
 
     public Message getAITileInfo(){
@@ -75,17 +79,22 @@ public class Adapter {
         }
         else if(fromServer.contains("BEGIN ROUND "))
             rid = serverMessage[2];
-        else if(fromServer.contains("NEW MATCH BEGINNING"))
+        else if(fromServer.contains("NEW MATCH BEGINNING")) {
+            gameJustStarted = true;
             oid = serverMessage[8];
+        }
         else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
-            gid = serverMessage[5];
+            if(gameJustStarted) {
+                gameJustStarted = false;
+                gidOne = serverMessage[5];
+            }
             moveNum = Integer.parseInt(serverMessage[10]);
             tileTypeOne = serverMessage[12];
             tileTypeTwo = serverMessage[13];
 
         }
         else if(fromServer.contains("PLACED")){
-            gid = serverMessage[1];
+            gidTwo = serverMessage[1];
             moveNum = Integer.parseInt(serverMessage[3]);
             pid = serverMessage[5];
             tileTypeOne = serverMessage[7];
@@ -121,11 +130,14 @@ public class Adapter {
             }
         }
         else if (fromServer.contains("OVER PLAYER")){
-            gid = serverMessage[1];
+            gidTwo = serverMessage[1];
             pid = serverMessage[4];
             p1Score = Integer.parseInt(serverMessage[5]);
             oid = serverMessage[7];
             p2Score = Integer.parseInt(serverMessage[8]);
+        }
+        else if(fromServer.contains("FORFEITED") || fromServer.contains("LOST")){
+            gidTwo = serverMessage[1];
         }
 
 

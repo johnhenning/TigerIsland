@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-import static ServerModule.Adapter.parseStringFromServer;
+import static ServerModule.Adapter.*;
 
 /**
  * Created by jslocke on 4/3/17.
@@ -24,10 +24,15 @@ public class KnockKnockClient {
     public boolean endOfChallenge = false;
     public boolean endOfMatch = false;
     public boolean gameNotOver = true;
+    public boolean gameOneNotOver = true;
+    public boolean gameTwoNotOver = true;
 
     private String ourPID;
     public String AITile;
     public String opponentMove;
+    public String gameOneID;
+    public String gameTwoID;
+    public int rounds;
 
     public KnockKnockClient(String hostName, int portNumber){
         try {
@@ -48,19 +53,28 @@ public class KnockKnockClient {
         }
         String serverMessage = receiveMessage();
         if(serverMessage.contains("WAIT FOR THE TOURNAMENT TO BEGIN")){
-             parseStringFromServer(serverMessage);
+            parseStringFromServer(serverMessage);
             ourPID = Adapter.ourPid;
-
         }
 
     }
 
     public void waitForChallenge(){
         String challengeString = receiveMessage();
-        if(!challengeString.startsWith("NEW CHALLENGE ")){
-            throw new AssertionError();
+        if(challengeString.startsWith("NEW CHALLENGE ")){
+           endOfChallenge = false;
+           parseStringFromServer(challengeString);
+           rounds = Integer.parseInt(numRounds);
+
+
+
+        }else if(challengeString.contains("WAIT FOR THE NEXT")){
+            waitForChallenge();
+        }else if(challengeString.contains("END OF CHALLENGES")){
+            endOfChallenge = true;
         }
-        parseStringFromServer(challengeString);
+
+
     }
 
 
@@ -70,25 +84,22 @@ public class KnockKnockClient {
         if(roundProtocolMessage.startsWith("BEGIN ROUND")){
             moveProtocol();
         }
-        else if(roundProtocolMessage.contains("WAIT FOR NEXT MATCH")){
+        else if(roundProtocolMessage.contains("WAIT FOR THE NEXT MATCH")){
+            endOfMatch = false;
             roundProtocol();
         }
         else if(roundProtocolMessage.startsWith("END OF ROUND")){
             gameNotOver = true;
-            endOfChallenge = true;
+            endOfChallenge = false;
         }
         else{
             throw new AssertionError();
         }
-//        if(checkifEndChallenges.contains("END OF CHALLENGES")){
-//            challengeNotOver = false;
-//        }
-//        else if(checkifEndChallenges.contains("WAIT FOR NEXT CHALLENGE TO BEGIN")){
-//            String s = waitForChallenge();
-//            parseStringFromServer(s);
-//            roundProtocol();
-//        }
-}
+
+    }
+    public void moveProtocol2(){
+
+    }
 
 
     public void moveProtocol(){
@@ -99,13 +110,27 @@ public class KnockKnockClient {
 
 
             if (serverMessage.startsWith("NEW MATCH")) {
+
                 AITile = receiveMessage();
+                String[] gameIDString = AITile.split(" ");
+
+
+                gameOneID = gameIDString[5];
+                gameOneNotOver = true;
+                gameTwoNotOver = true;
                 return;
             } else if (serverMessage.contains("OVER PLAYER")) {
                 receiveMessage();
                 endOfMatch = true;
             }
             else if(serverMessage.contains("FORFEIT") || serverMessage.contains("LOST")){
+                parseStringFromServer(serverMessage);
+                if(gameOneID.equals(gidTwo)){
+                    gameOneNotOver = false;
+                }else{
+                    gameTwoNotOver = false;
+                }
+                gameNotOver = false;
                 moveProtocol();
             }
             else {
@@ -130,6 +155,13 @@ public class KnockKnockClient {
 
             if(serverMessage.startsWith("NEW MATCH")){
                 AITile = receiveMessage();
+                String[] gameIDString = AITile.split(" ");
+                parseStringFromServer(AITile);
+
+
+                gameOneID = gameIDString[5];
+                gameOneNotOver = true;
+                gameTwoNotOver = true;
                 return;
             }
             else if(serverMessage.contains("OVER PLAYER")){
@@ -137,7 +169,14 @@ public class KnockKnockClient {
                 endOfMatch = true;
             }
             else if(serverMessage.contains("FORFEITED") || serverMessage.contains("LOST")){
+                parseStringFromServer(serverMessage);
+                if(gameOneID.equals(gidTwo)){
+                    gameOneNotOver = false;
+                }else{
+                    gameTwoNotOver = false;
+                }
                 gameNotOver = false;
+                moveProtocol();
             }
             else{
                 serverMessage2 = receiveMessage();
