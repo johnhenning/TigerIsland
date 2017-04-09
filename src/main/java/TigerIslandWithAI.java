@@ -1,3 +1,4 @@
+import GameInteractionModule.Rules.GameEndingRules;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
@@ -166,7 +167,7 @@ public class TigerIslandWithAI {
 //                    out.println("THANK YOU FOR PLAYING! GOODBYE");
                     int i = 0;
                     while(true){
-                        out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECONDS: MOVE " + i++ + " " +
+                        out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECONDS: MOVE " + i++ + " PLACE " +
                                             generateTerrain().toString() + "+" + generateTerrain().toString());
 
                         for(int j = 0; j < 2; j++) inputLine = in.readLine();
@@ -202,19 +203,32 @@ public class TigerIslandWithAI {
         Scanner in = new Scanner(System.in);
 
         AI player1 = new AI();
+        gameState.getCurrentPlayer().removeMeeple(17);
 
         while (GameOver) {
             Player1Turn = true;
-            Player2Turn = true;
+
             System.out.println("Player 1's turn!");
             while (Player1Turn) {
+                if(GameEndingRules.playerCannotCompleteBuildAction(gameState.getCurrentPlayer(), gameState)){
+                    GameOver = false;
+                    System.out.println("Our AI is stupid");
+                    break;
+                }
                 Message message = adapter.getAITileInfo();
                 long start_time = System.currentTimeMillis();
                 player1.completeTurn(message, gameState);
                 Player1Turn = false;
                 System.out.println("Time to complete : " + (System.currentTimeMillis() - start_time));
                 adapter.sendAIMove(message);
+                Player2Turn = true;
             }
+            if(GameOver == false){
+
+
+                break;
+            }
+
             System.out.println("Player 2's turn!");
             while (Player2Turn) {
                 boolean invalidTilePlacement = true;
@@ -259,6 +273,8 @@ public class TigerIslandWithAI {
             }
 
             try{serverTest.sleep(1000);} catch (InterruptedException e){};
+
+
 
         }
 

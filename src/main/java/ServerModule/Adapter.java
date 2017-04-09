@@ -72,8 +72,8 @@ public class Adapter {
         else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
             gid = Integer.parseInt(serverMessage[5]);
             moveNum = Integer.parseInt(serverMessage[10]);
-            tileTypeOne = serverMessage[11];
-            tileTypeTwo = serverMessage[12];
+            tileTypeOne = serverMessage[12];
+            tileTypeTwo = serverMessage[13];
 
         }
         else if(fromServer.contains("PLACED")){
@@ -269,6 +269,7 @@ public class Adapter {
         kkc.sendMessage(buildMessage);
 
     }
+
     /*public static Message makeAIMessage(String terrainTypeOne, String terrainTypeTwo){
         //Arr
     }

@@ -10,9 +10,9 @@ public class TilePlacementRules extends Rules {
 
     public static void isValidTilePlacement(Tile tile, Grid gameboard, ArrayList<Tile> placedTiles){
         if(TilePlacementRules.CheckGameStarted(placedTiles)) {
-            if(!TilePlacementRules.CheckForAdjacentHex(tile, gameboard)) throw new AssertionError();
+            if(!TilePlacementRules.CheckForAdjacentHex(tile, gameboard)) throw new AssertionError("Tiles aren't adjacent");
         }
-        if(!TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard)) throw new AssertionError();
+        if(!TilePlacementRules.CheckForUnoccupiedHexes(tile, gameboard)) throw new AssertionError("Hexes are occupied, try and level");
     }
 
     public static boolean CheckGameStarted(ArrayList<Tile> placedTiles){

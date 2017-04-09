@@ -42,7 +42,7 @@ public class TileNukeRules extends Rules {
         if (lowerLevel0 == lowerLevel1 && lowerLevel1 == lowerLevel2) {
             return lowerLevel0;
         } else {
-            throw new AssertionError();
+            throw new AssertionError("Hexes aren't on same plane");
         }
     }
 
@@ -62,7 +62,7 @@ public class TileNukeRules extends Rules {
         int tileIndex2 = hex_two.getTurnPlaced();
 
         if(tileIndex0 == tileIndex1 && tileIndex1 == tileIndex2){
-            throw new AssertionError();
+            throw new AssertionError("Hex is over the same tile");
         }
 
         return true;
@@ -76,7 +76,7 @@ public class TileNukeRules extends Rules {
                 if (gameboard[hex.getx()][hex.gety()] != null && gameboard[hex.getx()][hex.gety()].getTerrain() == TerrainType.VOLCANO) { return true; }
             }
         }
-        throw new AssertionError();
+        throw new AssertionError("Volcanoes don't line up");
     }
 
     public static boolean CheckTileNotContainTotoro(Tile tile, Hex[][]gameboard){
@@ -90,7 +90,7 @@ public class TileNukeRules extends Rules {
 
         if ((hex_zero != null && hex_zero.hasTotoro()) || (hex_one != null && hex_one.hasTotoro())
                 || (hex_two != null && hex_two.hasTotoro())){
-            throw new AssertionError();
+            throw new AssertionError("Tile does not contain totoro");
         }
         return true;
 
@@ -107,7 +107,7 @@ public class TileNukeRules extends Rules {
 
         if((hex_zero != null && hex_zero.hasTiger()) || (hex_one != null && hex_one.hasTiger())
         || (hex_two != null && hex_two.hasTiger())){
-            throw new AssertionError();
+            throw new AssertionError("Tile does not contain tiger");
         }
         return true;
 
