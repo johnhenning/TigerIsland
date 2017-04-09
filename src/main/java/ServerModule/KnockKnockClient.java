@@ -27,7 +27,7 @@ public class KnockKnockClient {
     public boolean gameOneNotOver = true;
     public boolean gameTwoNotOver = true;
 
-    private String ourPID;
+    public String ourPID;
     public String AITile;
     public String opponentMove;
     public String gameOneID;
@@ -82,7 +82,7 @@ public class KnockKnockClient {
     public void roundProtocol(){
         String roundProtocolMessage = receiveMessage();
         if(roundProtocolMessage.startsWith("BEGIN ROUND")){
-            moveProtocol();
+
         }
         else if(roundProtocolMessage.contains("WAIT FOR THE NEXT MATCH")){
             endOfMatch = false;
@@ -97,11 +97,30 @@ public class KnockKnockClient {
         }
 
     }
-    public void moveProtocol2(){
+    public void matchProtocol(){
+        String matchProtocolMessage = receiveMessage();
+        if(matchProtocolMessage.contains("NEW MATCH")){
+           //do nothing
+        }
+        else if(matchProtocolMessage.contains("OVER PLAYER")){
+            receiveMessage();
+            return;
+        }
+        parseStringFromServer(matchProtocolMessage);
 
     }
-
-
+    public void moveProtocol2(){
+        String moveMessage = receiveMessage();
+        if(moveMessage.contains(ourPID)){
+            //do nothing
+        }
+        else if(moveMessage.startsWith("MAKE YOUR MOVE")){
+            AITile = moveMessage;
+        }
+        else{
+            opponentMove = moveMessage;
+        }
+    }
     public void moveProtocol(){
         String serverMessage, serverMessage2, serverMessage3;
         if(!gameNotOver) {

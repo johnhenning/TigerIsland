@@ -1,3 +1,8 @@
+import GameInteractionModule.Turn;
+import GameStateModule.BuildMoveType;
+import GameStateModule.GameState;
+import IOModule.AI;
+import IOModule.Message;
 import ServerModule.Adapter;
 import ServerModule.KnockKnockClient;
 
@@ -50,11 +55,14 @@ public class WhoLikesTigersAnyways {
                     out.println("BEGIN ROUND 1 OF 2");
                     out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
                     out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
-                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUNDED SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCKY+GRASSLAND AT 1 -1 0 2 FOUNDED SETTLEMENT AT 2 -1 -1");
                     out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
-                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
+                    out.println("GAME 2 MOVE 2 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+
                     out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME 2 MOVE 3 PLAYER 69 FORFEITED: ILLEGAL BUILD");
+
                     out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
                     out.println("GAME 2 OVER PLAYER 69 1 PLAYER 420 1");
                     out.println("END OF ROUND 1 OF 2 WAIT FOR THE NEXT MATCH");
@@ -62,19 +70,17 @@ public class WhoLikesTigersAnyways {
                     out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
 
                     out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
+                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUNDED SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCKY+GRASSLAND AT 1 -1 0 2 FOUNDED SETTLEMENT AT 2 -1 -1");
 
-                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
                     out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 2 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUNDED SETTLEMENT AT 1 2 2");
+                    out.println("GAME 1 MOVE 3 PLAYER 69 FORFEITED: ILLEGAL TILE PLACEMENT");
 
-                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
-//                    out.println("GAME 1 MOVE 2 PLAYER PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-//                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
-//
-//                    out.println("GAME 1 MOVE 2 PLAYER PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-//                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
-
-                    out.println("GAME 1 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACED ROCKY+GRASSLAND AT 2 0 -2 1 FOUNDED SETTLEMENT AT 2 1 -3");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 2 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUNDED SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 3 PLAYER 69 FORFEITED: ILLEGAL TILE PLACEMENT");
 
                     out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
                     out.println("GAME 2 OVER PLAYER 69 1 PLAYER 420 1");
@@ -106,29 +112,91 @@ public class WhoLikesTigersAnyways {
         while(!gameClient.endOfChallenge){
             for(int i = 0; i < gameClient.rounds; i++){
                 gameClient.roundProtocol();
+                gameClient.matchProtocol();
                 boolean firstMove = true;
-                while(!gameClient.endOfMatch){
+                boolean gameOneNotOver = true;
+                boolean gameTwoNotOver = true;
+                GameState gameState1 = new GameState();
+                GameState gameState2 = new GameState();
+                AI gameOneAI = new AI();
+                AI gameTwoAI = new AI();
 
-                    if(gameClient.gameOneNotOver){
+                while(gameOneNotOver || gameTwoNotOver){
+
+                    if(gameOneNotOver){
                         if(firstMove){
                             firstMove = false;
-                            //AI's first move
-                        }else{
-                            gameClient.moveProtocol();
-                            //make opponent Move
+                            gameClient.moveProtocol2();
+
+                            Message AIMessage = adapter.getAITileInfo(gameClient.AITile);
+                            gameOneAI.completeTurn(AIMessage, gameState1);
+
+                            adapter.sendAIMove(AIMessage);
 
                             //make AI move
+                            boolean forfeitAI = false;
+                            if(AIMessage.buildMove.buildMoveType == BuildMoveType.UNABLE_TO_BUILD) {//read AI's echoed move
+                                gameOneNotOver = false;
+                            }
+                            gameClient.moveProtocol2();
+
+
+                        }else{
+                            gameClient.moveProtocol2();
+                            if(gameClient.opponentMove.contains("FORFEIT") || gameClient.opponentMove.contains("LOST")){
+                                gameOneNotOver = false;
+                            }
+                            else{
+                                //make Opponent Move
+                                Message opponentMove = adapter.getOpponentMove(gameClient.opponentMove);
+                                Turn.makeTileMove(opponentMove.tile, gameState1);
+                                Turn.makeBuildMove(opponentMove.buildMove, gameState1);
+                                //get AI tile
+                                gameClient.moveProtocol2();
+                                //make AI move
+                                Message AIMessage = adapter.getAITileInfo(gameClient.AITile);
+                                gameOneAI.completeTurn(AIMessage, gameState1);
+
+                                adapter.sendAIMove(AIMessage);
+
+                                boolean forfeitAI = false;
+                                if(AIMessage.buildMove.buildMoveType == BuildMoveType.UNABLE_TO_BUILD) {
+                                    gameOneNotOver = false;
+                                }
+                                gameClient.moveProtocol2();
+
+                            }
                         }
                     }
 
-                    if(gameClient.gameTwoNotOver){
-                        gameClient.moveProtocol();
-                        //make opponent move
+                    if(gameTwoNotOver){
+                        gameClient.moveProtocol2();
+                        if(gameClient.opponentMove.contains("FORFEIT") || gameClient.opponentMove.contains("LOST")){
+                            gameTwoNotOver = false;
+                        }
+                        else{
+                            //make Opponent Move
+                            Message opponentMove = adapter.getOpponentMove(gameClient.opponentMove);
+                            Turn.makeTileMove(opponentMove.tile, gameState2);
+                            Turn.makeBuildMove(opponentMove.buildMove, gameState2);
+                            //get AI tile
+                            gameClient.moveProtocol2();
+                            //make AI move
+                            Message AIMessage = adapter.getAITileInfo(gameClient.AITile);
+                            gameTwoAI.completeTurn(AIMessage, gameState2);
 
-                        //make AI move
+                            adapter.sendAIMove(AIMessage);
+                            boolean forfeitAI = false;
 
+                            if(AIMessage.buildMove.buildMoveType == BuildMoveType.UNABLE_TO_BUILD) {//read AI's echoed move
+                               gameTwoNotOver = false;
+                            }
+                            gameClient.moveProtocol2();
+
+                        }
                     }
                 }
+                gameClient.matchProtocol();
 
             }
             gameClient.roundProtocol();

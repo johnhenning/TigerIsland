@@ -1,9 +1,6 @@
 package ServerModule;
 
-import GameStateModule.BuildMove;
-import GameStateModule.Coordinate;
-import GameStateModule.TerrainType;
-import GameStateModule.Tile;
+import GameStateModule.*;
 import IOModule.Message;
 
 import java.util.ArrayList;
@@ -65,6 +62,45 @@ public class Adapter {
         terrains.add(TerrainType.valueOf(tileTypeOne));
         terrains.add(TerrainType.valueOf(tileTypeTwo));
         return new Message(new Tile(terrains), null);
+
+
+    }
+
+    public Message getOpponentMove(String s){
+        parseStringFromServer(s);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        int[] coords = convertCubeToAxial(xPlaced, yPlaced, zPlaced);
+        Coordinate[] newCoords = getCoordinatesOfOpponentsTile(new Coordinate(coords[0], coords[1]), orientation);
+        ArrayList<Coordinate> convertedCoordinates = new ArrayList<>();
+        convertedCoordinates.add(new Coordinate(coords[0], coords[1]));
+        convertedCoordinates.add(newCoords[0]);
+        convertedCoordinates.add(newCoords[1]);
+        Tile tile = new Tile(convertedCoordinates, terrains);
+        int[] buildCoords = convertCubeToAxial(xBuilt, yBuilt, zBuilt);
+        TerrainType buildTerrain = null;
+        if(terrainType != null){
+            buildTerrain = TerrainType.valueOf(terrainType);
+        }
+
+        BuildMove buildMove = new BuildMove(null,new Coordinate(buildCoords[0], buildCoords[1]) , buildTerrain);
+
+        if(founded == true){
+            buildMove.buildMoveType = BuildMoveType.FOUNDSETTLEMENT;
+        }
+        else if(expdanded == true){
+            buildMove.buildMoveType = BuildMoveType.EXPANDSETTLEMENT;
+        }
+        else if(totoro == true){
+            buildMove.buildMoveType = BuildMoveType.PLACETOTORO;
+        }
+        else if(tiger == true){
+            buildMove.buildMoveType = BuildMoveType.PLACETIGER;
+        }
+        return new Message(tile, buildMove);
+
     }
 
     public static void parseStringFromServer(String fromServer){
@@ -88,6 +124,7 @@ public class Adapter {
                 gameJustStarted = false;
                 gidOne = serverMessage[5];
             }
+            gidOne = serverMessage[5];
             moveNum = Integer.parseInt(serverMessage[10]);
             tileTypeOne = serverMessage[12];
             tileTypeTwo = serverMessage[13];
@@ -260,15 +297,22 @@ public class Adapter {
     }
 
     public void sendAIMove(Message message){
+        String messagePrefix = "GAME ";
+        parseStringFromServer(kkc.AITile);
+        messagePrefix += gidOne;
+        messagePrefix += " MOVE " + moveNum;
+        messagePrefix += " PLAYER " + kkc.ourPID + " ";
+        kkc.sendMessage(messagePrefix);
         sendTileMove(message);
         sendBuildMove(message);
     }
     public void sendTileMove(Message message){
         Tile tile = message.tile;
+
         Coordinate[] coordinates2 = new Coordinate[2];
         coordinates2[0] = tile.getCoords().get(1);
         coordinates2[1] = tile.getCoords().get(2);
-        String tileMessage = "Placed ";
+        String tileMessage = "PLACED ";
         tileMessage += tile.getHexes().get(1).getTerrain().toString() + "+" + tile.getHexes().get(2).getTerrain().toString();
         Coordinate volcanoCoordinate = tile.getCoords().get(0);
         int[] coordinates = convertAxialToCube(volcanoCoordinate.getX(), volcanoCoordinate.getY());
@@ -280,11 +324,15 @@ public class Adapter {
     public void sendBuildMove(Message message){
         BuildMove buildMove = message.buildMove;
         String buildMessage = buildMove.toString(buildMove.buildMoveType);
-        int [] coordinates = convertAxialToCube(buildMove.coordinate.getX(), buildMove.coordinate.getY());
-        buildMessage += coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
-        if(buildMove.terrainType != null)
-            buildMessage += " " + buildMove.terrainType.toString();
-        kkc.sendMessage(buildMessage);
+        if(buildMove.buildMoveType != BuildMoveType.UNABLE_TO_BUILD) {
+            int[] coordinates = convertAxialToCube(buildMove.coordinate.getX(), buildMove.coordinate.getY());
+            buildMessage += coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
+            if (buildMove.terrainType != null)
+                buildMessage += " " + buildMove.terrainType.toString();
+            kkc.sendMessage(buildMessage);
+        }else{
+            kkc.sendMessage(" UNABLE TO BUILD");
+        }
 
     }
     /*public static Message makeAIMessage(String terrainTypeOne, String terrainTypeTwo){
