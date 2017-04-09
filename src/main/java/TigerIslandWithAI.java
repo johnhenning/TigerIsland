@@ -1,6 +1,7 @@
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
+import IOModule.Opponent;
 import ServerModule.Adapter;
 
 import java.io.*;
@@ -192,6 +193,39 @@ public class TigerIslandWithAI {
         KnockKnockClient gameClient = new KnockKnockClient("localhost", 2222);
         Adapter adapter = new Adapter(gameClient);
         gameClient.authenticateConnection("Cheese", "Cheese123", "456");
+
+       /* gameClient.waitForChallenge();
+        while(!adapter.endOfChallengs){
+            gameClient.roundProtocol();
+            for(numofRounds){
+                GameState game1 = new GameState();
+                GameState game2 = new GameState();
+                gameClient.waitForMatch();
+                Message message = adapter.getAITileInfo();
+                while(!matchOver){
+                    if(!gameClient.game1Over){
+                        if(AITurn){
+                            //make AI move
+                        }
+                        else if(OpponentTurn){
+                            //make Opponent move
+                        }
+                    }
+                    gameClient.moveProtocol();
+                    if(!gameClient.game2Over){
+                        if(AITurn){
+                            //make AI move
+                        }
+                        else if(OpponentTurn){
+                            //make Opponent move
+                        }
+                    }
+                    gameClient.moveProtocol();
+
+                }
+            }
+            gameClient.challengeProtocol();
+        }*/
 
         GameState gameState = new GameState();
         Turn turn = new Turn();

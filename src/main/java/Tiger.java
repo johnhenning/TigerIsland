@@ -19,6 +19,17 @@ public class Tiger {
                 int portNumber = 2222;
                 KnockKnockClient kkc = new KnockKnockClient("localhost",portNumber);
                 kkc.authenticateConnection("Cheese", "Cheese123", "Cheddar");
+                kkc.waitForChallenge();
+                kkc.roundProtocol();
+                kkc.moveProtocol();
+                kkc.moveProtocol();
+                kkc.moveProtocol();
+                kkc.roundProtocol();
+                kkc.roundProtocol();
+                kkc.moveProtocol();
+                kkc.moveProtocol();
+                //kkc.moveProtocol();
+                kkc.roundProtocol();
                 System.out.println("we did it");
                 return;
             }
@@ -55,9 +66,33 @@ public class Tiger {
                         System.out.println(inputLine);
                         break;
                     }
-                    String pid = "456";
+                    String pid = "420";
                     out.println("WAIT FOR THE TOURNAMENT TO BEGIN "+pid);
-                    out.println("THANK YOU FOR PLAYING! GOODBYE");
+                    out.println("NEW CHALLENGE 1 YOU WILL PLAY 2 MATCHES");
+                    out.println("BEGIN ROUND 1 OF 2");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
+                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
+                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACE LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
+                    out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED:ILLEGAL BUILD");
+                    out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
+                    out.println("GAME 2 OVER PLAYER 69 1 PLAYER 420 1");
+                    out.println("END OF ROUND 1 OF 2 WAIT FOR THE NEXT MATCH");
+                    out.println("BEGIN ROUND 2 OF 2");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
+                    out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
+                    out.println("GAME 1 MOVE 1 PLAYER 420 PLACE LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
+                    out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED:ILLEGAL BUILD");
+                    out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
+                    out.println("GAME 2 OVER PLAYER 69 1 PLAYER 420 1");
+                    out.println("END OF ROUND 2 OF 2");
+                    //out.println("END OF CHALLENGES");
+                    //out.println("THANK YOU FOR PLAYING! GOODBYE");
                     return;
 
                 } catch (IOException e) {

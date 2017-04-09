@@ -12,17 +12,17 @@ import java.util.ArrayList;
  * Created by carlos on 4/4/2017.
  */
 public class Adapter {
-    //TODO: alphanumeric pid gid rid etc...
     public static String[] serverMessage;
     public static String delimiters = "[ +]+";
-    public static int pid;
-    public static int cid;
-    public static int numRounds;
-    public static int rid;
-    public static int oid;
-    public static int gid;
+    public static String ourPid;
+    public static String pid;
+    public static String cid;
+    public static String numRounds;
+    public static String rid;
+    public static String oid;
+    public static String gid;
     public static int moveNum;
-    public static int tid;
+
     public static int xPlaced;
     public static int yPlaced;
     public static int zPlaced;
@@ -39,7 +39,7 @@ public class Adapter {
     public static boolean expdanded;
     public static boolean totoro;
     public static boolean tiger;
-    public static boolean authentication;
+
     private KnockKnockClient kkc;
 
     public Adapter(KnockKnockClient kkc){
@@ -54,32 +54,40 @@ public class Adapter {
         terrains.add(TerrainType.valueOf(tileTypeTwo));
         return new Message(new Tile(terrains), null);
     }
+    public Message getAITileInfo(String s){
+        parseStringFromServer(s);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        return new Message(new Tile(terrains), null);
+    }
 
     public static void parseStringFromServer(String fromServer){
         serverMessage = fromServer.split(delimiters);
 
         if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
-            pid = Integer.parseInt(serverMessage[6]);
+            ourPid =serverMessage[6];
         }
         else if(fromServer.contains("NEW CHALLENGE ")){
-            cid = Integer.parseInt(serverMessage[2]);
-            numRounds = Integer.parseInt(serverMessage[6]);
+            cid = serverMessage[2];
+            numRounds = serverMessage[6];
         }
         else if(fromServer.contains("BEGIN ROUND "))
-            rid = Integer.parseInt(serverMessage[2]);
+            rid = serverMessage[2];
         else if(fromServer.contains("NEW MATCH BEGINNING"))
-            oid = Integer.parseInt(serverMessage[8]);
+            oid = serverMessage[8];
         else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
-            gid = Integer.parseInt(serverMessage[5]);
+            gid = serverMessage[5];
             moveNum = Integer.parseInt(serverMessage[10]);
-            tileTypeOne = serverMessage[11];
-            tileTypeTwo = serverMessage[12];
+            tileTypeOne = serverMessage[12];
+            tileTypeTwo = serverMessage[13];
 
         }
         else if(fromServer.contains("PLACED")){
-            gid = Integer.parseInt(serverMessage[1]);
+            gid = serverMessage[1];
             moveNum = Integer.parseInt(serverMessage[3]);
-            pid = Integer.parseInt(serverMessage[5]);
+            pid = serverMessage[5];
             tileTypeOne = serverMessage[7];
             tileTypeTwo = serverMessage[8];
             xPlaced = Integer.parseInt(serverMessage[10]);
@@ -113,19 +121,17 @@ public class Adapter {
             }
         }
         else if (fromServer.contains("OVER PLAYER")){
-            gid = Integer.parseInt(serverMessage[1]);
-            pid = Integer.parseInt(serverMessage[4]);
+            gid = serverMessage[1];
+            pid = serverMessage[4];
             p1Score = Integer.parseInt(serverMessage[5]);
-            oid = Integer.parseInt(serverMessage[7]);
+            oid = serverMessage[7];
             p2Score = Integer.parseInt(serverMessage[8]);
-        }
-        else if(fromServer.contains("END OF ROUND")){
-            rid = Integer.parseInt(serverMessage[3]);
-            numRounds = Integer.parseInt(serverMessage[5]);
         }
 
 
     }
+
+
 
     public int[] convertCubeToAxial(int x, int y, int z){
         int axialCoord[] = new int[2];
