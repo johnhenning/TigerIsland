@@ -20,9 +20,14 @@ public class AI implements Player {
         Turn.makeTileMove(tile, gameState);
 
         //Calculate Build Move
-        BuildMove buildMove = calculateBuildMove(tile, gameState);
-        message.buildMove = buildMove;
-        Turn.makeBuildMove(buildMove, gameState);
+        if(gameState.getCurrentPlayer().getNumMeeples() > 0) {
+            BuildMove buildMove = calculateBuildMove(tile, gameState);
+            message.buildMove = buildMove;
+            Turn.makeBuildMove(buildMove, gameState);
+        }
+        else{
+            message.buildMove.buildMoveType = BuildMoveType.UNABLE_TO_BUILD;
+        }
 
         //Send updated serverMessage back to server
         sendMessageToServer(message);
