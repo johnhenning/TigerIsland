@@ -9,6 +9,8 @@ public class Settlement {
     private ArrayList<Coordinate> settlementCoordinates;
     private Player owner; //Are we going to change the owner/player relationship as discussed?
     private int settlementID;
+    private boolean hasTotoro;
+    private boolean hasTiger;
 
     public Settlement(ArrayList<Coordinate> settlementCoordinates, Player owner, int settlementID) { //Is this necessary? : yes for splitting settlements up
         this.settlementCoordinates = settlementCoordinates;
@@ -117,6 +119,19 @@ public class Settlement {
         return new Coordinate(x+1,y);
     }
 
+    public void setHasTotoro(boolean hasTotoro) {
+        this.hasTotoro = hasTotoro;
+    }
 
+    public void setHasTiger(boolean hasTiger) {
+        this.hasTiger = hasTiger;
+    }
 
+    public boolean hasTotoro() {
+        return hasTotoro;
+    }
+
+    public boolean hasTiger() {
+        return hasTiger;
+    }
 }

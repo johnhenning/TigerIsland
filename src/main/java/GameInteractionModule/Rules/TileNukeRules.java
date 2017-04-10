@@ -272,4 +272,5 @@ public class TileNukeRules extends Rules {
         }
         settlementList.addAll(dividedSettlments);
     }
+
 }

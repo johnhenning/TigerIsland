@@ -2,6 +2,7 @@ package GameStateModule;
 import GameInteractionModule.Rules.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -131,6 +132,7 @@ public class GameState {
             currentPlayer.removeTotoro();
             currentPlayer.addScore(ScoringRules.totoroSanctuaryBuilt());
             Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
+            settlement.setHasTotoro(true);
             mergeSettlements(settlement);
         }
         else{
@@ -146,6 +148,7 @@ public class GameState {
             currentPlayer.removeTiger();
             currentPlayer.addScore(ScoringRules.tigerPlaygroundBuilt());
             Settlement settlement = new Settlement(coordinate, currentPlayer, ++settlementIDCount);
+            settlement.setHasTiger(true);
             mergeSettlements(settlement);
         }
         else{
@@ -165,7 +168,36 @@ public class GameState {
         return gameboard;
     }
 
+    public ArrayList<Coordinate> getNeighborUnoccupiedCoordinates(Settlement settlement) {
+        ArrayList<Coordinate> possibleHexes = new ArrayList<>();
+        for ( Coordinate coordinate : settlement.getSettlementCoordinates()) {
+            Hex currentHex = getHex(coordinate);
+            ArrayList<Hex> neighboringHexes = gameboard.getNeighborHexes(currentHex);
+            for (Hex hex : neighboringHexes) {
+                if (hex != null) {
+                    if (!hex.isUnoccupied()) {
+                        possibleHexes.add(hex.getCoordinate());
+                    }
+                }
+            }
+        }
+        possibleHexes = removeDuplicates(possibleHexes);
 
+        return possibleHexes;
+    }
+
+    public ArrayList<Coordinate> getUnoccupiedCoordinates() {
+        ArrayList<Coordinate> unoccupiedCoordinates = new ArrayList<>();
+        for (Tile tile : gameboard.getPlacedTiles()) {
+            for (Hex hex : tile.getHexes()) {
+                if (getHex(hex.getCoordinate()).isUnoccupied()) {
+                    unoccupiedCoordinates.add(hex.getCoordinate());
+                }
+            }
+        }
+        unoccupiedCoordinates = removeDuplicates(unoccupiedCoordinates);
+        return unoccupiedCoordinates;
+    }
 
     public void switchPlayer() {
         if (currentPlayer == player1) {
@@ -175,6 +207,7 @@ public class GameState {
         }
     }
 
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -183,11 +216,36 @@ public class GameState {
         return settlementIDCount;
     }
 
+    public void printHexSummary(int x, int y) {
+        //printing tiles placed with coords
+        gameboard.getHexFromCoordinate(new Coordinate(x, y)).printHex();
+    }
+
+    public void printPlacedTiles(){
+        gameboard.printLog();
+    }
+
+
+    public void printSettlementSummary(){
+        for(Settlement s: settlementList){
+            s.printSettlementInfo();
+            System.out.println();
+        }
+    }
+    public void setRightMostCoordinate(Coordinate coordinate) {
+        rightMostCoordinate = coordinate;
+    }
+
+    public Coordinate getRightMostCoordinate() {
+        return rightMostCoordinate;
+    }
+
     private void mergeSettlements(Settlement newSettlement) {
         ArrayList<Coordinate> adjacentCoordinates = newSettlement.getSettlementCoordinates();
         ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
         playersSettlements.remove(newSettlement);
         settlementList.remove(newSettlement);
+
         for(Settlement s: playersSettlements){
             int newSettlmentID = newSettlement.getSettlementID();
             if(s.areCoordinatesAdjacent(adjacentCoordinates) && (newSettlmentID != 0 || newSettlmentID != s.getSettlementID())) {
@@ -196,6 +254,14 @@ public class GameState {
             }
         }
         Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner(), newSettlement.getSettlementID());
+        if (newSettlement.hasTiger()) {
+            combinedSettlements.hasTiger();
+        }
+
+        if (newSettlement.hasTotoro()) {
+            combinedSettlements.hasTotoro();
+        }
+
         for(Coordinate c : combinedSettlements.getSettlementCoordinates()){
             Hex h = getHex(c);
             h.setSettlementID(newSettlement.getSettlementID());
@@ -203,27 +269,12 @@ public class GameState {
         settlementList.add(combinedSettlements);
     }
 
+    private ArrayList<Coordinate> removeDuplicates(ArrayList<Coordinate> coordinates) {
+        Set<Coordinate> set = new HashSet<>();
+        set.addAll(coordinates);
+        coordinates.clear();
+        coordinates.addAll(set);
 
-    public void printHexSummary(int x, int y) {
-        //printing tiles placed with coords
-        gameboard.getHexFromCoordinate(new Coordinate(x, y)).printHex();
-    }
-    public void printPlacedTiles(){
-        gameboard.printLog();
-    }
-
-    public void printSettlementSummary(){
-        for(Settlement s: settlementList){
-            s.printSettlementInfo();
-            System.out.println();
-        }
-    }
-
-    public void setRightMostCoordinate(Coordinate coordinate) {
-        rightMostCoordinate = coordinate;
-    }
-
-    public Coordinate getRightMostCoordinate() {
-        return rightMostCoordinate;
+        return coordinates;
     }
 }

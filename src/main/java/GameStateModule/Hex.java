@@ -54,6 +54,10 @@ public class Hex {
         return meepleCount;
     }
 
+    public boolean isUnoccupied() {
+        return !(hasTiger() || hasTiger() || getMeepleCount() > 0);
+    }
+
     public boolean hasTotoro() {
         return totoro;
     }

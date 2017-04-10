@@ -2,6 +2,7 @@
  * Created by johnhenning on 3/15/17.
  */
 package GameStateModule;
+import GameInteractionModule.Rules.Rules;
 import GameInteractionModule.Rules.TileNukeRules;
 import GameInteractionModule.Rules.TilePlacementRules;
 
@@ -87,5 +88,18 @@ public class Grid {
         for(int i = 0; i < placedTiles.size(); i++){
             placedTiles.get(i).printTile();
         }
+    }
+
+    public ArrayList<Hex> getNeighborHexes(Hex hex) {
+        ArrayList<Hex> hexes = new ArrayList<>();
+
+        hexes.add(Rules.downLeft(this, hex.getCoordinate()));
+        hexes.add(Rules.downRight(this, hex.getCoordinate()));
+        hexes.add(Rules.topLeft(this, hex.getCoordinate()));
+        hexes.add(Rules.topRight(this, hex.getCoordinate()));
+        hexes.add(Rules.leftOfHex(this, hex.getCoordinate()));
+        hexes.add(Rules.rightOfHex(this, hex.getCoordinate()));
+
+        return hexes;
     }
 }
