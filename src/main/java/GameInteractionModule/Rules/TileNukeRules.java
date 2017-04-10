@@ -17,7 +17,7 @@ public class TileNukeRules extends Rules {
         CheckVolcanoesLineUp(tile,gameboard);
         CheckTileNotContainTotoro(tile, gameboard);
         CheckTileNotContainTiger(tile, gameboard);
-        if(CheckNukeDoesNotWipeoutSettlement(tile, gameState)) throw new AssertionError();
+        if(CheckNukeDoesNotWipeoutSettlement(tile, gameState)) throw new AssertionError("This location cannot be nuked");
     }
 
     public static int getNewTileLevel(Tile tile, Hex[][] gameboard){
@@ -33,7 +33,7 @@ public class TileNukeRules extends Rules {
         Hex lower_hex1 = gameboard[hex1.getx()][hex1.gety()];
         Hex lower_hex2 = gameboard[hex2.getx()][hex2.gety()];
 
-        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) { throw new AssertionError(); }
+        if (lower_hex0 == null || lower_hex1 == null || lower_hex2 == null) { throw new AssertionError("There aren't hexes on each of these coordinates"); }
 
         int lowerLevel0 = lower_hex0.getLevel();
         int lowerLevel1 = lower_hex1.getLevel();

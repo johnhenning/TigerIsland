@@ -1,9 +1,6 @@
 package ServerModule;
 
-import GameStateModule.BuildMove;
-import GameStateModule.Coordinate;
-import GameStateModule.TerrainType;
-import GameStateModule.Tile;
+import GameStateModule.*;
 import IOModule.Message;
 
 import java.util.ArrayList;
@@ -12,17 +9,18 @@ import java.util.ArrayList;
  * Created by carlos on 4/4/2017.
  */
 public class Adapter {
-    //TODO: alphanumeric pid gid rid etc...
     public static String[] serverMessage;
     public static String delimiters = "[ +]+";
-    public static int pid;
-    public static int cid;
-    public static int numRounds;
-    public static int rid;
-    public static int oid;
-    public static int gid;
+    public static String ourPid;
+    public static String pid;
+    public static String cid;
+    public static String numRounds;
+    public static String rid;
+    public static String oid;
+    public static String gidOne = "";
+    public static String gidTwo = "";
     public static int moveNum;
-    public static int tid;
+
     public static int xPlaced;
     public static int yPlaced;
     public static int zPlaced;
@@ -39,11 +37,14 @@ public class Adapter {
     public static boolean expdanded;
     public static boolean totoro;
     public static boolean tiger;
-    public static boolean authentication;
-    private KnockKnockClient kkc;
+    public static String currentGID = "";
+    public static boolean gameJustStarted;
 
-    public Adapter(KnockKnockClient kkc){
+    private GameClient kkc;
+
+    public Adapter(GameClient kkc){
         this.kkc = kkc;
+
     }
 
     public Message getAITileInfo(){
@@ -54,32 +55,87 @@ public class Adapter {
         terrains.add(TerrainType.valueOf(tileTypeTwo));
         return new Message(new Tile(terrains), null);
     }
+    public Message getAITileInfo(String s){
+        parseStringFromServer(s);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        return new Message(new Tile(terrains), null);
+
+
+    }
+
+    public Message getOpponentMove(String s){
+        parseStringFromServer(s);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        int[] coords = convertCubeToAxial(xPlaced, yPlaced, zPlaced);
+        Coordinate[] newCoords = getCoordinatesOfOpponentsTile(new Coordinate(coords[0], coords[1]), orientation);
+        ArrayList<Coordinate> convertedCoordinates = new ArrayList<>();
+        convertedCoordinates.add(new Coordinate(coords[0], coords[1]));
+        convertedCoordinates.add(newCoords[0]);
+        convertedCoordinates.add(newCoords[1]);
+        Tile tile = new Tile(convertedCoordinates, terrains);
+        int[] buildCoords = convertCubeToAxial(xBuilt, yBuilt, zBuilt);
+        TerrainType buildTerrain = null;
+        if(terrainType != null){
+            buildTerrain = TerrainType.valueOf(terrainType);
+        }
+
+        BuildMove buildMove = new BuildMove(null,new Coordinate(buildCoords[0], buildCoords[1]) , buildTerrain);
+
+        if(founded == true){
+            buildMove.buildMoveType = BuildMoveType.FOUNDSETTLEMENT;
+        }
+        else if(expdanded == true){
+            buildMove.buildMoveType = BuildMoveType.EXPANDSETTLEMENT;
+        }
+        else if(totoro == true){
+            buildMove.buildMoveType = BuildMoveType.PLACETOTORO;
+        }
+        else if(tiger == true){
+            buildMove.buildMoveType = BuildMoveType.PLACETIGER;
+        }
+        return new Message(tile, buildMove);
+
+    }
 
     public static void parseStringFromServer(String fromServer){
         serverMessage = fromServer.split(delimiters);
 
         if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
-            pid = Integer.parseInt(serverMessage[6]);
+            ourPid =serverMessage[6];
         }
         else if(fromServer.contains("NEW CHALLENGE ")){
-            cid = Integer.parseInt(serverMessage[2]);
-            numRounds = Integer.parseInt(serverMessage[6]);
+            cid = serverMessage[2];
+            numRounds = serverMessage[6];
         }
         else if(fromServer.contains("BEGIN ROUND "))
-            rid = Integer.parseInt(serverMessage[2]);
-        else if(fromServer.contains("NEW MATCH BEGINNING"))
-            oid = Integer.parseInt(serverMessage[8]);
+            rid = serverMessage[2];
+        else if(fromServer.contains("NEW MATCH BEGINNING")) {
+            gameJustStarted = true;
+            oid = serverMessage[8];
+        }
         else if (fromServer.contains("MAKE YOUR MOVE IN GAME")){
-            gid = Integer.parseInt(serverMessage[5]);
+            if(gameJustStarted) {
+                gameJustStarted = false;
+                gidOne = serverMessage[5];
+            }
+            currentGID = serverMessage[5];
             moveNum = Integer.parseInt(serverMessage[10]);
             tileTypeOne = serverMessage[12];
             tileTypeTwo = serverMessage[13];
 
         }
         else if(fromServer.contains("PLACED")){
-            gid = Integer.parseInt(serverMessage[1]);
+            if(!serverMessage[1].equals(gidOne)){
+                gidTwo = serverMessage[1];
+            }
             moveNum = Integer.parseInt(serverMessage[3]);
-            pid = Integer.parseInt(serverMessage[5]);
+            pid = serverMessage[5];
             tileTypeOne = serverMessage[7];
             tileTypeTwo = serverMessage[8];
             xPlaced = Integer.parseInt(serverMessage[10]);
@@ -113,19 +169,20 @@ public class Adapter {
             }
         }
         else if (fromServer.contains("OVER PLAYER")){
-            gid = Integer.parseInt(serverMessage[1]);
-            pid = Integer.parseInt(serverMessage[4]);
+            gidTwo = serverMessage[1];
+            pid = serverMessage[4];
             p1Score = Integer.parseInt(serverMessage[5]);
-            oid = Integer.parseInt(serverMessage[7]);
+            oid = serverMessage[7];
             p2Score = Integer.parseInt(serverMessage[8]);
         }
-        else if(fromServer.contains("END OF ROUND")){
-            rid = Integer.parseInt(serverMessage[3]);
-            numRounds = Integer.parseInt(serverMessage[5]);
+        else if(fromServer.contains("FORFEITED") || fromServer.contains("LOST")){
+            gidTwo = serverMessage[1];
         }
 
 
     }
+
+
 
     public int[] convertCubeToAxial(int x, int y, int z){
         int axialCoord[] = new int[2];
@@ -241,32 +298,43 @@ public class Adapter {
         return new Coordinate(x+1,y);
     }
 
-    public void sendAIMove(Message message){
-        sendTileMove(message);
-        sendBuildMove(message);
+    public void sendAIMove(Message message, String s){
+        String messagePrefix = "GAME ";
+        parseStringFromServer(s);
+        messagePrefix += currentGID;
+        messagePrefix += " MOVE " + moveNum;
+
+        messagePrefix += " " + sendTileMove(message);
+        messagePrefix += " " + sendBuildMove(message);
+        kkc.sendMessage(messagePrefix);
     }
-    public void sendTileMove(Message message){
+    public String sendTileMove(Message message){
         Tile tile = message.tile;
+
         Coordinate[] coordinates2 = new Coordinate[2];
         coordinates2[0] = tile.getCoords().get(1);
         coordinates2[1] = tile.getCoords().get(2);
-        String tileMessage = "Placed ";
+        String tileMessage = "PLACE ";
         tileMessage += tile.getHexes().get(1).getTerrain().toString() + "+" + tile.getHexes().get(2).getTerrain().toString();
         Coordinate volcanoCoordinate = tile.getCoords().get(0);
         int[] coordinates = convertAxialToCube(volcanoCoordinate.getX(), volcanoCoordinate.getY());
         tileMessage += " AT " + coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
         tileMessage += " " + getOrientationFromOurTile(volcanoCoordinate, coordinates2);
 
-        kkc.sendMessage(tileMessage);
+        return tileMessage;
     }
-    public void sendBuildMove(Message message){
+    public String sendBuildMove(Message message){
         BuildMove buildMove = message.buildMove;
         String buildMessage = buildMove.toString(buildMove.buildMoveType);
-        int [] coordinates = convertAxialToCube(buildMove.coordinate.getX(), buildMove.coordinate.getY());
-        buildMessage += coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
-        if(buildMove.terrainType != null)
-            buildMessage += " " + buildMove.terrainType.toString();
-        kkc.sendMessage(buildMessage);
+        if(buildMove.buildMoveType != BuildMoveType.UNABLE_TO_BUILD) {
+            int[] coordinates = convertAxialToCube(buildMove.coordinate.getX(), buildMove.coordinate.getY());
+            buildMessage += coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
+            if (buildMove.terrainType != null)
+                buildMessage += " " + buildMove.terrainType.toString();
+            return buildMessage;
+        }else{
+            return " UNABLE TO BUILD";
+        }
 
     }
 

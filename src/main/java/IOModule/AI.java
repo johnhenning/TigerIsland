@@ -19,10 +19,17 @@ public class AI implements Player {
         tile.setCoordinates(tilePlacement);
         Turn.makeTileMove(tile, gameState);
 
+        BuildMove buildMove = new BuildMove(null, null, null);
         //Calculate Build Move
-        BuildMove buildMove = calculateBuildMove(tile, gameState);
-        message.buildMove = buildMove;
-        Turn.makeBuildMove(buildMove, gameState);
+        if(gameState.getCurrentPlayer().getNumMeeples() > 0) {
+            buildMove = calculateBuildMove(tile, gameState);
+            message.buildMove = buildMove;
+            Turn.makeBuildMove(buildMove, gameState);
+        }
+        else{
+            message.buildMove = new BuildMove(BuildMoveType.UNABLE_TO_BUILD, null ,null);
+
+        }
 
         //Send updated serverMessage back to server
         sendMessageToServer(message);

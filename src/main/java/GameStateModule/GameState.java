@@ -76,6 +76,7 @@ public class GameState {
             gameboard.placeTile(tile);
             return true;
         } catch (AssertionError e) {
+            System.out.println("Invalid tile placement/nuke");
             return false;
         }
     }

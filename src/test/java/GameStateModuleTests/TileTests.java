@@ -1,7 +1,6 @@
 package GameStateModuleTests;
 
 import GameStateModule.Coordinate;
-import GameStateModule.Hex;
 import GameStateModule.TerrainType;
 import GameStateModule.Tile;
 import org.junit.BeforeClass;
@@ -25,7 +24,7 @@ public class TileTests {
         coordinates.add(new Coordinate(1,2));
         coordinates.add(new Coordinate(2,2));
 
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
 

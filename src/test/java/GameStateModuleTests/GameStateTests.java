@@ -35,8 +35,8 @@ public class GameStateTests {
         coordinates.add(new Coordinate(101,102));
         coordinates.add(new Coordinate(102,102));
 
-        terrains.add(TerrainType.GRASSLAND);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.VOLCANO);
 
         setupHexAndTilesOnGameState(gameState);
@@ -104,7 +104,7 @@ public class GameStateTests {
         gameState.placeTile(tile2);
         gameState.foundSettlement(tile1.getCoords().get(2), player1);
         player1.removeMeeple(17);
-        try {gameState.expandSettlement(tile1.getCoords().get(2), player1, TerrainType.GRASSLAND);}
+        try {gameState.expandSettlement(tile1.getCoords().get(2), player1, TerrainType.GRASS);}
         catch (AssertionError e) { exceptionThrown = true; }
         assert exceptionThrown;
 
@@ -175,19 +175,19 @@ public class GameStateTests {
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
         terrains5.add(TerrainType.VOLCANO);
         terrains5.add(TerrainType.JUNGLE);

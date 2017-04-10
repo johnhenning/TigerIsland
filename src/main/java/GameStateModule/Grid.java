@@ -8,7 +8,7 @@ import GameInteractionModule.Rules.TilePlacementRules;
 import java.util.ArrayList;
 
 public class Grid {
-    private static Hex[][] gameboard;
+    private Hex[][] gameboard;
     private ArrayList<Tile> placedTiles;
 
     public Grid(int size) {
@@ -35,7 +35,7 @@ public class Grid {
         }
     }
 
-    public static Hex getHexFromCoordinate(Coordinate coordinate) {
+    public Hex getHexFromCoordinate(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();
         Hex hex = gameboard[x][y];
@@ -81,7 +81,7 @@ public class Grid {
         return placedTiles.get(tileIndex);
     }
 
-    public static Hex[][] getGameboard(){ return gameboard; }
+    public Hex[][] getGameboard(){ return gameboard; }
 
     public void printLog(){
         for(int i = 0; i < placedTiles.size(); i++){
