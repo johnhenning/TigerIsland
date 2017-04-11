@@ -156,15 +156,21 @@ public class AdapterTests {
         axialCoord = adapter.convertCubeToAxial(x,y,z);
         assert axialCoord[0] == 99;
         assert axialCoord[1] == 99;
+        x = -1;
+        y = 1;
+        z = 0;
+        axialCoord = adapter.convertCubeToAxial(x, y, z);
+        assert axialCoord[0] == 99;
+        assert axialCoord[1] == 100;
     }
 
     @Test
     public void convertAxialToCubeTest(){
-        x = 100;
+        x = 99;
         y = 100;
         cubicCoord = adapter.convertAxialToCube(x,y);
-        assert cubicCoord[0] == 0;
-        assert cubicCoord[1]== 0;
+        assert cubicCoord[0] == -1;
+        assert cubicCoord[1]== 1;
         assert cubicCoord[2]==0;
 
         x=99;

@@ -44,7 +44,7 @@ public class TigerBuildRules extends BuildRules {
     }
 
     public static boolean playerHasValidAdjSettlementForTiger(Hex hex, GameState gameState){
-        ArrayList<Settlement> adjSettlements = getAdjacentSettlementsGreaterThanFive(hex, gameState);
+        ArrayList<Settlement> adjSettlements = getAdjacentSettlements(hex, gameState);
         ArrayList<Settlement> playerAdjSettlements = settlementsOfPlayer(adjSettlements, gameState.getCurrentPlayer());
         for(Settlement s: playerAdjSettlements){
             if(settlementNotContainTigers(s, gameState)){
@@ -54,7 +54,7 @@ public class TigerBuildRules extends BuildRules {
         return false;
     }
 
-    public static ArrayList<Settlement> getAdjacentSettlementsGreaterThanFive(Hex hex, GameState gameState){
+    public static ArrayList<Settlement> getAdjacentSettlements(Hex hex, GameState gameState){
 
         Grid gameboard = gameState.getGameboard();
         ArrayList<Hex> adjacentHexes = TilePlacementRules.getAdjacentHexes(hex, gameboard);

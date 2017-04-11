@@ -3,6 +3,9 @@ package InterfaceTests;
 
 import GameStateModule.*;
 import IOModule.AI;
+import IOModule.Message;
+import ServerModule.Adapter;
+import ServerModule.GameClient;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 public class AITests {
     private GameState gameState;
     private AI ai;
+    GameClient gameC;
 
     @Before
     public void setup() {

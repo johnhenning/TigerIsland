@@ -26,6 +26,7 @@ public class GameState {
         placeTile(Tile.getInitialTile());
     }
 
+
     public void foundSettlement(Coordinate coordinate, Player player) {
         Hex h = gameboard.getHexFromCoordinate(coordinate);
         if (SettlementFoundationRules.isValidFoundation(h, player)) {

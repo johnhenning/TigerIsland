@@ -82,7 +82,7 @@ public class WhoLikesTigersAnyways {
 
 
 
-        GameClient gameClient = new GameClient("10.136.15.159", 6969);
+        GameClient gameClient = new GameClient("10.136.5.17", 6969);
 //        GameClient gameClient = new GameClient("10.228.1.171", 1708);
         Adapter adapter = new Adapter(gameClient);
         gameClient.authenticateConnection("heygang", "J", "J");

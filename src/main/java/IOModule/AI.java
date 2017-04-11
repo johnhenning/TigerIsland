@@ -1,6 +1,7 @@
 package IOModule;
 
 import GameInteractionModule.Rules.BuildRules;
+import GameInteractionModule.Rules.TilePlacementRules;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import ServerModule.Adapter;
@@ -75,5 +76,39 @@ public class AI implements Player {
 
     private void sendMessageToServer(Message message) {
 
+    }
+
+    public ArrayList<Settlement> getPlayerSettlementsLessThanFive(GameState gameState, Player player){
+
+        ArrayList<Settlement> settlementList = gameState.getSettlementList();
+        ArrayList<Settlement> playerSettlements = new ArrayList<>();
+        ArrayList<Settlement> playerSettlementsLessThanFive = new ArrayList<>();
+        for(Settlement s: settlementList){
+            if(s.getOwner().equals(player)){
+                playerSettlements.add(s);
+            }
+        }
+
+        for(Settlement s: playerSettlements){
+            if(s.getSize() <= 4){
+                playerSettlementsLessThanFive.add(s);
+            }
+        }
+        return playerSettlementsLessThanFive;
+    }
+
+    public ArrayList<Hex> getHexesAdjacentToSettlementsLessThanFive(ArrayList<Settlement> playerSettlements, GameState gameState){
+
+        Grid gameboard = gameState.getGameboard();
+        ArrayList<Hex> adjacentHexes = new ArrayList<>();
+
+        for(Settlement s: playerSettlements){
+            for(Coordinate c: s.getSettlementCoordinates()){
+                Hex hex = gameboard.getHexFromCoordinate(c);
+                adjacentHexes.addAll(TilePlacementRules.getAdjacentHexes(hex, gameboard));
+            }
+        }
+
+        return adjacentHexes;
     }
 }
