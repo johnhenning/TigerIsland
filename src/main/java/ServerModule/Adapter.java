@@ -17,8 +17,8 @@ public class Adapter {
     public static String numRounds;
     public static String rid;
     public static String oid;
-    public static String gidOne;
-    public static String gidTwo;
+    public static String gidOne = "";
+    public static String gidTwo = "";
     public static int moveNum;
 
     public static int xPlaced;
@@ -37,12 +37,12 @@ public class Adapter {
     public static boolean expdanded;
     public static boolean totoro;
     public static boolean tiger;
-
+    public static String currentGID = "";
     public static boolean gameJustStarted;
 
-    private KnockKnockClient kkc;
+    private GameClient kkc;
 
-    public Adapter(KnockKnockClient kkc){
+    public Adapter(GameClient kkc){
         this.kkc = kkc;
 
     }
@@ -124,14 +124,16 @@ public class Adapter {
                 gameJustStarted = false;
                 gidOne = serverMessage[5];
             }
-            gidOne = serverMessage[5];
+            currentGID = serverMessage[5];
             moveNum = Integer.parseInt(serverMessage[10]);
             tileTypeOne = serverMessage[12];
             tileTypeTwo = serverMessage[13];
 
         }
         else if(fromServer.contains("PLACED")){
-            gidTwo = serverMessage[1];
+            if(!serverMessage[1].equals(gidOne)){
+                gidTwo = serverMessage[1];
+            }
             moveNum = Integer.parseInt(serverMessage[3]);
             pid = serverMessage[5];
             tileTypeOne = serverMessage[7];
@@ -296,32 +298,32 @@ public class Adapter {
         return new Coordinate(x+1,y);
     }
 
-    public void sendAIMove(Message message){
+    public void sendAIMove(Message message, String s){
         String messagePrefix = "GAME ";
-        parseStringFromServer(kkc.AITile);
-        messagePrefix += gidOne;
+        parseStringFromServer(s);
+        messagePrefix += currentGID;
         messagePrefix += " MOVE " + moveNum;
-        messagePrefix += " PLAYER " + kkc.ourPID + " ";
+
+        messagePrefix += " " + sendTileMove(message);
+        messagePrefix += " " + sendBuildMove(message);
         kkc.sendMessage(messagePrefix);
-        sendTileMove(message);
-        sendBuildMove(message);
     }
-    public void sendTileMove(Message message){
+    public String sendTileMove(Message message){
         Tile tile = message.tile;
 
         Coordinate[] coordinates2 = new Coordinate[2];
         coordinates2[0] = tile.getCoords().get(1);
         coordinates2[1] = tile.getCoords().get(2);
-        String tileMessage = "PLACED ";
+        String tileMessage = "PLACE ";
         tileMessage += tile.getHexes().get(1).getTerrain().toString() + "+" + tile.getHexes().get(2).getTerrain().toString();
         Coordinate volcanoCoordinate = tile.getCoords().get(0);
         int[] coordinates = convertAxialToCube(volcanoCoordinate.getX(), volcanoCoordinate.getY());
         tileMessage += " AT " + coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
         tileMessage += " " + getOrientationFromOurTile(volcanoCoordinate, coordinates2);
 
-        kkc.sendMessage(tileMessage);
+        return tileMessage;
     }
-    public void sendBuildMove(Message message){
+    public String sendBuildMove(Message message){
         BuildMove buildMove = message.buildMove;
         String buildMessage = buildMove.toString(buildMove.buildMoveType);
         if(buildMove.buildMoveType != BuildMoveType.UNABLE_TO_BUILD) {
@@ -329,9 +331,9 @@ public class Adapter {
             buildMessage += coordinates[0] + " " + coordinates[1] + " " + coordinates[2];
             if (buildMove.terrainType != null)
                 buildMessage += " " + buildMove.terrainType.toString();
-            kkc.sendMessage(buildMessage);
+            return buildMessage;
         }else{
-            kkc.sendMessage(" UNABLE TO BUILD");
+            return " UNABLE TO BUILD";
         }
 
     }

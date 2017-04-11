@@ -16,13 +16,13 @@ public class BuildMove {
     public String toString(BuildMoveType buildMoveType){
         switch (buildMoveType){
             case FOUNDSETTLEMENT:
-                return "FOUNDED SETTLEMENT AT ";
+                return "FOUND SETTLEMENT AT ";
             case EXPANDSETTLEMENT:
-                return "EXPANDED SETTLEMENT AT ";
+                return "EXPAND SETTLEMENT AT ";
             case PLACETOTORO:
-                return "BUILT TOTORO SANCTUARY AT ";
+                return "BUILD TOTORO SANCTUARY AT ";
             case PLACETIGER:
-                return "BUILT TIGER PLAYGROUND AT ";
+                return "BUILD TIGER PLAYGROUND AT ";
             default:
                 return null;
         }

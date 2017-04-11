@@ -37,7 +37,7 @@ public class GridStepDefs {
 
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
@@ -62,12 +62,12 @@ public class GridStepDefs {
 
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
@@ -85,12 +85,12 @@ public class GridStepDefs {
 
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(101,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,99), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,99), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(102,99), TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
@@ -112,12 +112,12 @@ public class GridStepDefs {
 
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(100,99), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(100,99), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(101,99), TerrainType.LAKE);
         Tile tile = new Tile(coordinates, terrains);
         try { gameBoard.placeTile(tile); }
@@ -141,12 +141,12 @@ public class GridStepDefs {
 
         ArrayList<TerrainType> terrains2 = new ArrayList<TerrainType>();
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.ROCKY);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.ROCK);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates2, terrains2);
@@ -163,9 +163,9 @@ public class GridStepDefs {
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         hexes[0] = new Hex(new Coordinate(101,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,99), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,99), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(102,99), TerrainType.LAKE);
 
         tile = new Tile(coordinates, terrains);
@@ -190,7 +190,7 @@ public class GridStepDefs {
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,100), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,100), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(101,101), TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);

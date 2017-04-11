@@ -1,6 +1,5 @@
 package GameInteractionModuleTests;
 
-import GameInteractionModule.Rules.SettlementExpansionRules;
 import GameInteractionModule.Rules.TotoroBuildRules;
 import GameStateModule.*;
 import org.junit.Before;
@@ -155,19 +154,19 @@ public class TotoroPlacementRulesTest{
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
         terrains5.add(TerrainType.VOLCANO);
         terrains5.add(TerrainType.JUNGLE);

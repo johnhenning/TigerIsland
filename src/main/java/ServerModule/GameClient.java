@@ -16,7 +16,7 @@ import static ServerModule.Adapter.*;
 
 
 
-public class KnockKnockClient {
+public class GameClient {
     private Socket kkSocket;
     private PrintWriter out;
     private BufferedReader serverMessage;
@@ -29,12 +29,13 @@ public class KnockKnockClient {
 
     public String ourPID;
     public String AITile;
+    public String playerMove;
     public String opponentMove;
     public String gameOneID;
     public String gameTwoID;
     public int rounds;
 
-    public KnockKnockClient(String hostName, int portNumber){
+    public GameClient(String hostName, int portNumber){
         try {
             this.kkSocket = new Socket(hostName, portNumber);
             this.out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -70,7 +71,7 @@ public class KnockKnockClient {
 
         }else if(challengeString.contains("WAIT FOR THE NEXT")){
             waitForChallenge();
-        }else if(challengeString.contains("END OF CHALLENGES")){
+        }else if(challengeString.contains("END OF CHALLENGE")){
             endOfChallenge = true;
         }
 
@@ -86,13 +87,14 @@ public class KnockKnockClient {
         }
         else if(roundProtocolMessage.contains("WAIT FOR THE NEXT MATCH")){
             endOfMatch = false;
-            roundProtocol();
+
         }
         else if(roundProtocolMessage.startsWith("END OF ROUND")){
             gameNotOver = true;
             endOfChallenge = false;
         }
         else{
+            System.out.println(roundProtocolMessage);
             throw new AssertionError();
         }
 
@@ -111,10 +113,18 @@ public class KnockKnockClient {
     }
     public void moveProtocol2(){
         String moveMessage = receiveMessage();
-        if(moveMessage.contains(ourPID)){
-            //do nothing
+        if(moveMessage.startsWith("MAKE YOUR MOVE")){
+            AITile = moveMessage;
+            return;
+        }
+
+        if(moveMessage.contains("PLAYER " + ourPID)){
+            //game over message contains both PIDS, both getting sent while game occurs
+            playerMove = moveMessage;
         }
         else if(moveMessage.startsWith("MAKE YOUR MOVE")){
+            //this should not occur
+            System.out.println("SHITS FUCKED");
             AITile = moveMessage;
         }
         else{
@@ -187,7 +197,7 @@ public class KnockKnockClient {
                 receiveMessage();
                 endOfMatch = true;
             }
-            else if(serverMessage.contains("FORFEITED") || serverMessage.contains("LOST")){
+            else if(serverMessage.contains("FORFEIT") || serverMessage.contains("LOST")){
                 parseStringFromServer(serverMessage);
                 if(gameOneID.equals(gidTwo)){
                     gameOneNotOver = false;
@@ -227,18 +237,43 @@ public class KnockKnockClient {
         String fromServer;
         try
         {
-            while ((fromServer = serverMessage.readLine()) != null){
-                System.out.println("Received from Server: " + fromServer);
 
-                return fromServer;
-            }
-            return null;
+
+            fromServer = serverMessage.readLine();
+            System.out.println(fromServer);
+            return fromServer;
+//            fromServer = serverMessage.readLine();
+//            System.out.println("Received from Server: " + fromServer);
+//            return fromServer;
+//            while ((fromServer = serverMessage.readLine()) != null){
+//                String returnString = "";
+//                for(int i = 0; i < fromServer.length(); i++){
+//                    returnString += fromServer.charAt(i);
+//                }
+//                System.out.println("Received from Server: " + fromServer);
+//
+//
+//                return returnString;
+//            }
+//            return null;
         }
-        catch (IOException e){}
+        catch (IOException e){ System.out.println("SHITS FUCKED"); }
         return null;
     }
     public void sendMessage(String s){
+
+
         out.println(s);
+        //out.write(s);
+
+        System.out.println("Sent to Server: " + s);
+    }
+
+    public void shutdown(){
+        out.close();
+        try{
+            serverMessage.close();
+        }catch (IOException e){}
     }
 
 }

@@ -24,7 +24,7 @@ public class SettlementExpansionRules extends BuildRules{
             return true;
         }
         else{
-            throw new AssertionError();
+            throw new AssertionError("This is not a proper settlement expansion");
         }
     }
     public static boolean getAdjacentSettlements(Grid gameBoard, Settlement newSettlement){

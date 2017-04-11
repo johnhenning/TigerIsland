@@ -22,7 +22,7 @@ public class GridTests {
         coordinates.add(new Coordinate(1,2));
         coordinates.add(new Coordinate(2,2));
 
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
         tile = new Tile(coordinates, terrains);

@@ -1,4 +1,4 @@
-import ServerModule.KnockKnockClient;
+import ServerModule.GameClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Tiger {
             @Override
             public void run() {
                 int portNumber = 2222;
-                KnockKnockClient kkc = new KnockKnockClient("localhost",portNumber);
+                GameClient kkc = new GameClient("localhost",portNumber);
                 kkc.authenticateConnection("Cheese", "Cheese123", "Cheddar");
                 kkc.waitForChallenge();
                 kkc.roundProtocol();
@@ -29,7 +29,6 @@ public class Tiger {
                 kkc.moveProtocol();
                 kkc.moveProtocol();
                 kkc.moveProtocol();
-
                 kkc.moveProtocol();
                 kkc.roundProtocol();
                 System.out.println("we did it");
@@ -75,8 +74,8 @@ public class Tiger {
                     out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
                     out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
                     out.println("GAME 1 MOVE 1 PLAYER 420 PLACE LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASS AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCK+ROCK");
                     out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
                     out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED:ILLEGAL BUILD");
                     out.println("GAME 1 OVER PLAYER 420 1 PLAYER 69 1");
@@ -86,12 +85,12 @@ public class Tiger {
                     out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 69");
                     out.println("MAKE YOUR MOVE IN GAME 1 WITHIN 1.5 SECOND: MOVE 1 PLACE LAKE+LAKE");
                     out.println("GAME 1 MOVE 1 PLAYER 420 PLACE LAKE+LAKE AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASS AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCK+ROCK");
                     out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
 //                    out.println("GAME 1 MOVE 2 PLAYER 69 FORFEITED: ILLEGAL BUILD");
-                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASSLAND AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCKY+ROCKY");
+                    out.println("GAME 2 MOVE 1 PLAYER 69 PLACE ROCK+GRASS AT 1 1 1 1 FOUND SETTLEMENT AT 1 2 2");
+                    out.println("MAKE YOUR MOVE IN GAME 2 WITHIN 1.5 SECOND: MOVE 2 PLACE ROCK+ROCK");
                     out.println("GAME 2 MOVE 2 PLAYER 420 FORFEITED: ILLEGAL TILE PLACEMENT");
 
 

@@ -2,11 +2,9 @@ package GameInteractionModuleTests;
 
 import GameInteractionModule.Rules.Rules;
 import GameStateModule.*;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +30,7 @@ public class RulesTest {
         coordinates.add(new Coordinate(100,101));
 
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.JUNGLE);
 
         tile = new Tile(coordinates, terrains);
@@ -59,7 +57,7 @@ public class RulesTest {
     @Test
 
     public void HexesAreNotAdjacentTest(){
-        assert !Rules.HexesAreAdjacent(tile.getHexes().get(0), new Hex(new Coordinate(101,101), TerrainType.GRASSLAND));
+        assert !Rules.HexesAreAdjacent(tile.getHexes().get(0), new Hex(new Coordinate(101,101), TerrainType.GRASS));
     }
 
     @Test

@@ -34,7 +34,7 @@ public class TilePlacementRulesTest {
         coordinates.add(new Coordinate(1,2));
         coordinates.add(new Coordinate(2,2));
 
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.JUNGLE);
         tile = new Tile(coordinates, terrains);
@@ -82,7 +82,7 @@ public class TilePlacementRulesTest {
 
         terrains6.add(TerrainType.VOLCANO);
         terrains6.add(TerrainType.LAKE);
-        terrains6.add(TerrainType.GRASSLAND);
+        terrains6.add(TerrainType.GRASS);
 
         Tile tile6 = new Tile(hexesCoord6, terrains6);
         TilePlacementRules.isValidTilePlacement(tile6, gameState.getGameboard(), gameState.getGameboard().getPlacedTiles());
@@ -125,19 +125,19 @@ public class TilePlacementRulesTest {
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
         terrains5.add(TerrainType.VOLCANO);
         terrains5.add(TerrainType.JUNGLE);

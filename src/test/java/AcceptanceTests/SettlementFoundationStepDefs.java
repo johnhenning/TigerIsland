@@ -30,7 +30,7 @@ public class SettlementFoundationStepDefs {
 
         ArrayList<TerrainType> terrains = new ArrayList<>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Tile tile = new Tile(coordinates, terrains);
@@ -74,12 +74,12 @@ public class SettlementFoundationStepDefs {
         coordinates.add(new Coordinate(100,101));
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
         tile = new Tile(coordinates, terrains);
@@ -127,12 +127,12 @@ public class SettlementFoundationStepDefs {
         coordinates.add(new Coordinate(100,101));
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         Hex[] hexes = new Hex[3];
         hexes[0] = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
-        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASSLAND);
+        hexes[1] = new Hex(new Coordinate(101,101), TerrainType.GRASS);
         hexes[2] = new Hex(new Coordinate(100,101), TerrainType.LAKE);
 
         tile = new Tile(coordinates, terrains);

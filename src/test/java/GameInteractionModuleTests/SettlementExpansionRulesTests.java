@@ -3,7 +3,6 @@ package GameInteractionModuleTests;
 import GameInteractionModule.Rules.SettlementExpansionRules;
 import GameStateModule.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<TerrainType> terrains = new ArrayList<TerrainType>();
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         tile = new Tile(coordinates, terrains);
@@ -48,8 +47,8 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<TerrainType> terrains2 = new ArrayList<TerrainType>();
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         tile2 = new Tile(coordinates2, terrains2);
 
@@ -61,7 +60,7 @@ public class SettlementExpansionRulesTests {
         ArrayList<TerrainType> terrains3 = new ArrayList<TerrainType>();
         terrains3.add(TerrainType.VOLCANO);
         terrains3.add(TerrainType.LAKE);
-        terrains3.add(TerrainType.ROCKY);
+        terrains3.add(TerrainType.ROCK);
 
         tile3 = new Tile(coordinates3 ,terrains3);
 
@@ -72,8 +71,8 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<TerrainType> terrains4 = new ArrayList<TerrainType>();
         terrains4.add(TerrainType.VOLCANO);
-        terrains4.add(TerrainType.GRASSLAND);
-        terrains4.add(TerrainType.GRASSLAND);
+        terrains4.add(TerrainType.GRASS);
+        terrains4.add(TerrainType.GRASS);
 
         tile4 = new Tile(coordinates4, terrains4);
 
@@ -84,8 +83,8 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<TerrainType> terrains5 = new ArrayList<TerrainType>();
         terrains5.add(TerrainType.VOLCANO);
-        terrains5.add(TerrainType.GRASSLAND);
-        terrains5.add(TerrainType.GRASSLAND);
+        terrains5.add(TerrainType.GRASS);
+        terrains5.add(TerrainType.GRASS);
 
         tile5 = new Tile(coordinates5, terrains5);
     }
@@ -103,7 +102,7 @@ public class SettlementExpansionRulesTests {
 //        catch (AssertionError e) { exceptionThrown = true; }
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
-        newCoordinates.addAll(SettlementExpansionRules.findAdjacentCoords(gameBoard, TerrainType.GRASSLAND, tile2.getCoords().get(2)));
+        newCoordinates.addAll(SettlementExpansionRules.findAdjacentCoords(gameBoard, TerrainType.GRASS, tile2.getCoords().get(2)));
 //        assert !exceptionThrown;
         assert newCoordinates.size() == 2;
 
@@ -137,7 +136,7 @@ public class SettlementExpansionRulesTests {
         settlement1.add(new Settlement(settlementCoordinates, player1 , 0));
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
-        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASSLAND,settlement1.get(0)));
+        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASS,settlement1.get(0)));
         assert !exceptionThrown;
         assert newCoordinates.size() == 2;
     }
@@ -163,7 +162,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
 
-        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASSLAND,settlement1.get(0)));
+        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASS,settlement1.get(0)));
         assert !exceptionThrown;
         assert newCoordinates.size() == 2;
     }
@@ -192,7 +191,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
 
-        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASSLAND,settlement1.get(0)));
+        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASS,settlement1.get(0)));
         assert !exceptionThrown;
         assert newCoordinates.size() == 4;
     }
@@ -224,7 +223,7 @@ public class SettlementExpansionRulesTests {
 
         ArrayList<Coordinate> newCoordinates = new ArrayList<>();
 
-        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASSLAND,settlement1.get(0)));
+        newCoordinates.addAll(SettlementExpansionRules.expansionDFS(gameBoard,TerrainType.GRASS,settlement1.get(0)));
         assert exceptionThrown;//invalid tile was placed so should be true
         assert newCoordinates.size() == 4;
     }

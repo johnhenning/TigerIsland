@@ -28,7 +28,7 @@ public class BuildRulesTest {
     @Before
     public void setup() throws Exception{
         hex = new Hex(new Coordinate(100, 100), TerrainType.VOLCANO);
-        hexToBuildOn = new Hex(new Coordinate(100, 101), TerrainType.GRASSLAND);
+        hexToBuildOn = new Hex(new Coordinate(100, 101), TerrainType.GRASS);
 
         player1 = new Player();
         player2 = new Player();
@@ -45,7 +45,7 @@ public class BuildRulesTest {
         coordinates.add(new Coordinate(100,101));
 
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.JUNGLE);
 
         Settlement.add(new Settlement(new Coordinate(100,100), player1, 0));

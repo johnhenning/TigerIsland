@@ -51,8 +51,8 @@ public class Tile {
         initialTile.add(new Hex(new Coordinate(100,100), TerrainType.VOLCANO));
         initialTile.add(new Hex(new Coordinate(100,99), TerrainType.LAKE));
         initialTile.add(new Hex(new Coordinate(99,99), TerrainType.JUNGLE));
-        initialTile.add(new Hex(new Coordinate(99,101), TerrainType.ROCKY));
-        initialTile.add(new Hex(new Coordinate(100,101), TerrainType.GRASSLAND));
+        initialTile.add(new Hex(new Coordinate(99,101), TerrainType.ROCK));
+        initialTile.add(new Hex(new Coordinate(100,101), TerrainType.GRASS));
         ArrayList<Coordinate> coords = new ArrayList<>();
         coords.add(new Coordinate(100,100));
         coords.add(new Coordinate(100,99));
@@ -63,8 +63,8 @@ public class Tile {
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
         terrains.add(TerrainType.JUNGLE);
-        terrains.add(TerrainType.ROCKY);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.ROCK);
+        terrains.add(TerrainType.GRASS);
 
 
         return new Tile(coords, terrains);

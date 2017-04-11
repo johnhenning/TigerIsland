@@ -3,11 +3,9 @@ package GameInteractionModuleTests;
 import GameInteractionModule.Rules.TileNukeRules;
 import GameStateModule.*;
 
-import gherkin.lexer.Ar;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +64,7 @@ public class TileNukeRulesTests {
         coordinates.add(new Coordinate(99, 100));
 
         terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         terrains.add(TerrainType.LAKE);
 
         //overlappedSettlement.add(new Settlement(new Coordinate(100, 100), game.getCurrentPlayer(), 0));
@@ -108,19 +106,19 @@ public class TileNukeRulesTests {
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
 
         tile1 = new Tile(hexesCoord, terrains1);
@@ -178,19 +176,19 @@ public class TileNukeRulesTests {
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
 
         tile1 = new Tile(hexesCoord, terrains1);
@@ -253,19 +251,19 @@ public class TileNukeRulesTests {
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
         terrains5.add(TerrainType.VOLCANO);
         terrains5.add(TerrainType.JUNGLE);
@@ -354,12 +352,12 @@ public class TileNukeRulesTests {
         coords.add(new Coordinate(102, 99));
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
 
         Hex[] boomHexes = new Hex[3];
         boomHexes[0] = new Hex(new Coordinate(101, 99), TerrainType.VOLCANO);
         boomHexes[1] = new Hex(new Coordinate(102, 100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASSLAND);
+        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASS);
         Tile boomTile = new Tile(coords, terrains);
 
         game.levelTile(boomTile);
@@ -377,11 +375,11 @@ public class TileNukeRulesTests {
         coords.add(new Coordinate(102, 99));
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         Hex[] boomHexes = new Hex[3];
         boomHexes[0] = new Hex(new Coordinate(101, 99), TerrainType.VOLCANO);
         boomHexes[1] = new Hex(new Coordinate(102, 100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASSLAND);
+        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASS);
         Tile boomTile = new Tile(coords, terrains);
 
 
@@ -400,11 +398,11 @@ public class TileNukeRulesTests {
         coords.add(new Coordinate(102, 99));
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         Hex[] boomHexes = new Hex[3];
         boomHexes[0] = new Hex(new Coordinate(101, 99), TerrainType.VOLCANO);
         boomHexes[1] = new Hex(new Coordinate(102, 100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASSLAND);
+        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASS);
         Tile boomTile = new Tile(coords, terrains);
 
         game.levelTile(boomTile);
@@ -431,7 +429,7 @@ public class TileNukeRulesTests {
         coords.add(new Coordinate(99, 103));
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
 
         Tile boomTile = new Tile(coords, terrains);
 
@@ -444,7 +442,7 @@ public class TileNukeRulesTests {
         coords2.add(new Coordinate(100, 101));
         terrains2.add(TerrainType.VOLCANO);
         terrains2.add(TerrainType.LAKE);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
 
         Tile boomTile2 = new Tile(coords2, terrains2);
 
@@ -461,11 +459,11 @@ public class TileNukeRulesTests {
         coords.add(new Coordinate(102, 99));
         terrains.add(TerrainType.VOLCANO);
         terrains.add(TerrainType.LAKE);
-        terrains.add(TerrainType.GRASSLAND);
+        terrains.add(TerrainType.GRASS);
         Hex[] boomHexes = new Hex[3];
         boomHexes[0] = new Hex(new Coordinate(101, 99), TerrainType.VOLCANO);
         boomHexes[1] = new Hex(new Coordinate(102, 100), TerrainType.LAKE);
-        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASSLAND);
+        boomHexes[2] = new Hex(new Coordinate(102, 99), TerrainType.GRASS);
         Tile boomTile = new Tile(coords, terrains);
 
         game.levelTile(boomTile);
@@ -624,19 +622,19 @@ public class TileNukeRulesTests {
 
         terrains1.add(TerrainType.VOLCANO);
         terrains1.add(TerrainType.LAKE);
-        terrains1.add(TerrainType.GRASSLAND);
+        terrains1.add(TerrainType.GRASS);
 
         terrains2.add(TerrainType.VOLCANO);
-        terrains2.add(TerrainType.GRASSLAND);
-        terrains2.add(TerrainType.GRASSLAND);
+        terrains2.add(TerrainType.GRASS);
+        terrains2.add(TerrainType.GRASS);
 
         terrains3.add(TerrainType.VOLCANO);
-        terrains3.add(TerrainType.GRASSLAND);
-        terrains3.add(TerrainType.GRASSLAND);
+        terrains3.add(TerrainType.GRASS);
+        terrains3.add(TerrainType.GRASS);
 
         terrains4.add(TerrainType.VOLCANO);
         terrains4.add(TerrainType.JUNGLE);
-        terrains4.add(TerrainType.ROCKY);
+        terrains4.add(TerrainType.ROCK);
 
         terrains5.add(TerrainType.VOLCANO);
         terrains5.add(TerrainType.JUNGLE);

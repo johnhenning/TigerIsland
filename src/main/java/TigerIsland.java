@@ -1,16 +1,8 @@
-import GameInteractionModule.Game;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
-import IOModule.Message;
 import ServerModule.Adapter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -26,13 +18,13 @@ public class TigerIsland {
 
         switch(randNum){
             case 1:
-                return TerrainType.GRASSLAND;
+                return TerrainType.GRASS;
             case 2:
                 return TerrainType.LAKE;
             case 3:
                 return TerrainType.JUNGLE;
             case 4:
-                return TerrainType.ROCKY;
+                return TerrainType.ROCK;
         }
         return null;
     }
@@ -68,7 +60,7 @@ public class TigerIsland {
         BuildMove buildMove;
         BuildMoveType buildType;
         Coordinate coord;
-        TerrainType terrain = TerrainType.ROCKY;
+        TerrainType terrain = TerrainType.ROCK;
         String buildTypeString;
         String terrainString;
 
@@ -89,7 +81,7 @@ public class TigerIsland {
                 terrainString = in.next();
                 switch(terrainString.toUpperCase()){
                     case "G":
-                        terrain = TerrainType.GRASSLAND;
+                        terrain = TerrainType.GRASS;
                         break;
                     case "L":
                         terrain = TerrainType.LAKE;
@@ -98,7 +90,7 @@ public class TigerIsland {
                         terrain = TerrainType.JUNGLE;
                         break;
                     case "R":
-                        terrain = TerrainType.ROCKY;
+                        terrain = TerrainType.ROCK;
                         break;
                 }
                 return new BuildMove(buildType, coord, terrain);
