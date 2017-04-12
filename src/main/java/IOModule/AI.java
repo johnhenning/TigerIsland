@@ -10,6 +10,10 @@ import ServerModule.Adapter;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Stack;
+
+import static GameInteractionModule.Rules.BuildRules.isUnnocupied;
+import static GameInteractionModule.Rules.Rules.*;
 
 /**
  * Created by johnhenning on 4/4/17.
@@ -62,14 +66,14 @@ public class AI implements Player {
 
     }
 
-    private ArrayList<Coordinate> calculateTilePlacement(GameState gameState) {
+    public ArrayList<Coordinate> calculateTilePlacement(GameState gameState) {
         ArrayList<Tile> placedTiles = gameState.getGameboard().getPlacedTiles();
         Hex h = calculateBottomRightMostHex(placedTiles);
         Coordinate c = Adapter.downRight(h.getCoordinate());
         ArrayList<Coordinate> coords = new ArrayList<>();
+        coords.add(Adapter.downLeft(c));
         coords.add(c);
         coords.add(Adapter.downRight(c));
-        coords.add(Adapter.downLeft(c));
 
         return coords;
     }
@@ -128,7 +132,7 @@ public class AI implements Player {
         Hex bestHex = null;
         for (Settlement s : lessThanSizeFivePlayerSettlements) {
             ArrayList<Hex> adjacentHexes = getHexesAdjacentToSettlementLessThanFive(s, gameState);
-            if ((adjacentHexes != null) && isNewSettlementLarger(bestSettlment, s)) {
+            if ((adjacentHexes != null) && isNewSettlementLarger(bestSettlment, s) && (adjacentHexes.size() >0)) {
                 bestSettlment = s;
                 bestHex = adjacentHexes.get(0);
             }
@@ -210,6 +214,66 @@ public class AI implements Player {
             return adjacentHexes;
         }
         return adjacentHexes;
+    }
+
+    public ArrayList<Coordinate> expandHex(GameState gameState, Settlement settlement, TerrainType terrain){
+        ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
+        ArrayList<Coordinate> newHexesAdded = new ArrayList<>();
+        Stack<Coordinate> coords = new Stack();
+        coords.addAll(hexesEncountered);
+
+        while(!coords.empty()){
+            Coordinate currentAdjacentCoordinate = coords.pop();
+            ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameState.getGameboard(), terrain, currentAdjacentCoordinate);
+            for(int i=0; i<neighboringCoordinates.size(); i++){
+                if(contains(hexesEncountered, neighboringCoordinates.get(i))== false){
+                    newHexesAdded.add(neighboringCoordinates.get(i));
+                    hexesEncountered.add(neighboringCoordinates.get(i));
+                    coords.push(neighboringCoordinates.get(i));
+                }
+            }
+        }
+        return newHexesAdded;
+    }
+
+    public void calculateExpansion(GameState gameState){
+
+
+    }
+    public static boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){
+        for(Coordinate c : hexEncountered){
+            if(c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate){
+        ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
+        //we only want to add the coordinates, if they have the same terrain type, and they are unoccupied
+        //if the match occurs we need to add the coordinates of that match to the array list
+        Hex hex;
+        hex = downLeft(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = downRight(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = topRight(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = topLeft(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = leftOfHex(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = rightOfHex(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+
+        return adjacentCoordinates;
     }
 }
 

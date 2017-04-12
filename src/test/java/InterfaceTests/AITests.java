@@ -1,6 +1,7 @@
 package InterfaceTests;
 
 
+import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
 import IOModule.Message;
@@ -25,6 +26,7 @@ public class AITests {
 //    GameClient gameC;
     Player player1;
     Player player2;
+    private boolean exceptionThrown;
 
     @Before
     public void setup() {
@@ -161,6 +163,71 @@ public class AITests {
 
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
+    }
+
+    @Test
+    public void aiBuildMoveTests(){
+
+        boolean exceptionThrown = false;
+        ArrayList<Coordinate> hexesCoord = new ArrayList<>();
+        hexesCoord.add(new Coordinate(100, 103));
+        hexesCoord.add(new Coordinate(101, 103));
+        hexesCoord.add(new Coordinate(101, 102));
+
+
+        ArrayList<TerrainType> terrains1 = new ArrayList<>();
+
+        terrains1.add(TerrainType.VOLCANO);
+        terrains1.add(TerrainType.LAKE);
+        terrains1.add(TerrainType.GRASS);
+
+        Tile tile= new Tile(terrains1);
+        ArrayList<Coordinate> tilePlacement = ai.calculateTilePlacement(gameState);
+        tile.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile, gameState);
+        BuildMove buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile2= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile2.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile2, gameState);
+        buildMove = ai.calculateBuildMove(null, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile3= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile3.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile3, gameState);
+        buildMove = ai.calculateBuildMove(null, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile4= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile4.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile4, gameState);
+        buildMove = ai.calculateBuildMove(null, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile5= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile5.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile5, gameState);
+        buildMove = ai.calculateBuildMove(null, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile6= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile6.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile6, gameState);
+        buildMove = ai.calculateBuildMove(null, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+            assert buildMove != null;
     }
 
     public void setupHexAndTilesOnGameState(GameState game) {
