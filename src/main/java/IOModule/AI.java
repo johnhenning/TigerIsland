@@ -2,6 +2,7 @@ package IOModule;
 
 import GameInteractionModule.Turn;
 import GameStateModule.*;
+import ServerModule.Adapter;
 
 import java.util.*;
 
@@ -114,18 +115,62 @@ public class AI implements Player {
     }
 
     private boolean canPlaceTotoro(GameState gameState) {
-        return true;
-    }
+        if (validTotoroCoordinates.size() > 0) {
+            return true;
+        } else {
+            findValidTotoroPlacements(gameState);
+            if (validTotoroCoordinates.size() > 0) {
+                return true;
+            }
 
-    private ArrayList<Tile> calculateValidTilePlacements(GameState gameState) {
-        ArrayList<Coordinate> nullCoordinates = getAdjacentNullHexes(gameState);
-
-    }
-
-    private ArrayList<Coordinate> getAdjacentNullHexes(GameState gameState) {
-        for (Tile tile : gameState.getGameboard().getPlacedTiles()) {
-            for
+            return false;
         }
+    }
+
+    private void findValidTotoroPlacements(GameState gameState) {
+
+    }
+
+    private ArrayList<Tile> calculateValidTilePlacements(Message message, GameState gameState) {
+        ArrayList<Coordinate> nullCoordinates = getAdjacentNullCoordinates(gameState);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        for (Hex hex : message.tile.getHexes()) {
+            terrains.add(hex.getTerrain());
+        }
+        ArrayList<Tile> validTiles = new ArrayList<>();
+        for (Coordinate coordinate : nullCoordinates) {
+            for (int i = 1; i <= 6; i++) {
+                Coordinate [] coordinates  = Adapter.getCoordinatesOfOpponentsTile(coordinate, i);
+                boolean coordinatesAreNull = gameState.getHex(coordinates[0]) == null
+                        && gameState.getHex(coordinates[1]) == null;
+                if (coordinatesAreNull) {
+                    ArrayList<Coordinate> validCoordinates = new ArrayList<>();
+                    validCoordinates.add(coordinate);
+                    validCoordinates.add(coordinates[0]);
+                    validCoordinates.add(coordinates[1]);
+                    Tile tile = new Tile(validCoordinates, terrains);
+                    validTiles.add(tile);
+                }
+            }
+        }
+        return validTiles;
+    }
+
+    private ArrayList<Coordinate> getAdjacentNullCoordinates(GameState gameState) {
+        ArrayList<Coordinate> nullCoordinates = new ArrayList<>();
+
+        for (Tile tile : gameState.getGameboard().getPlacedTiles()) {
+            for (Hex hex : tile.getHexes()) {
+                ArrayList<Coordinate> coordinates = gameState.getGameboard().getNeighborHexes(hex);
+                for (Coordinate coordinate : coordinates) {
+                    if (gameState.getHex(coordinate) == null) {
+                        nullCoordinates.add(coordinate);
+                    }
+                }
+            }
+        }
+        nullCoordinates = Coordinate.removeDuplicates(nullCoordinates);
+        return nullCoordinates;
     }
 
     private boolean canPlaceNearSettlement(GameState gameState) {
@@ -316,5 +361,4 @@ public class AI implements Player {
             }
         }
     }
-
 }

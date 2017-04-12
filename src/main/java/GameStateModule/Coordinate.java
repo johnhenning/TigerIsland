@@ -1,5 +1,9 @@
 package GameStateModule;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by johnhenning on 3/20/17.
  */
@@ -27,5 +31,14 @@ public class Coordinate {
     public static Coordinate add(Coordinate c0, Coordinate c1) {
         Coordinate coordinate = new Coordinate(c0.getX() + c1.getX(), c0.getY() + c1.getY());
         return coordinate;
+    }
+
+    public static ArrayList<Coordinate> removeDuplicates(ArrayList<Coordinate> coordinates) {
+        Set<Coordinate> set = new HashSet<>();
+        set.addAll(coordinates);
+        coordinates.clear();
+        coordinates.addAll(set);
+
+        return coordinates;
     }
 }

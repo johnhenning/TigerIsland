@@ -172,16 +172,17 @@ public class GameState {
         ArrayList<Coordinate> possibleHexes = new ArrayList<>();
         for ( Coordinate coordinate : settlement.getSettlementCoordinates()) {
             Hex currentHex = getHex(coordinate);
-            ArrayList<Hex> neighboringHexes = gameboard.getNeighborHexes(currentHex);
-            for (Hex hex : neighboringHexes) {
+            ArrayList<Coordinate> neighborCoordinates = gameboard.getNeighborHexes(currentHex);
+            for (Coordinate neighborCoordinate : neighborCoordinates) {
+                Hex hex = gameboard.getHexFromCoordinate(neighborCoordinate);
                 if (hex != null) {
                     if (!hex.isUnoccupied()) {
-                        possibleHexes.add(hex.getCoordinate());
+                        possibleHexes.add(neighborCoordinate);
                     }
                 }
             }
         }
-        possibleHexes = removeDuplicates(possibleHexes);
+        possibleHexes = Coordinate.removeDuplicates(possibleHexes);
 
         return possibleHexes;
     }
@@ -195,7 +196,7 @@ public class GameState {
                 }
             }
         }
-        unoccupiedCoordinates = removeDuplicates(unoccupiedCoordinates);
+        unoccupiedCoordinates = Coordinate.removeDuplicates(unoccupiedCoordinates);
         return unoccupiedCoordinates;
     }
 
@@ -267,14 +268,5 @@ public class GameState {
             h.setSettlementID(newSettlement.getSettlementID());
         }
         settlementList.add(combinedSettlements);
-    }
-
-    private ArrayList<Coordinate> removeDuplicates(ArrayList<Coordinate> coordinates) {
-        Set<Coordinate> set = new HashSet<>();
-        set.addAll(coordinates);
-        coordinates.clear();
-        coordinates.addAll(set);
-
-        return coordinates;
     }
 }
