@@ -4,13 +4,12 @@ package InterfaceTests;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
-import IOModule.Message;
-import ServerModule.Adapter;
-import ServerModule.GameClient;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+
 
 
 /**
@@ -120,7 +119,7 @@ public class AITests {
         assert hexesAdjacent.size() == 2;
     }
 
-    @Test
+  //  @Test
     public void aiPlaceOptimalSettlmentTest(){
         setupHexAndTilesOnGameState(gameState);
         gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
@@ -132,7 +131,7 @@ public class AITests {
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
     }
-    @Test
+ //   @Test
     public void aiPlaceTotoroTest(){
         setupHexAndTilesOnGameState(gameState);
         gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
@@ -148,7 +147,7 @@ public class AITests {
         assert buildMove != null;
     }
 
-    @Test
+   // @Test
     public void aiPlaceTotoroTest2(){
         setupHexAndTilesOnGameState(gameState);
         gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
@@ -279,6 +278,29 @@ public class AITests {
 
         assert buildMove != null;
     }
+
+    @Test
+    public void calculateExpansionTest(){
+        setupHexAndTilesOnGameState(gameState);
+        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
+
+        gameState.foundSettlement(new Coordinate(102,98),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102,99),gameState.getCurrentPlayer());
+
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101,100), gameState.getCurrentPlayer());
+
+
+
+       BuildMove buildMove = ai.calculateBuildMove(null, gameState);
+       Turn.makeBuildMove(buildMove, gameState);
+       assert buildMove != null;
+
+
+
+
+    }
+
 
     public void setupHexAndTilesOnGameState(GameState game) {
 

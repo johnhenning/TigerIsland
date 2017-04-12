@@ -1,19 +1,19 @@
 package IOModule;
 
-import GameInteractionModule.Rules.BuildRules;
-import GameInteractionModule.Rules.SettlementFoundationRules;
-import GameInteractionModule.Rules.TilePlacementRules;
-import GameInteractionModule.Rules.TotoroBuildRules;
+import GameInteractionModule.Rules.*;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import ServerModule.Adapter;
 
+import java.security.cert.CertificateEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
 import static GameInteractionModule.Rules.BuildRules.isUnnocupied;
 import static GameInteractionModule.Rules.Rules.*;
+import static GameStateModule.Coordinate.removeDuplicates;
 
 /**
  * Created by johnhenning on 4/4/17.
@@ -48,10 +48,13 @@ public class AI implements Player {
         Hex settlementHex = null;
         totoroHex = canPlaceTotoro(gameState);
         settlementHex = getBestHexForFoundation(gameState);
-
+        BuildMove expansionMove = null;
+        expansionMove = calculateExpansion(gameState);
 
         if (totoroHex.size() != 0) {
             return new BuildMove(BuildMoveType.PLACETOTORO, totoroHex.get(0).getCoordinate(), null);
+        } else if(expansionMove != null){
+            return expansionMove;
         } else if (settlementHex != null) {
             return new BuildMove(BuildMoveType.FOUNDSETTLEMENT, settlementHex.getCoordinate(), null);
         } else {
@@ -140,6 +143,19 @@ public class AI implements Player {
         return bestHex;
     }
 
+    public Settlement getLargestSettlement(GameState gameState){
+        ArrayList<Settlement> lessThanSizeFivePlayerSettlements = getPlayerSettlementsLessThanFive(gameState);
+        Settlement bestSettlment = null;
+
+        for (Settlement s : lessThanSizeFivePlayerSettlements) {
+
+            if (isNewSettlementLarger(bestSettlment, s)) {
+                bestSettlment = s;
+            }
+        }
+        return bestSettlment;
+    }
+
     public ArrayList<Hex> getHexesAdjacentToSettlements(ArrayList<Settlement> playerSettlements, GameState gameState) {
 
         Grid gameboard = gameState.getGameboard();
@@ -214,7 +230,9 @@ public class AI implements Player {
     }
 
     public ArrayList<Coordinate> expandHex(GameState gameState, Settlement settlement, TerrainType terrain){
-        ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
+        ArrayList<Coordinate> settlementCoords = gameState.getCoordinatesofSettlement(settlement);
+        Settlement copyOfSettlement = new Settlement(settlementCoords, gameState.getCurrentPlayer(), settlement.getSettlementID());
+        ArrayList<Coordinate> hexesEncountered = copyOfSettlement.getSettlementCoordinates();
         ArrayList<Coordinate> newHexesAdded = new ArrayList<>();
         Stack<Coordinate> coords = new Stack();
         coords.addAll(hexesEncountered);
@@ -233,10 +251,102 @@ public class AI implements Player {
         return newHexesAdded;
     }
 
-    public void calculateExpansion(GameState gameState){
+    public BuildMove calculateExpansion(GameState gameState) {
+        Hex expansionHex = null;
+        Settlement largestSettlement = getLargestSettlement(gameState);
+        ArrayList<Coordinate> coordsToExpandJungle = new ArrayList<>();
+        ArrayList<Coordinate> coordsToExpandLake = new ArrayList<>();
+        ArrayList<Coordinate> coordsToExpandRock = new ArrayList<>();
+        ArrayList<Coordinate> coordsToExpandGrass = new ArrayList<>();
+        int largestExpansion = 0;
 
+        if(largestSettlement != null) {
+            coordsToExpandJungle = expandHex(gameState, largestSettlement, TerrainType.JUNGLE);
+        }
+        else
+        {
+            return null;
+        }
+        int settlementSizeJungle = largestSettlement.getSettlementCoordinates().size();
+        settlementSizeJungle = settlementSizeJungle + coordsToExpandJungle.size();
+        if (settlementSizeJungle > 6) {
+            return null;
+        } else if ((settlementSizeJungle == 5) || (settlementSizeJungle == 6)) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandJungle))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.JUNGLE);
+            }
+        } else {
+            largestExpansion = settlementSizeJungle;
+        }
 
+        int settlementSizeLake = largestSettlement.getSettlementCoordinates().size();
+        coordsToExpandLake = expandHex(gameState, largestSettlement, TerrainType.LAKE);
+        settlementSizeLake = settlementSizeLake + coordsToExpandLake.size();
+        if (settlementSizeLake > 6) {
+            return null;
+        } else if ((settlementSizeLake == 5) || (settlementSizeLake == 6)) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandLake))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.LAKE);
+            }
+
+        } else {
+            if (settlementSizeLake > largestExpansion) {
+                largestExpansion = settlementSizeLake;
+            }
+        }
+
+        int settlementSizeRock = largestSettlement.getSettlementCoordinates().size();
+        coordsToExpandRock = expandHex(gameState, largestSettlement, TerrainType.ROCK);
+        settlementSizeRock = settlementSizeRock + coordsToExpandRock.size();
+        if (settlementSizeRock > 6) {
+            return null;
+        } else if ((settlementSizeRock == 5) || (settlementSizeRock == 6)) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandRock))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.ROCK);
+            }
+
+        } else {
+            if (settlementSizeLake > largestExpansion) {
+                largestExpansion = settlementSizeLake;
+            }
+        }
+
+        int settlementSizeGrass = largestSettlement.getSettlementCoordinates().size();
+        coordsToExpandGrass = expandHex(gameState, largestSettlement, TerrainType.GRASS);
+        settlementSizeGrass = settlementSizeGrass + coordsToExpandGrass.size();
+        if (settlementSizeGrass > 6) {
+            return null;
+        } else if ((settlementSizeGrass == 5) || (settlementSizeGrass == 6)) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandGrass))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.GRASS);
+            }
+
+        } else {
+            if (settlementSizeGrass > largestExpansion) {
+                largestExpansion = settlementSizeLake;
+            }
+        }
+
+        if (largestExpansion == settlementSizeJungle) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandJungle))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.JUNGLE);
+            }
+        } else if (largestExpansion == settlementSizeLake) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandLake))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.LAKE);
+            }
+        } else if (largestExpansion == settlementSizeRock) {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandRock))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.ROCK);
+            }
+        } else {
+            if (BuildRules.checkPlayerHasEnoughMeeples(gameState.getCurrentPlayer(), SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coordsToExpandGrass))) {
+                return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.GRASS);
+            }
+        }
+        return null;
     }
+
     public static boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){
         for(Coordinate c : hexEncountered){
             if(c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()){
@@ -271,6 +381,10 @@ public class AI implements Player {
             adjacentCoordinates.add(hex.getCoordinate());
 
         return adjacentCoordinates;
+    }
+
+    private boolean canPlaceNearSettlement(GameState gameState) {
+        return true;
     }
 }
 

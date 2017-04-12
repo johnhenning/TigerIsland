@@ -4,6 +4,8 @@ import GameInteractionModule.Rules.*;
 import java.util.ArrayList;
 import java.util.Set;
 
+import static GameStateModule.Coordinate.removeDuplicates;
+
 /**
  * Created by johnhenning on 3/19/17.
  */
@@ -200,6 +202,8 @@ public class GameState {
             Hex h = getHex(c);
             h.setSettlementID(newSettlement.getSettlementID());
         }
+        ArrayList<Coordinate> duplicates = combinedSettlements.getSettlementCoordinates();
+        duplicates = removeDuplicates(duplicates);
         settlementList.add(combinedSettlements);
     }
 

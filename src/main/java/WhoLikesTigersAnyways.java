@@ -79,94 +79,110 @@ public class WhoLikesTigersAnyways {
         });
 //        serverTest.start();
 
+        String hostname = args[0];
+        int portNumber = Integer.parseInt(args[1]);
+
+        String tournamentPassword = args[2];
+        String username = args[3];
+        String userPassword = args[4];
 
 
 
-        GameClient gameClient = new GameClient("10.136.5.17", 6969);
+        GameClient gameClient = new GameClient(hostname, portNumber);
 //        GameClient gameClient = new GameClient("10.228.1.171", 1708);
         Adapter adapter = new Adapter(gameClient);
-        gameClient.authenticateConnection("heygang", "J", "J");
+        gameClient.authenticateConnection(tournamentPassword, username, userPassword);
 
         gameClient.waitForChallenge();
 
         while(!gameClient.endOfChallenge){
+//            gameClient.roundProtocol();
+            gameClient.matchProtocol();
+            boolean firstMove = true;
+            boolean gameOneNotOver = true;
+            boolean gameTwoNotOver = true;
+            boolean error = false;
+            GameState gameState1 = new GameState();
+            GameState gameState2 = new GameState();
+            AI gameOneAI = new AI();
+            AI gameTwoAI = new AI();
 
 
-            for(int i = 0; i < gameClient.rounds; i++){
-                gameClient.roundProtocol();
-                gameClient.matchProtocol();
-                boolean firstMove = true;
-                boolean gameOneNotOver = true;
-                boolean gameTwoNotOver = true;
-                GameState gameState1 = new GameState();
-                GameState gameState2 = new GameState();
-                AI gameOneAI = new AI();
-                AI gameTwoAI = new AI();
+            while(true) {
 
+                String s = gameClient.receiveMessage();
 
-                while(true) {
+                if(s.contains("END OF ROUND")){
+                    error = true;
+                    break;
+                }
 
-                    String s = gameClient.receiveMessage();
-
-                    if (s.contains("GAME " + Adapter.gidOne)) {
-                        if (s.contains("MAKE YOUR MOVE")) {
-                            Adapter.parseStringFromServer(s);
-                            Message AIMessage = adapter.getAITileInfo(s);
-                            gameOneAI.completeTurn(AIMessage, gameState1);
-                            adapter.sendAIMove(AIMessage, s);
-                        }
-                        if(s.contains("FORFEITED") || s.contains("LOST")) {
-                            gameOneNotOver = false;
-                            if(!gameTwoNotOver)
-                                break;
-                        }
-                        else if(s.contains("PLAYER " + gameClient.ourPID)) {
-
-                        }
-                        else if(s.contains("PLAYER")) {
-                            Adapter.parseStringFromServer(s);
-                            Message opponentMove = adapter.getOpponentMove(s);
-                            Turn.makeTileMove(opponentMove.tile, gameState1);
-                            Turn.makeBuildMove(opponentMove.buildMove, gameState1);
-                        }
+                if (s.contains("GAME A")) {
+                    if (s.contains("MAKE YOUR MOVE")) {
+                        Adapter.parseStringFromServer(s);
+                        Message AIMessage = adapter.getAITileInfo(s);
+                        gameOneAI.completeTurn(AIMessage, gameState1);
+                        adapter.sendAIMove(AIMessage, s);
+                    }
+                    if(s.contains("FORFEITED") || s.contains("LOST")) {
+                        gameOneNotOver = false;
+                        if(!gameTwoNotOver)
+                            break;
+                    }
+                    else if(s.contains("PLAYER " + gameClient.ourPID)) {
 
                     }
-                    else if(s.contains("GAME " + Adapter.gidTwo)){
-                        if (s.contains("MAKE YOUR MOVE")) {
-                            Adapter.parseStringFromServer(s);
-                            Message AIMessage = adapter.getAITileInfo(s);
-                            gameTwoAI.completeTurn(AIMessage, gameState2);
-                            adapter.sendAIMove(AIMessage, s);
-                        }
-                        if(s.contains("FORFEITED") || s.contains("LOST")) {
-                            gameTwoNotOver = false;
-                            if(!gameOneNotOver)
-                                break;
-                        }
-                        else if(s.contains("PLAYER " + gameClient.ourPID)) {
-
-                        }
-                        else if(s.contains("PLAYER")) {
-                            Adapter.parseStringFromServer(s);
-                            System.out.println("Making move for opponent..");
-                            Message opponentMove = adapter.getOpponentMove(s);
-                            Turn.makeTileMove(opponentMove.tile, gameState2);
-                            Turn.makeBuildMove(opponentMove.buildMove, gameState2);
-                        }
+                    else if(s.contains("PLAYER")) {
+                        Adapter.parseStringFromServer(s);
+                        Message opponentMove = adapter.getOpponentMove(s);
+                        Turn.makeTileMove(opponentMove.tile, gameState1);
+                        Turn.makeBuildMove(opponentMove.buildMove, gameState1);
                     }
-                    if (!gameOneNotOver && !gameTwoNotOver) {
-                        break;
+
+                }
+                else if(s.contains("GAME B")){
+                    if (s.contains("MAKE YOUR MOVE")) {
+                        Adapter.parseStringFromServer(s);
+                        Message AIMessage = adapter.getAITileInfo(s);
+                        gameTwoAI.completeTurn(AIMessage, gameState2);
+                        adapter.sendAIMove(AIMessage, s);
+                    }
+                    if(s.contains("FORFEITED") || s.contains("LOST")) {
+                        gameTwoNotOver = false;
+                        if(!gameOneNotOver)
+                            break;
+                    }
+                    else if(s.contains("PLAYER " + gameClient.ourPID)) {
+
+                    }
+                    else if(s.contains("PLAYER")) {
+                        Adapter.parseStringFromServer(s);
+                        System.out.println("Making move for opponent..");
+                        Message opponentMove = adapter.getOpponentMove(s);
+                        Turn.makeTileMove(opponentMove.tile, gameState2);
+                        Turn.makeBuildMove(opponentMove.buildMove, gameState2);
                     }
                 }
-                gameClient.matchProtocol();
-
-
+                if (!gameOneNotOver && !gameTwoNotOver) {
+                    break;
+                }
             }
-            gameClient.roundProtocol();
-            gameClient.waitForChallenge();
+            //if(error){
+
+            //}else{
+//                    gameClient.matchProtocol();
+            //}
+
+//                gameClient.roundProtocol();
+
+
         }
+        //gameClient.roundProtocol();
+//            gameClient.waitForChallenge();
+
         System.out.println("We did it! a.k.a shit's not fucked");
         gameClient.shutdown();
     }
 
 }
+
