@@ -9,7 +9,16 @@ import java.util.*;
  * Created by johnhenning on 4/4/17.
  */
 public class AI implements Player {
+    private ArrayList<Coordinate> validTotoroCoordinates;
+    private ArrayList<Coordinate> validTigerCoordinates;
+    private Random r;
+//    private ArrayList<Coordinate>
 
+    public AI() {
+        validTotoroCoordinates = new ArrayList<>();
+        validTigerCoordinates = new ArrayList<>();
+        r = new Random();
+    }
     @Override
     public void completeTurn(Message message, GameState gameState) {
         //Calculate Tile Placement
@@ -27,6 +36,102 @@ public class AI implements Player {
         //Send updated message back to server
         sendMessageToServer(message);
     }
+
+    public Message DecisionTree(Message message, GameState gameState, double nearSettlementProb) {
+        if (canPlaceNearSettlement(gameState)) {
+            double placeNearSettlement = r.nextDouble();
+            if (placeNearSettlement <= nearSettlementProb) {
+                return placeTileNearSettlement(message, gameState);
+            } else {
+                return placeTileRandomly(message, gameState);
+            }
+
+        } else {
+            return placeTileRandomly(message, gameState);
+        }
+
+    }
+
+    private Message placeTileNearSettlement(Message message, GameState gameState) {
+
+    }
+
+    private Message placeTileRandomly(Message message, GameState gameState) {
+        ArrayList<Tile> validTiles = calculateValidTilePlacements(gameState);
+        int tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+
+        if (canPlaceTotoro(gameState)) {
+            return placeTotoro(message, gameState);
+        } else if (canPlaceTiger(gameState)) {
+            return placeTiger(message, gameState);
+        } else {
+            double expandProb = 0.65;
+            double foundProb = 0.75;
+            return expandSettlement(message, gameState, expandProb, foundProb);
+        }
+    }
+
+    private Message expandSettlement(Message message, GameState gameState, double expandProb, double foundProb) {
+        double expand = r.nextDouble();
+        if(expand <= expandProb) {
+            return calculateExpansion(message, gameState);
+        } else {
+            return foundSettlement(foundProb);
+        }
+    }
+
+    private Message foundSettlement(double foundProb) {
+
+    }
+
+    private Message calculateExpansion(Message message, GameState gameState) {
+
+    }
+
+    private Message placeTiger(Message message, GameState gameState) {
+        int coordinateIndex = r.nextInt(validTigerCoordinates.size());
+        message.buildMove.buildMoveType = BuildMoveType.PLACETIGER;
+        message.buildMove.coordinate = validTigerCoordinates.get(coordinateIndex);
+
+        validTigerCoordinates.remove(coordinateIndex);
+
+        return message;
+    }
+
+    private boolean canPlaceTiger(GameState gameState) {
+
+    }
+
+    private Message placeTotoro(Message message, GameState gameState) {
+        int coordinateIndex = r.nextInt(validTotoroCoordinates.size());
+        message.buildMove.buildMoveType = BuildMoveType.PLACETOTORO;
+        message.buildMove.coordinate = validTotoroCoordinates.get(coordinateIndex);
+
+        validTotoroCoordinates.remove(coordinateIndex);
+
+        return message;
+    }
+
+    private boolean canPlaceTotoro(GameState gameState) {
+        return true;
+    }
+
+    private ArrayList<Tile> calculateValidTilePlacements(GameState gameState) {
+        ArrayList<Coordinate> nullCoordinates = getAdjacentNullHexes(gameState);
+
+    }
+
+    private ArrayList<Coordinate> getAdjacentNullHexes(GameState gameState) {
+        for (Tile tile : gameState.getGameboard().getPlacedTiles()) {
+            for
+        }
+    }
+
+    private boolean canPlaceNearSettlement(GameState gameState) {
+        return true;
+    }
+
 
     private ArrayList<Coordinate> calculateTilePlacement(Tile tile, GameState gameState) {
         Coordinate rightMostCoordinate = gameState.getRightMostCoordinate();
