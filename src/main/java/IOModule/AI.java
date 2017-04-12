@@ -1,6 +1,7 @@
 package IOModule;
 
 import GameInteractionModule.Rules.BuildRules;
+import GameInteractionModule.Rules.SettlementFoundationRules;
 import GameInteractionModule.Rules.TilePlacementRules;
 import GameInteractionModule.Rules.TotoroBuildRules;
 import GameInteractionModule.Turn;
@@ -8,6 +9,7 @@ import GameStateModule.*;
 import ServerModule.Adapter;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Created by johnhenning on 4/4/17.
@@ -102,7 +104,7 @@ public class AI implements Player {
         ArrayList<Settlement> playerSettlements = new ArrayList<>();
         ArrayList<Settlement> playerSettlementsLessThanFive = new ArrayList<>();
         for(Settlement s: settlementList){
-            if(s.getOwner().equals(player)){
+            if(s.getOwner().equals(gameState.getCurrentPlayer())){
                 playerSettlements.add(s);
             }
         }
@@ -115,18 +117,51 @@ public class AI implements Player {
         return playerSettlementsLessThanFive;
     }
 
+    public boolean isNewSettlementLarger(Settlement previous, Settlement current){
+        if(previous == null){
+            return true;
+        }
+
+        return previous.getSettlementCoordinates().size() < current.getSettlementCoordinates().size();
+
+    }
+
+    public Hex getBestHexForFoundation(GameState gameState){
+        ArrayList<Settlement> lessThanSizeFivePlayerSettlements = getPlayerSettlementsLessThanFive(gameState);
+        Settlement bestSettlment = null;
+        Hex bestHex = null;
+        for(Settlement s: lessThanSizeFivePlayerSettlements){
+            ArrayList<Hex> adjacentHexes = getHexesAdjacentToSettlements(s, gameState);
+            if((adjacentHexes != null) && isNewSettlementLarger(bestSettlment, s)) {
+                bestSettlment = s;
+                bestHex = adjacentHexes.get(0);
+            }
+        }
+        return bestHex;
+    }
+
     public ArrayList<Hex> getHexesAdjacentToSettlements(ArrayList<Settlement> playerSettlements, GameState gameState){
 
         Grid gameboard = gameState.getGameboard();
         ArrayList<Hex> adjacentHexes = new ArrayList<>();
 
-        for(Settlement s: playerSettlements){
-            for(Coordinate c: s.getSettlementCoordinates()){
+        for (Settlement s : playerSettlements) {
+            for (Coordinate c : s.getSettlementCoordinates()) {
                 Hex hex = gameboard.getHexFromCoordinate(c);
-                adjacentHexes.addAll(TilePlacementRules.getAdjacentHexes(hex, gameboard));
+                for (Hex h : TilePlacementRules.getAdjacentHexes(hex, gameboard)) {
+                    if (!containsHex(adjacentHexes, h)) {
+                        adjacentHexes.add(h);
+                    }
+                }
             }
         }
 
+        for(int i = 0; i < adjacentHexes.size(); i++){
+            Hex hex = adjacentHexes.get(i);
+            if(!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer())){
+                adjacentHexes.remove(i--);
+            }
+        }
         return adjacentHexes;
     }
 

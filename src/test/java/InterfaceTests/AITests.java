@@ -19,13 +19,23 @@ import java.util.ArrayList;
 
 public class AITests {
     private GameState gameState;
+    private GameState gameState2;
     private AI ai;
-    GameClient gameC;
+    private AI ai2;
+//    GameClient gameC;
+    Player player1;
+    Player player2;
 
     @Before
     public void setup() {
         ai = new AI();
+        ai2 = new AI();
         gameState = new GameState();
+        gameState2 = new GameState();
+        player1 = new Player();
+        player2 = new Player();
+        //int portNumber = 2222;
+        //GameClient gameC = new GameClient("localhost",portNumber);
     }
     @Test
     public void bottomRightFunctionTest(){
@@ -41,6 +51,71 @@ public class AITests {
         assert h.getCoordinate().getX() == 102;
         assert h.getCoordinate().getY() == 102;
 
+    }
+
+    @Test
+    public void getPlayerSettlementsLessThanFiveTest(){
+//        Adapter ad = new Adapter(gameC);
+//        setupHexAndTilesOnGameState(gameState);
+//        Message message = ad.getAITileInfo("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE ROCK+ROCK");
+//        ai.completeTurn(message, gameState);
+//        ad.sendAIMove(message, "MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE ROCK+ROCK");
+//
+//        Message message2 = ad.getAITileInfo("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE JUNGLE+GRASS");
+//        ai.completeTurn(message2, gameState);
+//        ad.sendAIMove(message2, "MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE JUNGLE+GRASS");
+//
+//        message = ad.getAITileInfo("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE JUNGLE+LAKE");
+//        ai.completeTurn(message, gameState);
+//        ad.sendAIMove(message, "MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE JUNGLE+LAKE");
+
+        setupHexAndTilesOnGameState(gameState);
+        //gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+        ArrayList<Settlement> pSettlements = new ArrayList<>();
+
+        gameState.switchPlayer();
+
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+        pSettlements = ai.getPlayerSettlementsLessThanFive(gameState);
+        assert pSettlements.size() == 1;
+
+    }
+    @Test
+    public void getHexesAdjacentToSettlementLessThanFiveTest(){
+        setupHexAndTilesOnGameState(gameState);
+        //gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        ArrayList<Hex> hexesAdjacent = new ArrayList<>();
+        ArrayList<Settlement> pSettlements = new ArrayList<>();
+        pSettlements = ai.getPlayerSettlementsLessThanFive(gameState);
+        hexesAdjacent = ai.getHexesAdjacentToSettlements(pSettlements, gameState);
+        assert hexesAdjacent.size() == 2;
     }
 
     @Test
