@@ -36,6 +36,8 @@ public class GameClient {
     public int rounds;
 
     public GameClient(String hostName, int portNumber){
+
+
         try {
             this.kkSocket = new Socket(hostName, portNumber);
             this.out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -94,8 +96,8 @@ public class GameClient {
             endOfChallenge = false;
         }
         else{
-            System.out.println(roundProtocolMessage);
-            throw new AssertionError();
+            System.out.println("Error: " + roundProtocolMessage);
+            //throw new AssertionError();
         }
 
     }
@@ -261,7 +263,6 @@ public class GameClient {
         return null;
     }
     public void sendMessage(String s){
-
 
         out.println(s);
         //out.write(s);

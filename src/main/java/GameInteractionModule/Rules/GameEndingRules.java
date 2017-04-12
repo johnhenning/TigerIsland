@@ -20,7 +20,7 @@ public class GameEndingRules {
     }
 
     public static Coordinate playerCanPlaceTotoro(Player player, GameState gameState){
-        ArrayList<Settlement> playerSettlements = TotoroBuildRules.playerHasSizeFiveSettlement(player, gameState);
+        ArrayList<Settlement> playerSettlements = TotoroBuildRules.playerHasSizeFiveSettlement(gameState);
         if (playerSettlements.size()==0)
             return new Coordinate(-1,-1);
         for(Settlement s : playerSettlements){

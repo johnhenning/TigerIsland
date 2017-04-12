@@ -43,6 +43,19 @@ public class AITests {
 
     }
 
+    @Test
+    public void aiPlaceTotoroTest(){
+        setupHexAndTilesOnGameState(gameState);
+        gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99,100),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98,101),gameState.getCurrentPlayer());
+
+        BuildMove buildMove = ai.calculateBuildMove(null, gameState);
+        assert buildMove != null;
+    }
+
 
     public void setupHexAndTilesOnGameState(GameState game) {
 

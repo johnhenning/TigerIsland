@@ -93,10 +93,10 @@ public class TotoroBuildRules extends BuildRules {
     }
 
 
-    public static ArrayList<Settlement> playerHasSizeFiveSettlement(Player player, GameState gameState)
+    public static ArrayList<Settlement> playerHasSizeFiveSettlement(GameState gameState)
     {
         ArrayList<Settlement> settlementList = gameState.getSettlementList();
-        ArrayList<Settlement> settlementListOfPlayer = settlementsOfPlayer(settlementList, player);
+        ArrayList<Settlement> settlementListOfPlayer = settlementsOfPlayer(settlementList, gameState.getCurrentPlayer());
         ArrayList<Settlement> settlementGreaterThanFiveOfPlayer = new ArrayList<>();
         settlementGreaterThanFiveOfPlayer = SettlementsGreaterThanFive(settlementListOfPlayer);
         return settlementGreaterThanFiveOfPlayer;

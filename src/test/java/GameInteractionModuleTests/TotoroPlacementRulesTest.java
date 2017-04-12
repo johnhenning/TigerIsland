@@ -71,7 +71,7 @@ public class TotoroPlacementRulesTest{
 
     @Test
     public void playerHasSizeFiveSettlementTest(){
-        ArrayList<Settlement> playerS = TotoroBuildRules.playerHasSizeFiveSettlement(gameState.getCurrentPlayer(), gameState);
+        ArrayList<Settlement> playerS = TotoroBuildRules.playerHasSizeFiveSettlement(gameState);
         assert playerS.get(0) == gameState.getSettlementList().get(1);
     }
 

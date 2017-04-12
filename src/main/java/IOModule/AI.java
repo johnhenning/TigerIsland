@@ -2,6 +2,7 @@ package IOModule;
 
 import GameInteractionModule.Rules.BuildRules;
 import GameInteractionModule.Rules.TilePlacementRules;
+import GameInteractionModule.Rules.TotoroBuildRules;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import ServerModule.Adapter;
@@ -36,14 +37,31 @@ public class AI implements Player {
         sendMessageToServer(message);
     }
 
-    private BuildMove calculateBuildMove(Tile tile, GameState gameState) {
-        Coordinate coordinate = new Coordinate(-1, -1);
-        for(Hex h: tile.getHexes()){
-            if(h.getTerrain() != TerrainType.VOLCANO){
-                coordinate = h.getCoordinate();
-            }
+    public BuildMove calculateBuildMove(Tile tile, GameState gameState) {
+
+        ArrayList<Hex> totoroHex = new ArrayList<>();
+        Hex settlementHex = null;
+        totoroHex = canPlaceTotoro(gameState);
+        settlementHex = getBestHex(gameState);
+
+
+
+        if(totoroHex.size()!=0){
+            return new BuildMove(BuildMoveType.PLACETOTORO, totoroHex.get(0).getCoordinate(), null);
         }
-        return new BuildMove(BuildMoveType.FOUNDSETTLEMENT, coordinate, null);
+        else if (settlementHex!=null){
+            return new BuildMove(BuildMoveType.FOUNDSETTLEMENT, settlementHex.getCoordinate(), null);
+        }
+        else{
+            Coordinate coordinate = new Coordinate(-1, -1);
+            for(Hex h: tile.getHexes()){
+                if(h.getTerrain() != TerrainType.VOLCANO){
+                    coordinate = h.getCoordinate();
+                }
+            }
+            return new BuildMove(BuildMoveType.FOUNDSETTLEMENT, coordinate, null);
+        }
+
     }
 
     private ArrayList<Coordinate> calculateTilePlacement(GameState gameState) {
@@ -97,7 +115,7 @@ public class AI implements Player {
         return playerSettlementsLessThanFive;
     }
 
-    public ArrayList<Hex> getHexesAdjacentToSettlementsLessThanFive(ArrayList<Settlement> playerSettlements, GameState gameState){
+    public ArrayList<Hex> getHexesAdjacentToSettlements(ArrayList<Settlement> playerSettlements, GameState gameState){
 
         Grid gameboard = gameState.getGameboard();
         ArrayList<Hex> adjacentHexes = new ArrayList<>();
@@ -111,4 +129,20 @@ public class AI implements Player {
 
         return adjacentHexes;
     }
+
+    public ArrayList<Hex> canPlaceTotoro(GameState gameState){
+        ArrayList<Settlement> playerSettlement = new ArrayList<>();
+        ArrayList<Hex> adjacentHexes = new ArrayList<>();
+        playerSettlement = TotoroBuildRules.playerHasSizeFiveSettlement(gameState);
+        if(playerSettlement.size() != 0){
+            adjacentHexes = getHexesAdjacentToSettlements(playerSettlement,gameState);
+            return adjacentHexes;
+        }
+        else{
+
+            return adjacentHexes;
+
+        }
+    }
 }
+
