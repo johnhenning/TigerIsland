@@ -205,13 +205,10 @@ public class AI implements Player {
         if (playerSettlement.size() != 0) {
             for (Settlement s : playerSettlement) {
                 if (TotoroBuildRules.settlementNotContainTotoros(s, gameState)) {
-                    adjacentHexes = getHexesAdjacentToSettlements(playerSettlement, gameState);
+                    adjacentHexes = getHexesAdjacentToSettlementLessThanFive(s, gameState);
                     return adjacentHexes;
                 }
             }
-        } else {
-
-            return adjacentHexes;
         }
         return adjacentHexes;
     }

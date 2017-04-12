@@ -193,7 +193,7 @@ public class AITests {
         tilePlacement = ai.calculateTilePlacement(gameState);
         tile2.setCoordinates(tilePlacement);
         Turn.makeTileMove(tile2, gameState);
-        buildMove = ai.calculateBuildMove(null, gameState);
+        buildMove = ai.calculateBuildMove(tile2, gameState);
         Turn.makeBuildMove(buildMove, gameState);
         gameState.switchPlayer();
 
@@ -201,7 +201,7 @@ public class AITests {
         tilePlacement = ai.calculateTilePlacement(gameState);
         tile3.setCoordinates(tilePlacement);
         Turn.makeTileMove(tile3, gameState);
-        buildMove = ai.calculateBuildMove(null, gameState);
+        buildMove = ai.calculateBuildMove(tile3, gameState);
         Turn.makeBuildMove(buildMove, gameState);
         gameState.switchPlayer();
 
@@ -209,7 +209,7 @@ public class AITests {
         tilePlacement = ai.calculateTilePlacement(gameState);
         tile4.setCoordinates(tilePlacement);
         Turn.makeTileMove(tile4, gameState);
-        buildMove = ai.calculateBuildMove(null, gameState);
+        buildMove = ai.calculateBuildMove(tile4, gameState);
         Turn.makeBuildMove(buildMove, gameState);
         gameState.switchPlayer();
 
@@ -217,7 +217,7 @@ public class AITests {
         tilePlacement = ai.calculateTilePlacement(gameState);
         tile5.setCoordinates(tilePlacement);
         Turn.makeTileMove(tile5, gameState);
-        buildMove = ai.calculateBuildMove(null, gameState);
+        buildMove = ai.calculateBuildMove(tile5, gameState);
         Turn.makeBuildMove(buildMove, gameState);
         gameState.switchPlayer();
 
@@ -225,9 +225,59 @@ public class AITests {
         tilePlacement = ai.calculateTilePlacement(gameState);
         tile6.setCoordinates(tilePlacement);
         Turn.makeTileMove(tile6, gameState);
-        buildMove = ai.calculateBuildMove(null, gameState);
+        buildMove = ai.calculateBuildMove(tile6, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-            assert buildMove != null;
+        gameState.switchPlayer();
+
+        Tile tile7= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile7.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile7, gameState);
+        buildMove = ai.calculateBuildMove(tile7, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile8= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile8.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile8, gameState);
+        buildMove = ai.calculateBuildMove(tile8, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile9= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile9.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile9, gameState);
+        buildMove = ai.calculateBuildMove(tile9, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile10= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile10.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile10, gameState);
+        buildMove = ai.calculateBuildMove(tile10, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile11= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile11.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile11, gameState);
+        buildMove = ai.calculateBuildMove(tile11, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        Tile tile12= new Tile(terrains1);
+        tilePlacement = ai.calculateTilePlacement(gameState);
+        tile12.setCoordinates(tilePlacement);
+        Turn.makeTileMove(tile12, gameState);
+        buildMove = ai.calculateBuildMove(tile12, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        assert buildMove != null;
     }
 
     public void setupHexAndTilesOnGameState(GameState game) {
