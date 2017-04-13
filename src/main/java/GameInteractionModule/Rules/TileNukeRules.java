@@ -2,9 +2,7 @@ package GameInteractionModule.Rules;
 
 import GameStateModule.*;
 
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by johnhenning on 3/22/17.
@@ -228,11 +226,19 @@ public class TileNukeRules extends Rules {
 
     public static void removeCoordsFromSettlement(ArrayList<Coordinate> coords, Settlement s){
 
-        for(int i = 0; i < s.getSettlementCoordinates().size(); i++){
-            for(int j = 0; j < coords.size(); j++){
-                if(s.getSettlementCoordinates().get(i).equals(coords.get(j)))
-                    s.getSettlementCoordinates().remove(i);
+        Iterator<Coordinate> coordinateIterator = coords.iterator();
+        Iterator<Coordinate> settlementCoordinateIterator = s.getSettlementCoordinates().iterator();
+        while(coordinateIterator.hasNext()){
+            Coordinate coord = coordinateIterator.next();
+            while(settlementCoordinateIterator.hasNext()){
+                Coordinate settlementCoord = settlementCoordinateIterator.next();
+                if(coord.equals(settlementCoord)){
+                    settlementCoordinateIterator.remove();
+                }
             }
+            settlementCoordinateIterator = s.getSettlementCoordinates().iterator();
+
+
         }
 
     }

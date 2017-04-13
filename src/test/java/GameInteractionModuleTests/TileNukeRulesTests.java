@@ -328,6 +328,7 @@ public class TileNukeRulesTests {
         Settlement s = validSettlement.get(0);
         TileNukeRules.removeCoordsFromSettlement(coordinates, s);
         assert (s.getSettlementCoordinates().size() == 2);
+
     }
 
     @Test

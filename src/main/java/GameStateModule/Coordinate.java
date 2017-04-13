@@ -1,7 +1,9 @@
 package GameStateModule;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -16,6 +18,7 @@ public class Coordinate {
         this.y = y;
     }
 
+
     public int getX() {
         return x;
     }
@@ -23,6 +26,7 @@ public class Coordinate {
     public int getY() {
         return y;
     }
+
 
     public boolean equals(Coordinate coordinate) {
         return (coordinate.getX() == x) && (coordinate.getY() == y);
@@ -34,10 +38,11 @@ public class Coordinate {
     }
 
     public static ArrayList<Coordinate> removeDuplicates(ArrayList<Coordinate> coordinates){
-        Set<Coordinate> set = new HashSet<>();
-        set.addAll(coordinates);
+// add elements to al, including duplicates
+        Set<Coordinate> coordSet = new HashSet<>();
+        coordSet.addAll(coordinates);
         coordinates.clear();
-        coordinates.addAll(set);
+        coordinates.addAll(coordSet);
 
         return coordinates;
     }
