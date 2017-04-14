@@ -6,27 +6,27 @@ The main method is in the WhoLikesTigersAnyways class. To run, build the system,
 
 ### Modules
 1. Game Interaction
-  - Rules
-  - Turn
+  * Rules
+  * Turn
 2. Game State
-  - Game State
-  - Grid
-  - Coordinate
-  - Tile
-  - Hex
-  - Settlement
-  - Build Move
-  - Build Move Type
-  - TerrainType
+  * Game State
+  * Grid
+  * Coordinate
+  * Tile
+  * Hex
+  * Settlement
+  * Build Move
+  * Build Move Type
+  * TerrainType
 3. IO 
-  - AI
-  - Message
-  - Player (Interface)
+  * AI
+  * Message
+  * Player (Interface)
 4. Server
-  - Adapter
-  - Game Client
+  * Adapter
+  * Game Client
 5. Thread
-  - Game Thread
+  * Game Thread
  
 ### AI Functinality
 - Places Tile
