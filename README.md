@@ -6,7 +6,7 @@ The main method is in the WhoLikesTigersAnyways class. To run, build the system,
 
 ### Modules
 #### Game Interaction
-Rules
+* Rules
 * Turn
 #### Game State
 * Game State
