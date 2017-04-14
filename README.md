@@ -5,10 +5,10 @@ The main method is in the WhoLikesTigersAnyways class. To run, build the system,
 `java WhoLikesTigersAnyways IP port serverpassword team_username team_password`
 
 ### Modules
-* Game Interaction
+1. Game Interaction
  - Rules
  - Turn
-* Game State
+2. Game State
  - Game State
  - Grid
  - Coordinate
@@ -18,14 +18,14 @@ The main method is in the WhoLikesTigersAnyways class. To run, build the system,
  - Build Move
  - Build Move Type
  - TerrainType
-* IO 
+3. IO 
  - AI
  - Message
  - Player (Interface)
-* Server
+4. Server
  - Adapter
  - Game Client
-* Thread
+5. Thread
  - Game Thread
  
 ### AI Functinality
