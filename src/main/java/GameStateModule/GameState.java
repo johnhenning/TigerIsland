@@ -50,20 +50,140 @@ public class GameState {
             Settlement settlement = getSettlementByID(hex.getSettlementID());
             ArrayList<Coordinate> beforeExpansionCoordinates = getCoordinatesofSettlement(settlement);
             Settlement beforeExpansion = new Settlement(beforeExpansionCoordinates, player, settlement.getSettlementID());
-            hexesToPlaceMeeplesOn = SettlementExpansionRules.expansionDFS(gameboard, terrainType, beforeExpansion);
+            hexesToPlaceMeeplesOn = expansionDFS(gameboard, terrainType, beforeExpansion);
             if(BuildRules.checkPlayerHasEnoughMeeples(player, SettlementExpansionRules.getMeeplesRequiredExpansion(this, hexesToPlaceMeeplesOn))){
                 expansionPlaceMeeples(hexesToPlaceMeeplesOn, player);
                 settlement = beforeExpansion;
             }
             else{
+                System.out.println("Something happened in expandSettlement");
                 throw new AssertionError();
             }
             mergeSettlements(settlement);
         }
         else{
+            System.out.println("Something happened in expandSettlement");
             throw new AssertionError();
         }
 
+    }
+    public ArrayList<Coordinate> expansionDFS(Grid gameboard, TerrainType terrain, Settlement settlement){
+        ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
+        ArrayList<Coordinate> newHexesAdded = new ArrayList<>();
+        Stack<Coordinate> coords = new Stack();
+        coords.addAll(hexesEncountered);
+
+        while(!coords.empty()){
+            Coordinate currentAdjacentCoordinate = coords.pop();
+            ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
+            for(int i=0; i<neighboringCoordinates.size(); i++){
+                if(SettlementExpansionRules.contains(hexesEncountered, neighboringCoordinates.get(i))== false){
+                    newHexesAdded.add(neighboringCoordinates.get(i));
+                    hexesEncountered.add(neighboringCoordinates.get(i));
+                    coords.push(neighboringCoordinates.get(i));
+                }
+            }
+        }
+        return newHexesAdded;
+    }
+    public ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate){
+        ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
+        //we only want to add the coordinates, if they have the same terrain type, and they are unoccupied
+        //if the match occurs we need to add the coordinates of that match to the array list
+        Hex hex;
+        hex = downLeft(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = downRight(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = topRight(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = topLeft(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = leftOfHex(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = rightOfHex(gameboard, coordinate);
+        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+            adjacentCoordinates.add(hex.getCoordinate());
+
+        return adjacentCoordinates;
+    }
+    public Hex downRight(Grid gameboard, Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0) {  //even
+            y += 1;
+            return gameboard.getGameboard()[x][y];
+        }
+        else {  //odd
+            x += 1;
+            y += 1;
+            return  gameboard.getGameboard()[x][y];
+        }
+    }
+    public Hex downLeft(Grid gameboard, Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0) {  //even
+            x -= 1;
+            y += 1;
+            return gameboard.getGameboard()[x][y];
+        }
+        else {  //odd
+            y += 1;
+            return  gameboard.getGameboard()[x][y];
+        }
+    }
+    public Hex topRight(Grid gameboard, Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0) {  //even
+            y -= 1;
+            return gameboard.getGameboard()[x][y];
+        }
+        else {  //odd
+            x += 1;
+            y -= 1;
+            return  gameboard.getGameboard()[x][y];
+        }
+    }
+    public Hex topLeft(Grid gameboard, Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if((y % 2) == 0) {  //even
+            x -= 1;
+            y -= 1;
+            return gameboard.getGameboard()[x][y];
+        }
+        else {  //odd
+            y -= 1;
+            return gameboard.getGameboard()[x][y];
+        }
+    }
+
+    public Hex leftOfHex(Grid gameboard, Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        x -= 1;
+
+        return gameboard.getGameboard()[x][y];
+    }
+
+    public Hex rightOfHex(Grid gameboard, Coordinate coordinate){
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        x += 1;
+        return gameboard.getGameboard()[x][y];
     }
 
     public Settlement getSettlementByID(int settlementID) {
@@ -138,6 +258,7 @@ public class GameState {
             mergeSettlements(settlement);
         }
         else{
+            System.out.println("Something happened in placeTotoro");
             throw new AssertionError();
         }
 
@@ -153,6 +274,7 @@ public class GameState {
             mergeSettlements(settlement);
         }
         else{
+            System.out.println("Something happened in placeTiger");
             throw new AssertionError();
         }
     }
@@ -228,6 +350,9 @@ public class GameState {
         ArrayList<Coordinate> hexesEncountered = new ArrayList<>();
         ArrayList<Settlement> splitSettlements = new ArrayList<>();
         Stack<Coordinate> coords = new Stack();
+        if(settlement.getSettlementCoordinates().size() <= 0){
+            return splitSettlements;
+        }
         coords.add(settlement.getSettlementCoordinates().get(0));
         hexesEncountered.add(settlement.getSettlementCoordinates().get(0));
 
@@ -270,7 +395,7 @@ public class GameState {
 
 
     public void bigDivideSettlements (Grid gameBoard, ArrayList<Settlement> settlementList, Tile tile, int settlementID){
-        ArrayList<Settlement> affectedSettlements = TileNukeRules.findAffectedSettlements(settlementList, tile);
+        ArrayList<Settlement> affectedSettlements = findAffectedSettlements(settlementList, tile);
         ArrayList<Settlement> dividedSettlments = new ArrayList<>();
 
         for(Settlement s : affectedSettlements){
@@ -278,5 +403,34 @@ public class GameState {
         }
         settlementList.addAll(dividedSettlments);
     }
+    public ArrayList<Settlement> findAffectedSettlements(ArrayList<Settlement> settlements, Tile tile) {
+        ArrayList<Settlement> affectedSettlements = new ArrayList<>();
+        ArrayList<Coordinate> nukedCoords = tile.getCoords();
+
+        for (Settlement s : settlements) {
+            boolean found = false;
+            for (Coordinate c : nukedCoords) {
+                int i;
+                i = coordinateIndex(s.getSettlementCoordinates(), c);
+                if (i >= 0) {
+                    s.getSettlementCoordinates().remove(i);
+                    found = true;
+                }
+            }
+            if(found)
+                affectedSettlements.add(s);
+        }
+
+        return  affectedSettlements;
+    }
+    private int coordinateIndex(ArrayList<Coordinate> settlementCoords, Coordinate nukedCoord){
+        for(Coordinate c : settlementCoords){
+            if(c.getX() == nukedCoord.getX() && c.getY() == nukedCoord.getY()){
+                return settlementCoords.indexOf(c);
+            }
+        }
+        return -1;
+    }
+
 }
 

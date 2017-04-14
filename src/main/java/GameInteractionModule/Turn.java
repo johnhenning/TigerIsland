@@ -21,34 +21,42 @@ public class Turn {
             case FOUNDSETTLEMENT:
                 try {
                     gameState.foundSettlement(buildMove.coordinate,gameState.getCurrentPlayer());
+                    gameState.switchPlayer();
                 } catch (AssertionError e) {
+                    gameState.switchPlayer();
                     return false;
                 }
                 break;
             case EXPANDSETTLEMENT:
                 try {
                     gameState.expandSettlement(buildMove.coordinate, gameState.getCurrentPlayer(), buildMove.terrainType);
+                    gameState.switchPlayer();
+
                 } catch (AssertionError e) {
+                    gameState.switchPlayer();
                     return false;
                 }
                 break;
             case PLACETIGER:
                 try {
                     gameState.placeTiger(buildMove.coordinate);
+                    gameState.switchPlayer();
                 } catch (AssertionError e){
+                    gameState.switchPlayer();
                     return false;
                 }
                 break;
             case PLACETOTORO:
                 try {
                     gameState.placeTotoro(buildMove.coordinate);
+                    gameState.switchPlayer();
                 } catch (AssertionError e){
+                    gameState.switchPlayer();
                     return false;
                 }
                 break;
             default: return false;
         }
-        gameState.switchPlayer();
 
         return true;
     }

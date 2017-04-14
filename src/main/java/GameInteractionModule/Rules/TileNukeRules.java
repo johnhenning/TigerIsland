@@ -161,35 +161,8 @@ public class TileNukeRules extends Rules {
         }
         return smallSettlements;
     }
-    private static int coordinateIndex(ArrayList<Coordinate> settlementCoords, Coordinate nukedCoord){
-        for(Coordinate c : settlementCoords){
-            if(c.getX() == nukedCoord.getX() && c.getY() == nukedCoord.getY()){
-                return settlementCoords.indexOf(c);
-            }
-        }
-        return -1;
-    }
 
-    public static ArrayList<Settlement> findAffectedSettlements(ArrayList<Settlement> settlements, Tile tile) {
-        ArrayList<Settlement> affectedSettlements = new ArrayList<>();
-        ArrayList<Coordinate> nukedCoords = tile.getCoords();
 
-        for (Settlement s : settlements) {
-            boolean found = false;
-            for (Coordinate c : nukedCoords) {
-                int i;
-                i = coordinateIndex(s.getSettlementCoordinates(), c);
-                if (i >= 0) {
-                    s.getSettlementCoordinates().remove(i);
-                    found = true;
-                }
-            }
-            if(found)
-                affectedSettlements.add(s);
-        }
-
-        return  affectedSettlements;
-    }
 
     public static boolean settlmentContainsCoordinate(Settlement settlement, Coordinate coordinate){
         for(Coordinate c : settlement.getSettlementCoordinates()){

@@ -316,7 +316,7 @@ public class TileNukeRulesTests {
         Settlement s1 = new Settlement(coord2, game.getCurrentPlayer(), 0);
         validSettlement.add(s1);
         ArrayList<Settlement> affectedSettlements =
-                TileNukeRules.findAffectedSettlements(validSettlement, tile6);
+                game.findAffectedSettlements(validSettlement, tile6);
         assert affectedSettlements.size() == 2;
 
 
