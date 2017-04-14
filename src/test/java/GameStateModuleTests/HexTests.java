@@ -9,9 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-/**
- * Created by Daniel002 on 3/29/2017.
- */
+
 public class HexTests {
     private static int x;
     private static int y;
@@ -35,13 +33,13 @@ public class HexTests {
     public void coordinateXTest(){
         Hex hex = new Hex(coordinate, terrainType);
 
-        assertEquals(hex.getCoords().getX(), coordinate.getX());
+        assertEquals(hex.getCoordinate().getX(), coordinate.getX());
     }
 
     public void coordinateYTest(){
         Hex hex = new Hex(coordinate, terrainType);
 
-        assertEquals(hex.getCoords().getY(), coordinate.getY());
+        assertEquals(hex.getCoordinate().getY(), coordinate.getY());
     }
 
     @Test
@@ -82,6 +80,20 @@ public class HexTests {
     public void hasTigerTest(){
         Hex hex = new Hex(coordinate, terrainType);
         assertFalse(hex.hasTiger());
+    }
+
+    @Test
+    public void addTotoroTest(){
+        Hex hex = new Hex(coordinate, terrainType);
+        hex.addTotoro();
+        hex.hasTotoro();
+    }
+
+    @Test
+    public void addTigerTest(){
+        Hex hex = new Hex(coordinate, terrainType);
+        hex.addTiger();
+        hex.hasTiger();
     }
 
 }

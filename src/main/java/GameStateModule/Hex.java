@@ -4,11 +4,12 @@ package GameStateModule;
  * Created by johnhenning on 3/15/17.
  */
 public class Hex {
-    private final Coordinate coordinate;
+    private Coordinate coordinate;
     private final TerrainType terrain;
     private int turnPlaced;
     private int level;
     private int meepleCount;
+    private int settlementID;
     private boolean totoro;
     private boolean tiger;
 
@@ -32,33 +33,47 @@ public class Hex {
         return coordinate;
     }
 
-    public void setLevel(int level) { 
-      this.level = level; 
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getSettlementID() {
+        return settlementID;
+    }
+
+    public int getTurnPlaced() {
+        return turnPlaced;
     }
 
     public TerrainType getTerrain() {
         return terrain;
     }
 
-    public int getLevel() {
-        return level; 
-    }
-    
-    public int getTurnPlaced() {
-        return turnPlaced;
+    public int getMeepleCount() {
+        return meepleCount;
     }
 
-    public int getMeepleCount() { 
-        return meepleCount; 
+    public boolean hasTotoro() {
+        return totoro;
     }
 
-    public boolean hasTotoro() { 
-        return totoro; 
+    public boolean hasTiger() {
+        return tiger;
     }
 
-    public boolean hasTiger() { 
-        return tiger; 
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
+
+    public void setLevel(int level) {
+      this.level = level;
+    }
+
+    public void setSettlementID(int settlementID) {
+        this.settlementID = settlementID;
+    }
+
 
     public void setTurnPlaced(int turnPlaced) {
         this.turnPlaced = turnPlaced;
@@ -76,7 +91,28 @@ public class Hex {
         tiger = true;
     }
 
-    public Coordinate getCoords(){ return coordinate; }
+    public void printCoord(){ System.out.println("x: " + coordinate.getX() + " y: " + coordinate.getY());}
+
+    public void printTerrainType(){ System.out.println(terrain.toString()); }
+
+    public void printEntities() {
+        System.out.print("| Meeples: " + meepleCount + " | ");
+        System.out.print("Totoro: " + totoro + " | ");
+        System.out.print("Tiger: " + tiger + " | ");
+    }
+
+    public void printHexInfo(){
+        System.out.println(" Hex level: " + level + " SettlementID: " + settlementID + " |");
+    }
+
+    public void printHex(){
+        printCoord();
+        printTerrainType();
+        printEntities();
+        printHexInfo();
+        System.out.println();
+    }
+
+
 
 }
-

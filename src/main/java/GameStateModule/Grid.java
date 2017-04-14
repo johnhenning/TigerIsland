@@ -4,16 +4,13 @@
 package GameStateModule;
 import GameInteractionModule.Rules.TileNukeRules;
 import GameInteractionModule.Rules.TilePlacementRules;
+import ServerModule.Adapter;
 
 import java.util.ArrayList;
 
 public class Grid {
-    private static Hex[][] gameboard;
+    private Hex[][] gameboard;
     private ArrayList<Tile> placedTiles;
-
-
-    //TODO: should we use a beginning of game flag to check if a tile has been placed?
-    //I think we can check that by the size of the placed tiles ArrayList
 
     public Grid(int size) {
         gameboard = new Hex[size][size];
@@ -22,14 +19,11 @@ public class Grid {
     }
 
     public void placeTile(Tile tile) {
-
-
-
-        TilePlacementRules.isValidTilePlacement(tile, gameboard, placedTiles);
+        TilePlacementRules.isValidTilePlacement(tile, this, placedTiles);
 
         placeTileOnGameboard(tile, 1);
 
-        placedTiles.add(tile); //this has to occur before above function, need to fix
+        placedTiles.add(tile);
 
 
     }
@@ -42,7 +36,7 @@ public class Grid {
         }
     }
 
-    public static Hex getHexFromCoordinate(Coordinate coordinate) {
+    public Hex getHexFromCoordinate(Coordinate coordinate) {
         int x = coordinate.getX();
         int y = coordinate.getY();
         Hex hex = gameboard[x][y];
@@ -55,7 +49,6 @@ public class Grid {
     }
 
     public void levelTile(Tile tile) {
-        TileNukeRules.isValidNuke(tile, gameboard);
         int newLevel = TileNukeRules.getNewTileLevel(tile, gameboard);
         placedTiles.add(tile);
         placeTileOnGameboard(tile, newLevel);
@@ -89,5 +82,24 @@ public class Grid {
         return placedTiles.get(tileIndex);
     }
 
-    public static Hex[][] getGameboard(){ return gameboard; }
+    public Hex[][] getGameboard(){ return gameboard; }
+
+    public ArrayList<Coordinate> getNeighborHexes(Hex hex) {
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+
+        coordinates.add(Adapter.downLeft(hex.getCoordinate()));
+        coordinates.add(Adapter.downRight(hex.getCoordinate()));
+        coordinates.add(Adapter.topLeft(hex.getCoordinate()));
+        coordinates.add(Adapter.topRight(hex.getCoordinate()));
+        coordinates.add(Adapter.leftOfHex(hex.getCoordinate()));
+        coordinates.add(Adapter.rightOfHex(hex.getCoordinate()));
+
+        return coordinates;
+    }
+
+    public void printLog(){
+        for(int i = 0; i < placedTiles.size(); i++){
+            placedTiles.get(i).printTile();
+        }
+    }
 }

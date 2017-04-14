@@ -16,10 +16,11 @@ public class SettlementFoundationRulesTest {
     private Hex hex;
     private Hex hex2;
     private Hex hex3;
+    private Player player;
 
     @Before
     public void setup(){
-
+        player = new Player();
         hex = new Hex(new Coordinate(100,100), TerrainType.VOLCANO);
         hex2 = new Hex(new Coordinate(101, 101), TerrainType.LAKE);
         hex3 = new Hex(new Coordinate(101, 101), TerrainType.LAKE);
@@ -37,8 +38,8 @@ public class SettlementFoundationRulesTest {
 
     @Test
     public void isValidFoundation(){
-        assert SettlementFoundationRules.isValidFoundation(hex) == false;
-        assert SettlementFoundationRules.isValidFoundation(hex2) == true;
-        assert SettlementFoundationRules.isValidFoundation(hex3) == false;
+        assert SettlementFoundationRules.isValidFoundation(hex, player) == false;
+        assert SettlementFoundationRules.isValidFoundation(hex2, player) == true;
+        assert SettlementFoundationRules.isValidFoundation(hex3, player) == false;
     }
 }
