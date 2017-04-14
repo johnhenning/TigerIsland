@@ -1,7 +1,7 @@
 # TigerIsland - Team J
 ## Intro to Software Engineering Final Project
 ### Running the Game  
-The main method is in the WhoLikesTigersAnyways class. To run, build the system, then run 
+The main method is in the WhoLikesTigersAnyways class. To run, build the system, then run  
 `java WhoLikesTigersAnyways IP port serverpassword team_username team_password`
 
 ### Modules
