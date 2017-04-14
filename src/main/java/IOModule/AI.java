@@ -154,7 +154,6 @@ public class AI implements Player {
     public ArrayList<Settlement> getPlayerSettlementsLessThanFive(GameState gameState) {
 
         ArrayList<Settlement> settlementList = gameState.getSettlementList();
-
         ArrayList<Settlement> playerSettlements = new ArrayList<>();
         ArrayList<Settlement> playerSettlementsLessThanFive = new ArrayList<>();
         for (Settlement s : settlementList) {
@@ -191,7 +190,12 @@ public class AI implements Player {
                 bestHex = adjacentHexes.get(0);
             }
         }
-        return bestHex;
+        if(SettlementFoundationRules.isValidFoundation(bestHex, gameState.getCurrentPlayer())) {
+            return bestHex;
+        }else{
+            return  null;
+        }
+
     }
 
     public Settlement getLargestSettlement(GameState gameState){
@@ -232,12 +236,6 @@ public class AI implements Player {
                 hexIterator.remove();
             }
         }
-//        for (int i = 0; i < adjacentHexes.size(); i++) {
-//            Hex hex = adjacentHexes.get(i);
-//            if (!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer())) {
-//                adjacentHexes.remove(i--);
-//            }
-//        }
         return adjacentHexes;
     }
 
@@ -256,20 +254,12 @@ public class AI implements Player {
         }
 
         Iterator<Hex> hexIterator = adjacentHexes.iterator();
-        while(hexIterator.hasNext()) {
-            Hex hex = hexIterator.next();
-            if(!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer()))
-            {
+        while(hexIterator.hasNext()){
+            Hex hex2 = hexIterator.next();
+            if(!SettlementFoundationRules.isValidFoundation(hex2, gameState.getCurrentPlayer())){
                 hexIterator.remove();
             }
         }
-
-//        for (int i = 0; i < adjacentHexes.size(); i++) {
-//            if (!SettlementFoundationRules.isValidFoundation(adjacentHexes.get(i), gameState.getCurrentPlayer())) {
-//
-//                adjacentHexes.remove(i--);
-//            }
-//        }
 
         return adjacentHexes;
     }

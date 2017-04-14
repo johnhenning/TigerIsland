@@ -326,7 +326,7 @@ public class TileNukeRulesTests {
     public void removeCoordsFromSettlementTest() {
         validSettlement.add(new Settlement(secondSettlementCoords, game.getCurrentPlayer(), 1));
         Settlement s = validSettlement.get(0);
-        TileNukeRules.removeCoordsFromSettlement(coordinates, s);
+        game.removeCoordsFromSettlement(coordinates, s);
         assert (s.getSettlementCoordinates().size() == 2);
 
     }

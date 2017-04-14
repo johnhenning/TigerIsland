@@ -104,6 +104,11 @@ public class Adapter {
     }
 
     public static void parseStringFromServer(String fromServer){
+        founded = false;
+        expdanded = false;
+        tiger = false;
+        totoro = false;
+
         serverMessage = fromServer.split(delimiters);
         founded= false;
         expdanded = false;
