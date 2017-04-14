@@ -94,7 +94,7 @@ public class AITests {
 
     }
     @Test
-    public void getHexesAdjacentToSettlementLessThanFiveTest(){
+    public void getHexesAdjacentToSettlementTest(){
         setupHexAndTilesOnGameState(gameState);
         //gameState.switchPlayer();
         gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
@@ -120,6 +120,34 @@ public class AITests {
         assert hexesAdjacent.size() == 2;
     }
 
+    @Test
+    public void getHexesAdjacentToSettlementsLessThanFiveTest(){
+        setupHexAndTilesOnGameState(gameState);
+        //gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        ArrayList<Hex> hexesAdjacent = new ArrayList<>();
+        hexesAdjacent = ai.getHexesAdjacentToSettlementLessThanFive(gameState.getSettlementList().get(0), gameState);
+        Hex hex = ai.getBestHexForFoundation(gameState);
+        assert hexesAdjacent.size() == 0;
+
+    }
   //  @Test
     public void aiPlaceOptimalSettlmentTest(){
         setupHexAndTilesOnGameState(gameState);

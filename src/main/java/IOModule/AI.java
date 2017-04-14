@@ -154,6 +154,7 @@ public class AI implements Player {
     public ArrayList<Settlement> getPlayerSettlementsLessThanFive(GameState gameState) {
 
         ArrayList<Settlement> settlementList = gameState.getSettlementList();
+
         ArrayList<Settlement> playerSettlements = new ArrayList<>();
         ArrayList<Settlement> playerSettlementsLessThanFive = new ArrayList<>();
         for (Settlement s : settlementList) {
@@ -222,13 +223,21 @@ public class AI implements Player {
             }
         }
 
-        //TODO: get rid of loops with remove
-        for (int i = 0; i < adjacentHexes.size(); i++) {
-            Hex hex = adjacentHexes.get(i);
-            if (!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer())) {
-                adjacentHexes.remove(i--);
+
+        Iterator<Hex> hexIterator = adjacentHexes.iterator();
+        while(hexIterator.hasNext()) {
+            Hex hex = hexIterator.next();
+            if(!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer()))
+            {
+                hexIterator.remove();
             }
         }
+//        for (int i = 0; i < adjacentHexes.size(); i++) {
+//            Hex hex = adjacentHexes.get(i);
+//            if (!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer())) {
+//                adjacentHexes.remove(i--);
+//            }
+//        }
         return adjacentHexes;
     }
 
@@ -246,13 +255,21 @@ public class AI implements Player {
             }
         }
 
-
-        for (int i = 0; i < adjacentHexes.size(); i++) {
-            if (!SettlementFoundationRules.isValidFoundation(adjacentHexes.get(i), gameState.getCurrentPlayer())) {
-                //TODO: get rid of loops with remove
-                adjacentHexes.remove(i--);
+        Iterator<Hex> hexIterator = adjacentHexes.iterator();
+        while(hexIterator.hasNext()) {
+            Hex hex = hexIterator.next();
+            if(!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer()))
+            {
+                hexIterator.remove();
             }
         }
+
+//        for (int i = 0; i < adjacentHexes.size(); i++) {
+//            if (!SettlementFoundationRules.isValidFoundation(adjacentHexes.get(i), gameState.getCurrentPlayer())) {
+//
+//                adjacentHexes.remove(i--);
+//            }
+//        }
 
         return adjacentHexes;
     }
