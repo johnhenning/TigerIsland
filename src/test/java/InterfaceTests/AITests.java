@@ -1,15 +1,16 @@
 package InterfaceTests;
 
 
+import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
+
 import IOModule.Message;
-import ServerModule.Adapter;
-import ServerModule.GameClient;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 /**
@@ -25,6 +26,7 @@ public class AITests {
 //    GameClient gameC;
     Player player1;
     Player player2;
+    private boolean exceptionThrown;
 
     @Before
     public void setup() {
@@ -92,7 +94,7 @@ public class AITests {
 
     }
     @Test
-    public void getHexesAdjacentToSettlementLessThanFiveTest(){
+    public void getHexesAdjacentToSettlementTest(){
         setupHexAndTilesOnGameState(gameState);
         //gameState.switchPlayer();
         gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
@@ -119,6 +121,34 @@ public class AITests {
     }
 
     @Test
+    public void getHexesAdjacentToSettlementsLessThanFiveTest(){
+        setupHexAndTilesOnGameState(gameState);
+        //gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer());
+
+        gameState.switchPlayer();
+
+        ArrayList<Hex> hexesAdjacent = new ArrayList<>();
+        hexesAdjacent = ai.getHexesAdjacentToSettlementLessThanFive(gameState.getSettlementList().get(0), gameState);
+        Hex hex = ai.getBestHexForFoundation(gameState);
+        assert hexesAdjacent.size() == 0;
+
+    }
+  //  @Test
     public void aiPlaceOptimalSettlmentTest(){
         setupHexAndTilesOnGameState(gameState);
         gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
@@ -130,7 +160,7 @@ public class AITests {
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
     }
-    @Test
+ //   @Test
     public void aiPlaceTotoroTest(){
         setupHexAndTilesOnGameState(gameState);
         gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
@@ -146,7 +176,7 @@ public class AITests {
         assert buildMove != null;
     }
 
-    @Test
+   // @Test
     public void aiPlaceTotoroTest2(){
         setupHexAndTilesOnGameState(gameState);
         gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
@@ -162,6 +192,347 @@ public class AITests {
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
     }
+
+    @Test
+    public void aiBuildMoveTests(){
+
+        boolean exceptionThrown = false;
+        ArrayList<Coordinate> hexesCoord = new ArrayList<>();
+        hexesCoord.add(new Coordinate(100, 103));
+        hexesCoord.add(new Coordinate(101, 103));
+        hexesCoord.add(new Coordinate(101, 102));
+
+
+        ArrayList<TerrainType> terrains1 = new ArrayList<>();
+
+        terrains1.add(TerrainType.VOLCANO);
+        terrains1.add(TerrainType.LAKE);
+        terrains1.add(TerrainType.GRASS);
+
+        ArrayList<TerrainType> terrains2 = new ArrayList<>();
+
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.ROCK);
+        terrains2.add(TerrainType.GRASS);
+
+        ArrayList<TerrainType> terrains3 = new ArrayList<>();
+
+        terrains3.add(TerrainType.VOLCANO);
+        terrains3.add(TerrainType.JUNGLE);
+        terrains3.add(TerrainType.LAKE);
+
+        ArrayList<TerrainType> terrains4 = new ArrayList<>();
+
+        terrains4.add(TerrainType.VOLCANO);
+        terrains4.add(TerrainType.ROCK);
+        terrains4.add(TerrainType.ROCK);
+
+        ArrayList<TerrainType> terrains5 = new ArrayList<>();
+
+        terrains5.add(TerrainType.VOLCANO);
+        terrains5.add(TerrainType.GRASS);
+        terrains5.add(TerrainType.GRASS);
+
+        ArrayList<TerrainType> terrains6 = new ArrayList<>();
+
+        terrains6.add(TerrainType.VOLCANO);
+        terrains6.add(TerrainType.LAKE);
+        terrains6.add(TerrainType.ROCK);
+        Tile tile = new Tile(terrains1);
+
+        Message message = new Message(tile, null);
+        Random r = new Random();
+
+        ArrayList<Tile> validTiles = ai.calculateValidTilePlacements(message, gameState);
+        int tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        BuildMove buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains2);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains3);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains4);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains5);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains6);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains5);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains4);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains3);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains2);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains1);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains2);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains3);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains4);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains5);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains6);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains3);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains1);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains2);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains4);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains3);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains1);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains2);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains5);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains1);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        tile = new Tile(terrains5);
+        validTiles = ai.calculateValidTilePlacements(message, gameState);
+        tileIndex = r.nextInt(validTiles.size());
+        message.tile = validTiles.get(tileIndex);
+        tile = message.tile;
+        Turn.makeTileMove(tile, gameState);
+        buildMove = ai.calculateBuildMove(tile, gameState);
+        Turn.makeBuildMove(buildMove, gameState);
+        gameState.switchPlayer();
+
+        assert buildMove != null;
+    }
+
+    @Test
+    public void calculateExpansionTest(){
+        setupHexAndTilesOnGameState(gameState);
+        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
+
+        gameState.foundSettlement(new Coordinate(102,98),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102,99),gameState.getCurrentPlayer());
+
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101,100), gameState.getCurrentPlayer());
+
+
+
+       BuildMove buildMove = ai.calculateBuildMove(null, gameState);
+       Turn.makeBuildMove(buildMove, gameState);
+       assert buildMove != null;
+
+
+    }
+
+    @Test
+    public void getAdjacentNullTest(){
+        ArrayList<Coordinate> nullCoord = new ArrayList<>();
+        nullCoord = ai.getAdjacentNullCoordinates(gameState);
+        assert true;
+
+    }
+
 
     public void setupHexAndTilesOnGameState(GameState game) {
 

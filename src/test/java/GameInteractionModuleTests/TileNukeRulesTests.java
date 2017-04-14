@@ -316,7 +316,7 @@ public class TileNukeRulesTests {
         Settlement s1 = new Settlement(coord2, game.getCurrentPlayer(), 0);
         validSettlement.add(s1);
         ArrayList<Settlement> affectedSettlements =
-                TileNukeRules.findAffectedSettlements(validSettlement, tile6);
+                game.findAffectedSettlements(validSettlement, tile6);
         assert affectedSettlements.size() == 2;
 
 
@@ -326,8 +326,9 @@ public class TileNukeRulesTests {
     public void removeCoordsFromSettlementTest() {
         validSettlement.add(new Settlement(secondSettlementCoords, game.getCurrentPlayer(), 1));
         Settlement s = validSettlement.get(0);
-        TileNukeRules.removeCoordsFromSettlement(coordinates, s);
+        game.removeCoordsFromSettlement(coordinates, s);
         assert (s.getSettlementCoordinates().size() == 2);
+
     }
 
     @Test

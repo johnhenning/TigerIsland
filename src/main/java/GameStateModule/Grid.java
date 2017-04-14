@@ -4,6 +4,7 @@
 package GameStateModule;
 import GameInteractionModule.Rules.TileNukeRules;
 import GameInteractionModule.Rules.TilePlacementRules;
+import ServerModule.Adapter;
 
 import java.util.ArrayList;
 
@@ -82,6 +83,19 @@ public class Grid {
     }
 
     public Hex[][] getGameboard(){ return gameboard; }
+
+    public ArrayList<Coordinate> getNeighborHexes(Hex hex) {
+        ArrayList<Coordinate> coordinates = new ArrayList<>();
+
+        coordinates.add(Adapter.downLeft(hex.getCoordinate()));
+        coordinates.add(Adapter.downRight(hex.getCoordinate()));
+        coordinates.add(Adapter.topLeft(hex.getCoordinate()));
+        coordinates.add(Adapter.topRight(hex.getCoordinate()));
+        coordinates.add(Adapter.leftOfHex(hex.getCoordinate()));
+        coordinates.add(Adapter.rightOfHex(hex.getCoordinate()));
+
+        return coordinates;
+    }
 
     public void printLog(){
         for(int i = 0; i < placedTiles.size(); i++){

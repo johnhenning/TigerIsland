@@ -35,40 +35,69 @@ public class WhoLikesTigersAnyways {
                     String inputLine, outputLine;
 
                     out.println("WELCOME TO ANOTHER EDITION OF THUNDERDOME!");
-                    String password = "heygang";
-                    while((inputLine = in.readLine()) != null){
-                        if(inputLine.contains("ENTER THUNDERDOME " + password)) {
-                            System.out.println(inputLine);
-                            break;
-                        }
-                    }
                     out.println("TWO SHALL ENTER, ONE SHALL LEAVE");
-                    String username = "Cheese123";
-                    while ((inputLine = in.readLine()) != null){
-                        if (inputLine.contains("I AM "+username+" "+password));
-                        System.out.println(inputLine);
-                        break;
-                    }
-                    String pid = "4";
-                    out.println("WAIT FOR THE TOURNAMENT TO BEGIN "+pid);
-                    out.println("NEW CHALLENGE 0 YOU WILL PLAY 7 MATCHES");
-                    out.println("BEGIN ROUND 1 OF 7");
-                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 5");
-                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE GRASS+LAKE");
-                    out.println(in.readLine()); //game A our first move
-                    out.println("GAME B MOVE 0 PLAYER 5 PLACED GRASS+LAKE AT -1 1 0 5 FOUNDED SETTLEMENT AT 0 1 -1");
-
-                    //out.println("GAME A MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUNDED SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE ROCK+JUNGLE");
-                    out.println(in.readLine());
-                    out.println("GAME A MOVE 0 PLAYER 5 PLACED ROCK+JUNGLE AT 0 -4 4 3 FOUNDED SETTLEMENT AT 0 -3 3");
-
-                    out.println("END OF ROUND 2 OF 2");
+                    out.println("WAIT FOR THE TOURNAMENT TO BEGIN 2");
+                    out.println("NEW CHALLENGE 0 YOU WILL PLAY 1 MATCH");
+                    out.println("BEGIN ROUND 1 OF 1");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 1");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE JUNGLE+LAKE");
+                    out.println("GAME B MOVE 0 PLAYER 2 PLACED JUNGLE+LAKE AT 2 0 -2 1 FOUNDED SETTLEMENT AT 3 0 -3");
+                    out.println("GAME A MOVE 0 PLAYER 1 PLACED JUNGLE+LAKE AT -1 1 0 5 FOUNDED SETTLEMENT AT -2 2 0");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE GRASS+JUNGLE");
+                    out.println("GAME A MOVE 0 PLAYER 2 PLACED GRASS+JUNGLE AT -3 1 2 5 FOUNDED SETTLEMENT AT -4 2 2");
+                    out.println("GAME B MOVE 0 PLAYER 1 PLACED GRASS+JUNGLE AT 1 2 -3 1 FOUNDED SETTLEMENT AT 2 2 -4");
+                    out.println("Making move for opponent..");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE JUNGLE+ROCK");
+                    out.println("GAME B MOVE 1 PLAYER 2 PLACED JUNGLE+ROCK AT 3 1 -4 1 EXPANDED SETTLEMENT AT 3 0 -3 JUNGLE");
+                    out.println("GAME A MOVE 1 PLAYER 1 PLACED JUNGLE+ROCK AT -4 0 4 3 EXPANDED SETTLEMENT AT -2 2 0 JUNGLE");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 1 PLACE GRASS+ROCK");
+                    out.println("GAME B MOVE 1 PLAYER 1 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A MOVE 1 PLAYER 2 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A OVER PLAYER 2 FORFEITED PLAYER 1 WIN");
+                    out.println("GAME B OVER PLAYER 1 FORFEITED PLAYER 2 WIN");
+                    out.println("END OF ROUND 1 OF 1");
+                    out.println("WAIT FOR THE NEXT CHALLENGE TO BEGIN");
+                    out.println("NEW CHALLENGE 1 YOU WILL PLAY 1 MATCH");
+                    out.println("BEGIN ROUND 1 OF 1");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 1");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE GRASS+GRASS");
+                    out.println("GAME B MOVE 0 PLAYER 2 PLACED GRASS+GRASS AT 2 0 -2 3 FOUNDED SETTLEMENT AT 2 -1 -1");
+                    out.println("GAME A MOVE 0 PLAYER 1 PLACED GRASS+GRASS AT 2 -1 -1 4 FOUNDED SETTLEMENT AT 1 -1 0");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE LAKE+ROCK");
+                    out.println("GAME A MOVE 0 PLAYER 2 PLACED LAKE+ROCK AT 2 -3 1 5 FOUNDED SETTLEMENT AT 1 -2 1");
+                    out.println("GAME B MOVE 0 PLAYER 1 PLACED LAKE+ROCK AT 1 -1 0 3 FOUNDED SETTLEMENT AT 1 -2 1");
+                    out.println("Making move for opponent..");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE ROCK+JUNGLE");
+                    out.println("GAME A MOVE 1 PLAYER 1 PLACED ROCK+JUNGLE AT 3 -2 -1 1 EXPANDED SETTLEMENT AT 1 -1 0 LAKE");
+                    out.println("GAME B MOVE 1 PLAYER 2 PLACED ROCK+JUNGLE AT 0 2 -2 2 EXPANDED SETTLEMENT AT 2 -1 -1 LAKE");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 1 PLACE LAKE+ROCK");
+                    out.println("GAME A MOVE 1 PLAYER 2 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME B MOVE 1 PLAYER 1 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A OVER PLAYER 2 FORFEITED PLAYER 1 WIN");
+                    out.println("GAME B OVER PLAYER 1 FORFEITED PLAYER 2 WIN");
+                    out.println("END OF ROUND 1 OF 1");
+                    out.println("WAIT FOR THE NEXT CHALLENGE TO BEGIN");
+                    out.println("NEW CHALLENGE 2 YOU WILL PLAY 1 MATCH");
+                    out.println("BEGIN ROUND 1 OF 1");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 1");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE JUNGLE+ROCK");
+                    out.println("GAME A MOVE 0 PLAYER 1 PLACED JUNGLE+ROCK AT 1 -1 0 2 FOUNDED SETTLEMENT AT 2 -2 0");
+                    out.println("GAME B MOVE 0 PLAYER 2 PLACED JUNGLE+ROCK AT 0 2 -2 5 FOUNDED SETTLEMENT AT -1 3 -2");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE LAKE+JUNGLE");
+                    out.println("GAME B MOVE 0 PLAYER 1 PLACED LAKE+JUNGLE AT -2 4 -2 6 FOUNDED SETTLEMENT AT -2 5 -3");
+                    out.println("Making move for opponent..");
+                    out.println("GAME A MOVE 0 PLAYER 2 PLACED LAKE+JUNGLE AT -2 1 1 6 FOUNDED SETTLEMENT AT -2 2 0");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE LAKE+LAKE");
+                    out.println("GAME B MOVE 1 PLAYER 2 PLACED LAKE+LAKE AT -2 3 -1 4 EXPANDED SETTLEMENT AT -1 3 -2 JUNGLE");
+                    out.println("GAME A MOVE 1 PLAYER 1 PLACED LAKE+LAKE AT 1 1 -2 6 EXPANDED SETTLEMENT AT 2 -2 0 JUNGLE");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 1 PLACE JUNGLE+GRASS");
+                    out.println("GAME A MOVE 1 PLAYER 2 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME B MOVE 1 PLAYER 1 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A OVER PLAYER 2 FORFEITED PLAYER 1 WIN");
+                    out.println("GAME B OVER PLAYER 1 FORFEITED PLAYER 2 WIN");
+                    out.println("END OF ROUND 1 OF 1");
                     out.println("END OF CHALLENGES");
-                    out.println("THANK YOU FOR PLAYING! GOODBYE");
-                    out.close();
-                    in.close();
-                    return;
+                    out.println("");
 
                 } catch (IOException e) {
                     System.out.println("Exception caught when trying to listen on port "
@@ -79,94 +108,110 @@ public class WhoLikesTigersAnyways {
         });
 //        serverTest.start();
 
+        String hostname = args[0];
+        int portNumber = Integer.parseInt(args[1]);
+
+        String tournamentPassword = args[2];
+        String username = args[3];
+        String userPassword = args[4];
 
 
 
-        GameClient gameClient = new GameClient("10.136.5.17", 6969);
+        GameClient gameClient = new GameClient(hostname, portNumber);
 //        GameClient gameClient = new GameClient("10.228.1.171", 1708);
         Adapter adapter = new Adapter(gameClient);
-        gameClient.authenticateConnection("heygang", "J", "J");
+        gameClient.authenticateConnection(tournamentPassword, username, userPassword);
 
         gameClient.waitForChallenge();
 
         while(!gameClient.endOfChallenge){
+//            gameClient.roundProtocol();
+            gameClient.matchProtocol();
+            boolean firstMove = true;
+            boolean gameOneNotOver = true;
+            boolean gameTwoNotOver = true;
+            boolean error = false;
+            GameState gameState1 = new GameState();
+            GameState gameState2 = new GameState();
+            AI gameOneAI = new AI();
+            AI gameTwoAI = new AI();
 
 
-            for(int i = 0; i < gameClient.rounds; i++){
-                gameClient.roundProtocol();
-                gameClient.matchProtocol();
-                boolean firstMove = true;
-                boolean gameOneNotOver = true;
-                boolean gameTwoNotOver = true;
-                GameState gameState1 = new GameState();
-                GameState gameState2 = new GameState();
-                AI gameOneAI = new AI();
-                AI gameTwoAI = new AI();
+            while(true) {
 
+                String s = gameClient.receiveMessage();
 
-                while(true) {
+                if(s.contains("END OF ROUND")){
+                    error = true;
+                    break;
+                }
 
-                    String s = gameClient.receiveMessage();
-
-                    if (s.contains("GAME " + Adapter.gidOne)) {
-                        if (s.contains("MAKE YOUR MOVE")) {
-                            Adapter.parseStringFromServer(s);
-                            Message AIMessage = adapter.getAITileInfo(s);
-                            gameOneAI.completeTurn(AIMessage, gameState1);
-                            adapter.sendAIMove(AIMessage, s);
-                        }
-                        if(s.contains("FORFEITED") || s.contains("LOST")) {
-                            gameOneNotOver = false;
-                            if(!gameTwoNotOver)
-                                break;
-                        }
-                        else if(s.contains("PLAYER " + gameClient.ourPID)) {
-
-                        }
-                        else if(s.contains("PLAYER")) {
-                            Adapter.parseStringFromServer(s);
-                            Message opponentMove = adapter.getOpponentMove(s);
-                            Turn.makeTileMove(opponentMove.tile, gameState1);
-                            Turn.makeBuildMove(opponentMove.buildMove, gameState1);
-                        }
+                if (s.contains("GAME A")) {
+                    if (s.contains("MAKE YOUR MOVE")) {
+                        Adapter.parseStringFromServer(s);
+                        Message AIMessage = adapter.getAITileInfo(s);
+                        gameOneAI.completeTurn(AIMessage, gameState1);
+                        adapter.sendAIMove(AIMessage, s);
+                    }
+                    if(s.contains("FORFEITED") || s.contains("LOST")) {
+                        gameOneNotOver = false;
+                        if(!gameTwoNotOver)
+                            break;
+                    }
+                    else if(s.contains("PLAYER " + gameClient.ourPID)) {
 
                     }
-                    else if(s.contains("GAME " + Adapter.gidTwo)){
-                        if (s.contains("MAKE YOUR MOVE")) {
-                            Adapter.parseStringFromServer(s);
-                            Message AIMessage = adapter.getAITileInfo(s);
-                            gameTwoAI.completeTurn(AIMessage, gameState2);
-                            adapter.sendAIMove(AIMessage, s);
-                        }
-                        if(s.contains("FORFEITED") || s.contains("LOST")) {
-                            gameTwoNotOver = false;
-                            if(!gameOneNotOver)
-                                break;
-                        }
-                        else if(s.contains("PLAYER " + gameClient.ourPID)) {
-
-                        }
-                        else if(s.contains("PLAYER")) {
-                            Adapter.parseStringFromServer(s);
-                            System.out.println("Making move for opponent..");
-                            Message opponentMove = adapter.getOpponentMove(s);
-                            Turn.makeTileMove(opponentMove.tile, gameState2);
-                            Turn.makeBuildMove(opponentMove.buildMove, gameState2);
-                        }
+                    else if(s.contains("PLAYER")) {
+                        Adapter.parseStringFromServer(s);
+                        Message opponentMove = adapter.getOpponentMove(s);
+                        Turn.makeTileMove(opponentMove.tile, gameState1);
+                        Turn.makeBuildMove(opponentMove.buildMove, gameState1);
                     }
-                    if (!gameOneNotOver && !gameTwoNotOver) {
-                        break;
+
+                }
+                else if(s.contains("GAME B")){
+                    if (s.contains("MAKE YOUR MOVE")) {
+                        Adapter.parseStringFromServer(s);
+                        Message AIMessage = adapter.getAITileInfo(s);
+                        gameTwoAI.completeTurn(AIMessage, gameState2);
+                        adapter.sendAIMove(AIMessage, s);
+                    }
+                    if(s.contains("FORFEITED") || s.contains("LOST")) {
+                        gameTwoNotOver = false;
+                        if(!gameOneNotOver)
+                            break;
+                    }
+                    else if(s.contains("PLAYER " + gameClient.ourPID)) {
+
+                    }
+                    else if(s.contains("PLAYER")) {
+                        Adapter.parseStringFromServer(s);
+                        System.out.println("Making move for opponent..");
+                        Message opponentMove = adapter.getOpponentMove(s);
+                        Turn.makeTileMove(opponentMove.tile, gameState2);
+                        Turn.makeBuildMove(opponentMove.buildMove, gameState2);
                     }
                 }
-                gameClient.matchProtocol();
-
-
+                if (!gameOneNotOver && !gameTwoNotOver) {
+                    break;
+                }
             }
-            gameClient.roundProtocol();
-            gameClient.waitForChallenge();
+            //if(error){
+
+            //}else{
+//                    gameClient.matchProtocol();
+            //}
+
+//                gameClient.roundProtocol();
+
+
         }
+        //gameClient.roundProtocol();
+//            gameClient.waitForChallenge();
+
         System.out.println("We did it! a.k.a shit's not fucked");
         gameClient.shutdown();
     }
 
 }
+

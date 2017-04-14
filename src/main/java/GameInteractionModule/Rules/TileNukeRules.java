@@ -2,9 +2,7 @@ package GameInteractionModule.Rules;
 
 import GameStateModule.*;
 
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by johnhenning on 3/22/17.
@@ -163,35 +161,8 @@ public class TileNukeRules extends Rules {
         }
         return smallSettlements;
     }
-    private static int coordinateIndex(ArrayList<Coordinate> settlementCoords, Coordinate nukedCoord){
-        for(Coordinate c : settlementCoords){
-            if(c.getX() == nukedCoord.getX() && c.getY() == nukedCoord.getY()){
-                return settlementCoords.indexOf(c);
-            }
-        }
-        return -1;
-    }
 
-    public static ArrayList<Settlement> findAffectedSettlements(ArrayList<Settlement> settlements, Tile tile) {
-        ArrayList<Settlement> affectedSettlements = new ArrayList<>();
-        ArrayList<Coordinate> nukedCoords = tile.getCoords();
 
-        for (Settlement s : settlements) {
-            boolean found = false;
-            for (Coordinate c : nukedCoords) {
-                int i;
-                i = coordinateIndex(s.getSettlementCoordinates(), c);
-                if (i >= 0) {
-                    s.getSettlementCoordinates().remove(i);
-                    found = true;
-                }
-            }
-            if(found)
-                affectedSettlements.add(s);
-        }
-
-        return  affectedSettlements;
-    }
 
     public static boolean settlmentContainsCoordinate(Settlement settlement, Coordinate coordinate){
         for(Coordinate c : settlement.getSettlementCoordinates()){
@@ -201,7 +172,7 @@ public class TileNukeRules extends Rules {
         }
         return false;
     }
-    public static ArrayList<Coordinate> findAdjacentSettlmentCoords(Grid gameBoard, Coordinate coordinate, Settlement settlement){
+    public static ArrayList<Coordinate> findAdjacentSettlementCoords(Grid gameBoard, Coordinate coordinate, Settlement settlement){
         ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
         Hex hex;
 
@@ -226,50 +197,7 @@ public class TileNukeRules extends Rules {
         return adjacentCoordinates;
     }
 
-    public static void removeCoordsFromSettlement(ArrayList<Coordinate> coords, Settlement s){
 
-        for(int i = 0; i < s.getSettlementCoordinates().size(); i++){
-            for(int j = 0; j < coords.size(); j++){
-                if(s.getSettlementCoordinates().get(i).equals(coords.get(j)))
-                    s.getSettlementCoordinates().remove(i);
-            }
-        }
 
-    }
 
-    public static ArrayList<Settlement> divideSettlement(Grid gameBoard, Settlement settlement, int settlementID){
-        ArrayList<Coordinate> hexesEncountered = new ArrayList<>();
-        ArrayList<Settlement> splitSettlements = new ArrayList<>();
-        Stack<Coordinate> coords = new Stack();
-        coords.add(settlement.getSettlementCoordinates().get(0));
-        hexesEncountered.add(settlement.getSettlementCoordinates().get(0));
-
-        while(!coords.empty()){
-            Coordinate currentAdjacentCoordinate = coords.pop();
-            ArrayList<Coordinate> neighboringCoords =
-                    findAdjacentSettlmentCoords(gameBoard, currentAdjacentCoordinate, settlement);
-            for(int i = 0; i < neighboringCoords.size(); i++){
-                if(!SettlementExpansionRules.contains(hexesEncountered, neighboringCoords.get(i))){
-                    hexesEncountered.add(neighboringCoords.get(i));
-                    coords.push(neighboringCoords.get(i));
-                }
-            }
-        }
-
-        removeCoordsFromSettlement(hexesEncountered, settlement);
-        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), settlement.getSettlementID());
-        splitSettlements.add(newSettlement);
-
-        return splitSettlements;
-    }
-
-    public static void bigDivideSettlements (Grid gameBoard, ArrayList<Settlement> settlementList, Tile tile, int settlementID){
-        ArrayList<Settlement> affectedSettlements = findAffectedSettlements(settlementList, tile);
-        ArrayList<Settlement> dividedSettlments = new ArrayList<>();
-
-        for(Settlement s : affectedSettlements){
-            dividedSettlments.addAll(divideSettlement(gameBoard, s, settlementID));
-        }
-        settlementList.addAll(dividedSettlments);
-    }
 }
