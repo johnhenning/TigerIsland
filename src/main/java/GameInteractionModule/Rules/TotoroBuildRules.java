@@ -1,5 +1,4 @@
 package GameInteractionModule.Rules;
-import GameInteractionModule.Game;
 import GameStateModule.*;
 
 import java.util.ArrayList;

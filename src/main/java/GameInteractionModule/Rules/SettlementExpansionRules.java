@@ -74,7 +74,7 @@ public class SettlementExpansionRules extends BuildRules{
         return adjacencyFound;
     }
 
-    public static ArrayList<Coordinate> expansionDFS(Grid gameboard, TerrainType terrain, Settlement settlement){
+    public ArrayList<Coordinate> expansionDFS(Grid gameboard, TerrainType terrain, Settlement settlement){
         ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
         ArrayList<Coordinate> newHexesAdded = new ArrayList<>();
         Stack<Coordinate> coords = new Stack();
@@ -103,7 +103,7 @@ public class SettlementExpansionRules extends BuildRules{
         return false;
     }
 
-    public static ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate){
+    public ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate){
         ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
         //we only want to add the coordinates, if they have the same terrain type, and they are unoccupied
         //if the match occurs we need to add the coordinates of that match to the array list

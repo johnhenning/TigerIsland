@@ -27,4 +27,11 @@ public class BuildMove {
                 return null;
         }
     }
+    public boolean equals(BuildMove buildMove){
+        if(this.buildMoveType == buildMove.buildMoveType && this.coordinate == buildMove.coordinate &&
+                this.terrainType == buildMove.terrainType){
+            return true;
+        }
+        return false;
+    }
 }
