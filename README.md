@@ -5,28 +5,28 @@ The main method is in the WhoLikesTigersAnyways class. To run, build the system,
 `java WhoLikesTigersAnyways IP port serverpassword team_username team_password`
 
 ### Modules
-1. Game Interaction
-  * Rules
-  * Turn
-2. Game State
-  * Game State
-  * Grid
-  * Coordinate
-  * Tile
-  * Hex
-  * Settlement
-  * Build Move
-  * Build Move Type
-  * TerrainType
-3. IO 
-  * AI
-  * Message
-  * Player (Interface)
-4. Server
-  * Adapter
-  * Game Client
-5. Thread
-  * Game Thread
+#### Game Interaction
+Rules
+* Turn
+#### Game State
+* Game State
+* Grid
+* Coordinate
+* Tile
+* Hex
+* Settlement
+* Build Move
+* Build Move Type
+* TerrainType
+#### IO 
+* AI
+* Message
+* Player (Interface)
+#### Server
+* Adapter
+* Game Client
+#### Thread
+* Game Thread
  
 ### AI Functinality
 - Places Tile
