@@ -166,7 +166,16 @@ public class SettlementExpansionRulesTests {
         assert !exceptionThrown;
         assert newCoordinates.size() == 2;
     }
-
+    @Test
+    public void getMeeplesRequiredTest(){
+            gameState.placeTile(tile3);
+            Hex hex = gameState.getHex(new Coordinate(99,103));
+            hex.setLevel(2);
+            ArrayList<Coordinate> coords = new ArrayList<>();
+            coords.add(new Coordinate(99,103));
+            int meeples = SettlementExpansionRules.getMeeplesRequiredExpansion(gameState, coords);
+            assert meeples == 2;
+    }
     @Test
     public void expansionDFSTest3(){
         gameBoard = new Grid(200);

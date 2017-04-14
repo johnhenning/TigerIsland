@@ -104,7 +104,16 @@ public class Adapter {
     }
 
     public static void parseStringFromServer(String fromServer){
+        founded = false;
+        expdanded = false;
+        tiger = false;
+        totoro = false;
+
         serverMessage = fromServer.split(delimiters);
+        founded= false;
+        expdanded = false;
+        totoro = false;
+        tiger = false;
 
         if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
             ourPid =serverMessage[6];

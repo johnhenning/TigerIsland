@@ -47,4 +47,9 @@ public class Player {
     public void addScore(int score) {
         this.score += score;
     }
+
+
+    public boolean equals(Player player){
+        return this == player;
+    }
 }

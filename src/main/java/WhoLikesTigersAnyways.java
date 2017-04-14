@@ -35,40 +35,69 @@ public class WhoLikesTigersAnyways {
                     String inputLine, outputLine;
 
                     out.println("WELCOME TO ANOTHER EDITION OF THUNDERDOME!");
-                    String password = "heygang";
-                    while((inputLine = in.readLine()) != null){
-                        if(inputLine.contains("ENTER THUNDERDOME " + password)) {
-                            System.out.println(inputLine);
-                            break;
-                        }
-                    }
                     out.println("TWO SHALL ENTER, ONE SHALL LEAVE");
-                    String username = "Cheese123";
-                    while ((inputLine = in.readLine()) != null){
-                        if (inputLine.contains("I AM "+username+" "+password));
-                        System.out.println(inputLine);
-                        break;
-                    }
-                    String pid = "4";
-                    out.println("WAIT FOR THE TOURNAMENT TO BEGIN "+pid);
-                    out.println("NEW CHALLENGE 0 YOU WILL PLAY 7 MATCHES");
-                    out.println("BEGIN ROUND 1 OF 7");
-                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 5");
-                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE GRASS+LAKE");
-                    out.println(in.readLine()); //game A our first move
-                    out.println("GAME B MOVE 0 PLAYER 5 PLACED GRASS+LAKE AT -1 1 0 5 FOUNDED SETTLEMENT AT 0 1 -1");
-
-                    //out.println("GAME A MOVE 1 PLAYER 420 PLACED LAKE+LAKE AT 1 1 1 1 FOUNDED SETTLEMENT AT 1 2 2");
-                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE ROCK+JUNGLE");
-                    out.println(in.readLine());
-                    out.println("GAME A MOVE 0 PLAYER 5 PLACED ROCK+JUNGLE AT 0 -4 4 3 FOUNDED SETTLEMENT AT 0 -3 3");
-
-                    out.println("END OF ROUND 2 OF 2");
+                    out.println("WAIT FOR THE TOURNAMENT TO BEGIN 2");
+                    out.println("NEW CHALLENGE 0 YOU WILL PLAY 1 MATCH");
+                    out.println("BEGIN ROUND 1 OF 1");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 1");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE JUNGLE+LAKE");
+                    out.println("GAME B MOVE 0 PLAYER 2 PLACED JUNGLE+LAKE AT 2 0 -2 1 FOUNDED SETTLEMENT AT 3 0 -3");
+                    out.println("GAME A MOVE 0 PLAYER 1 PLACED JUNGLE+LAKE AT -1 1 0 5 FOUNDED SETTLEMENT AT -2 2 0");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE GRASS+JUNGLE");
+                    out.println("GAME A MOVE 0 PLAYER 2 PLACED GRASS+JUNGLE AT -3 1 2 5 FOUNDED SETTLEMENT AT -4 2 2");
+                    out.println("GAME B MOVE 0 PLAYER 1 PLACED GRASS+JUNGLE AT 1 2 -3 1 FOUNDED SETTLEMENT AT 2 2 -4");
+                    out.println("Making move for opponent..");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE JUNGLE+ROCK");
+                    out.println("GAME B MOVE 1 PLAYER 2 PLACED JUNGLE+ROCK AT 3 1 -4 1 EXPANDED SETTLEMENT AT 3 0 -3 JUNGLE");
+                    out.println("GAME A MOVE 1 PLAYER 1 PLACED JUNGLE+ROCK AT -4 0 4 3 EXPANDED SETTLEMENT AT -2 2 0 JUNGLE");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 1 PLACE GRASS+ROCK");
+                    out.println("GAME B MOVE 1 PLAYER 1 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A MOVE 1 PLAYER 2 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A OVER PLAYER 2 FORFEITED PLAYER 1 WIN");
+                    out.println("GAME B OVER PLAYER 1 FORFEITED PLAYER 2 WIN");
+                    out.println("END OF ROUND 1 OF 1");
+                    out.println("WAIT FOR THE NEXT CHALLENGE TO BEGIN");
+                    out.println("NEW CHALLENGE 1 YOU WILL PLAY 1 MATCH");
+                    out.println("BEGIN ROUND 1 OF 1");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 1");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE GRASS+GRASS");
+                    out.println("GAME B MOVE 0 PLAYER 2 PLACED GRASS+GRASS AT 2 0 -2 3 FOUNDED SETTLEMENT AT 2 -1 -1");
+                    out.println("GAME A MOVE 0 PLAYER 1 PLACED GRASS+GRASS AT 2 -1 -1 4 FOUNDED SETTLEMENT AT 1 -1 0");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE LAKE+ROCK");
+                    out.println("GAME A MOVE 0 PLAYER 2 PLACED LAKE+ROCK AT 2 -3 1 5 FOUNDED SETTLEMENT AT 1 -2 1");
+                    out.println("GAME B MOVE 0 PLAYER 1 PLACED LAKE+ROCK AT 1 -1 0 3 FOUNDED SETTLEMENT AT 1 -2 1");
+                    out.println("Making move for opponent..");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE ROCK+JUNGLE");
+                    out.println("GAME A MOVE 1 PLAYER 1 PLACED ROCK+JUNGLE AT 3 -2 -1 1 EXPANDED SETTLEMENT AT 1 -1 0 LAKE");
+                    out.println("GAME B MOVE 1 PLAYER 2 PLACED ROCK+JUNGLE AT 0 2 -2 2 EXPANDED SETTLEMENT AT 2 -1 -1 LAKE");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 1 PLACE LAKE+ROCK");
+                    out.println("GAME A MOVE 1 PLAYER 2 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME B MOVE 1 PLAYER 1 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A OVER PLAYER 2 FORFEITED PLAYER 1 WIN");
+                    out.println("GAME B OVER PLAYER 1 FORFEITED PLAYER 2 WIN");
+                    out.println("END OF ROUND 1 OF 1");
+                    out.println("WAIT FOR THE NEXT CHALLENGE TO BEGIN");
+                    out.println("NEW CHALLENGE 2 YOU WILL PLAY 1 MATCH");
+                    out.println("BEGIN ROUND 1 OF 1");
+                    out.println("NEW MATCH BEGINNING NOW YOUR OPPONENT IS PLAYER 1");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 0 PLACE JUNGLE+ROCK");
+                    out.println("GAME A MOVE 0 PLAYER 1 PLACED JUNGLE+ROCK AT 1 -1 0 2 FOUNDED SETTLEMENT AT 2 -2 0");
+                    out.println("GAME B MOVE 0 PLAYER 2 PLACED JUNGLE+ROCK AT 0 2 -2 5 FOUNDED SETTLEMENT AT -1 3 -2");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 0 PLACE LAKE+JUNGLE");
+                    out.println("GAME B MOVE 0 PLAYER 1 PLACED LAKE+JUNGLE AT -2 4 -2 6 FOUNDED SETTLEMENT AT -2 5 -3");
+                    out.println("Making move for opponent..");
+                    out.println("GAME A MOVE 0 PLAYER 2 PLACED LAKE+JUNGLE AT -2 1 1 6 FOUNDED SETTLEMENT AT -2 2 0");
+                    out.println("MAKE YOUR MOVE IN GAME B WITHIN 1.5 SECONDS: MOVE 1 PLACE LAKE+LAKE");
+                    out.println("GAME B MOVE 1 PLAYER 2 PLACED LAKE+LAKE AT -2 3 -1 4 EXPANDED SETTLEMENT AT -1 3 -2 JUNGLE");
+                    out.println("GAME A MOVE 1 PLAYER 1 PLACED LAKE+LAKE AT 1 1 -2 6 EXPANDED SETTLEMENT AT 2 -2 0 JUNGLE");
+                    out.println("MAKE YOUR MOVE IN GAME A WITHIN 1.5 SECONDS: MOVE 1 PLACE JUNGLE+GRASS");
+                    out.println("GAME A MOVE 1 PLAYER 2 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME B MOVE 1 PLAYER 1 FORFEITED: ILLEGAL BUILD");
+                    out.println("GAME A OVER PLAYER 2 FORFEITED PLAYER 1 WIN");
+                    out.println("GAME B OVER PLAYER 1 FORFEITED PLAYER 2 WIN");
+                    out.println("END OF ROUND 1 OF 1");
                     out.println("END OF CHALLENGES");
-                    out.println("THANK YOU FOR PLAYING! GOODBYE");
-                    out.close();
-                    in.close();
-                    return;
+                    out.println("");
 
                 } catch (IOException e) {
                     System.out.println("Exception caught when trying to listen on port "

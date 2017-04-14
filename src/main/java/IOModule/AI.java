@@ -190,7 +190,12 @@ public class AI implements Player {
                 bestHex = adjacentHexes.get(0);
             }
         }
-        return bestHex;
+        if(SettlementFoundationRules.isValidFoundation(bestHex, gameState.getCurrentPlayer())) {
+            return bestHex;
+        }else{
+            return  null;
+        }
+
     }
 
     public Settlement getLargestSettlement(GameState gameState){
@@ -222,11 +227,13 @@ public class AI implements Player {
             }
         }
 
-        //TODO: get rid of loops with remove
-        for (int i = 0; i < adjacentHexes.size(); i++) {
-            Hex hex = adjacentHexes.get(i);
-            if (!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer())) {
-                adjacentHexes.remove(i--);
+
+        Iterator<Hex> hexIterator = adjacentHexes.iterator();
+        while(hexIterator.hasNext()) {
+            Hex hex = hexIterator.next();
+            if(!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer()))
+            {
+                hexIterator.remove();
             }
         }
         return adjacentHexes;
@@ -246,11 +253,11 @@ public class AI implements Player {
             }
         }
 
-
-        for (int i = 0; i < adjacentHexes.size(); i++) {
-            if (!SettlementFoundationRules.isValidFoundation(adjacentHexes.get(i), gameState.getCurrentPlayer())) {
-                //TODO: get rid of loops with remove
-                adjacentHexes.remove(i--);
+        Iterator<Hex> hexIterator = adjacentHexes.iterator();
+        while(hexIterator.hasNext()){
+            Hex hex2 = hexIterator.next();
+            if(!SettlementFoundationRules.isValidFoundation(hex2, gameState.getCurrentPlayer())){
+                hexIterator.remove();
             }
         }
 
