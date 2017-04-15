@@ -421,8 +421,8 @@ public class AI implements Player {
             }
 
         } else {
-            if (settlementSizeLake > largestExpansion) {
-                largestExpansion = settlementSizeLake;
+            if (settlementSizeRock > largestExpansion) {
+                largestExpansion = settlementSizeRock;
             }
         }
 
@@ -438,7 +438,7 @@ public class AI implements Player {
 
         } else {
             if (settlementSizeGrass > largestExpansion) {
-                largestExpansion = settlementSizeLake;
+                largestExpansion = settlementSizeGrass;
             }
         }
         if(largestExpansion == largestSettlement.getSettlementCoordinates().size()){
