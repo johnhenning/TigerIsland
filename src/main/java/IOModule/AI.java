@@ -57,15 +57,22 @@ public class AI implements Player {
 
     public BuildMove calculateBuildMove(Tile tile, GameState gameState) {
 
+        gameState.switchPlayer();
+        int oppMeeple = gameState.getCurrentPlayer().getNumMeeples();
+        gameState.switchPlayer();
+
         ArrayList<Hex> totoroHex = new ArrayList<>();
         Hex settlementHex = null;
         totoroHex = canPlaceTotoro(gameState);
         settlementHex = getBestHexForFoundation(gameState);
         BuildMove expansionMove = null;
         expansionMove = calculateExpansion(gameState);
-        Hex randomHex = randomValidHex(gameState);
+        //Hex randomHex = randomValidHex(gameState);
 
         if(gameState.getCurrentPlayer().getNumMeeples() < 5){
+            expansionMove = null;
+        }
+        if(oppMeeple >  gameState.getCurrentPlayer().getNumMeeples()){
             expansionMove = null;
         }
         if(previousBuildMove != null && expansionMove != null && previousBuildMove.equals(expansionMove)){
