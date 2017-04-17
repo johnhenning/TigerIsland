@@ -28,7 +28,7 @@ The main method is in the WhoLikesTigersAnyways class. To run, build the system,
 #### Thread
 * Game Thread
  
-### AI Functinality
+### AI Functionality
 - Places Tile
 - Places Totoro
 - Founds Settlements
