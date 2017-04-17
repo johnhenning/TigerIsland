@@ -9,6 +9,7 @@ import java.security.cert.CertificateEncodingException;
 import java.util.*;
 
 import static GameInteractionModule.Rules.BuildRules.isUnnocupied;
+import static GameInteractionModule.Rules.BuildRules.isValidBuild;
 import static GameInteractionModule.Rules.Rules.*;
 import static GameStateModule.Coordinate.removeDuplicates;
 
@@ -30,9 +31,11 @@ public class AI implements Player {
     @Override
     public void completeTurn(Message message, GameState gameState) {
         //Calculate Tile Placement
+
         ArrayList<Tile> validTiles = calculateValidTilePlacements(message, gameState);
         int tileIndex = r.nextInt(validTiles.size());
         message.tile = validTiles.get(tileIndex);
+
         Tile tile = message.tile;
         Turn.makeTileMove(tile, gameState);
 
@@ -60,6 +63,8 @@ public class AI implements Player {
         settlementHex = getBestHexForFoundation(gameState);
         BuildMove expansionMove = null;
         expansionMove = calculateExpansion(gameState);
+        Hex randomHex = randomValidHex(gameState);
+
         if(gameState.getCurrentPlayer().getNumMeeples() < 5){
             expansionMove = null;
         }
@@ -76,15 +81,29 @@ public class AI implements Player {
         } else {
             Coordinate coordinate = new Coordinate(-1, -1);
             for (Hex h : tile.getHexes()) {
-                if (h.getTerrain() != TerrainType.VOLCANO) {
+                if (h.getTerrain() != TerrainType.VOLCANO && h.getLevel()==1) {
                     coordinate = h.getCoordinate();
                 }
             }
+
             return new BuildMove(BuildMoveType.FOUNDSETTLEMENT, coordinate, null);
         }
 
     }
 
+    public Hex randomValidHex(GameState gameState){
+        Hex validHex = null;
+        ArrayList<Tile> placedTiles = gameState.getGameboard().getPlacedTiles();
+        for(Tile t: placedTiles){
+            ArrayList<Coordinate> coords = t.getCoords();
+            for(Coordinate c: coords){
+                if(SettlementFoundationRules.isValidFoundation(gameState.getHex(c),gameState.getCurrentPlayer())){
+                    validHex = gameState.getHex(c);
+                }
+            }
+        }
+        return validHex;
+    }
     public ArrayList<Coordinate> calculateTilePlacement(GameState gameState) {
         ArrayList<Tile> placedTiles = gameState.getGameboard().getPlacedTiles();
         Hex h = calculateBottomRightMostHex(placedTiles);
@@ -97,6 +116,97 @@ public class AI implements Player {
         return coords;
     }
 
+    public boolean opponentHasSize5Settlement(GameState gameState){
+        ArrayList<Settlement> opponentSettlements = new ArrayList<>();
+        ArrayList<Settlement> settlementList = new ArrayList<>();
+        settlementList = gameState.getSettlementList();
+
+        for (Settlement s : settlementList) {
+            if (!s.getOwner().equals(gameState.getCurrentPlayer())) {
+                opponentSettlements.add(s);
+            }
+        }
+        for(Settlement s: opponentSettlements){
+            if(s.getSize()>= 5){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Tile calculateValidTileNuke(Message message, GameState gameState){
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        for (Hex hex : message.tile.getHexes()) {
+            terrains.add(hex.getTerrain());
+        }
+        ArrayList<Settlement> opponentSettlements = new ArrayList<>();
+        ArrayList<Settlement> settlementList = new ArrayList<>();
+        settlementList = gameState.getSettlementList();
+
+        for (Settlement s : settlementList) {
+            if (!s.getOwner().equals(gameState.getCurrentPlayer())) {
+                opponentSettlements.add(s);
+            }
+        }
+
+        ArrayList<Hex> volcanoHexes = new ArrayList<>();
+        volcanoHexes = getVolcanoHexesAdjacentToSettlements(opponentSettlements,gameState);
+        Grid gameboard = gameState.getGameboard();
+        Hex[][] board = gameboard.getGameboard();
+
+        for(Hex h : volcanoHexes)
+        {
+            Coordinate volcanoCoordinate = h.getCoordinate();
+            for (int i = 1; i <= 6; i++) {
+                boolean failure = false;
+                ArrayList<Coordinate> tileCoords = new ArrayList<>();
+                Coordinate[] coordinates = Adapter.getCoordinatesOfOpponentsTile(volcanoCoordinate, i);
+                tileCoords.add(volcanoCoordinate);
+                tileCoords.add(coordinates[0]);
+                tileCoords.add(coordinates[1]);
+
+                Tile validNukeTile = new Tile(tileCoords, terrains);
+                try{
+                    TileNukeRules.isValidNuke(validNukeTile, board, gameState);
+                }
+                catch(AssertionError e){
+                    failure = true;
+                }
+                if(!failure){
+                    return validNukeTile;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<Hex> getVolcanoHexesAdjacentToSettlements(ArrayList<Settlement> playerSettlements, GameState gameState) {
+
+        Grid gameboard = gameState.getGameboard();
+        ArrayList<Hex> adjacentHexes = new ArrayList<>();
+
+        for (Settlement s : playerSettlements) {
+            for (Coordinate c : s.getSettlementCoordinates()) {
+                Hex hex = gameboard.getHexFromCoordinate(c);
+                for (Hex h : getAdjacentHexes(hex, gameboard)) {
+                    if (!containsHex(adjacentHexes, h)) {
+                        adjacentHexes.add(h);
+                    }
+                }
+            }
+        }
+
+
+        Iterator<Hex> hexIterator = adjacentHexes.iterator();
+        while(hexIterator.hasNext()) {
+            Hex hex = hexIterator.next();
+            if(!hex.getTerrain().equals(TerrainType.VOLCANO))
+            {
+                hexIterator.remove();
+            }
+        }
+        return adjacentHexes;
+    }
     public ArrayList<Tile> calculateValidTilePlacements(Message message, GameState gameState) {
         ArrayList<Coordinate> nullCoordinates = getAdjacentNullCoordinates(gameState);
         ArrayList<TerrainType> terrains = new ArrayList<>();

@@ -192,7 +192,27 @@ public class AITests {
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
     }
+    @Test
+    public void calculateNukeTileTest(){
+        setupHexAndTilesOnGameState(gameState);
+        gameState.switchPlayer();
+        gameState.foundSettlement(new Coordinate(102,100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102,99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
+        gameState.switchPlayer();
 
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.GRASS);
+        terrains.add(TerrainType.LAKE);
+
+        Tile tile = new Tile(terrains);
+        Message message = new Message(tile, null);
+        Tile nukeTile;
+        nukeTile =  ai.calculateValidTileNuke(message,gameState);
+        assert true;
+
+    }
     @Test
     public void aiBuildMoveTests(){
 
