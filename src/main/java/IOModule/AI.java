@@ -72,9 +72,7 @@ public class AI implements Player {
         if(gameState.getCurrentPlayer().getNumMeeples() < 5){
             expansionMove = null;
         }
-        if(oppMeeple >  gameState.getCurrentPlayer().getNumMeeples()){
-            expansionMove = null;
-        }
+
         if(previousBuildMove != null && expansionMove != null && previousBuildMove.equals(expansionMove)){
             expansionMove = null;
         }
@@ -445,17 +443,17 @@ public class AI implements Player {
             for (Settlement s : playerSettlement) {
                 if (TotoroBuildRules.settlementNotContainTotoros(s, gameState)) {
                     adjacentHexes = getHexesAdjacentToSettlementLessThanFiveTotoro(s, gameState);
-                    return adjacentHexes;
+
                 }
             }
         }
-//        Iterator<Hex> hexIterator = adjacentHexes.iterator();
-//        while(hexIterator.hasNext()){
-//            Hex hex2 = hexIterator.next();
-//            if(!TotoroBuildRules.isValidTotoroLocation(hex2, gameState.getCurrentPlayer(), gameState)){
-//                hexIterator.remove();
-//            }
-//        }
+        Iterator<Hex> hexIterator = adjacentHexes.iterator();
+        while(hexIterator.hasNext()){
+            Hex hex2 = hexIterator.next();
+            if(!TotoroBuildRules.isValidTotoroLocation(hex2, gameState.getCurrentPlayer(), gameState)){
+                hexIterator.remove();
+            }
+        }
 
 
         return adjacentHexes;

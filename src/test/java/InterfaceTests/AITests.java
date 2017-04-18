@@ -528,18 +528,34 @@ public class AITests {
     @Test
     public void calculateExpansionTest(){
         setupHexAndTilesOnGameState(gameState);
+        setupHexAndTilesOnGameState(gameState2);
+
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        coords.add(new Coordinate(100,100));
+        coords.add(new Coordinate(99,99));
+        coords.add(new Coordinate(99,100));
+
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.JUNGLE);
+        terrains.add(TerrainType.JUNGLE);
+
+        Tile tile = new Tile(coords, terrains);
+        gameState.levelTile(tile);
+        gameState2.levelTile(tile);
+
+
         gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
 
-        gameState.foundSettlement(new Coordinate(102,98),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102,99),gameState.getCurrentPlayer());
 
-        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,100), gameState.getCurrentPlayer());
-
+        gameState2.foundSettlement(new Coordinate(98,98),gameState2.getCurrentPlayer());
 
 
        BuildMove buildMove = ai.calculateBuildMove(null, gameState);
        Turn.makeBuildMove(buildMove, gameState);
+
+       buildMove = ai2.calculateBuildMove(null, gameState2);
+        Turn.makeBuildMove(buildMove, gameState2);
        assert buildMove != null;
 
 
