@@ -130,14 +130,8 @@ public class AdapterTests {
         assert adapter.zBuilt== -6;
         assert adapter.tiger;
 
-        testString = "GAME 2 OVER PLAYER 1 200 PLAYER 2 205";
+        testString = "GAME OVER SEND OUTCOME";
         adapter.parseStringFromServer(testString);
-        assert adapter.gidTwo.equals("2");
-        assert adapter.pid.equals("1");
-        assert adapter.p1Score== 200;
-        assert adapter.oid.equals("2");
-        assert adapter.p2Score== 205;
-
 
 
     }
