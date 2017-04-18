@@ -1,6 +1,8 @@
 package GameInteractionModule;
 
-import GameStateModule.*;
+import GameStateModule.BuildMove;
+import GameStateModule.GameState;
+import GameStateModule.Tile;
 
 /**
  * Created by johnhenning on 3/19/17.
@@ -20,13 +22,23 @@ public class Turn {
         switch(buildMove.buildMoveType) {
             case FOUNDSETTLEMENT:
                 try {
-                    gameState.foundSettlement(buildMove.coordinate,gameState.getCurrentPlayer());
+                    gameState.foundSettlement(buildMove.coordinate, gameState.getCurrentPlayer(), false);
                     gameState.switchPlayer();
                 } catch (AssertionError e) {
                     gameState.switchPlayer();
                     return false;
                 }
                 break;
+            case FOUNDSHANGRILA:
+                try {
+                    gameState.foundSettlement(buildMove.coordinate, gameState.getCurrentPlayer(), true);
+                    gameState.switchPlayer();
+                } catch (AssertionError e) {
+                    gameState.switchPlayer();
+                    return false;
+                }
+                break;
+            case EXPANDSHANGRILA:
             case EXPANDSETTLEMENT:
                 try {
                     gameState.expandSettlement(buildMove.coordinate, gameState.getCurrentPlayer(), buildMove.terrainType);

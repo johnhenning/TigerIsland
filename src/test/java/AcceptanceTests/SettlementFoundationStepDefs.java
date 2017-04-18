@@ -4,8 +4,8 @@ import GameInteractionModule.Rules.SettlementFoundationRules;
 import GameStateModule.*;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,9 @@ public class SettlementFoundationStepDefs {
 
     @When("^the Player tries to found a settlement on that hex$")
     public void the_Player_tries_to_found_a_settlement_on_that_hex() throws Throwable {
-        try{game.foundSettlement(new Coordinate(101,101),new Player());}
+        try {
+            game.foundSettlement(new Coordinate(101, 101), new Player(), false);
+        }
         catch (AssertionError e){ exceptionThrown = true; }
     }
 
@@ -87,13 +89,17 @@ public class SettlementFoundationStepDefs {
         game.placeTile(tile);
         Coordinate c = new Coordinate(101,101);
         Hex h = game.getHex(c);
-        try{game.foundSettlement(new Coordinate(101,101),new Player());}
+        try {
+            game.foundSettlement(new Coordinate(101, 101), new Player(), false);
+        }
         catch (AssertionError e){}
         assert !SettlementFoundationRules.isUnnocupied(h);
     }
     @When("^the player attempts to found a settlement at that location$")
     public void the_player_attempts_to_found_a_settlement_at_that_location() throws Throwable {
-        try{ game.foundSettlement(new Coordinate(101,101),new Player());}
+        try {
+            game.foundSettlement(new Coordinate(101, 101), new Player(), false);
+        }
         catch (AssertionError e){ exceptionThrown = true; }
     }
 
@@ -143,7 +149,9 @@ public class SettlementFoundationStepDefs {
 
     @When("^the Player tries to found a settlement on the hex$")
     public void the_Player_tries_to_found_a_settlement_on_the_hex() throws Throwable {
-        try{ game.foundSettlement(new Coordinate(100,100),new Player());}
+        try {
+            game.foundSettlement(new Coordinate(100, 100), new Player(), false);
+        }
         catch (AssertionError e){ exceptionThrown = true; }
     }
 

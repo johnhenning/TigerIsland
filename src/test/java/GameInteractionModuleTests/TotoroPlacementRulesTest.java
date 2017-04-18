@@ -11,12 +11,12 @@ import java.util.ArrayList;
  * Created by jslocke on 4/2/17.
  */
 public class TotoroPlacementRulesTest{
-    GameState gameState;
     static Tile tile1;
     static Tile tile2;
     static Tile tile3;
     static Tile tile4;
     static Tile tile5;
+    GameState gameState;
     boolean exceptionThrown;
 
     @Before
@@ -26,19 +26,19 @@ public class TotoroPlacementRulesTest{
         setupHexAndTilesOnGameState(gameState);
 
         gameState.switchPlayer();
-        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer(), false);
 
         gameState.switchPlayer();
 
-        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
 
     }
 

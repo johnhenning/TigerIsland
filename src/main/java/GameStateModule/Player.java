@@ -8,10 +8,12 @@ public class Player {
     private int numMeeples;
     private int numTotoros;
     private int numTigers;
+    private int numShaman;
 
     public Player() {
         score = 0;
-        numMeeples = 20;
+        numMeeples = 19;
+        numShaman = 1;
         numTotoros = 3;
         numTigers = 2;
     }
@@ -48,8 +50,11 @@ public class Player {
         this.score += score;
     }
 
-
     public boolean equals(Player player){
         return this == player;
+    }
+
+    public void removeShaman() {
+        numShaman -= 1;
     }
 }

@@ -1,6 +1,7 @@
 package GameStateModuleTests;
 
 import GameStateModule.*;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 public class GameStateTests {
 
+    boolean exceptionThrown;
     private GameState gameState;
     private ArrayList<Coordinate> coordinates;
     private ArrayList<TerrainType> terrains;
@@ -23,7 +25,6 @@ public class GameStateTests {
     private Tile tile4;
     private Tile tile5;
     private Player player1;
-    boolean exceptionThrown;
 
     @Before
     public void setup() throws Exception{
@@ -63,36 +64,45 @@ public class GameStateTests {
           gameState.placeTile(tile3);
           gameState.placeTile(tile4);
           gameState.placeTile(tile5);
-          gameState.foundSettlement(tile1.getCoords().get(1), gameState.getCurrentPlayer());
-          gameState.foundSettlement(tile1.getCoords().get(2), gameState.getCurrentPlayer());
-          gameState.foundSettlement(tile2.getCoords().get(1), gameState.getCurrentPlayer());
-          gameState.foundSettlement(tile2.getCoords().get(2), gameState.getCurrentPlayer());
-          gameState.foundSettlement(tile3.getCoords().get(2), gameState.getCurrentPlayer());
+        gameState.foundSettlement(tile1.getCoords().get(1), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(tile1.getCoords().get(2), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(tile2.getCoords().get(1), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(tile2.getCoords().get(2), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(tile3.getCoords().get(2), gameState.getCurrentPlayer(), false);
           gameState.placeTotoro(tile3.getCoords().get(1));
     }
 
     @Test
     public void settlementFoundationTest() throws Exception {
         gameState.placeTile(tile1);
-        gameState.foundSettlement(tile1.getCoords().get(1), player1);
+        gameState.foundSettlement(tile1.getCoords().get(1), player1, false);
+    }
+
+    @Test
+    public void shangrilaFoundationTest() throws Exception {
+        gameState.placeTile(tile1);
+        gameState.foundSettlement(tile1.getCoords().get(1), player1, true);
+
+        ArrayList<Settlement> settlements = gameState.getSettlementList();
+        Assert.assertEquals(true, settlements.get(settlements.size() - 1).HasShaman());
     }
 
     @Test
     public void settlementMergeTest() throws Exception {
         gameState.placeTile(tile1);
-        gameState.foundSettlement(tile1.getCoords().get(1), player1);
+        gameState.foundSettlement(tile1.getCoords().get(1), player1, false);
         assert  gameState.getSettlementList().size() == 1;
 
         gameState.placeTile(tile2);
         gameState.placeTile(tile3);
-        gameState.foundSettlement(new Coordinate(99,99), player1);
-        gameState.foundSettlement(new Coordinate(100,99), player1);
-        gameState.foundSettlement(new Coordinate(100, 101), player1);
-        gameState.foundSettlement(new Coordinate(101,101), player1);
+        gameState.foundSettlement(new Coordinate(99, 99), player1, false);
+        gameState.foundSettlement(new Coordinate(100, 99), player1, false);
+        gameState.foundSettlement(new Coordinate(100, 101), player1, false);
+        gameState.foundSettlement(new Coordinate(101, 101), player1, false);
         //tile1.getHexes().get(2).setLevel(3);
 
-        gameState.foundSettlement(new Coordinate(102,98), player1);
-        gameState.foundSettlement(new Coordinate(102,99), player1);
+        gameState.foundSettlement(new Coordinate(102, 98), player1, false);
+        gameState.foundSettlement(new Coordinate(102, 99), player1, false);
 
         assert gameState.getSettlementList().size() == 2;
 
@@ -102,7 +112,7 @@ public class GameStateTests {
     public void settlmentExpansionTest() throws Exception{
         gameState.placeTile(tile1);
         gameState.placeTile(tile2);
-        gameState.foundSettlement(tile1.getCoords().get(2), player1);
+        gameState.foundSettlement(tile1.getCoords().get(2), player1, false);
         player1.removeMeeple(17);
         try {gameState.expandSettlement(tile1.getCoords().get(2), player1, TerrainType.GRASS);}
         catch (AssertionError e) { exceptionThrown = true; }
@@ -199,22 +209,6 @@ public class GameStateTests {
         tile4 = new Tile(hexesCoord4, terrains4);
         tile5 = new Tile(hexesCoord5, terrains5);
 
-
-//        try {game.placeTile(tile1);}
-//        catch (AssertionError e) { exceptionThrown = true; }
-//        assert  !exceptionThrown;
-//        try {game.placeTile(tile2);}
-//        catch (AssertionError e) { exceptionThrown = true; }
-//        assert  !exceptionThrown;
-//        try {game.placeTile(tile4);}
-//        catch (AssertionError e) { exceptionThrown = true; }
-//        assert  !exceptionThrown;
-//        try {game.placeTile(tile3);}
-//        catch (AssertionError e) { exceptionThrown = true; }
-//        assert  !exceptionThrown;
-//        try {game.placeTile(tile5);}
-//        catch (AssertionError e) { exceptionThrown = true; }
-//        assert  !exceptionThrown;
 
     }
 }

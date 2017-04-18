@@ -4,7 +4,6 @@ package InterfaceTests;
 import GameInteractionModule.Turn;
 import GameStateModule.*;
 import IOModule.AI;
-
 import IOModule.Message;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,13 +18,13 @@ import java.util.Random;
 
 
 public class AITests {
+    //    GameClient gameC;
+    Player player1;
+    Player player2;
     private GameState gameState;
     private GameState gameState2;
     private AI ai;
     private AI ai2;
-//    GameClient gameC;
-    Player player1;
-    Player player2;
     private boolean exceptionThrown;
 
     @Before
@@ -73,20 +72,20 @@ public class AITests {
 
         setupHexAndTilesOnGameState(gameState);
         //gameState.switchPlayer();
-        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer(), false);
         //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
         ArrayList<Settlement> pSettlements = new ArrayList<>();
 
         gameState.switchPlayer();
 
-        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
 
         gameState.switchPlayer();
         pSettlements = ai.getPlayerSettlementsLessThanFive(gameState);
@@ -97,19 +96,19 @@ public class AITests {
     public void getHexesAdjacentToSettlementTest(){
         setupHexAndTilesOnGameState(gameState);
         //gameState.switchPlayer();
-        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer(), false);
         //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
 
         gameState.switchPlayer();
 
-        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
 
         gameState.switchPlayer();
 
@@ -124,21 +123,21 @@ public class AITests {
     public void getHexesAdjacentToSettlementsLessThanFiveTest(){
         setupHexAndTilesOnGameState(gameState);
         //gameState.switchPlayer();
-        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 101), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer(), false);
         //gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
 
         gameState.switchPlayer();
 
-        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer(), false);
 
         gameState.switchPlayer();
 
@@ -151,11 +150,11 @@ public class AITests {
   //  @Test
     public void aiPlaceOptimalSettlmentTest(){
         setupHexAndTilesOnGameState(gameState);
-        gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(100,101),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,102),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(100, 101), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 102), gameState.getCurrentPlayer(), false);
 
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
@@ -163,14 +162,14 @@ public class AITests {
  //   @Test
     public void aiPlaceTotoroTest(){
         setupHexAndTilesOnGameState(gameState);
-        gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,101),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer(), false);
 
-        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102,100),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer(), false);
 
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
@@ -179,15 +178,15 @@ public class AITests {
    // @Test
     public void aiPlaceTotoroTest2(){
         setupHexAndTilesOnGameState(gameState);
-        gameState.foundSettlement(new Coordinate(98,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,99),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(99,101),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(99, 101), gameState.getCurrentPlayer(), false);
         gameState.placeTotoro(new Coordinate(98, 101));
 
-        gameState.foundSettlement(new Coordinate(101,100),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102,100),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 100), gameState.getCurrentPlayer(), false);
 
         BuildMove buildMove = ai.calculateBuildMove(null, gameState);
         assert buildMove != null;
@@ -508,13 +507,13 @@ public class AITests {
     @Test
     public void calculateExpansionTest(){
         setupHexAndTilesOnGameState(gameState);
-        gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(98, 98), gameState.getCurrentPlayer(), false);
 
-        gameState.foundSettlement(new Coordinate(102,98),gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(102,99),gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(102, 98), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(102, 99), gameState.getCurrentPlayer(), false);
 
-        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer());
-        gameState.foundSettlement(new Coordinate(101,100), gameState.getCurrentPlayer());
+        gameState.foundSettlement(new Coordinate(100, 99), gameState.getCurrentPlayer(), false);
+        gameState.foundSettlement(new Coordinate(101, 100), gameState.getCurrentPlayer(), false);
 
 
 

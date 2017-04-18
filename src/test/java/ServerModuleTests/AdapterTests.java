@@ -1,7 +1,7 @@
 package ServerModuleTests;
 
+import GameStateModule.Coordinate;
 import ServerModule.Adapter;
-import GameStateModule.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,6 +11,7 @@ import org.junit.Test;
  */
 public class AdapterTests {
 
+    int orientation;
     private Adapter adapter;
     private String testString;
     private String authenticationString;
@@ -21,9 +22,6 @@ public class AdapterTests {
     private int z;
     private Coordinate habitableCoordinates[];
     private Coordinate volcanoCoordinate;
-    int orientation;
-
-
 
     @Before
     public void setup()throws Exception{
@@ -98,7 +96,7 @@ public class AdapterTests {
         assert adapter.yBuilt == -4;
         assert adapter.zBuilt == 4;
         assert adapter.terrainType.equals("LAKE");
-        assert adapter.expdanded;
+        assert adapter.expanded;
 
         testString = "GAME 1 MOVE 20 PLAYER 222 PLACED JUNGLE+JUNGLE AT -1 -1 -1 5 BUILT TOTORO SANCTUARY AT -5 -5 -5";
         adapter.parseStringFromServer(testString);

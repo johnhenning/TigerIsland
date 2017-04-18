@@ -2,7 +2,6 @@ package GameInteractionModuleTests;
 
 import GameInteractionModule.Rules.TileNukeRules;
 import GameStateModule.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +25,11 @@ import java.util.ArrayList;
 
 public class TileNukeRulesTests {
 
+    static Tile tile2;
+    static Tile tile3;
+    static Tile tile4;
+    static Tile tile5;
+    static Tile tile6;
     private GameState game;
     private Grid gameBoard;
     //    private GameState gameState;
@@ -34,18 +38,10 @@ public class TileNukeRulesTests {
     private Player player1;
     private Player player2;
     private boolean exceptionThrown;
-
     private ArrayList<Coordinate> coordinates;
     private ArrayList<Coordinate> secondSettlementCoords;
-
     private ArrayList<TerrainType> terrains;
     private Tile tile1;
-    static Tile tile2;
-    static Tile tile3;
-    static Tile tile4;
-    static Tile tile5;
-    static Tile tile6;
-
 
     @Before
     public void setup() {
@@ -417,11 +413,11 @@ public class TileNukeRulesTests {
     @Test
     public void testingValidNuking(){
         setupHexAndTilesOnGameState(game);
-        game.foundSettlement(new Coordinate(98, 101), game.getCurrentPlayer());
-        game.foundSettlement(new Coordinate(99, 101), game.getCurrentPlayer());
+        game.foundSettlement(new Coordinate(98, 101), game.getCurrentPlayer(), false);
+        game.foundSettlement(new Coordinate(99, 101), game.getCurrentPlayer(), false);
         game.switchPlayer();
-        game.foundSettlement(new Coordinate(100, 101), game.getCurrentPlayer());
-        game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer());
+        game.foundSettlement(new Coordinate(100, 101), game.getCurrentPlayer(), false);
+        game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer(), false);
 
         ArrayList<Coordinate> coords = new ArrayList<>();
         ArrayList<TerrainType> terrains = new ArrayList<>();
@@ -479,31 +475,31 @@ public class TileNukeRulesTests {
 
     public void setupSettlementSize5(GameState game) {
         try {
-            game.foundSettlement(new Coordinate(101, 102), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 102), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(102, 100), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(102, 100), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(102, 99), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(102, 99), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(102, 98), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(102, 98), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
@@ -512,25 +508,25 @@ public class TileNukeRulesTests {
 
     public void setupSettlementNonNuked(GameState game) {
         try {
-            game.foundSettlement(new Coordinate(101, 100), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 100), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(100, 101), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(100, 101), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(101, 102), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 102), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
@@ -540,31 +536,31 @@ public class TileNukeRulesTests {
     public void setupSettlement2Players(GameState game) {
 
         try {
-            game.foundSettlement(new Coordinate(101, 102), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 102), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(101, 101), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(102, 100), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(102, 100), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(102, 99), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(102, 99), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }
         assert !exceptionThrown;
         try {
-            game.foundSettlement(new Coordinate(102, 98), game.getCurrentPlayer());
+            game.foundSettlement(new Coordinate(102, 98), game.getCurrentPlayer(), false);
         } catch (AssertionError e) {
             exceptionThrown = true;
         }

@@ -17,8 +17,12 @@ public class BuildMove {
         switch (buildMoveType){
             case FOUNDSETTLEMENT:
                 return "FOUND SETTLEMENT AT ";
+            case FOUNDSHANGRILA:
+                return "FOUND SHANGRILA AT";
             case EXPANDSETTLEMENT:
                 return "EXPAND SETTLEMENT AT ";
+            case EXPANDSHANGRILA:
+                return "EXPAND SHANGRILA AT";
             case PLACETOTORO:
                 return "BUILD TOTORO SANCTUARY AT ";
             case PLACETIGER:

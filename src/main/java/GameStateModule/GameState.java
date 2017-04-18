@@ -30,18 +30,29 @@ public class GameState {
     }
 
 
-    public void foundSettlement(Coordinate coordinate, Player player) {
+    public void foundSettlement(Coordinate coordinate, Player player, boolean shaman) {
         Hex h = gameboard.getHexFromCoordinate(coordinate);
         if (SettlementFoundationRules.isValidFoundation(h, player)) {
-            player.removeMeeple();
-            placeMeeple(coordinate);
             player.addScore(ScoringRules.settlementFounded());
             Settlement settlement = new Settlement(coordinate,player, ++settlementIDCount);
+            if (shaman) {
+                player.removeShaman();
+                placeShaman(coordinate);
+                settlement.setShaman(true);
+            } else {
+                player.removeMeeple();
+                placeMeeple(coordinate);
+            }
             mergeSettlements(settlement);
         } else {
             throw new AssertionError();
         }
 }
+
+    private void placeShaman(Coordinate coordinate) {
+        Hex hex = getHex(coordinate);
+        hex.setShaman(true);
+    }
 
     public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) {
         Hex hex = getHex(coordinate);
@@ -235,7 +246,12 @@ public class GameState {
     public  void expansionPlaceMeeples(ArrayList<Coordinate> coordinates, Player player){
         for(Coordinate c : coordinates){
             Hex hex = gameboard.getHexFromCoordinate(c);
-            player.addScore(ScoringRules.settlementExpanded(hex));
+            Settlement settlement = getSettlementByID(hex.getSettlementID());
+            if (settlement.HasShaman()) {
+                player.addScore(2 * ScoringRules.settlementExpanded(hex));
+            } else {
+                player.addScore(ScoringRules.settlementExpanded(hex));
+            }
             int meeplesPlaced = placeMeeple(c);
             player.removeMeeple(meeplesPlaced);
         }
@@ -322,6 +338,7 @@ public class GameState {
             }
         }
         Settlement combinedSettlements = new Settlement(adjacentCoordinates, newSettlement.getOwner(), newSettlement.getSettlementID());
+        combinedSettlements.setShaman(newSettlement.HasShaman());
         for(Coordinate c : combinedSettlements.getSettlementCoordinates()){
             Hex h = getHex(c);
             h.setSettlementID(newSettlement.getSettlementID());

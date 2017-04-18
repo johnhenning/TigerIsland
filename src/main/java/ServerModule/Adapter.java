@@ -34,12 +34,12 @@ public class Adapter {
     public static String tileTypeTwo;
     public static String terrainType;
     public static boolean founded;
-    public static boolean expdanded;
+    public static boolean expanded;
     public static boolean totoro;
     public static boolean tiger;
     public static String currentGID = "";
     public static boolean gameJustStarted;
-
+    private static boolean shangrila;
     private GameClient kkc;
 
     public Adapter(GameClient kkc){
@@ -47,73 +47,18 @@ public class Adapter {
 
     }
 
-    public Message getAITileInfo(){
-        parseStringFromServer(kkc.receiveMessage());
-        ArrayList<TerrainType> terrains = new ArrayList<>();
-        terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.valueOf(tileTypeOne));
-        terrains.add(TerrainType.valueOf(tileTypeTwo));
-        return new Message(new Tile(terrains), null);
-    }
-    public Message getAITileInfo(String s){
-        parseStringFromServer(s);
-        ArrayList<TerrainType> terrains = new ArrayList<>();
-        terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.valueOf(tileTypeOne));
-        terrains.add(TerrainType.valueOf(tileTypeTwo));
-        return new Message(new Tile(terrains), null);
-
-
-    }
-
-    public Message getOpponentMove(String s){
-        parseStringFromServer(s);
-        ArrayList<TerrainType> terrains = new ArrayList<>();
-        terrains.add(TerrainType.VOLCANO);
-        terrains.add(TerrainType.valueOf(tileTypeOne));
-        terrains.add(TerrainType.valueOf(tileTypeTwo));
-        int[] coords = convertCubeToAxial(xPlaced, yPlaced, zPlaced);
-        Coordinate[] newCoords = getCoordinatesOfOpponentsTile(new Coordinate(coords[0], coords[1]), orientation);
-        ArrayList<Coordinate> convertedCoordinates = new ArrayList<>();
-        convertedCoordinates.add(new Coordinate(coords[0], coords[1]));
-        convertedCoordinates.add(newCoords[0]);
-        convertedCoordinates.add(newCoords[1]);
-        Tile tile = new Tile(convertedCoordinates, terrains);
-        int[] buildCoords = convertCubeToAxial(xBuilt, yBuilt, zBuilt);
-        TerrainType buildTerrain = null;
-        if(terrainType != null){
-            buildTerrain = TerrainType.valueOf(terrainType);
-        }
-
-        BuildMove buildMove = new BuildMove(null,new Coordinate(buildCoords[0], buildCoords[1]) , buildTerrain);
-
-        if(founded == true){
-            buildMove.buildMoveType = BuildMoveType.FOUNDSETTLEMENT;
-        }
-        else if(expdanded == true){
-            buildMove.buildMoveType = BuildMoveType.EXPANDSETTLEMENT;
-        }
-        else if(totoro == true){
-            buildMove.buildMoveType = BuildMoveType.PLACETOTORO;
-        }
-        else if(tiger == true){
-            buildMove.buildMoveType = BuildMoveType.PLACETIGER;
-        }
-        return new Message(tile, buildMove);
-
-    }
-
     public static void parseStringFromServer(String fromServer){
         founded = false;
-        expdanded = false;
+        expanded = false;
         tiger = false;
         totoro = false;
 
         serverMessage = fromServer.split(delimiters);
         founded= false;
-        expdanded = false;
+        expanded = false;
         totoro = false;
         tiger = false;
+        shangrila = false;
 
         if(fromServer.contains("WAIT FOR THE TOURNAMENT TO BEGIN ")) {
             ourPid =serverMessage[6];
@@ -155,13 +100,19 @@ public class Adapter {
                 xBuilt = Integer.parseInt(serverMessage[17]);
                 yBuilt = Integer.parseInt(serverMessage[18]);
                 zBuilt = Integer.parseInt(serverMessage[19]);
+                if (serverMessage[15].contains("SHANGRILA")) {
+                    shangrila = true;
+                }
                 founded = true;
             }
             else if (fromServer.contains("EXPANDED")){
                 xBuilt = Integer.parseInt(serverMessage[17]);
                 yBuilt = Integer.parseInt(serverMessage[18]);
                 zBuilt = Integer.parseInt(serverMessage[19]);
-                expdanded = true;
+                expanded = true;
+                if (serverMessage[15].contains("SHANGRILA")) {
+                    shangrila = true;
+                }
                 terrainType = serverMessage[20];
             }
             else if (fromServer.contains("TOTORO")){
@@ -189,23 +140,6 @@ public class Adapter {
         }
 
 
-    }
-
-
-
-    public int[] convertCubeToAxial(int x, int y, int z){
-        int axialCoord[] = new int[2];
-        axialCoord[0] = (x + (z - (z&1)) / 2)+100;
-        axialCoord[1] = (z)+100;
-        return axialCoord;
-    }
-
-    public int[] convertAxialToCube(int x, int y){
-        int cubicCoord[] = new int[3];
-        cubicCoord[0] = ((x-100)-((y-100)-((y-100)&1))/2);
-        cubicCoord[2] = y-100;
-        cubicCoord[1] = (-(cubicCoord[0])-cubicCoord[2]);
-        return cubicCoord;
     }
 
     public static Coordinate[] getCoordinatesOfOpponentsTile(Coordinate volcanoCoordinate, int orientation){
@@ -260,6 +194,7 @@ public class Adapter {
            return  6;
         return 0;
     }
+
     public static Coordinate downRight(Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
@@ -268,6 +203,7 @@ public class Adapter {
             return new Coordinate(x,y+1);
         return new Coordinate(x+1,y+1);
     }
+
     public static Coordinate downLeft(Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
@@ -276,6 +212,7 @@ public class Adapter {
             return new Coordinate(x-1,y+1);
         return new Coordinate(x,y+1);
     }
+
     public static Coordinate topRight(Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
@@ -284,6 +221,7 @@ public class Adapter {
             return new Coordinate(x,y-1);
         return new Coordinate(x+1,y-1);
     }
+
     public static Coordinate topLeft(Coordinate coordinate){
         int x, y;
         x = coordinate.getX();
@@ -305,6 +243,83 @@ public class Adapter {
         x = coordinate.getX();
         y = coordinate.getY();
         return new Coordinate(x+1,y);
+    }
+
+    public Message getAITileInfo() {
+        parseStringFromServer(kkc.receiveMessage());
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        return new Message(new Tile(terrains), null);
+    }
+
+    public Message getAITileInfo(String s) {
+        parseStringFromServer(s);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        return new Message(new Tile(terrains), null);
+
+
+    }
+
+    public Message getOpponentMove(String s) {
+        parseStringFromServer(s);
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.valueOf(tileTypeOne));
+        terrains.add(TerrainType.valueOf(tileTypeTwo));
+        int[] coords = convertCubeToAxial(xPlaced, yPlaced, zPlaced);
+        Coordinate[] newCoords = getCoordinatesOfOpponentsTile(new Coordinate(coords[0], coords[1]), orientation);
+        ArrayList<Coordinate> convertedCoordinates = new ArrayList<>();
+        convertedCoordinates.add(new Coordinate(coords[0], coords[1]));
+        convertedCoordinates.add(newCoords[0]);
+        convertedCoordinates.add(newCoords[1]);
+        Tile tile = new Tile(convertedCoordinates, terrains);
+        int[] buildCoords = convertCubeToAxial(xBuilt, yBuilt, zBuilt);
+        TerrainType buildTerrain = null;
+        if (terrainType != null) {
+            buildTerrain = TerrainType.valueOf(terrainType);
+        }
+
+        BuildMove buildMove = new BuildMove(null, new Coordinate(buildCoords[0], buildCoords[1]), buildTerrain);
+
+        if (founded) {
+            if (shangrila) {
+                buildMove.buildMoveType = BuildMoveType.FOUNDSHANGRILA;
+            } else {
+                buildMove.buildMoveType = BuildMoveType.FOUNDSETTLEMENT;
+            }
+        } else if (expanded) {
+            if (shangrila) {
+                buildMove.buildMoveType = BuildMoveType.EXPANDSHANGRILA;
+            } else {
+                buildMove.buildMoveType = BuildMoveType.EXPANDSETTLEMENT;
+            }
+        } else if (totoro) {
+            buildMove.buildMoveType = BuildMoveType.PLACETOTORO;
+        } else if (tiger) {
+            buildMove.buildMoveType = BuildMoveType.PLACETIGER;
+        }
+        return new Message(tile, buildMove);
+
+    }
+
+    public int[] convertCubeToAxial(int x, int y, int z) {
+        int axialCoord[] = new int[2];
+        axialCoord[0] = (x + (z - (z & 1)) / 2) + 100;
+        axialCoord[1] = (z) + 100;
+        return axialCoord;
+    }
+
+    public int[] convertAxialToCube(int x, int y) {
+        int cubicCoord[] = new int[3];
+        cubicCoord[0] = ((x - 100) - ((y - 100) - ((y - 100) & 1)) / 2);
+        cubicCoord[2] = y - 100;
+        cubicCoord[1] = (-(cubicCoord[0]) - cubicCoord[2]);
+        return cubicCoord;
     }
 
     public void sendAIMove(Message message, String s){

@@ -4,14 +4,15 @@ package GameStateModule;
  * Created by johnhenning on 3/15/17.
  */
 public class Hex {
-    private Coordinate coordinate;
     private final TerrainType terrain;
+    private Coordinate coordinate;
     private int turnPlaced;
     private int level;
     private int meepleCount;
     private int settlementID;
     private boolean totoro;
     private boolean tiger;
+    private boolean shaman;
 
     public Hex(Coordinate coordinate, TerrainType terrain) {
         this.coordinate = coordinate;
@@ -33,17 +34,32 @@ public class Hex {
         return coordinate;
     }
 
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
     public int getLevel() {
         return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public int getSettlementID() {
         return settlementID;
     }
 
+    public void setSettlementID(int settlementID) {
+        this.settlementID = settlementID;
+    }
+
     public int getTurnPlaced() {
         return turnPlaced;
+    }
+
+    public void setTurnPlaced(int turnPlaced) {
+        this.turnPlaced = turnPlaced;
     }
 
     public TerrainType getTerrain() {
@@ -60,23 +76,6 @@ public class Hex {
 
     public boolean hasTiger() {
         return tiger;
-    }
-
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public void setLevel(int level) {
-      this.level = level;
-    }
-
-    public void setSettlementID(int settlementID) {
-        this.settlementID = settlementID;
-    }
-
-
-    public void setTurnPlaced(int turnPlaced) {
-        this.turnPlaced = turnPlaced;
     }
 
     public void addMeeple(int level) {
@@ -113,6 +112,7 @@ public class Hex {
         System.out.println();
     }
 
-
-
+    public void setShaman(boolean shaman) {
+        this.shaman = shaman;
+    }
 }
