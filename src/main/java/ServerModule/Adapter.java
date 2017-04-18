@@ -127,13 +127,8 @@ public class Adapter {
                 zBuilt = Integer.parseInt(serverMessage[20]);
                 tiger = true;
             }
-        }
-        else if (fromServer.contains("OVER PLAYER")){
+        } else if (fromServer.contains("OVER SEND OUTCOME")) {
             gidTwo = serverMessage[1];
-            pid = serverMessage[4];
-            p1Score = Integer.parseInt(serverMessage[5]);
-            oid = serverMessage[7];
-            p2Score = Integer.parseInt(serverMessage[8]);
         }
         else if(fromServer.contains("FORFEITED") || fromServer.contains("LOST")){
             gidTwo = serverMessage[1];

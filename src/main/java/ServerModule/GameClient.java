@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import static ServerModule.Adapter.*;
@@ -17,16 +16,11 @@ import static ServerModule.Adapter.*;
 
 
 public class GameClient {
-    private Socket kkSocket;
-    private PrintWriter out;
-    private BufferedReader serverMessage;
-    private BufferedReader clientMessage;
     public boolean endOfChallenge = false;
     public boolean endOfMatch = false;
     public boolean gameNotOver = true;
     public boolean gameOneNotOver = true;
     public boolean gameTwoNotOver = true;
-
     public String ourPID;
     public String AITile;
     public String playerMove;
@@ -34,6 +28,10 @@ public class GameClient {
     public String gameOneID;
     public String gameTwoID;
     public int rounds;
+    private Socket kkSocket;
+    private PrintWriter out;
+    private BufferedReader serverMessage;
+    private BufferedReader clientMessage;
 
     public GameClient(String hostName, int portNumber){
 
@@ -194,9 +192,11 @@ public class GameClient {
                 gameOneNotOver = true;
                 gameTwoNotOver = true;
                 return;
-            }
-            else if(serverMessage.contains("OVER PLAYER")){
-                receiveMessage();
+            } else if (serverMessage.contains("OVER SEND OUTCOME")) {
+                String msg = receiveMessage();
+                parseStringFromServer(msg);
+                String toServer = "GAME " + gidTwo + "OVER PLAYER " + pid + " " + p1Score + " PLAYER " + ourPID + " " + p2Score;
+                sendMessage(toServer);
                 endOfMatch = true;
             }
             else if(serverMessage.contains("FORFEIT") || serverMessage.contains("LOST")){
