@@ -3,6 +3,7 @@ import GameInteractionModule.Rules.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.Stack;
 
 import static GameStateModule.Coordinate.removeDuplicates;
@@ -26,13 +27,36 @@ public class GameState {
 
         settlementIDCount = 0;
         currentPlayer = player1;
-        placeTile(Tile.getInitialTile());
+        placeTile(getInitialTile());
     }
 
+    public Tile getInitialTile(){
+        ArrayList<Hex> initialTile = new ArrayList<>();
+        initialTile.add(new Hex(new Coordinate(100,100), TerrainType.VOLCANO));
+        initialTile.add(new Hex(new Coordinate(100,99), TerrainType.LAKE));
+        initialTile.add(new Hex(new Coordinate(99,99), TerrainType.JUNGLE));
+        initialTile.add(new Hex(new Coordinate(99,101), TerrainType.ROCK));
+        initialTile.add(new Hex(new Coordinate(100,101), TerrainType.GRASS));
+        ArrayList<Coordinate> coords = new ArrayList<>();
+        coords.add(new Coordinate(100,100));
+        coords.add(new Coordinate(100,99));
+        coords.add(new Coordinate(99,99));
+        coords.add(new Coordinate(99,101));
+        coords.add(new Coordinate(100,101));
+        ArrayList<TerrainType> terrains = new ArrayList<>();
+        terrains.add(TerrainType.VOLCANO);
+        terrains.add(TerrainType.LAKE);
+        terrains.add(TerrainType.JUNGLE);
+        terrains.add(TerrainType.ROCK);
+        terrains.add(TerrainType.GRASS);
+
+
+        return new Tile(coords, terrains);
+    }
 
     public void foundSettlement(Coordinate coordinate, Player player) {
         Hex h = gameboard.getHexFromCoordinate(coordinate);
-        if (SettlementFoundationRules.isValidFoundation(h, player)) {
+        if (isValidFoundation(h, player)) {
             player.removeMeeple();
             placeMeeple(coordinate);
             player.addScore(ScoringRules.settlementFounded());
@@ -41,17 +65,21 @@ public class GameState {
         } else {
             throw new AssertionError();
         }
-}
+    }
+
+    public  boolean isValidFoundation(Hex hex, Player player){
+        return hex != null && hex.getLevel()==1 && isUnnocupied(hex) && hex.getTerrain()!=TerrainType.VOLCANO && BuildRules.checkPlayerHasEnoughMeeples(player, 1);
+    }
 
     public void expandSettlement(Coordinate coordinate, Player player, TerrainType terrainType) {
         Hex hex = getHex(coordinate);
         ArrayList<Coordinate> hexesToPlaceMeeplesOn = new ArrayList<>();
-        if (SettlementExpansionRules.expansionIsValid(hex)) {
+        if (expansionIsValid(hex)) {
             Settlement settlement = getSettlementByID(hex.getSettlementID());
             ArrayList<Coordinate> beforeExpansionCoordinates = getCoordinatesofSettlement(settlement);
             Settlement beforeExpansion = new Settlement(beforeExpansionCoordinates, player, settlement.getSettlementID());
             hexesToPlaceMeeplesOn = expansionDFS(gameboard, terrainType, beforeExpansion);
-            if(BuildRules.checkPlayerHasEnoughMeeples(player, SettlementExpansionRules.getMeeplesRequiredExpansion(this, hexesToPlaceMeeplesOn))){
+            if(checkPlayerHasEnoughMeeples(player, getMeeplesRequiredExpansion(this, hexesToPlaceMeeplesOn))){
                 expansionPlaceMeeples(hexesToPlaceMeeplesOn, player);
                 settlement = beforeExpansion;
             }
@@ -67,6 +95,27 @@ public class GameState {
         }
 
     }
+    public boolean expansionIsValid(Hex hex){
+        if(hex != null && hex.getSettlementID() != 0 && hex.getTerrain()!=TerrainType.VOLCANO){
+            return true;
+        }
+        else{
+            throw new AssertionError("This is not a proper settlement expansion");
+        }
+    }
+    public boolean checkPlayerHasEnoughMeeples(Player player, int numMeeples){
+        return player.getNumMeeples() >= numMeeples;
+    }
+
+    public int getMeeplesRequiredExpansion(GameState gameState, ArrayList<Coordinate> coordinates){
+        int meeplesRequired = 0;
+        for(Coordinate c: coordinates){
+            Hex h = gameState.getHex(c);
+            meeplesRequired += h.getLevel();
+        }
+        return meeplesRequired;
+    }
+
     public ArrayList<Coordinate> expansionDFS(Grid gameboard, TerrainType terrain, Settlement settlement){
         ArrayList<Coordinate> hexesEncountered = settlement.getSettlementCoordinates();
         ArrayList<Coordinate> newHexesAdded = new ArrayList<>();
@@ -77,7 +126,7 @@ public class GameState {
             Coordinate currentAdjacentCoordinate = coords.pop();
             ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameboard, terrain, currentAdjacentCoordinate);
             for(int i=0; i<neighboringCoordinates.size(); i++){
-                if(SettlementExpansionRules.contains(hexesEncountered, neighboringCoordinates.get(i))== false){
+                if(contains(hexesEncountered, neighboringCoordinates.get(i))== false){
                     newHexesAdded.add(neighboringCoordinates.get(i));
                     hexesEncountered.add(neighboringCoordinates.get(i));
                     coords.push(neighboringCoordinates.get(i));
@@ -86,31 +135,43 @@ public class GameState {
         }
         return newHexesAdded;
     }
+
+    public boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){
+        for(Coordinate c : hexEncountered){
+            if(c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()){
+                return true;
+            }
+        }
+        return false;
+    }
     public ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate){
         ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
         //we only want to add the coordinates, if they have the same terrain type, and they are unoccupied
         //if the match occurs we need to add the coordinates of that match to the array list
         Hex hex;
         hex = downLeft(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = downRight(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = topRight(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = topLeft(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = leftOfHex(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = rightOfHex(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && BuildRules.isUnnocupied(hex))
+        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
 
         return adjacentCoordinates;
+    }
+    public boolean isUnnocupied(Hex hex){
+        return hex.getMeepleCount()==0 && !hex.hasTiger() && !hex.hasTotoro();
     }
     public Hex downRight(Grid gameboard, Coordinate coordinate){
         int x, y;
@@ -210,6 +271,7 @@ public class GameState {
             TileNukeRules.isValidNuke(tile, gameboard.getGameboard(), this);
             bigDivideSettlements(gameboard, settlementList, tile, settlementIDCount);
             cleanSettlements();
+
             gameboard.levelTile(tile);
             return true;
         } catch (AssertionError e) {
@@ -219,9 +281,11 @@ public class GameState {
 
     }
     public void cleanSettlements(){
-        for(int i = 0; i < settlementList.size(); i++){
-            if(settlementList.get(i).getSettlementCoordinates().size() == 0) {
-                settlementList.remove(i--);
+        Iterator<Settlement> settlementIterator = settlementList.iterator();
+        while (settlementIterator.hasNext()) {
+           Settlement settlement = settlementIterator.next();
+            if(settlement.getSettlementCoordinates().size()==0){
+                settlementIterator.remove();
             }
         }
     }
@@ -311,7 +375,7 @@ public class GameState {
 
     private void mergeSettlements(Settlement newSettlement) {
         ArrayList<Coordinate> adjacentCoordinates = newSettlement.getSettlementCoordinates();
-        ArrayList<Settlement> playersSettlements = BuildRules.settlementsOfPlayer(settlementList, newSettlement.getOwner());
+        ArrayList<Settlement> playersSettlements = settlementsOfPlayer(settlementList, newSettlement.getOwner());
         playersSettlements.remove(newSettlement);
         settlementList.remove(newSettlement);
         for(Settlement s: playersSettlements){
@@ -328,9 +392,18 @@ public class GameState {
         }
         ArrayList<Coordinate> duplicates = combinedSettlements.getSettlementCoordinates();
         duplicates = removeDuplicates(duplicates);
+
         settlementList.add(combinedSettlements);
     }
 
+    public ArrayList<Settlement> settlementsOfPlayer(ArrayList<Settlement> settlements, Player player){
+        ArrayList<Settlement> playerSettlements = new ArrayList<Settlement>();
+        for(Settlement s: settlements){
+            if(s.getOwner().equals(player))
+                playerSettlements.add(s);
+        }
+        return playerSettlements;
+    }
 
     public void printHexSummary(int x, int y) {
         //printing tiles placed with coords
@@ -350,7 +423,7 @@ public class GameState {
         ArrayList<Coordinate> hexesEncountered = new ArrayList<>();
         ArrayList<Settlement> splitSettlements = new ArrayList<>();
         Stack<Coordinate> coords = new Stack();
-        if(settlement.getSettlementCoordinates().size() <= 0){
+        if(settlement == null || settlement.getSettlementCoordinates().size() <= 0){
             return splitSettlements;
         }
         coords.add(settlement.getSettlementCoordinates().get(0));
@@ -359,9 +432,9 @@ public class GameState {
         while(!coords.empty()){
             Coordinate currentAdjacentCoordinate = coords.pop();
             ArrayList<Coordinate> neighboringCoords =
-                    TileNukeRules.findAdjacentSettlementCoords(gameBoard, currentAdjacentCoordinate, settlement);
+                    findAdjacentSettlementCoords(gameBoard, currentAdjacentCoordinate, settlement);
             for(int i = 0; i < neighboringCoords.size(); i++){
-                if(!SettlementExpansionRules.contains(hexesEncountered, neighboringCoords.get(i))){
+                if(!contains(hexesEncountered, neighboringCoords.get(i))){
                     hexesEncountered.add(neighboringCoords.get(i));
                     coords.push(neighboringCoords.get(i));
                 }
@@ -369,11 +442,14 @@ public class GameState {
         }
 
         removeCoordsFromSettlement(hexesEncountered, settlement);
-        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), settlement.getSettlementID());
+        Settlement newSettlement = new Settlement(hexesEncountered, settlement.getOwner(), ++settlementIDCount);
         splitSettlements.add(newSettlement);
+        mergeSettlements(newSettlement);
 
         return splitSettlements;
     }
+
+
     public void removeCoordsFromSettlement(ArrayList<Coordinate> coords, Settlement s){
 
         Iterator<Coordinate> coordinateIterator = coords.iterator();
@@ -403,23 +479,50 @@ public class GameState {
         }
         settlementList.addAll(dividedSettlments);
     }
+    public void removeSettlementByID(int settlementID){
+        Iterator<Settlement> settlementIterator = settlementList.iterator();
+        while (settlementIterator.hasNext()) {
+            Settlement settlement = settlementIterator.next();
+            if (settlement.getSettlementID() == settlementID) {
+                settlementIterator.remove();
+            }
+        }
+    }
     public ArrayList<Settlement> findAffectedSettlements(ArrayList<Settlement> settlements, Tile tile) {
         ArrayList<Settlement> affectedSettlements = new ArrayList<>();
         ArrayList<Coordinate> nukedCoords = tile.getCoords();
-
-        for (Settlement s : settlements) {
-            boolean found = false;
-            for (Coordinate c : nukedCoords) {
-                int i;
-                i = coordinateIndex(s.getSettlementCoordinates(), c);
-                if (i >= 0) {
-                    s.getSettlementCoordinates().remove(i);
-                    found = true;
+        for(Coordinate c: nukedCoords){
+            Hex h = getHex(c);
+            if(h.getSettlementID() != 0) {
+                if(getSettlementByID(h.getSettlementID()) != null) {
+                    int i = coordinateIndex(getSettlementByID(h.getSettlementID()).getSettlementCoordinates(), c);
+                    getSettlementByID(h.getSettlementID()).getSettlementCoordinates().remove(i);
+                    affectedSettlements.add(getSettlementByID(h.getSettlementID()));
+//                    removeSettlementByID(h.getSettlementID());
                 }
             }
-            if(found)
-                affectedSettlements.add(s);
         }
+        Iterator<Settlement> settlementIterator = affectedSettlements.iterator();
+        while (settlementIterator.hasNext()) {
+            Settlement settlement = settlementIterator.next();
+            if (settlement != null && settlement.getSettlementCoordinates().size() == 0) {
+                settlementIterator.remove();
+            }
+        }
+
+//        for (Settlement s : settlements) {
+//            boolean found = false;
+//            for (Coordinate c : nukedCoords) {
+//                int i;
+//                i = coordinateIndex(s.getSettlementCoordinates(), c);
+//                if (i >= 0) {
+//                    s.getSettlementCoordinates().remove(i);
+//                    found = true;
+//                }
+//            }
+//            if(found)
+//                affectedSettlements.add(s);
+//        }
 
         return  affectedSettlements;
     }
@@ -430,6 +533,40 @@ public class GameState {
             }
         }
         return -1;
+    }
+
+    public ArrayList<Coordinate> findAdjacentSettlementCoords(Grid gameBoard, Coordinate coordinate, Settlement settlement){
+        ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
+        Hex hex;
+
+        hex = downLeft(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = downRight(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = topRight(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = topLeft(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = leftOfHex(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoordinate());
+        hex = rightOfHex(gameBoard, coordinate);
+        if(hex != null && settlmentContainsCoordinate(settlement, hex.getCoordinate()))
+            adjacentCoordinates.add(hex.getCoordinate());
+        return adjacentCoordinates;
+    }
+
+    public  boolean settlmentContainsCoordinate(Settlement settlement, Coordinate coordinate){
+        for(Coordinate c : settlement.getSettlementCoordinates()){
+            if(c.equals(coordinate)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

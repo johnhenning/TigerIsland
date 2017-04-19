@@ -270,7 +270,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         BuildMove buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains2);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -280,7 +280,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains3);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -290,7 +290,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains4);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -300,7 +300,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains5);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -310,7 +310,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains6);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -320,7 +320,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains5);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -330,7 +330,6 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
 
         tile = new Tile(terrains4);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -340,7 +339,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains3);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -350,7 +349,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains2);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -360,7 +359,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains1);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -370,7 +369,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains2);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -380,7 +379,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains3);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -390,7 +389,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains4);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -400,7 +399,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains5);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -410,7 +409,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains6);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -420,7 +419,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains3);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -430,7 +429,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains1);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -440,7 +439,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains2);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -450,7 +449,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains4);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -460,7 +459,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains3);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -470,7 +469,6 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
 
         tile = new Tile(terrains1);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -480,7 +478,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains2);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -490,7 +488,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains5);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -500,7 +498,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains1);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -510,7 +508,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         tile = new Tile(terrains5);
         validTiles = ai.calculateValidTilePlacements(message, gameState);
@@ -520,7 +518,7 @@ public class AITests {
         Turn.makeTileMove(tile, gameState);
         buildMove = ai.calculateBuildMove(tile, gameState);
         Turn.makeBuildMove(buildMove, gameState);
-        gameState.switchPlayer();
+
 
         assert buildMove != null;
     }
@@ -540,9 +538,20 @@ public class AITests {
         terrains.add(TerrainType.JUNGLE);
         terrains.add(TerrainType.JUNGLE);
 
+        ArrayList<Coordinate> coords2 = new ArrayList<>();
+        coords2.add(new Coordinate(100,100));
+        coords2.add(new Coordinate(99,99));
+        coords2.add(new Coordinate(99,100));
+
+        ArrayList<TerrainType> terrains2 = new ArrayList<>();
+        terrains2.add(TerrainType.VOLCANO);
+        terrains2.add(TerrainType.JUNGLE);
+        terrains2.add(TerrainType.JUNGLE);
+
         Tile tile = new Tile(coords, terrains);
+        Tile tile2 = new Tile(coords2,terrains2);
         gameState.levelTile(tile);
-        gameState2.levelTile(tile);
+        gameState2.levelTile(tile2);
 
 
         gameState.foundSettlement(new Coordinate(98,98),gameState.getCurrentPlayer());
@@ -554,8 +563,8 @@ public class AITests {
        BuildMove buildMove = ai.calculateBuildMove(null, gameState);
        Turn.makeBuildMove(buildMove, gameState);
 
-       buildMove = ai2.calculateBuildMove(null, gameState2);
-        Turn.makeBuildMove(buildMove, gameState2);
+       BuildMove buildMove1 = ai2.calculateBuildMove(null, gameState2);
+        Turn.makeBuildMove(buildMove1, gameState2);
        assert buildMove != null;
 
 
@@ -565,7 +574,7 @@ public class AITests {
     public void getAdjacentNullTest(){
         ArrayList<Coordinate> nullCoord = new ArrayList<>();
         nullCoord = ai.getAdjacentNullCoordinates(gameState);
-        assert true;
+        assert nullCoord.size() == 12;
 
     }
 

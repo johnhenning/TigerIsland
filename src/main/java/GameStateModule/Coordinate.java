@@ -1,10 +1,7 @@
 package GameStateModule;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by johnhenning on 3/20/17.
@@ -27,7 +24,16 @@ public class Coordinate {
         return y;
     }
 
-
+    public int hashCode() {
+        return (x * 31) ^ y;
+    }
+    public boolean equals(Object o) {
+        if (o instanceof Coordinate) {
+            Coordinate other = (Coordinate) o;
+            return (x == other.x && y == other.y);
+        }
+        return false;
+    }
     public boolean equals(Coordinate coordinate) {
         return (coordinate.getX() == x) && (coordinate.getY() == y);
     }
@@ -39,10 +45,9 @@ public class Coordinate {
 
     public static ArrayList<Coordinate> removeDuplicates(ArrayList<Coordinate> coordinates){
 // add elements to al, including duplicates
-        Set<Coordinate> coordSet = new HashSet<>();
-        coordSet.addAll(coordinates);
+        Set<Coordinate> coordsWithoutDuplicates = new LinkedHashSet<Coordinate>(coordinates);
         coordinates.clear();
-        coordinates.addAll(coordSet);
+        coordinates.addAll(coordsWithoutDuplicates);
 
         return coordinates;
     }

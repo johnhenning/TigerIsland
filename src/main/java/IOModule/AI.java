@@ -5,13 +5,12 @@ import GameInteractionModule.Turn;
 import GameStateModule.*;
 import ServerModule.Adapter;
 
-import java.security.cert.CertificateEncodingException;
+
 import java.util.*;
 
-import static GameInteractionModule.Rules.BuildRules.isUnnocupied;
+import static GameInteractionModule.Rules.BuildRules.isNotVolcano;
 import static GameInteractionModule.Rules.BuildRules.isValidBuild;
-import static GameInteractionModule.Rules.Rules.*;
-import static GameStateModule.Coordinate.removeDuplicates;
+
 
 /**
  * Created by johnhenning on 4/4/17.
@@ -28,13 +27,21 @@ public class AI implements Player {
         validTigerCoordinates = new ArrayList<>();
         r = new Random();
     }
+
     @Override
     public void completeTurn(Message message, GameState gameState) {
         //Calculate Tile Placement
+        Tile tile1 = calculateValidTileNuke(message,gameState);
+        if(tile1!=null && opponentHasSize5Settlement(gameState)){
 
-        ArrayList<Tile> validTiles = calculateValidTilePlacements(message, gameState);
-        int tileIndex = r.nextInt(validTiles.size());
-        message.tile = validTiles.get(tileIndex);
+            message.tile = tile1;
+        }
+        else{
+            ArrayList<Tile> validTiles = calculateValidTilePlacements(message, gameState);
+            int tileIndex = r.nextInt(validTiles.size());
+            message.tile = validTiles.get(tileIndex);
+        }
+
 
         Tile tile = message.tile;
         Turn.makeTileMove(tile, gameState);
@@ -57,9 +64,6 @@ public class AI implements Player {
 
     public BuildMove calculateBuildMove(Tile tile, GameState gameState) {
 
-        gameState.switchPlayer();
-        int oppMeeple = gameState.getCurrentPlayer().getNumMeeples();
-        gameState.switchPlayer();
 
         ArrayList<Hex> totoroHex = new ArrayList<>();
         Hex settlementHex = null;
@@ -67,18 +71,18 @@ public class AI implements Player {
         settlementHex = getBestHexForFoundation(gameState);
         BuildMove expansionMove = null;
         expansionMove = calculateExpansion(gameState);
-        //Hex randomHex = randomValidHex(gameState);
+        Hex randomHex = randomValidHex(gameState);
 
-        if(gameState.getCurrentPlayer().getNumMeeples() < 5){
+        if (gameState.getCurrentPlayer().getNumMeeples() < 5) {
             expansionMove = null;
         }
 
-        if(previousBuildMove != null && expansionMove != null && previousBuildMove.equals(expansionMove)){
+        if (previousBuildMove != null && expansionMove != null && previousBuildMove.equals(expansionMove)) {
             expansionMove = null;
         }
         if (totoroHex.size() != 0) {
             return new BuildMove(BuildMoveType.PLACETOTORO, totoroHex.get(0).getCoordinate(), null);
-        } else if(expansionMove != null){
+        } else if (expansionMove != null) {
 
             return expansionMove;
         } else if (settlementHex != null) {
@@ -86,9 +90,13 @@ public class AI implements Player {
         } else {
             Coordinate coordinate = new Coordinate(-1, -1);
             for (Hex h : tile.getHexes()) {
-                if (h.getTerrain() != TerrainType.VOLCANO && h.getLevel()==1) {
+                if (h.getTerrain() != TerrainType.VOLCANO && isValidFoundation(h, gameState)) {
                     coordinate = h.getCoordinate();
                 }
+            }
+            if(coordinate.equals(new Coordinate(-1, -1))){
+                coordinate = randomHex.getCoordinate();
+
             }
 
             return new BuildMove(BuildMoveType.FOUNDSETTLEMENT, coordinate, null);
@@ -96,18 +104,22 @@ public class AI implements Player {
 
     }
 
-    public Hex randomValidHex(GameState gameState){
+    public Hex randomValidHex(GameState gameState) {
         Hex validHex = null;
         ArrayList<Tile> placedTiles = gameState.getGameboard().getPlacedTiles();
-        for(Tile t: placedTiles){
+        for (Tile t : placedTiles) {
             ArrayList<Coordinate> coords = t.getCoords();
-            for(Coordinate c: coords){
-                if(SettlementFoundationRules.isValidFoundation(gameState.getHex(c),gameState.getCurrentPlayer())){
+            for (Coordinate c : coords) {
+                if (isValidFoundation(gameState.getHex(c),gameState)) {
                     validHex = gameState.getHex(c);
                 }
             }
         }
         return validHex;
+    }
+    public boolean isValidFoundation(Hex hex, GameState gameState) {
+        return hex != null && hex.getLevel() == 1 && isUnnocupied(hex) && hex.getTerrain() != TerrainType.VOLCANO && checkPlayerHasEnoughMeeples(gameState, 1);
+
     }
     public ArrayList<Coordinate> calculateTilePlacement(GameState gameState) {
         ArrayList<Tile> placedTiles = gameState.getGameboard().getPlacedTiles();
@@ -121,7 +133,7 @@ public class AI implements Player {
         return coords;
     }
 
-    public boolean opponentHasSize5Settlement(GameState gameState){
+    public boolean opponentHasSize5Settlement(GameState gameState) {
         ArrayList<Settlement> opponentSettlements = new ArrayList<>();
         ArrayList<Settlement> settlementList = new ArrayList<>();
         settlementList = gameState.getSettlementList();
@@ -131,14 +143,15 @@ public class AI implements Player {
                 opponentSettlements.add(s);
             }
         }
-        for(Settlement s: opponentSettlements){
-            if(s.getSize()>= 5){
+        for (Settlement s : opponentSettlements) {
+            if (s.getSize() >= 5) {
                 return true;
             }
         }
         return false;
     }
-    public Tile calculateValidTileNuke(Message message, GameState gameState){
+
+    public Tile calculateValidTileNuke(Message message, GameState gameState) {
         ArrayList<TerrainType> terrains = new ArrayList<>();
         for (Hex hex : message.tile.getHexes()) {
             terrains.add(hex.getTerrain());
@@ -154,12 +167,11 @@ public class AI implements Player {
         }
 
         ArrayList<Hex> volcanoHexes = new ArrayList<>();
-        volcanoHexes = getVolcanoHexesAdjacentToSettlements(opponentSettlements,gameState);
+        volcanoHexes = getVolcanoHexesAdjacentToSettlements(opponentSettlements, gameState);
         Grid gameboard = gameState.getGameboard();
         Hex[][] board = gameboard.getGameboard();
 
-        for(Hex h : volcanoHexes)
-        {
+        for (Hex h : volcanoHexes) {
             Coordinate volcanoCoordinate = h.getCoordinate();
             for (int i = 1; i <= 6; i++) {
                 boolean failure = false;
@@ -170,13 +182,12 @@ public class AI implements Player {
                 tileCoords.add(coordinates[1]);
 
                 Tile validNukeTile = new Tile(tileCoords, terrains);
-                try{
+                try {
                     TileNukeRules.isValidNuke(validNukeTile, board, gameState);
-                }
-                catch(AssertionError e){
+                } catch (AssertionError e) {
                     failure = true;
                 }
-                if(!failure){
+                if (!failure) {
                     return validNukeTile;
                 }
             }
@@ -203,15 +214,15 @@ public class AI implements Player {
 
 
         Iterator<Hex> hexIterator = adjacentHexes.iterator();
-        while(hexIterator.hasNext()) {
+        while (hexIterator.hasNext()) {
             Hex hex = hexIterator.next();
-            if(!hex.getTerrain().equals(TerrainType.VOLCANO))
-            {
+            if (!hex.getTerrain().equals(TerrainType.VOLCANO)) {
                 hexIterator.remove();
             }
         }
         return adjacentHexes;
     }
+
     public ArrayList<Tile> calculateValidTilePlacements(Message message, GameState gameState) {
         ArrayList<Coordinate> nullCoordinates = getAdjacentNullCoordinates(gameState);
         ArrayList<TerrainType> terrains = new ArrayList<>();
@@ -221,7 +232,7 @@ public class AI implements Player {
         ArrayList<Tile> validTiles = new ArrayList<>();
         for (Coordinate coordinate : nullCoordinates) {
             for (int i = 1; i <= 6; i++) {
-                Coordinate [] coordinates  = Adapter.getCoordinatesOfOpponentsTile(coordinate, i);
+                Coordinate[] coordinates = Adapter.getCoordinatesOfOpponentsTile(coordinate, i);
                 boolean coordinatesAreNull = gameState.getHex(coordinates[0]) == null
                         && gameState.getHex(coordinates[1]) == null;
                 if (coordinatesAreNull) {
@@ -308,20 +319,22 @@ public class AI implements Player {
         Hex bestHex = null;
         for (Settlement s : lessThanSizeFivePlayerSettlements) {
             ArrayList<Hex> adjacentHexes = getHexesAdjacentToSettlementLessThanFive(s, gameState);
-            if ((adjacentHexes != null) && isNewSettlementLarger(bestSettlment, s) && (adjacentHexes.size() >0)) {
+            if ((adjacentHexes != null) && isNewSettlementLarger(bestSettlment, s) && (adjacentHexes.size() > 0)) {
                 bestSettlment = s;
                 bestHex = adjacentHexes.get(0);
             }
         }
-        if(SettlementFoundationRules.isValidFoundation(bestHex, gameState.getCurrentPlayer())) {
+        if (isValidFoundation(bestHex, gameState)) {
             return bestHex;
-        }else{
-            return  null;
+        } else {
+            return null;
         }
 
     }
 
-    public Settlement getLargestSettlement(GameState gameState){
+
+
+    public Settlement getLargestSettlement(GameState gameState) {
         ArrayList<Settlement> lessThanSizeFivePlayerSettlements = getPlayerSettlementsLessThanFive(gameState);
         Settlement bestSettlment = null;
 
@@ -352,10 +365,9 @@ public class AI implements Player {
 
 
         Iterator<Hex> hexIterator = adjacentHexes.iterator();
-        while(hexIterator.hasNext()) {
-            Hex hex = hexIterator.next();
-            if(!SettlementFoundationRules.isValidFoundation(hex, gameState.getCurrentPlayer()))
-            {
+        while (hexIterator.hasNext()) {
+            Hex hex2 = hexIterator.next();
+            if (!isValidFoundation(hex2, gameState)) {
                 hexIterator.remove();
             }
         }
@@ -377,31 +389,33 @@ public class AI implements Player {
         }
 
         Iterator<Hex> hexIterator = adjacentHexes.iterator();
-        while(hexIterator.hasNext()){
+        while (hexIterator.hasNext()) {
             Hex hex2 = hexIterator.next();
-            if(!SettlementFoundationRules.isValidFoundation(hex2, gameState.getCurrentPlayer())){
+            if (!isValidFoundation(hex2, gameState)) {
                 hexIterator.remove();
             }
         }
 
         return adjacentHexes;
     }
-    public ArrayList<Hex> getAdjacentHexes(Hex hex, Grid gameboard){
+
+    public ArrayList<Hex> getAdjacentHexes(Hex hex, Grid gameboard) {
         ArrayList<Hex> adjacentHexes = new ArrayList<>();
-        if(downRight(gameboard, hex.getCoordinate()) != null)
+        if (downRight(gameboard, hex.getCoordinate()) != null)
             adjacentHexes.add(downRight(gameboard, hex.getCoordinate()));
-        if(downLeft(gameboard, hex.getCoordinate()) != null)
+        if (downLeft(gameboard, hex.getCoordinate()) != null)
             adjacentHexes.add(downLeft(gameboard, hex.getCoordinate()));
-        if(topRight(gameboard, hex.getCoordinate()) != null)
+        if (topRight(gameboard, hex.getCoordinate()) != null)
             adjacentHexes.add(topRight(gameboard, hex.getCoordinate()));
-        if(topLeft(gameboard, hex.getCoordinate()) != null)
+        if (topLeft(gameboard, hex.getCoordinate()) != null)
             adjacentHexes.add(topLeft(gameboard, hex.getCoordinate()));
-        if(rightOfHex(gameboard, hex.getCoordinate()) != null)
+        if (rightOfHex(gameboard, hex.getCoordinate()) != null)
             adjacentHexes.add(rightOfHex(gameboard, hex.getCoordinate()));
-        if(leftOfHex(gameboard, hex.getCoordinate()) != null)
+        if (leftOfHex(gameboard, hex.getCoordinate()) != null)
             adjacentHexes.add(leftOfHex(gameboard, hex.getCoordinate()));
         return adjacentHexes;
     }
+
     public ArrayList<Hex> getHexesAdjacentToSettlementLessThanFiveTotoro(Settlement playerSettlement, GameState gameState) {
         Grid gameboard = gameState.getGameboard();
         ArrayList<Hex> adjacentHexes = new ArrayList<>();
@@ -417,15 +431,16 @@ public class AI implements Player {
         }
 
         Iterator<Hex> hexIterator = adjacentHexes.iterator();
-        while(hexIterator.hasNext()){
+        while (hexIterator.hasNext()) {
             Hex hex2 = hexIterator.next();
-            if(!TotoroBuildRules.isValidTotoroLocation(hex2,gameState.getCurrentPlayer(),gameState)){
+            if (!TotoroBuildRules.isValidTotoroLocation(hex2, gameState.getCurrentPlayer(), gameState)) {
                 hexIterator.remove();
             }
         }
 
         return adjacentHexes;
     }
+
     public boolean containsHex(ArrayList<Hex> hexes, Hex hex) {
         for (Hex h : hexes) {
             if (h.equals(hex)) {
@@ -448,9 +463,9 @@ public class AI implements Player {
             }
         }
         Iterator<Hex> hexIterator = adjacentHexes.iterator();
-        while(hexIterator.hasNext()){
+        while (hexIterator.hasNext()) {
             Hex hex2 = hexIterator.next();
-            if(!TotoroBuildRules.isValidTotoroLocation(hex2, gameState.getCurrentPlayer(), gameState)){
+            if (!TotoroBuildRules.isValidTotoroLocation(hex2, gameState.getCurrentPlayer(), gameState)) {
                 hexIterator.remove();
             }
         }
@@ -459,7 +474,7 @@ public class AI implements Player {
         return adjacentHexes;
     }
 
-    public ArrayList<Coordinate> expandHex(GameState gameState, Settlement settlement, TerrainType terrain){
+    public ArrayList<Coordinate> expandHex(GameState gameState, Settlement settlement, TerrainType terrain) {
         ArrayList<Coordinate> settlementCoords = gameState.getCoordinatesofSettlement(settlement);
         Settlement copyOfSettlement = new Settlement(settlementCoords, gameState.getCurrentPlayer(), settlement.getSettlementID());
         ArrayList<Coordinate> hexesEncountered = copyOfSettlement.getSettlementCoordinates();
@@ -467,11 +482,11 @@ public class AI implements Player {
         Stack<Coordinate> coords = new Stack();
         coords.addAll(hexesEncountered);
 
-        while(!coords.empty()){
+        while (!coords.empty()) {
             Coordinate currentAdjacentCoordinate = coords.pop();
             ArrayList<Coordinate> neighboringCoordinates = findAdjacentCoords(gameState.getGameboard(), terrain, currentAdjacentCoordinate);
-            for(int i=0; i<neighboringCoordinates.size(); i++){
-                if(contains(hexesEncountered, neighboringCoordinates.get(i))== false){
+            for (int i = 0; i < neighboringCoordinates.size(); i++) {
+                if (contains(hexesEncountered, neighboringCoordinates.get(i)) == false) {
                     newHexesAdded.add(neighboringCoordinates.get(i));
                     hexesEncountered.add(neighboringCoordinates.get(i));
                     coords.push(neighboringCoordinates.get(i));
@@ -489,12 +504,12 @@ public class AI implements Player {
         ArrayList<Coordinate> coordsToExpandRock = new ArrayList<>();
         ArrayList<Coordinate> coordsToExpandGrass = new ArrayList<>();
         int largestExpansion = 0;
-
-        if(largestSettlement != null) {
-            coordsToExpandJungle = expandHex(gameState, largestSettlement, TerrainType.JUNGLE);
+        if(gameState.getCurrentPlayer().getNumMeeples() < 5){
+            return null;
         }
-        else
-        {
+        if (largestSettlement != null) {
+            coordsToExpandJungle = expandHex(gameState, largestSettlement, TerrainType.JUNGLE);
+        } else {
             return null;
         }
         int settlementSizeJungle = largestSettlement.getSettlementCoordinates().size();
@@ -556,10 +571,9 @@ public class AI implements Player {
                 largestExpansion = settlementSizeGrass;
             }
         }
-        if(largestExpansion == largestSettlement.getSettlementCoordinates().size()){
+        if (largestExpansion == largestSettlement.getSettlementCoordinates().size()) {
             return null;
-        }
-        else if (largestExpansion == settlementSizeJungle) {
+        } else if (largestExpansion == settlementSizeJungle) {
             if (checkPlayerHasEnoughMeeples(gameState, getMeeplesRequiredExpansion(gameState, coordsToExpandJungle))) {
                 return new BuildMove(BuildMoveType.EXPANDSETTLEMENT, largestSettlement.getSettlementCoordinates().get(0), TerrainType.JUNGLE);
             }
@@ -578,111 +592,113 @@ public class AI implements Player {
         }
         return null;
     }
-    public boolean checkPlayerHasEnoughMeeples(GameState gameState, int numMeeples){
+
+    public boolean checkPlayerHasEnoughMeeples(GameState gameState, int numMeeples) {
         return gameState.getCurrentPlayer().getNumMeeples() >= numMeeples;
     }
-    public int getMeeplesRequiredExpansion(GameState gameState, ArrayList<Coordinate> coordinates){
+
+    public int getMeeplesRequiredExpansion(GameState gameState, ArrayList<Coordinate> coordinates) {
         int meeplesRequired = 0;
-        for(Coordinate c: coordinates){
+        for (Coordinate c : coordinates) {
             Hex h = gameState.getHex(c);
             meeplesRequired += h.getLevel();
         }
         return meeplesRequired;
     }
 
-    public boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord){
-        for(Coordinate c : hexEncountered){
-            if(c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()){
+    public boolean contains(ArrayList<Coordinate> hexEncountered, Coordinate currentCoord) {
+        for (Coordinate c : hexEncountered) {
+            if (c.getX() == currentCoord.getX() && c.getY() == currentCoord.getY()) {
                 return true;
             }
         }
         return false;
     }
 
-    public ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate){
+    public ArrayList<Coordinate> findAdjacentCoords(Grid gameboard, TerrainType terrain, Coordinate coordinate) {
         ArrayList<Coordinate> adjacentCoordinates = new ArrayList<>();
         //we only want to add the coordinates, if they have the same terrain type, and they are unoccupied
         //if the match occurs we need to add the coordinates of that match to the array list
         Hex hex;
         hex = downLeft(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+        if (hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = downRight(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+        if (hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = topRight(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+        if (hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = topLeft(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+        if (hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = leftOfHex(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+        if (hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
         hex = rightOfHex(gameboard, coordinate);
-        if(hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
+        if (hex != null && (hex.getTerrain() == terrain) && isUnnocupied(hex))
             adjacentCoordinates.add(hex.getCoordinate());
 
         return adjacentCoordinates;
     }
-    public Hex downRight(Grid gameboard, Coordinate coordinate){
+
+    public Hex downRight(Grid gameboard, Coordinate coordinate) {
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
-        if((y % 2) == 0) {  //even
+        if ((y % 2) == 0) {  //even
+            y += 1;
+            return gameboard.getGameboard()[x][y];
+        } else {  //odd
+            x += 1;
             y += 1;
             return gameboard.getGameboard()[x][y];
         }
-        else {  //odd
-            x += 1;
-            y += 1;
-            return  gameboard.getGameboard()[x][y];
-        }
     }
-    public Hex downLeft(Grid gameboard, Coordinate coordinate){
+
+    public Hex downLeft(Grid gameboard, Coordinate coordinate) {
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
-        if((y % 2) == 0) {  //even
+        if ((y % 2) == 0) {  //even
             x -= 1;
             y += 1;
             return gameboard.getGameboard()[x][y];
-        }
-        else {  //odd
+        } else {  //odd
             y += 1;
-            return  gameboard.getGameboard()[x][y];
+            return gameboard.getGameboard()[x][y];
         }
     }
-    public Hex topRight(Grid gameboard, Coordinate coordinate){
+
+    public Hex topRight(Grid gameboard, Coordinate coordinate) {
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
-        if((y % 2) == 0) {  //even
+        if ((y % 2) == 0) {  //even
             y -= 1;
             return gameboard.getGameboard()[x][y];
-        }
-        else {  //odd
+        } else {  //odd
             x += 1;
-            y -= 1;
-            return  gameboard.getGameboard()[x][y];
-        }
-    }
-    public Hex topLeft(Grid gameboard, Coordinate coordinate){
-        int x, y;
-        x = coordinate.getX();
-        y = coordinate.getY();
-        if((y % 2) == 0) {  //even
-            x -= 1;
-            y -= 1;
-            return gameboard.getGameboard()[x][y];
-        }
-        else {  //odd
             y -= 1;
             return gameboard.getGameboard()[x][y];
         }
     }
 
-    public Hex leftOfHex(Grid gameboard, Coordinate coordinate){
+    public Hex topLeft(Grid gameboard, Coordinate coordinate) {
+        int x, y;
+        x = coordinate.getX();
+        y = coordinate.getY();
+        if ((y % 2) == 0) {  //even
+            x -= 1;
+            y -= 1;
+            return gameboard.getGameboard()[x][y];
+        } else {  //odd
+            y -= 1;
+            return gameboard.getGameboard()[x][y];
+        }
+    }
+
+    public Hex leftOfHex(Grid gameboard, Coordinate coordinate) {
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
@@ -691,7 +707,7 @@ public class AI implements Player {
         return gameboard.getGameboard()[x][y];
     }
 
-    public Hex rightOfHex(Grid gameboard, Coordinate coordinate){
+    public Hex rightOfHex(Grid gameboard, Coordinate coordinate) {
         int x, y;
         x = coordinate.getX();
         y = coordinate.getY();
@@ -699,8 +715,10 @@ public class AI implements Player {
         return gameboard.getGameboard()[x][y];
     }
 
-    private boolean canPlaceNearSettlement(GameState gameState) {
-        return true;
+    public boolean isUnnocupied(Hex hex){
+        return hex.getMeepleCount()==0 && !hex.hasTiger() && !hex.hasTotoro();
     }
 }
+
+
 
